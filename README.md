@@ -20,6 +20,3 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 
 `digirock` was created by Tony Hallam. It is licensed under the terms of the MIT license.
 
-## Credits
-
-`digirock` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
