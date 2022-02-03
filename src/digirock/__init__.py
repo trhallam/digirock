@@ -1,7 +1,18 @@
 # pylint:disable=missing-docstring
 import sys
+from ._version import version as __version__
 
-from ._fluid import FluidModel, Fluid, Water, WaterECL, DeadOil, Oil, Gas, GasPVDG
+from ._fluid import (
+    FluidModel,
+    Fluid,
+    Water,
+    WaterECL,
+    DeadOil,
+    Oil,
+    Gas,
+    GasPVDG,
+    load_pvtw,
+)
 
 from ._frame import (
     PoroAdjModel,
