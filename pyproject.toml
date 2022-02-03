@@ -1,0 +1,10 @@
+[project]
+name = "digirock"
+
+[build-system]
+requires = ["setuptools", "wheel", "setuptools_scm>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "src/digirock/_version.py"
+local_scheme = "no-local-version"
