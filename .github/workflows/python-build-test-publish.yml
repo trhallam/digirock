@@ -10,9 +10,12 @@ name: digirock actions
 
 on: [push, pull_request]
 
+env:
+  PACKAGE: digirock
+
 jobs:
   build-test:
-    name: Build and test digirock
+    name: Build and test
     strategy:
       fail-fast: false
       matrix:
@@ -27,15 +30,24 @@ jobs:
           # required for `git describe --tags` to work
           fetch-depth: 0
 
+      # required to use caching because it depends on requirements.txt
+      - name: create requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip_tools
+          pip-compile setup.cfg --extra test
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
+          cache: 'pip'
 
       - name: Install package and deps
         run: |
           python -m pip install --upgrade pip
-          pip install .[test]
+          pip install -r requirements.txt
+          pip install .
 
       - name: Run tests
         run: |
@@ -49,6 +61,38 @@ jobs:
         with:
           name: ${{ matrix.os }} Python ${{ matrix.python }} wheel
           path: dist/*
+
+  test_badge:
+    name: create test badges
+    if: ${{ always() }}
+    needs: [build-test]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: passed?
+      if: needs.build-test.result == 'success'
+      run: |
+        echo "BADGE_COLOUR=green" >> $GITHUB_ENV
+        echo "BADGE_MSG=pass" >> $GITHUB_ENV
+
+    - name: failed?
+      if: needs.build-test.result == 'failure'
+      run: |
+        echo "BADGE_COLOUR=RED" >> $GITHUB_ENV
+        echo "BADGE_MSG=fail" >> $GITHUB_ENV
+
+    - name: create test badges
+      if: 
+      uses: schneegans/dynamic-badges-action@v1.1.0
+      with:
+        auth: ${{ secrets.GIST_TOKEN }}
+        gistID: 3383896c25bd99987cb78b098d18cf32
+        filename: ${{ env.PACKAGE }}_test.json
+        label: Tests
+        namedLogo: Python
+        logoColor: white
+        message: ${{ env.BADGE_MSG }}
+        color: ${{ env.BADGE_COLOUR }}
 
   publish:
     name: Publish to test.PyPI and PyPI
