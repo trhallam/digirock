@@ -1962,7 +1962,7 @@ subscripted 1 and which is subscripted 2. In general
 <span class="sd">        (): HS bulk modulus bounds</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">k1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">k2</span> <span class="o">-</span> <span class="n">k1</span><span class="p">)</span> <span class="o">+</span> <span class="n">f1</span><span class="o">/</span><span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">mu1</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">k1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">f1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">k2</span> <span class="o">-</span> <span class="n">k1</span><span class="p">)</span> <span class="o">+</span> <span class="n">f1</span> <span class="o">/</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">mu1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">))</span>
 </code></pre></div>
         </details>
     </div>
@@ -2061,7 +2061,9 @@ subscripted 1 and which is subscripted 2. In general
 <span class="sd">        (): HS shear modulus bounds (positive)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">mu1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f1</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">mu2</span><span class="o">-</span><span class="n">mu1</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">f1</span><span class="o">*</span><span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">mu1</span><span class="o">*</span><span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">mu1</span><span class="o">/</span><span class="mi">3</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">mu1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">f1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">mu2</span> <span class="o">-</span> <span class="n">mu1</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">f1</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">mu1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">mu1</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">mu1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -2125,7 +2127,7 @@ subscripted 1 and which is subscripted 2. In general
 <span class="sd">        mumax (array-like): Maximum material moduli.</span>
 <span class="sd">        args (array-like): pairs of mineral moduli arrays and volume fraction arrays</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">_hsw_lambda</span><span class="p">(</span><span class="n">mumax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="n">_hsw_lambda</span><span class="p">(</span><span class="n">mumin</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">_hsw_lambda</span><span class="p">(</span><span class="n">mumax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="n">_hsw_lambda</span><span class="p">(</span><span class="n">mumin</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span>
 </code></pre></div>
         </details>
     </div>
@@ -2223,7 +2225,7 @@ subscripted 1 and which is subscripted 2. In general
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">zmin</span> <span class="o">=</span> <span class="n">_hsw_zeta</span><span class="p">(</span><span class="n">kmin</span><span class="p">,</span> <span class="n">mumin</span><span class="p">)</span>
     <span class="n">zmax</span> <span class="o">=</span> <span class="n">_hsw_zeta</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">mumax</span><span class="p">)</span>
-    <span class="k">return</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">_hsw_gamma</span><span class="p">(</span><span class="n">zmin</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="n">_hsw_gamma</span><span class="p">(</span><span class="n">zmax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">_hsw_gamma</span><span class="p">(</span><span class="n">zmin</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="n">_hsw_gamma</span><span class="p">(</span><span class="n">zmax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span>
 </code></pre></div>
         </details>
     </div>

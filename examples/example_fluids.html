@@ -1879,8 +1879,7 @@ print("Modulus 1 array values (GPa):", wat.density(t, pres))
 
 # arrays can be used, but they must be the same shape
 print("Modulus 2 array values (GPa):", wat.density(temp, pres))
-print("Modulus 2 array values (GPa):", wat.density(temp.reshape(2, -1), pres.reshape(2, -1)))
-</div>
+print("Modulus 2 array values (GPa):", wat.density(temp.reshape(2, -1), pres.reshape(2, -1)))</div>
     
         </div>
     </div>
@@ -2547,8 +2546,7 @@ from digirock.utils.ecl import EclStandardConditions</div>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">bw92</span><span class="o">.</span><span class="n">wat_salinity_brine</span><span class="p">(</span><span class="n">EclStandardConditions</span><span class="o">.</span><span class="n">TEMP</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">EclStandardConditions</span><span class="o">.</span><span class="n">PRES</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="mf">1.108193</span><span class="p">)</span>
 </pre></div>
-<div id="cell-15" class="clipboard-copy-txt">bw92.wat_salinity_brine(EclStandardConditions.TEMP.value, EclStandardConditions.PRES.value, 1.108193)
-</div>
+<div id="cell-15" class="clipboard-copy-txt">bw92.wat_salinity_brine(EclStandardConditions.TEMP.value, EclStandardConditions.PRES.value, 1.108193)</div>
     
         </div>
     </div>
@@ -2657,23 +2655,45 @@ a.get_summary()</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
+Input <span class="ansi-green-fg">In [17]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span> a <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">load_pvtw</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">example_data/COMPLEX_PVT.inc</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span>[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pvtw0</span><span style="color: rgb(175,0,0)">&#34;</span>]
+<span class="ansi-green-intense-fg ansi-bold">      2</span> a<span style="color: rgb(98,98,98)">.</span>get_summary()
 
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/digirock/_fluid.py:244</span>, in <span class="ansi-cyan-fg">load_pvtw</span><span class="ansi-blue-fg">(filepath, units, prefix, salinity)</span>
+<span class="ansi-green-intense-fg ansi-bold">    241</span> table <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">dict</span>()
+<span class="ansi-green-intense-fg ansi-bold">    242</span> _ut: <span style="color: rgb(0,135,0)">dict</span> <span style="color: rgb(98,98,98)">=</span> EclUnitScaler[units]<span style="color: rgb(98,98,98)">.</span>value
+<span class="ansi-green-fg">--&gt; 244</span> rawpvt <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">read_eclipsekw_2dtable</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">filepath</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">PVTW</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    245</span> dens <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>
+<span class="ansi-green-intense-fg ansi-bold">    247</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
 
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>{&#39;class&#39;: digirock._fluid.WaterECL,
- &#39;name&#39;: &#39;pvtw0&#39;,
- &#39;salinity&#39;: 0.1423666294070789,
- &#39;ref_pres&#39;: 26.85,
- &#39;bw&#39;: 1.03382,
- &#39;comp&#39;: 0.00031288999999999997,
- &#39;visc&#39;: 0.38509,
- &#39;cvisc&#39;: 0.0009780099999999999,
- &#39;density_asc&#39;: 1.1012673958726442}</pre>
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/digirock/utils/file.py:246</span>, in <span class="ansi-cyan-fg">read_eclipsekw_2dtable</span><span class="ansi-blue-fg">(filepath, kword)</span>
+<span class="ansi-green-intense-fg ansi-bold">    224</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">read_eclipsekw_2dtable</span>(filepath, kword):
+<span class="ansi-green-intense-fg ansi-bold">    225</span>     <span style="color: rgb(175,0,0)">&#34;&#34;&#34;A 2D table has the same number of items per row and will return a</span>
+<span class="ansi-green-intense-fg ansi-bold">    226</span> <span style="color: rgb(175,0,0)">    contiguous list of table row items.</span>
+<span class="ansi-green-intense-fg ansi-bold">    227</span> 
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">    244</span> <span style="color: rgb(175,0,0)">        ValueError: [description]</span>
+<span class="ansi-green-intense-fg ansi-bold">    245</span> <span style="color: rgb(175,0,0)">    &#34;&#34;&#34;</span>
+<span class="ansi-green-fg">--&gt; 246</span>     table <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_read_eclipsekw_section</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">filepath</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">kword</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    247</span>     table <span style="color: rgb(98,98,98)">=</span> table<span style="color: rgb(98,98,98)">.</span>strip()<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">/</span><span style="color: rgb(175,0,0)">&#34;</span>)[:<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]
+<span class="ansi-green-intense-fg ansi-bold">    248</span>     table <span style="color: rgb(98,98,98)">=</span> [p<span style="color: rgb(98,98,98)">.</span>strip()<span style="color: rgb(98,98,98)">.</span>split() <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> p <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> table]
+
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/digirock/utils/file.py:207</span>, in <span class="ansi-cyan-fg">_read_eclipsekw_section</span><span class="ansi-blue-fg">(filepath, kword)</span>
+<span class="ansi-green-intense-fg ansi-bold">    205</span> found_kw <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">False</span>
+<span class="ansi-green-intense-fg ansi-bold">    206</span> table <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-fg">--&gt; 207</span> <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">open</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">filepath</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">r</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> f:
+<span class="ansi-green-intense-fg ansi-bold">    208</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> line <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> f:
+<span class="ansi-green-intense-fg ansi-bold">    209</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> line[:<span style="color: rgb(98,98,98)">2</span>] <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">--</span><span style="color: rgb(175,0,0)">&#34;</span>:
+
+<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;example_data/COMPLEX_PVT.inc&#39;</pre>
 </div>
-
 </div>
 
 </div>
@@ -2722,15 +2742,18 @@ a.get_summary()</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Input <span class="ansi-green-fg">In [18]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">a</span><span style="color: rgb(98,98,98)">.</span>get_summary()[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">salinity</span><span style="color: rgb(175,0,0)">&#34;</span>] <span style="color: rgb(98,98,98)">*</span> <span style="color: rgb(98,98,98)">1E6</span>
 
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>142366.6294070789</pre>
+<span class="ansi-red-fg">NameError</span>: name &#39;a&#39; is not defined</pre>
 </div>
-
 </div>
 
 </div>
@@ -2779,15 +2802,18 @@ a.get_summary()</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[19]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Input <span class="ansi-green-fg">In [19]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">a</span><span style="color: rgb(98,98,98)">.</span>density(p, t)
 
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1.1397910024070124</pre>
+<span class="ansi-red-fg">NameError</span>: name &#39;a&#39; is not defined</pre>
 </div>
-
 </div>
 
 </div>
