@@ -15,7 +15,8 @@ from collections import OrderedDict
 
 from ._utils import ndim_index_list
 
-ECLIPSE_typemap = {'INTE': int, 'REAL': float, 'CHAR': str, 'LOGI':bool, 'DOUB':float}
+ECLIPSE_typemap = {"INTE": int, "REAL": float, "CHAR": str, "LOGI": bool, "DOUB": float}
+
 
 def get_type(a):
     """returns the type of a string
@@ -25,27 +26,37 @@ def get_type(a):
     """
     f, i, ch = False, False, False
 
-    try: float(a)
-    except ValueError: pass
-    else: f = True
+    try:
+        float(a)
+    except ValueError:
+        pass
+    else:
+        f = True
 
-    try: int(a)
-    except ValueError: pass
-    else: i = True
+    try:
+        int(a)
+    except ValueError:
+        pass
+    else:
+        i = True
 
-    try: str(a)
-    except ValueError: pass
-    else: ch = True
+    try:
+        str(a)
+    except ValueError:
+        pass
+    else:
+        ch = True
 
     if i:
-        return ECLIPSE_typemap['INTE']
+        return ECLIPSE_typemap["INTE"]
     elif f:
-        return ECLIPSE_typemap['REAL']
+        return ECLIPSE_typemap["REAL"]
     elif ch:
-        return ECLIPSE_typemap['CHAR']
+        return ECLIPSE_typemap["CHAR"]
     else:
-        print('Unknown type: assuming string')
+        print("Unknown type: assuming string")
         return str
+
 
 def grouper(n, iterable):
     """Iterate over an iterable by chunks of n
@@ -58,10 +69,11 @@ def grouper(n, iterable):
     """
     it = iter(iterable)
     while True:
-       chunk = tuple(itertools.islice(it, n))
-       if not chunk:
-           return
-       yield chunk
+        chunk = tuple(itertools.islice(it, n))
+        if not chunk:
+            return
+        yield chunk
+
 
 def scan_eclipsekw(filepath, overloaded_kw=False):
     """Scans an eclipse row-wise property file from ascii to determine which
@@ -77,8 +89,8 @@ def scan_eclipsekw(filepath, overloaded_kw=False):
     Returns:
         keywords (OrderedDict): A list of keyword strings identified in the file.
     """
-    efile = open(filepath, mode='r')
-    print(f'Scanning {filepath}')
+    efile = open(filepath, mode="r")
+    print(f"Scanning {filepath}")
     sections = OrderedDict()
     known_sections_count = dict()
     new_section = True
@@ -86,27 +98,28 @@ def scan_eclipsekw(filepath, overloaded_kw=False):
     for i, line in enumerate(efile):
         if "--" in line[0:2] or len(line) < 2:
             pass  # skip comment lines
-        elif '/' in line:
+        elif "/" in line:
             new_section = True
-            cursec['last_line'] = i
+            cursec["last_line"] = i
             sections[keyw] = cursec
         elif new_section:
             cursec = dict()
-            #print('new', line)
-            keyw = line.split('--')[0]
+            # print('new', line)
+            keyw = line.split("--")[0]
             keyw = keyw.rstrip("\n").rstrip()
             if overloaded_kw:
                 if keyw in known_sections_count.keys():
                     known_sections_count[keyw] = known_sections_count[keyw] + 1
                 else:
                     known_sections_count[keyw] = 0
-                keyw = f'{keyw}_{known_sections_count[keyw]}'
-            cursec['first_line'] = i
+                keyw = f"{keyw}_{known_sections_count[keyw]}"
+            cursec["first_line"] = i
             new_section = False
         else:
             pass  # skip data lines
     efile.close()
     return sections
+
 
 def read_eclipsekw(filepath, filter=None, null=-9999, ijk=None, overloaded_kw=False):
     """Read an eclipse row-wise property file from ascii into a DataFrame
@@ -131,24 +144,23 @@ def read_eclipsekw(filepath, filter=None, null=-9999, ijk=None, overloaded_kw=Fa
         load_filter = list()
         for key in filter:
             if key not in sections.keys():
-                print(f'{key} section is missing from {filepath}')
+                print(f"{key} section is missing from {filepath}")
             else:
                 load_filter.append(key)
 
     if isinstance(ijk, list) and len(ijk) == 3:
         ijk.reverse()
         index = ndim_index_list(ijk)
-        df['i'] = index[2]
-        df['j'] = index[1]
-        df['k'] = index[0]
-
+        df["i"] = index[2]
+        df["j"] = index[1]
+        df["k"] = index[0]
 
     for key in load_filter:
         sec = sections[key]
-        sfl = sec['first_line']
-        sll = sec['last_line']
-        print('Loading section data for: ', key, ' Lines: ', sfl + 1, ' to ', sll)
-        efile = open(filepath, mode='r')
+        sfl = sec["first_line"]
+        sll = sec["last_line"]
+        print("Loading section data for: ", key, " Lines: ", sfl + 1, " to ", sll)
+        efile = open(filepath, mode="r")
         tdata = list()
         has_data = sll > sfl
         # number type properties
@@ -158,17 +170,21 @@ def read_eclipsekw(filepath, filter=None, null=-9999, ijk=None, overloaded_kw=Fa
                     pass
                 elif i <= sll:
                     cache_line = line.split()
-                    for dp in cache_line: #check for crazy Eclipse data multipliers e.g. 10*dp
-                        if '*' in dp:
-                            n, d = dp.split('*')
-                            tdata.extend([d]*int(n))
+                    for (
+                        dp
+                    ) in (
+                        cache_line
+                    ):  # check for crazy Eclipse data multipliers e.g. 10*dp
+                        if "*" in dp:
+                            n, d = dp.split("*")
+                            tdata.extend([d] * int(n))
                         else:
                             tdata.append(dp)
                 else:
                     pass
 
             # petrel GRDECL and ECLIPSE input check
-            if tdata[-1] == '/':
+            if tdata[-1] == "/":
                 popped = tdata.pop(-1)
             df[key] = tdata
             # try int then float
@@ -177,30 +193,33 @@ def read_eclipsekw(filepath, filter=None, null=-9999, ijk=None, overloaded_kw=Fa
                 df[key].replace(null, np.nan, inplace=True)
             except (ValueError, OverflowError):
                 try:
-                    df[key] = df[key].astype('float')
+                    df[key] = df[key].astype("float")
                     df[key].replace(float(null), np.nan, inplace=True)
-                except ValueError: pass
+                except ValueError:
+                    pass
     return df
+
 
 def _read_eclipsekw_section(filepath, kword):
     """Helper function for read_eclipsekw_*****"""
     found_kw = False
     table = ""
-    with open(filepath, 'r') as f:
+    with open(filepath, "r") as f:
         for line in f:
-            if line[:2] == '--':
-                pass # comments
+            if line[:2] == "--":
+                pass  # comments
             elif kword in line:
                 found_kw = True
             elif found_kw and line[0] not in string.ascii_uppercase:
                 line = line[::-1]
-                line = line[line.rfind('--')+2:].strip() # remove trailling comments
-                table = table + '  ' + line[::-1]
+                line = line[line.rfind("--") + 2 :].strip()  # remove trailling comments
+                table = table + "  " + line[::-1]
             elif found_kw and line[0] in string.ascii_uppercase:
-                break # end of section
+                break  # end of section
             else:
-                pass # blank lines probs
+                pass  # blank lines probs
     return table
+
 
 def read_eclipsekw_2dtable(filepath, kword):
     """A 2D table has the same number of items per row and will return a
@@ -225,9 +244,10 @@ def read_eclipsekw_2dtable(filepath, kword):
         ValueError: [description]
     """
     table = _read_eclipsekw_section(filepath, kword)
-    table = table.strip().split('/')[:-1]
+    table = table.strip().split("/")[:-1]
     table = [p.strip().split() for p in table]
     return table
+
 
 def read_eclipsekw_3dtable(filepath, kword):
     """
@@ -240,9 +260,10 @@ def read_eclipsekw_3dtable(filepath, kword):
         ValueError: [description]
     """
     table = _read_eclipsekw_section(filepath, kword)
-    table = table.split('/  /')[:-1]
-    table = [p.strip().split('/') for p in table]
+    table = table.split("/  /")[:-1]
+    table = [p.strip().split("/") for p in table]
     return table
+
 
 def read_eclipsekw_m3dtable(filepath, kword):
     """

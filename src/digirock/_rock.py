@@ -8,7 +8,7 @@ import numpy as np
 from ._exceptions import WorkflowError
 
 from ._fluid import FluidModel
-from .  _frame import RockFrame
+from ._frame import RockFrame
 from ._stress import StressModel
 from .elastic import acoustic_vel, acoustic_moduli
 from .models import gassmann_fluidsub

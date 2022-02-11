@@ -66,6 +66,7 @@ def safe_divide(a, b):
     shp = a.shape if a.size != 1 else b.shape
     return np.divide(a, b, out=np.zeros(shp), where=b != 0.0)
 
+
 def ndim_index_list(n):
     """Creates the list for indexing input data based upon dimensions in list n.
 
@@ -85,8 +86,8 @@ def ndim_index_list(n):
     if isinstance(n, list):
         ind = list()
         ind.append(np.arange(1, n[0] + 1).repeat(np.product(n[1:])))
-        for i in range(1,len(n)-1):
-            ni = i+1
+        for i in range(1, len(n) - 1):
+            ni = i + 1
             t = np.arange(1, n[i] + 1)
             t = t.repeat(np.product(n[ni:]))
             t = np.tile(t, np.product(n[:i]))
@@ -94,4 +95,4 @@ def ndim_index_list(n):
         ind.append(np.tile(np.arange(1, n[-1] + 1), np.product(n[:-1])))
         return ind
     else:
-        raise ValueError('n must be of type list containing integer values')
+        raise ValueError("n must be of type list containing integer values")

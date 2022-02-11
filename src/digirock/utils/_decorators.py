@@ -4,6 +4,7 @@
 from functools import wraps
 import numpy as np
 
+
 def mutually_exclusive(keyword, *keywords):
     """[summary]
 
@@ -20,14 +21,24 @@ def mutually_exclusive(keyword, *keywords):
         https://stackoverflow.com/a/54487188
     """
     keywords = (keyword,) + keywords
+
     def wrapper(func):
         @wraps(func)
         def inner(*args, **kwargs):
-            if kwargs and sum([k in keywords for k, val in kwargs.items() if val is not None]) > 1:
-                raise ValueError('Expected no more than one of {}'.format(', '.join(keywords)))
+            if (
+                kwargs
+                and sum([k in keywords for k, val in kwargs.items() if val is not None])
+                > 1
+            ):
+                raise ValueError(
+                    "Expected no more than one of {}".format(", ".join(keywords))
+                )
             return func(*args, **kwargs)
+
         return inner
+
     return wrapper
+
 
 def mutually_inclusive(keyword, *keywords):
     """
@@ -36,6 +47,7 @@ def mutually_inclusive(keyword, *keywords):
         keyword ([type]): [description]
     """
     keywords = (keyword,) + keywords
+
     def wrapper(func):
         @wraps(func)
         def inner(*args, **kwargs):
@@ -46,14 +58,19 @@ def mutually_inclusive(keyword, *keywords):
                 if k in keywords and val not in (None, False):
                     i = i + 1
             if not (i == 0 or i == len(keywords)):
-                raise ValueError("Expected none or all of keywords"
-                                 f"{', '.join(keywords)} to be defined.")
+                raise ValueError(
+                    "Expected none or all of keywords"
+                    f"{', '.join(keywords)} to be defined."
+                )
             return func(*args, **kwargs)
+
         return inner
+
     return wrapper
 
+
 # pylint: disable=all
-if __name__ == '__main__':
+if __name__ == "__main__":
     # @mutually_exclusive('a', 'b')
     # def f(a=None, b=None):
     #     print(a, b)
@@ -63,7 +80,7 @@ if __name__ == '__main__':
     # f(b=1)
     # f(a=1, b=None)
 
-    @mutually_inclusive('a', 'b')
+    @mutually_inclusive("a", "b")
     def f(a=None, b=None):
         print(a, b)
 

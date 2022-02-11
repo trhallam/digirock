@@ -11,6 +11,7 @@ from numpy import sum as npsum
 
 from ..utils import safe_divide
 
+
 def hs_kbounds(k1, k2, mu1, f1):
     """Calculate the Hashin-Shtrikman bulk moduli bounds for an isotropic elastic mixture
 
@@ -29,7 +30,8 @@ def hs_kbounds(k1, k2, mu1, f1):
         (): HS bulk modulus bounds
 
     """
-    return k1 + (1-f1) / (1 / (k2 - k1) + f1/(k1 + 4*mu1/3))
+    return k1 + (1 - f1) / (1 / (k2 - k1) + f1 / (k1 + 4 * mu1 / 3))
+
 
 def hs_mubounds(k1, mu1, mu2, f1):
     """Calculate the Hashin-Shtrikman shear moduli bounds for an isotropic elastic mixture
@@ -49,7 +51,10 @@ def hs_mubounds(k1, mu1, mu2, f1):
         (): HS shear modulus bounds (positive)
 
     """
-    return mu1 + (1-f1) / ((1 / (mu2-mu1)) + 2*f1*(k1 + 2*mu1)/(5*mu1*(k1 + 4*mu1/3)))
+    return mu1 + (1 - f1) / (
+        (1 / (mu2 - mu1)) + 2 * f1 * (k1 + 2 * mu1) / (5 * mu1 * (k1 + 4 * mu1 / 3))
+    )
+
 
 def _hsw_medium_avg(z, zscale, *args):
     z = asarray(z)
@@ -64,12 +69,13 @@ def _hsw_medium_avg(z, zscale, *args):
             dims = arg.shape
             size = arg.size
         elif arg.shape != dims:
-            raise ValueError('inputs must have matching dimensions')
+            raise ValueError("inputs must have matching dimensions")
 
-    bavg = zeros((nargs//2, size))
+    bavg = zeros((nargs // 2, size))
     for i, (comp, frac) in enumerate(zip(args[::2], args[1::2])):
-        bavg[i, :] = safe_divide(frac.ravel(), (comp.ravel() + zscale*z.ravel()))
-    return 1 / npsum(bavg, axis=0).reshape(dims) - zscale*z
+        bavg[i, :] = safe_divide(frac.ravel(), (comp.ravel() + zscale * z.ravel()))
+    return 1 / npsum(bavg, axis=0).reshape(dims) - zscale * z
+
 
 def _hsw_lambda(z, *args):
     """Hashin-Shtrikman Lamba component for bulk moduli.
@@ -83,7 +89,8 @@ def _hsw_lambda(z, *args):
     Refs:
         Rock Physics Handbook p171
     """
-    return _hsw_medium_avg(z, 4.0/3.0, *args)
+    return _hsw_medium_avg(z, 4.0 / 3.0, *args)
+
 
 def _hsw_zeta(k, mu):
     """Scalar for _hsw_gamma
@@ -100,7 +107,8 @@ def _hsw_zeta(k, mu):
     Refs:
         Rock Physics Handbook p171
     """
-    return mu/6 * ((9*k + 8*mu)/(k + 2*mu))
+    return mu / 6 * ((9 * k + 8 * mu) / (k + 2 * mu))
+
 
 def _hsw_gamma(z, *args):
     """Shear modulus bounds for Hashin-Shtikman-Walpole method.
@@ -120,6 +128,7 @@ def _hsw_gamma(z, *args):
         z = full_like(gamma, z)
     return where(z == 0.0, 0.0, gamma)
 
+
 def hsw_avg_bulk_modulus(mumin, mumax, *args):
     """Hashin-Shrikman-Walpole average bulk modulus for N materials.
 
@@ -128,7 +137,8 @@ def hsw_avg_bulk_modulus(mumin, mumax, *args):
         mumax (array-like): Maximum material moduli.
         args (array-like): pairs of mineral moduli arrays and volume fraction arrays
     """
-    return 0.5*(_hsw_lambda(mumax, *args) + _hsw_lambda(mumin, *args))
+    return 0.5 * (_hsw_lambda(mumax, *args) + _hsw_lambda(mumin, *args))
+
 
 def hsw_avg_shear_modulus(kmax, mumax, kmin, mumin, *args):
     """Hashin-Shrikman-Walpole average shear modulus for N materials.
@@ -145,4 +155,4 @@ def hsw_avg_shear_modulus(kmax, mumax, kmin, mumin, *args):
     """
     zmin = _hsw_zeta(kmin, mumin)
     zmax = _hsw_zeta(kmax, mumax)
-    return 0.5*(_hsw_gamma(zmin, *args) + _hsw_gamma(zmax, *args))
+    return 0.5 * (_hsw_gamma(zmin, *args) + _hsw_gamma(zmax, *args))

@@ -224,9 +224,9 @@ def gas_oga_density(t, p, g):
         )
 
     a = 0.03 + 0.00527 * (3.5 - tpr) ** 3
-    b = 0.642 * tpr - 0.007 * tpr ** 4 - 0.52
+    b = 0.642 * tpr - 0.007 * tpr**4 - 0.52
     c = 0.109 * (3.85 - tpr) ** 2
-    d = np.exp(-1 * (0.45 + 8 * (0.56 - 1 / tpr) ** 2) * (ppr ** 1.2) / tpr)
+    d = np.exp(-1 * (0.45 + 8 * (0.56 - 1 / tpr) ** 2) * (ppr**1.2) / tpr)
 
     E = c * d
     Z = a * ppr + b + E
@@ -249,16 +249,16 @@ def gas_adiabatic_bulkmod(t, p, g):
     ppr = gas_pseudored_pres(p, g)
     tpr = gas_pseudored_temp(t, g)
     a = 0.03 + 0.00527 * (3.5 - tpr) ** 3
-    b = 0.642 * tpr - 0.007 * tpr ** 4 - 0.52
+    b = 0.642 * tpr - 0.007 * tpr**4 - 0.52
     c = 0.109 * (3.85 - tpr) ** 2
-    d = np.exp(-1 * (0.45 + 8 * (0.56 - 1 / tpr) ** 2) * (ppr ** 1.2) / tpr)
+    d = np.exp(-1 * (0.45 + 8 * (0.56 - 1 / tpr) ** 2) * (ppr**1.2) / tpr)
     gamma = (
         0.85
         + 5.6 / (ppr + 2)
         + 27.1 / np.square(ppr + 3.5)
         - 8.7 * np.exp(-0.65 * (ppr + 1))
     )
-    m = 1.2 * (-1 * (0.45 + 8 * (0.56 - 1 / tpr) ** 2) * (ppr ** 0.2) / tpr)
+    m = 1.2 * (-1 * (0.45 + 8 * (0.56 - 1 / tpr) ** 2) * (ppr**0.2) / tpr)
     f = c * d * m + a
     Z = a * ppr + b + c * d
     return p * gamma * 1e-3 / (1 - ppr * f / Z)
@@ -279,7 +279,7 @@ def gas_adiabatic_viscosity(t, p, g):
     ppr = gas_pseudored_pres(p, g)
     tpr = gas_pseudored_temp(t, g)
     eta1 = 0.0001 * (
-        tpr * (28 + 48 * g - 5 * g ** 2) - 6.47 * g ** (-2) + 35 / g + 1.14 * g - 15.55
+        tpr * (28 + 48 * g - 5 * g**2) - 6.47 * g ** (-2) + 35 / g + 1.14 * g - 15.55
     )
     eta2diveta1 = (
         0.001
@@ -499,7 +499,7 @@ def _wat_velocity_pure_sum(tl, pl, vl):
         # using np.float64 may sacrifice some accuracy but was required for large powers
         for i in range(0, 5):
             for j in range(0, 4):
-                vl[v] = vl[v] + WATC[i, j] * (tt ** i) * (pp ** j)
+                vl[v] = vl[v] + WATC[i, j] * (tt**i) * (pp**j)
 
 
 def wat_velocity_pure(t, p):

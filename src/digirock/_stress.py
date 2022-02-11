@@ -32,9 +32,15 @@ class StressModel:
         super().__init__(save_header)
 
     def set_sensitivity(self, ek, pk, eg, pg):
-        """Stress sensitivity parameters.
-        """
-        self.sp = AttributeDict({"ek": ek, "pk": pk, "eg": eg, "pg": pg,})
+        """Stress sensitivity parameters."""
+        self.sp = AttributeDict(
+            {
+                "ek": ek,
+                "pk": pk,
+                "eg": eg,
+                "pg": pg,
+            }
+        )
         self._has_stress_sens = True
 
     def set_stress_env(self, grad, ref_pres, ref_depth):
@@ -68,7 +74,6 @@ class StressModel:
             )
         return self.grad * (depth - self.ref_depth) + self.ref_pres
 
-
     def set_vertical_stress_func(self, func):
         """Set a custom stress function for the overburden.
 
@@ -84,10 +89,8 @@ class StressModel:
         assert np.all(func(test) >= 0)
         self._sv_func = func
 
-
     def vertical_stress(self, depth):
         return self._sv_func(depth)
-
 
     def effective_stress(self, depth, res_pres):
         """Effective stress by taking difference of vertical stress and reservoir pressure.
