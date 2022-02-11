@@ -38,5 +38,5 @@ jobs:
         run: mkdocs build -f mkdocs.yml
 
       - name: deploy mkdocs
-        if: success() && github.event_name == 'push'
+        if: success() && github.event_name == 'push' && github.ref_name == 'main'
         run: mkdocs gh-deploy -f mkdocs.yml
