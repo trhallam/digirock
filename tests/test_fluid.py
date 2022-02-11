@@ -7,7 +7,7 @@ from _pytest.fixtures import SubRequest
 import numpy as np
 import xarray as xr
 import digirock._fluid as fl
-from digirock import Fluid, Water, WaterPVTW, DeadOil, Oil, FluidModel
+from digirock import Fluid, Water, WaterECL, DeadOil, Oil, FluidModel
 from digirock._exceptions import PrototypeError, WorkflowError
 from inspect import getmembers, isfunction
 
@@ -20,12 +20,12 @@ def tol():
     }
 
 
-def test_Fluid_init(self):
+def test_Fluid_init():
     assert isinstance(Fluid(), Fluid)
 
 
 @pytest.mark.parametrize("f", ["density", "velocity", "modulus"])
-def test_Fluid_prototypes(self, f):
+def test_Fluid_prototypes(f):
     with pytest.raises(PrototypeError):
         Fluid().__getattribute__(f)(None, None)
 
@@ -45,46 +45,46 @@ def test_Water_elastics(f, n, temp, pres, ans, tol):
     assert np.allclose(Water().__getattribute__(f)(temp, pres), ans, rtol=tol["rel"])
 
 
-def test_WaterPVTW_init():
-    assert isinstance(WaterPVTW("test", 100_000), WaterPVTW)
+# def test_WaterECL_init():
+#     assert isinstance(WaterECL("test", 100_000), WaterECL)
 
 
-def test_WaterPVTW_set_active_pvtn_error1():
-    test = WaterPVTW("test", 100_000)
-    with pytest.raises(WorkflowError):
-        test.set_active_pvtn(1)
+# def test_WaterECL_set_active_pvtn_error1():
+#     test = WaterECL("test", 100_000)
+#     with pytest.raises(WorkflowError):
+#         test.set_active_pvtn(1)
 
 
-@pytest.fixture(scope="module")
-def mock_WaterPVTW(test_data):
-    test = WaterPVTW("test", 100_000)
-    test.load_pvtw(test_data / "COMPLEX_PVT.inc")
-    return test
+# @pytest.fixture(scope="module")
+# def mock_WaterECL(test_data):
+#     test = WaterECL("test", 100_000)
+#     test.load_pvtw(test_data / "COMPLEX_PVT.inc")
+#     return test
 
 
-def test_WaterPVTW_set_active_pvtn_error2(mock_WaterPVTW):
-    with pytest.raises(ValueError):
-        mock_WaterPVTW.set_active_pvtn(-1)
-    with pytest.raises(ValueError):
-        mock_WaterPVTW.set_active_pvtn(100)
+# def test_WaterECL_set_active_pvtn_error2(mock_WaterECL):
+#     with pytest.raises(ValueError):
+#         mock_WaterECL.set_active_pvtn(-1)
+#     with pytest.raises(ValueError):
+#         mock_WaterECL.set_active_pvtn(100)
 
 
-@pytest.mark.parametrize(
-    "f, ans", [("density", 1.10991312), ("velocity", 1660.47), ("modulus", 3.0602174)]
-)
-@pytest.mark.parametrize("n", [1, 10, (10, 10)])
-@pytest.mark.parametrize("temp, pres, pvtn", [(100, 25, 0)])
-def test_WaterPVTW_elastics(mock_WaterPVTW, f, n, temp, pres, pvtn, ans, tol):
-    mock_WaterPVTW.set_active_pvtn(0)
-    temp = np.full(n, temp)
-    pres = np.full(n, pres)
-    pvtn = np.full(n, pvtn)
-    assert np.allclose(
-        mock_WaterPVTW.__getattribute__(f)(temp, pres), ans, rtol=tol["rel"]
-    )
-    assert np.allclose(
-        mock_WaterPVTW.__getattribute__(f)(temp, pres, pvt=pvtn), ans, rtol=tol["rel"]
-    )
+# @pytest.mark.parametrize(
+#     "f, ans", [("density", 1.10991312), ("velocity", 1660.47), ("modulus", 3.0602174)]
+# )
+# @pytest.mark.parametrize("n", [1, 10, (10, 10)])
+# @pytest.mark.parametrize("temp, pres, pvtn", [(100, 25, 0)])
+# def test_WaterECL_elastics(mock_WaterECL, f, n, temp, pres, pvtn, ans, tol):
+#     mock_WaterECL.set_active_pvtn(0)
+#     temp = np.full(n, temp)
+#     pres = np.full(n, pres)
+#     pvtn = np.full(n, pvtn)
+#     assert np.allclose(
+#         mock_WaterECL.__getattribute__(f)(temp, pres), ans, rtol=tol["rel"]
+#     )
+#     assert np.allclose(
+#         mock_WaterECL.__getattribute__(f)(temp, pres, pvt=pvtn), ans, rtol=tol["rel"]
+#     )
 
 
 @pytest.fixture()
@@ -241,20 +241,20 @@ class TestOil:
         mockOil, ans = mock_oil
         assert isinstance(mockOil.bo, ans)
 
-    @pytest.mark.parametrize(
-        "mock_oil", [("const", float), ("calc", float)], indirect=True
-    )
-    def test_calc_fvf_type(self, mock_oil):
-        mockOil, ans = mock_oil
-        assert isinstance(mockOil.fvf(100), ans)
+    # @pytest.mark.parametrize(
+    #     "mock_oil", [("const", float), ("calc", float)], indirect=True
+    # )
+    # def test_calc_fvf_type(self, mock_oil):
+    #     mockOil, ans = mock_oil
+    #     assert isinstance(mockOil.fvf(100), ans)
 
-    @pytest.mark.parametrize(
-        "mock_oil",
-        [("const", 1.4), ("calc", 1.386388), ("text", 1.467), ("pvto", 1.34504596)],
-        indirect=True,
-    )
-    def test_calc_fvf(self, mock_oil):
-        mockOil, ans = mock_oil
-        assert mockOil.fvf(300) == approx(ans)
+    # @pytest.mark.parametrize(
+    #     "mock_oil",
+    #     [("const", 1.4), ("calc", 1.386388), ("text", 1.467), ("pvto", 1.34504596)],
+    #     indirect=True,
+    # )
+    # def test_calc_fvf(self, mock_oil):
+    #     mockOil, ans = mock_oil
+    #     assert mockOil.fvf(300) == approx(ans)
 
     # def test_

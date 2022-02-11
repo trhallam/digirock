@@ -85,7 +85,7 @@ class Water(Fluid):
     """Water fluid class based upon B&W 92.
 
     Attributes:
-        As per Fluid base class.
+        name (str): name of the fluid
         sal (float): Brine salinity in ppm
     """
 
@@ -129,7 +129,7 @@ class WaterECL(Fluid):
     Modulus and velocity are calculated using B&W 92 with the modified density.
 
     Attributes:
-        As per fluid base class.
+        name (str): name of the fluid
         density_asc: Density (g/cc) at surface conditions.
         pvt: list of pvt dicts, each table contains
             ref_pres: Reference pressure of bw (MPa)
@@ -293,7 +293,7 @@ class DeadOil(Fluid):
     """Dead Oil fluid class for oils with no disolved gasses.
 
     Attributes:
-        As per Fluid base class.
+        name (str): name of the fluid
         api: API gravity of oil.
         std_density: Standard bulk density in g/cc at 15.6degC.
         bo (float, xarray.DataArray): The formation volume factor or table.
@@ -671,7 +671,7 @@ class Gas(Fluid):
     """Gas fluid class.
 
     Attributes:
-        As per Fluid base calss
+        name (str): name of the fluid
     """
 
     @mutually_exclusive("gas_sg", "gas_density")
@@ -727,7 +727,7 @@ class GasPVDG(Gas):
     section.
 
     Attributes:
-        As per fluid base class.
+        name (str): name of the fluid
         density_asc: Density (g/cc) at surface conditions.
         pvt: list of pvt dicts, each table contains
             ref_pres: Reference pressure of bw (MPa)

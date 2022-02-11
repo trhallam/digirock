@@ -3,17 +3,15 @@
 
 """Functions related to the moduli and mixed moduli of minerals
 
-This module contains functions related to the calculation of:
-    1. modulus bounds
-    2. moduli for mixed mineral materials
-    3. Gassman fluid substitution
+This module contains functions related to the calculation of
 
-These functions are based upon the work by:
-    1.
-    2. MacBeth, 2004, A classification for the pressure-sensitivity properties of a sandstone
-        rock frame
-    3. Smith, Sondergeld and Rai, 2003, Gassmann fluid substitutions: A tutorial, Geophysics,
-        68, pp430-440
+ 1. modulus bounds
+ 2. moduli for mixed mineral materials
+ 3. Gassmann fluid substitution
+
+Refs:
+    MacBeth, 2004, A classification for the pressure-sensitivity properties of a sandstone rock frame\n
+    Smith, Sondergeld and Rai, 2003, Gassmann fluid substitutions: A tutorial, Geophysics, 68, pp430-440
 """
 
 import numpy as np

@@ -1,33 +1,39 @@
-#!/usr/bin/python
-# -*- coding: utf8 -*-
-
 """Function for calculating fluid properties in a reservoir
 
-Symbols     Definitions                 Units           Function/s
-rhow        Density of brine            g/cm3
-rhog        Density of gas              g/cm3
-rhoo        Density of oil              g/cm3
-rho0        Reference Density of Oil    g/cm3
-kwat        Bulk modulus of water       GPa
-kgas        Bulk modulus of gas         GPa
-koil        Bulk modulus of oil         GPa
-g           Specific gravity of gas     API
-p           In-situ pressure            MPa
-t           In-situ temperature         degC
-sal         Salinity                    Wt.fraction
-sw          Water Saturation            fraction
-rg          Gas-to-Oil ratio (GOR)      Litre/litre
-gas_R       Gas constant                m3 Pa K-1 mol-1
+| Symbols  |   Definitions             |    Units          |        Function/s      |
+|----------|---------------------------|-------------------|------------------------|
+rhow       |  Density of brine         |   g/cm3           |
+rhog       |  Density of gas           |   g/cm3           |
+rhoo       |  Density of oil           |   g/cm3           |
+rho0       |  Reference Density of Oil |   g/cm3           |
+kwat       |  Bulk modulus of water    |   GPa             |
+kgas       |  Bulk modulus of gas      |   GPa             |
+koil       |  Bulk modulus of oil      |   GPa             |
+g          |  Specific gravity of gas  |   API             |
+p          |  In-situ pressure         |   MPa             |
+t          |  In-situ temperature      |   degC            |
+sal        |  Salinity                 |   Wt.fraction     |
+sw         |  Water Saturation         |   fraction        |
+rg         |  Gas-to-Oil ratio (GOR)   |   Litre/litre     |
+gas_R      |  Gas constant             |   m3 Pa K-1 mol-1 |
 
 Notes:
-    The gas specific gravity G is the ratio of the gas density to air density
+    - The gas specific gravity G is the ratio of the gas density to air density
     at 15.6 degC and at atmospheric pressure. Typically gases have G values
     from 0.56 (Methane) to 1.8
 
-    Salinity has units that can be converted as such
+    - Salinity has units that can be converted as such
     35 g dissolved salt / kg sea water = 35 ppt = 35 o/oo = 3.5% = 35000 ppm = 35000 mg/l
 
+| Constant | Variable Name | Units | Value |
+|----------|---------------|-------|-------|
+| Gas Constant | `GAS_R`   | (J K-1 mol-1) (m3 Pa K-1 mol-1) | 8.31441 |
+| Atmospheric Pressures | `STD_ATM_PRESS` | Pa | 101325 |
+| Molecular Weight of Air | `AIR_M_WEIGHT` | g/mol | 28.967 |
+| Density of air at STD | `AIR_RHO` | g/m3 | AIR_M_WEIGHT * STD_ATM_PRESS / ((15.6 + 273.15) * GAS_R) |
+
 These functions are based upon the work by:
+
    1. Batzle and Wang, 1992, Seismic Properties of Pore Fluids
    2. Kumar, D, 2006, A Tutorial on Gassmann Fluid Substitution: Formulation,
         Algorithm and Matlab Code
@@ -498,12 +504,11 @@ def _wat_velocity_pure_sum(tl, pl, vl):
 
 def wat_velocity_pure(t, p):
     """Returns the velocity of pure water at t and p
+    t and p must have equal shape
 
     Args:
         t (array-like): temperature degC
         p (array-like): pressure MPa
-
-        t and p must have equal shape
 
     Returns:
         (array-like): compressional velocity of pure water m/s

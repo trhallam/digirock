@@ -1,0 +1,69 @@
+site_name: digirock Documentation
+site_author: Tony Hallam
+docs_dir: docs
+theme:
+  name: material
+  language: 'en'
+  features:
+    - navigations.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+use_directory_urls: false
+
+copyright: 'Tony Hallam'
+
+markdown_extensions:
+  - admonition
+  - footnotes
+  - tables
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: false
+  # - pymdownx.snippets:
+  #     auto_append: ["docs/hyperlinks.md"]
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.details
+  - pymdownx.highlight:
+      use_pygments: true
+      auto_title: true
+  - pymdownx.superfences
+  - pymdownx.smartsymbols
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+plugins:
+  - search
+  - simple
+  - mkdocs-jupyter:
+      execute: true
+      kernel_name: python3
+  - mkdocstrings:
+      default_handler: python
+      watch:
+        - src/digirock
+
+nav:
+  - "Home":
+    - "About": index.md
+    - "Contributing": "contrib.md"
+    - "Contact": "contact.md"
+    - "Issue Tracker":  https://github.com/trhallam/digirock/issues
+
+  - "User Guide":
+    - "Digirock Framework": "ug/framework.md"
+    - "Examples":
+      - "Fluids": examples/example_fluids.ipynb
+
+  - "API":
+    - "Fluid Methods": api/fluid_methods.md
+    - "Fluid Classes": api/fluid_classes.md
+    - "Models": api/model_methods.md
+
+
