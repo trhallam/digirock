@@ -59,7 +59,7 @@ nav:
   - "User Guide":
     - "Digirock Framework": "ug/framework.md"
     - "Examples":
-      - "Fluids": examples/example_fluids.ipynb
+      - "Fluids": examples/example_fluids.py
 
   - "API":
     - "Fluid Methods": api/fluid_methods.md
