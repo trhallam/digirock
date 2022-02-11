@@ -3,11 +3,11 @@
 <p align="left">
     <a href="https://github.com/trhallam/digirock/actions" 
        alt="Python Tests">
-        <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/trhallam/3383896c25bd99987cb78b098d18cf32/raw/digirock_test.json" />
+        <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/trhallam/0da415ee1bf30b0fc37a2fc4ddafbdee/raw/digirock_test.json" />
     </a>
     <a href="https://trhallam.github.io/digirock/#project-layout" 
        alt="Mkdocs">
-        <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/trhallam/3383896c25bd99987cb78b098d18cf32/raw/digirock_docs.json" />
+        <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/trhallam/0da415ee1bf30b0fc37a2fc4ddafbdee/raw/digirock_docs.json" />
     </a>
         <a href="https://github.com/psf/black" 
        alt="black">
