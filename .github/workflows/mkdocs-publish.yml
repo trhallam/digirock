@@ -2,6 +2,9 @@ name: Publish docs via GitHub Pages
 
 on: [push, pull_request]
 
+env:
+  PACKAGE: digirock
+
 jobs:
 
   mkdocs_build_test_deploy:
@@ -40,7 +43,6 @@ jobs:
         if: success() && github.event_name == 'push' && github.ref_name == 'main'
         run: mkdocs gh-deploy -f mkdocs.yml
 
-
   test_badge:
     name: create docs badges
     if: always() && github.ref_name == 'main'
@@ -65,7 +67,7 @@ jobs:
       uses: schneegans/dynamic-badges-action@v1.1.0
       with:
         auth: ${{ secrets.GIST_TOKEN }}
-        gistID: 3383896c25bd99987cb78b098d18cf32
+        gistID: 0da415ee1bf30b0fc37a2fc4ddafbdee
         filename: ${{ env.PACKAGE }}_docs.json
         label: Docs
         namedLogo: Read the Docs
