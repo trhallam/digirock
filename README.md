@@ -1,6 +1,24 @@
 # digirock - [![latest-version](https://img.shields.io/pypi/v/digirock?color=006dad&label=pypi_version&logo=Python&logoColor=white)](https://pypi.org/project/digirock)
 
-![Test](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/trhallam/3383896c25bd99987cb78b098d18cf32/raw/digirock_test.json) [![Code Style](https://img.shields.io/badge/code_style-black-000000.svg)](https://github.com/psf/black) [![Licence](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/trhallam/digirock/blob/main/LICENSE)
+<p align="left">
+    <a href="https://github.com/trhallam/digirock/actions" 
+       alt="Python Tests">
+        <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/trhallam/3383896c25bd99987cb78b098d18cf32/raw/digirock_test.json" />
+    </a>
+    <a href="https://trhallam.github.io/digirock/#project-layout" 
+       alt="Mkdocs">
+        <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/trhallam/3383896c25bd99987cb78b098d18cf32/raw/digirock_docs.json" />
+    </a>
+        <a href="https://github.com/psf/black" 
+       alt="black">
+        <img src="https://img.shields.io/badge/code_style-black-000000.svg" />
+    </a>
+    </a>
+        <a href="https://github.com/trhallam/digirock/blob/main/LICENSE" 
+       alt="License">
+        <img src="https://img.shields.io/badge/license-MIT-brightgreen" />
+    </a>
+</p>
 
 A set of classes for making flexible digital rock models.
 
