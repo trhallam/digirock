@@ -1,0 +1,2500 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Tony Hallam">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.11">
+    
+    
+      
+        <title>Models - digirock Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50e68009.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#basic-models" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="digirock Documentation" class="md-header__button md-logo" aria-label="digirock Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            digirock Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Models
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../index.html" class="md-tabs__link">
+        Home
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ug/framework.html" class="md-tabs__link">
+        User Guide
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="fluid_methods.html" class="md-tabs__link md-tabs__link--active">
+        API
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="digirock Documentation" class="md-nav__button md-logo" aria-label="digirock Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    digirock Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" data-md-state="indeterminate" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contrib.html" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contact.html" class="md-nav__link">
+        Contact
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/trhallam/digirock/issues" class="md-nav__link">
+        Issue Tracker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" data-md-state="indeterminate" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          User Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ug/framework.html" class="md-nav__link">
+        Digirock Framework
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" data-md-state="indeterminate" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Examples
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Examples" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/example_fluids.html" class="md-nav__link">
+        Fluids
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fluid_methods.html" class="md-nav__link">
+        Fluid Methods
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fluid_classes.html" class="md-nav__link">
+        Fluid Classes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Models
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="model_methods.html" class="md-nav__link md-nav__link--active">
+        Models
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-models" class="md-nav__link">
+    Basic Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.dryframe_acoustic" class="md-nav__link">
+    dryframe_acoustic()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.dryframe_delta_pres" class="md-nav__link">
+    dryframe_delta_pres()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.dryframe_density" class="md-nav__link">
+    dryframe_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.dryframe_dpres" class="md-nav__link">
+    dryframe_dpres()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.dryframe_stress" class="md-nav__link">
+    dryframe_stress()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.gassmann_fluidsub" class="md-nav__link">
+    gassmann_fluidsub()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.patchy_fluidsub" class="md-nav__link">
+    patchy_fluidsub()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.saturated_density" class="md-nav__link">
+    saturated_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.voigt_upper_bound" class="md-nav__link">
+    voigt_upper_bound()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.vrh_avg" class="md-nav__link">
+    vrh_avg()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hashin-striktman-model" class="md-nav__link">
+    Hashin-Striktman Model
+  </a>
+  
+    <nav class="md-nav" aria-label="Hashin-Striktman Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._hsw.hs_kbounds" class="md-nav__link">
+    hs_kbounds()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._hsw.hs_mubounds" class="md-nav__link">
+    hs_mubounds()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._hsw.hsw_avg_bulk_modulus" class="md-nav__link">
+    hsw_avg_bulk_modulus()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._hsw.hsw_avg_shear_modulus" class="md-nav__link">
+    hsw_avg_shear_modulus()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cemented-sand-model" class="md-nav__link">
+    Cemented Sand Model
+  </a>
+  
+    <nav class="md-nav" aria-label="Cemented Sand Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._cemented_sand.dryframe_cemented_sand" class="md-nav__link">
+    dryframe_cemented_sand()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-models" class="md-nav__link">
+    Basic Models
+  </a>
+  
+    <nav class="md-nav" aria-label="Basic Models">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.dryframe_acoustic" class="md-nav__link">
+    dryframe_acoustic()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.dryframe_delta_pres" class="md-nav__link">
+    dryframe_delta_pres()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.dryframe_density" class="md-nav__link">
+    dryframe_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.dryframe_dpres" class="md-nav__link">
+    dryframe_dpres()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.dryframe_stress" class="md-nav__link">
+    dryframe_stress()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.gassmann_fluidsub" class="md-nav__link">
+    gassmann_fluidsub()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.patchy_fluidsub" class="md-nav__link">
+    patchy_fluidsub()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.saturated_density" class="md-nav__link">
+    saturated_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.voigt_upper_bound" class="md-nav__link">
+    voigt_upper_bound()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._mod.vrh_avg" class="md-nav__link">
+    vrh_avg()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hashin-striktman-model" class="md-nav__link">
+    Hashin-Striktman Model
+  </a>
+  
+    <nav class="md-nav" aria-label="Hashin-Striktman Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._hsw.hs_kbounds" class="md-nav__link">
+    hs_kbounds()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._hsw.hs_mubounds" class="md-nav__link">
+    hs_mubounds()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._hsw.hsw_avg_bulk_modulus" class="md-nav__link">
+    hsw_avg_bulk_modulus()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._hsw.hsw_avg_shear_modulus" class="md-nav__link">
+    hsw_avg_shear_modulus()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cemented-sand-model" class="md-nav__link">
+    Cemented Sand Model
+  </a>
+  
+    <nav class="md-nav" aria-label="Cemented Sand Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock.models._cemented_sand.dryframe_cemented_sand" class="md-nav__link">
+    dryframe_cemented_sand()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+  <h1>Models</h1>
+
+<p>Methods can be imported from <code>digirock.models</code>.</p>
+<h2 id="basic-models">Basic Models</h2>
+
+
+  <div class="doc doc-object doc-module">
+
+
+    <div class="doc doc-contents first">
+
+      <p>Functions related to the moduli and mixed moduli of minerals</p>
+<p>This module contains functions related to the calculation of</p>
+<ol>
+<li>modulus bounds</li>
+<li>moduli for mixed mineral materials</li>
+<li>Gassmann fluid substitution</li>
+</ol>
+<div class="admonition refs">
+<p class="admonition-title">Refs</p>
+<p>MacBeth, 2004, A classification for the pressure-sensitivity properties of a sandstone rock frame</p>
+<p>Smith, Sondergeld and Rai, 2003, Gassmann fluid substitutions: A tutorial, Geophysics, 68, pp430-440</p>
+</div>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._mod.dryframe_acoustic" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">dryframe_acoustic</span><span class="p">(</span><span class="n">ksat</span><span class="p">,</span> <span class="n">kfl</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Dry frame bulk modulus from material saturated modulus</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>ksat</code></td>
+        <td><code>array_like</code></td>
+        <td><p>saturated bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kfl</code></td>
+        <td><code>array_like</code></td>
+        <td><p>fluid bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>k0</code></td>
+        <td><code>array_like</code></td>
+        <td><p>matrix bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>phi</code></td>
+        <td><code>array_like</code></td>
+        <td><p>porosity (frac)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>kdry (array_like)</code></td>
+      <td><p>backed-out dry fame bulk modulus (inverse Gassman_fluidsub)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_mod.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">dryframe_acoustic</span><span class="p">(</span><span class="n">ksat</span><span class="p">,</span> <span class="n">kfl</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dry frame bulk modulus from material saturated modulus</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ksat (array_like): saturated bulk modulus</span>
+<span class="sd">        kfl (array_like): fluid bulk modulus</span>
+<span class="sd">        k0 (array_like): matrix bulk modulus</span>
+<span class="sd">        phi (array_like): porosity (frac)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        kdry (array_like): backed-out dry fame bulk modulus (inverse Gassman_fluidsub)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ksat</span> <span class="o">*</span> <span class="p">(</span><span class="n">phi</span> <span class="o">*</span> <span class="n">k0</span> <span class="o">/</span> <span class="n">kfl</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span><span class="p">)</span> <span class="o">-</span> <span class="n">k0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="n">phi</span> <span class="o">*</span> <span class="n">k0</span> <span class="o">/</span> <span class="n">kfl</span> <span class="o">+</span> <span class="n">ksat</span> <span class="o">/</span> <span class="n">k0</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._mod.dryframe_delta_pres" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">dryframe_delta_pres</span><span class="p">(</span><span class="n">erp_init</span><span class="p">,</span> <span class="n">erp</span><span class="p">,</span> <span class="n">mod_vrh</span><span class="p">,</span> <span class="n">mod_e</span><span class="p">,</span> <span class="n">mod_p</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the dry rock frame for a given stress regieme and depth by factoring the
+difference between two pressure regiemes.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>erp_init</code></td>
+        <td><code>array_like</code></td>
+        <td><p>Effective Initial Reservoir Pressure (MPa)
+                    = Overburden Pressure - Initial Reservoir Pressure</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>erp</code></td>
+        <td><code>array_like</code></td>
+        <td><p>Effective Current Reservoir Pressure (MPa)
+                    = Overburden Pressure - Current Reservoir Pressure</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mod_vrh</code></td>
+        <td></td>
+        <td><p>Voigt-Reuss-Hill average modulus (check this).</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mod_e</code></td>
+        <td></td>
+        <td><p>modulus stress sensitivity metric *2</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mod_p</code></td>
+        <td></td>
+        <td><p>modulus characteristic pressure constant *2</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>phi</code></td>
+        <td></td>
+        <td><p>rock porosity</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>c</code></td>
+        <td><code>list</code></td>
+        <td><p>Default:None): If 'c=None' constant porosity is used else c is a critical
+porosity (phic) list of length 5 e.g. [c1, c2, c3, c4, c5] where when phi &lt; c3;
+phic = c1 + c2<em>phi and when phi &gt;= c3 phic = c3 + c4</em>phi</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>moddry (array_like)</code></td>
+      <td><p>the dry-frame modulus for inputs</p></td>
+    </tr>
+  </tbody>
+</table>      <div class="admonition references">
+<p class="admonition-title">References</p>
+<p>[1] Amini and Alvarez (2014)
+[2] MacBeth (2004)</p>
+</div>
+
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_mod.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">dryframe_delta_pres</span><span class="p">(</span><span class="n">erp_init</span><span class="p">,</span> <span class="n">erp</span><span class="p">,</span> <span class="n">mod_vrh</span><span class="p">,</span> <span class="n">mod_e</span><span class="p">,</span> <span class="n">mod_p</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">phic</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the dry rock frame for a given stress regieme and depth by factoring the</span>
+<span class="sd">    difference between two pressure regiemes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        erp_init (array_like): Effective Initial Reservoir Pressure (MPa)</span>
+<span class="sd">                                = Overburden Pressure - Initial Reservoir Pressure</span>
+<span class="sd">        erp (array_like): Effective Current Reservoir Pressure (MPa)</span>
+<span class="sd">                                = Overburden Pressure - Current Reservoir Pressure</span>
+<span class="sd">        mod_vrh: Voigt-Reuss-Hill average modulus (check this).</span>
+<span class="sd">        mod_e: modulus stress sensitivity metric *2</span>
+<span class="sd">        mod_p: modulus characteristic pressure constant *2</span>
+<span class="sd">        phi: rock porosity</span>
+<span class="sd">        c (list: Default:None): If &#39;c=None&#39; constant porosity is used else c is a critical</span>
+<span class="sd">            porosity (phic) list of length 5 e.g. [c1, c2, c3, c4, c5] where when phi &lt; c3;</span>
+<span class="sd">            phic = c1 + c2*phi and when phi &gt;= c3 phic = c3 + c4*phi</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        moddry (array_like): the dry-frame modulus for inputs</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        [1] Amini and Alvarez (2014)</span>
+<span class="sd">        [2] MacBeth (2004)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Calcuate Bulk Modulus for Dry Frame</span>
+    <span class="n">dry1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">phi</span> <span class="o">&gt;=</span> <span class="n">phic</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">mod_vrh</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span> <span class="o">/</span> <span class="n">phic</span><span class="p">))</span>
+    <span class="n">moddry</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">dry1</span>
+        <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">mod_e</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">erp_init</span> <span class="o">/</span> <span class="n">mod_p</span><span class="p">)))</span>
+        <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">mod_e</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">erp</span> <span class="o">/</span> <span class="n">mod_p</span><span class="p">)))</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">moddry</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._mod.dryframe_density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">dryframe_density</span><span class="p">(</span><span class="n">rhob</span><span class="p">,</span> <span class="n">rhofl</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Dry frame grain density</p>
+<p>Primarily used for fluid substitution.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rhob</code></td>
+        <td><code>array-like</code></td>
+        <td><p>saturated rock bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>rhofl</code></td>
+        <td><code>array-like</code></td>
+        <td><p>fluid density</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>phi</code></td>
+        <td><code>array-like</code></td>
+        <td><p>porosity (frac)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>dry frame grain density</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_mod.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">dryframe_density</span><span class="p">(</span><span class="n">rhob</span><span class="p">,</span> <span class="n">rhofl</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dry frame grain density</span>
+
+<span class="sd">    Primarily used for fluid substitution.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rhob (array-like): saturated rock bulk modulus</span>
+<span class="sd">        rhofl (array-like): fluid density</span>
+<span class="sd">        phi (array-like): porosity (frac)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): dry frame grain density</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">rhob</span> <span class="o">-</span> <span class="n">rhofl</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._mod.dryframe_dpres" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">dryframe_dpres</span><span class="p">(</span><span class="n">dry_mod</span><span class="p">,</span> <span class="n">pres1</span><span class="p">,</span> <span class="n">pres2</span><span class="p">,</span> <span class="n">sse</span><span class="p">,</span> <span class="n">ssp</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the dry rock frame for a given stress regieme and depth by factoring the
+difference between two pressure regiemes.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>dry_mod</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Dryframe modulus (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>pres1</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Pressure calibrated to dryframe modulus. (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>pres2</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Pressure of output (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>sse</code></td>
+        <td><code>float</code></td>
+        <td><p>Stress-sensitivity parameter E</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>ssp</code></td>
+        <td><code>float</code></td>
+        <td><p>Stress-sensitivity parameter P</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>array_like</code></td>
+      <td><p>the dry-frame modulus adjusted to pressure (pres2)</p></td>
+    </tr>
+  </tbody>
+</table>      <div class="admonition references">
+<p class="admonition-title">References</p>
+<p>[1] Amini and Alvarez (2014)
+[2] MacBeth (2004)</p>
+</div>
+
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_mod.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">dryframe_dpres</span><span class="p">(</span><span class="n">dry_mod</span><span class="p">,</span> <span class="n">pres1</span><span class="p">,</span> <span class="n">pres2</span><span class="p">,</span> <span class="n">sse</span><span class="p">,</span> <span class="n">ssp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the dry rock frame for a given stress regieme and depth by factoring the</span>
+<span class="sd">    difference between two pressure regiemes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dry_mod (array-like): Dryframe modulus (MPa)</span>
+<span class="sd">        pres1 (array-like): Pressure calibrated to dryframe modulus. (MPa)</span>
+<span class="sd">        pres2 (array-like): Pressure of output (MPa)</span>
+<span class="sd">        sse (float): Stress-sensitivity parameter E</span>
+<span class="sd">        ssp (float): Stress-sensitivity parameter P</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        array_like: the dry-frame modulus adjusted to pressure (pres2)</span>
+
+<span class="sd">    References:</span>
+<span class="sd">        [1] Amini and Alvarez (2014)</span>
+<span class="sd">        [2] MacBeth (2004)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">dry_mod</span>
+        <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">sse</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">pres1</span> <span class="o">/</span> <span class="n">ssp</span><span class="p">)))</span>
+        <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">sse</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">pres2</span> <span class="o">/</span> <span class="n">ssp</span><span class="p">)))</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._mod.dryframe_stress" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">dryframe_stress</span><span class="p">(</span><span class="n">mod_e</span><span class="p">,</span> <span class="n">mod_p</span><span class="p">,</span> <span class="n">inf</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Dry frame bulk modulus from stress sensitivity coefficients.</p>
+<p>Based on MacBeth 2004 for sandstone rock frame.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>mod_e</code></td>
+        <td><code>array-like</code></td>
+        <td><p>modulus stress sensitivity metric *2 MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mod_p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>modulus characteristic pressure constant *2 MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>inf</code></td>
+        <td><code>array-like</code></td>
+        <td><p>modulus background high pressure asymptote MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>the effective pressure MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_mod.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">dryframe_stress</span><span class="p">(</span><span class="n">mod_e</span><span class="p">,</span> <span class="n">mod_p</span><span class="p">,</span> <span class="n">inf</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dry frame bulk modulus from stress sensitivity coefficients.</span>
+
+<span class="sd">    Based on MacBeth 2004 for sandstone rock frame.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mod_e (array-like): modulus stress sensitivity metric *2 MPa</span>
+<span class="sd">        mod_p (array-like): modulus characteristic pressure constant *2 MPa</span>
+<span class="sd">        inf (array-like): modulus background high pressure asymptote MPa</span>
+<span class="sd">        p (array-like): the effective pressure MPa</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">inf</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">mod_e</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">p</span> <span class="o">/</span> <span class="n">mod_p</span><span class="p">)))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._mod.gassmann_fluidsub" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gassmann_fluidsub</span><span class="p">(</span><span class="n">kdry</span><span class="p">,</span> <span class="n">kfl</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Gassmann fluid substitution for saturated rock bulk modulus</p>
+<p>Gassmann fluid substitution assumes:
+    The rock is homogenous and isotropic, rocks with diverse mineral acoustic properties will
+        violate this assumption.
+    All the porespace is connected, this is propably not true for low porosity rocks.
+    The frequencies being used to measure the rock properties fall within the seismic
+        bandwidth. Logging frequencies are usually ok for high-porosity clean sands.
+    Homogeonous mixing of the fluid. This is reasonable over geologic time but may be
+        inappropriate for production timescales.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>kdry</code></td>
+        <td><code>array_like</code></td>
+        <td><p>dry frame rock bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kfl</code></td>
+        <td><code>array_like</code></td>
+        <td><p>fluid bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>k0</code></td>
+        <td><code>array_like</code></td>
+        <td><p>matrix bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>phi</code></td>
+        <td><code>array_like</code></td>
+        <td><p>porosity (frac)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ksat (array_like)</code></td>
+      <td><p>saturated rock bulk modulus</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_mod.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gassmann_fluidsub</span><span class="p">(</span><span class="n">kdry</span><span class="p">,</span> <span class="n">kfl</span><span class="p">,</span> <span class="n">k0</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gassmann fluid substitution for saturated rock bulk modulus</span>
+
+<span class="sd">    Gassmann fluid substitution assumes:</span>
+<span class="sd">        The rock is homogenous and isotropic, rocks with diverse mineral acoustic properties will</span>
+<span class="sd">            violate this assumption.</span>
+<span class="sd">        All the porespace is connected, this is propably not true for low porosity rocks.</span>
+<span class="sd">        The frequencies being used to measure the rock properties fall within the seismic</span>
+<span class="sd">            bandwidth. Logging frequencies are usually ok for high-porosity clean sands.</span>
+<span class="sd">        Homogeonous mixing of the fluid. This is reasonable over geologic time but may be</span>
+<span class="sd">            inappropriate for production timescales.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        kdry (array_like): dry frame rock bulk modulus</span>
+<span class="sd">        kfl (array_like): fluid bulk modulus</span>
+<span class="sd">        k0 (array_like): matrix bulk modulus</span>
+<span class="sd">        phi (array_like): porosity (frac)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ksat (array_like): saturated rock bulk modulus</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">kdry</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">kdry</span> <span class="o">/</span> <span class="n">k0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="n">safe_divide</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">kfl</span><span class="p">)</span>
+        <span class="o">+</span> <span class="n">safe_divide</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span><span class="p">),</span> <span class="n">k0</span><span class="p">)</span>
+        <span class="o">-</span> <span class="n">safe_divide</span><span class="p">(</span><span class="n">kdry</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">k0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._mod.patchy_fluidsub" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">patchy_fluidsub</span><span class="p">(</span><span class="n">kdry</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">kfls</span><span class="p">,</span> <span class="n">vfrac</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Patch fluid substitution for non-homogenous fluid mixing</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>kdry</code></td>
+        <td><code>array_like</code></td>
+        <td><p>dry frame rock bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mu</code></td>
+        <td><code>array_like</code></td>
+        <td><p>rock shear modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kfls</code></td>
+        <td><code>array_like</code></td>
+        <td><p>list or array of length M fluid moduli</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>vfrac</code></td>
+        <td><code>array_like</code></td>
+        <td><p>list or array of length M or M-1 fluid volume fractions
+                    for length M sum(vfrac) == 1
+                    for length M-1  1 - sum(vfrac) = complement for kfls[-1]</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ksat (array_like)</code></td>
+      <td><p>the saturated rock bulk modulus</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_mod.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">patchy_fluidsub</span><span class="p">(</span><span class="n">kdry</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">kfls</span><span class="p">,</span> <span class="n">vfrac</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Patch fluid substitution for non-homogenous fluid mixing</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        kdry (array_like): dry frame rock bulk modulus</span>
+<span class="sd">        mu (array_like): rock shear modulus</span>
+<span class="sd">        kfls (array_like): list or array of length M fluid moduli</span>
+<span class="sd">        vfrac (array_like): list or array of length M or M-1 fluid volume fractions</span>
+<span class="sd">                                for length M sum(vfrac) == 1</span>
+<span class="sd">                                for length M-1  1 - sum(vfrac) = complement for kfls[-1]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ksat (array_like): the saturated rock bulk modulus</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO make this more matrix oriented</span>
+    <span class="n">nfl</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">kfls</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vfrac</span><span class="p">)</span> <span class="o">==</span> <span class="n">nfl</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">for</span> <span class="n">fl</span> <span class="ow">in</span> <span class="n">kfls</span><span class="p">:</span>
+        <span class="k">pass</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._mod.saturated_density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">saturated_density</span><span class="p">(</span><span class="n">rhog</span><span class="p">,</span> <span class="n">rhofl</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Saturated bulk density</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rhog</code></td>
+        <td><code>array-like</code></td>
+        <td><p>dry frame grain density</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>rhofl</code></td>
+        <td><code>array-like</code></td>
+        <td><p>fluid density</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>phi</code></td>
+        <td><code>array-like</code></td>
+        <td><p>porosity (frac)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>saturated rock bulk density (rhob)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_mod.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">saturated_density</span><span class="p">(</span><span class="n">rhog</span><span class="p">,</span> <span class="n">rhofl</span><span class="p">,</span> <span class="n">phi</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Saturated bulk density</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rhog (array-like): dry frame grain density</span>
+<span class="sd">        rhofl (array-like): fluid density</span>
+<span class="sd">        phi (array-like): porosity (frac)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): saturated rock bulk density (rhob)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">rhog</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">phi</span><span class="p">)</span> <span class="o">+</span> <span class="n">rhofl</span> <span class="o">*</span> <span class="n">phi</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._mod.voigt_upper_bound" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">voigt_upper_bound</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the Voigt upper bound for material moduli</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>m</code></td>
+        <td><code>array_like</code></td>
+        <td><p>the material moduli</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>f</code></td>
+        <td><code>array_like</code></td>
+        <td><p>the material volume fractions where sum(f, axis=-1) = 1</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>()</code></td>
+      <td><p>the Voigt upper bound modulus</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_mod.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">voigt_upper_bound</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the Voigt upper bound for material moduli</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        m (array_like): the material moduli</span>
+<span class="sd">        f (array_like): the material volume fractions where sum(f, axis=-1) = 1</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (): the Voigt upper bound modulus</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_vr_bound</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="s2">&quot;voigt&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._mod.vrh_avg" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">vrh_avg</span><span class="p">(</span><span class="n">mclay</span><span class="p">,</span> <span class="n">mnonclay</span><span class="p">,</span> <span class="n">vclay</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the Voigt-Reuss-Hill mix for a simple other/shale mix.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>mclay</code></td>
+        <td><code>array-like</code></td>
+        <td><p>clay component moduli</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mnonclay</code></td>
+        <td><code>array-like</code></td>
+        <td><p>non-clay component moduli</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>vclay</code></td>
+        <td><code>array-like</code></td>
+        <td><p>fraction of material that is clay where 0 &lt; fclay &lt; 1</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>Voigt-Reuss-Hill average modulus</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_mod.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">vrh_avg</span><span class="p">(</span><span class="n">mclay</span><span class="p">,</span> <span class="n">mnonclay</span><span class="p">,</span> <span class="n">vclay</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the Voigt-Reuss-Hill mix for a simple other/shale mix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mclay (array-like): clay component moduli</span>
+<span class="sd">        mnonclay (array-like): non-clay component moduli</span>
+<span class="sd">        vclay (array-like): fraction of material that is clay where 0 &lt; fclay &lt; 1</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): Voigt-Reuss-Hill average modulus</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fclay</span> <span class="o">=</span> <span class="n">vclay</span>
+    <span class="n">fnonclay</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">vclay</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="n">voigt_upper_bound</span><span class="p">([</span><span class="n">mnonclay</span><span class="p">,</span> <span class="n">mclay</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="n">fnonclay</span><span class="p">,</span> <span class="n">fclay</span><span class="p">]))</span>
+        <span class="o">+</span> <span class="n">reuss_lower_bound</span><span class="p">([</span><span class="n">mnonclay</span><span class="p">,</span> <span class="n">mclay</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="n">fnonclay</span><span class="p">,</span> <span class="n">fclay</span><span class="p">]))</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="hashin-striktman-model">Hashin-Striktman Model</h2>
+
+
+  <div class="doc doc-object doc-module">
+
+
+    <div class="doc doc-contents first">
+
+      <p>Hashin-Shtrikman-Walpole Models for moduli mixing.</p>
+<div class="admonition refs">
+<p class="admonition-title">Refs</p>
+<p>Mavko et. al. (2009) The Rock Physics Handbook, Cambridge Press</p>
+</div>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._hsw.hs_kbounds" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">hs_kbounds</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">mu1</span><span class="p">,</span> <span class="n">f1</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the Hashin-Shtrikman bulk moduli bounds for an isotropic elastic mixture</p>
+<p>Upper and lower bounds are computed by interchanging which constituent material is
+subscripted 1 and which is subscripted 2. In general
+    Upper bound -&gt; stiffest material is subscripted 1
+    Lower bound -&gt; stiffest material is subscripted 1</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>k1</code></td>
+        <td></td>
+        <td><p>constituent one bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>k2</code></td>
+        <td></td>
+        <td><p>constituent two bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mu1</code></td>
+        <td></td>
+        <td><p>constituent one shear modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>f1</code></td>
+        <td></td>
+        <td><p>material one volume fraction 0 &lt;= f1 &lt;= 1</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>()</code></td>
+      <td><p>HS bulk modulus bounds</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_hsw.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">hs_kbounds</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">mu1</span><span class="p">,</span> <span class="n">f1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the Hashin-Shtrikman bulk moduli bounds for an isotropic elastic mixture</span>
+
+<span class="sd">    Upper and lower bounds are computed by interchanging which constituent material is</span>
+<span class="sd">    subscripted 1 and which is subscripted 2. In general</span>
+<span class="sd">        Upper bound -&gt; stiffest material is subscripted 1</span>
+<span class="sd">        Lower bound -&gt; stiffest material is subscripted 1</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        k1: constituent one bulk modulus</span>
+<span class="sd">        k2: constituent two bulk modulus</span>
+<span class="sd">        mu1: constituent one shear modulus</span>
+<span class="sd">        f1: material one volume fraction 0 &lt;= f1 &lt;= 1</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (): HS bulk modulus bounds</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">k1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">k2</span> <span class="o">-</span> <span class="n">k1</span><span class="p">)</span> <span class="o">+</span> <span class="n">f1</span><span class="o">/</span><span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">mu1</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._hsw.hs_mubounds" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">hs_mubounds</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">f1</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the Hashin-Shtrikman shear moduli bounds for an isotropic elastic mixture</p>
+<p>Upper and lower bounds are computed by interchanging which constituent material is
+subscripted 1 and which is subscripted 2. In general
+    Upper bound -&gt; stiffest material is subscripted 1
+    Lower bound -&gt; stiffest material is subscripted 1</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>k1</code></td>
+        <td></td>
+        <td><p>constituent one bulk modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mu1</code></td>
+        <td></td>
+        <td><p>constituent one shear modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mu2</code></td>
+        <td></td>
+        <td><p>constituent two shear modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>f1</code></td>
+        <td></td>
+        <td><p>material one volume fraction 0 &lt;= f1 &lt;= 1</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>()</code></td>
+      <td><p>HS shear modulus bounds (positive)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_hsw.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">hs_mubounds</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">mu1</span><span class="p">,</span> <span class="n">mu2</span><span class="p">,</span> <span class="n">f1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the Hashin-Shtrikman shear moduli bounds for an isotropic elastic mixture</span>
+
+<span class="sd">    Upper and lower bounds are computed by interchanging which constituent material is</span>
+<span class="sd">    subscripted 1 and which is subscripted 2. In general</span>
+<span class="sd">        Upper bound -&gt; stiffest material is subscripted 1</span>
+<span class="sd">        Lower bound -&gt; stiffest material is subscripted 1</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        k1: constituent one bulk modulus</span>
+<span class="sd">        mu1: constituent one shear modulus</span>
+<span class="sd">        mu2: constituent two shear modulus</span>
+<span class="sd">        f1: material one volume fraction 0 &lt;= f1 &lt;= 1</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        (): HS shear modulus bounds (positive)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">mu1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f1</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">mu2</span><span class="o">-</span><span class="n">mu1</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">f1</span><span class="o">*</span><span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">mu1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">mu1</span><span class="o">*</span><span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mi">4</span><span class="o">*</span><span class="n">mu1</span><span class="o">/</span><span class="mi">3</span><span class="p">)))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._hsw.hsw_avg_bulk_modulus" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">hsw_avg_bulk_modulus</span><span class="p">(</span><span class="n">mumin</span><span class="p">,</span> <span class="n">mumax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Hashin-Shrikman-Walpole average bulk modulus for N materials.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>mumin</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Minimum material moduli.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mumax</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Maximum material moduli.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>args</code></td>
+        <td><code>array-like</code></td>
+        <td><p>pairs of mineral moduli arrays and volume fraction arrays</p></td>
+        <td><code>()</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_hsw.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">hsw_avg_bulk_modulus</span><span class="p">(</span><span class="n">mumin</span><span class="p">,</span> <span class="n">mumax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Hashin-Shrikman-Walpole average bulk modulus for N materials.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mumin (array-like): Minimum material moduli.</span>
+<span class="sd">        mumax (array-like): Maximum material moduli.</span>
+<span class="sd">        args (array-like): pairs of mineral moduli arrays and volume fraction arrays</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">_hsw_lambda</span><span class="p">(</span><span class="n">mumax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="n">_hsw_lambda</span><span class="p">(</span><span class="n">mumin</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._hsw.hsw_avg_shear_modulus" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">hsw_avg_shear_modulus</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">mumax</span><span class="p">,</span> <span class="n">kmin</span><span class="p">,</span> <span class="n">mumin</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Hashin-Shrikman-Walpole average shear modulus for N materials.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>kmax</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Maximum material bulk moduli</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mumax</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Minimum material shear moduli</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kmin</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Maximum material bulk moduli</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mumin</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Minimum materal shear moduli.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>args</code></td>
+        <td><code>array-like</code></td>
+        <td><p>pairs of mineral moduli arrays and volume fraction arrays</p></td>
+        <td><code>()</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>array-like</code></td>
+      <td><p>The average of the upper and lower bounds for the input args.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_hsw.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">hsw_avg_shear_modulus</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">mumax</span><span class="p">,</span> <span class="n">kmin</span><span class="p">,</span> <span class="n">mumin</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Hashin-Shrikman-Walpole average shear modulus for N materials.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        kmax (array-like): Maximum material bulk moduli</span>
+<span class="sd">        mumax (array-like): Minimum material shear moduli</span>
+<span class="sd">        kmin (array-like): Maximum material bulk moduli</span>
+<span class="sd">        mumin (array-like): Minimum materal shear moduli.</span>
+<span class="sd">        args (array-like): pairs of mineral moduli arrays and volume fraction arrays</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        array-like: The average of the upper and lower bounds for the input args.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">zmin</span> <span class="o">=</span> <span class="n">_hsw_zeta</span><span class="p">(</span><span class="n">kmin</span><span class="p">,</span> <span class="n">mumin</span><span class="p">)</span>
+    <span class="n">zmax</span> <span class="o">=</span> <span class="n">_hsw_zeta</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">mumax</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">_hsw_gamma</span><span class="p">(</span><span class="n">zmin</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">+</span> <span class="n">_hsw_gamma</span><span class="p">(</span><span class="n">zmax</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="cemented-sand-model">Cemented Sand Model</h2>
+
+
+  <div class="doc doc-object doc-module">
+
+
+    <div class="doc doc-contents first">
+
+      <p>Cemented Sand Model</p>
+<div class="admonition refs">
+<p class="admonition-title">Refs</p>
+<p>Mavko et. al. (2009) The Rock Physics Handbook, Cambridge Press pp 255-257</p>
+</div>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.models._cemented_sand.dryframe_cemented_sand" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">dryframe_cemented_sand</span><span class="p">(</span><span class="n">k_sand</span><span class="p">,</span> <span class="n">mu_sand</span><span class="p">,</span> <span class="n">k_cem</span><span class="p">,</span> <span class="n">mu_cem</span><span class="p">,</span> <span class="n">phi0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">ncontacts</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="s1">&#39;scheme1&#39;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Dryframe moduli for Cemented-Sand model.</p>
+<p>Assumes sand grains are in contact and cement fills the porespace between grains.</p>
+<p>Scheme 1: Cement preferentially fills spaces around contacts increasing shear strength.
+Scheme 2: Cement covers grains evenly but maintains contacts between sand grains.
+Alpha as float: Specify a custom value for alpha.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>k_sand</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Bulk modulus of sand grains.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mu_sand</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Shear modulus of sand grains.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>k_cem</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Bulk modulus of cement.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mu_cem</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Shear modulus of cement.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>phi0</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Material porosity without any cement. For perfect spherical grains
+phi0 = 0.36</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>phi</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Material porosity after substituting in cememnt to porespace.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>ncontacts</code></td>
+        <td><code>float</code></td>
+        <td><p>Number of contacts between grains.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>alpha</code></td>
+        <td><code>str/float, Optional</code></td>
+        <td><p>The cement fill scheme to use. Defaults to 'scheme1.
+One of ['sheme1', 'scheme2', float]</p></td>
+        <td><code>&#39;scheme1&#39;</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like, array-like)</code></td>
+      <td><p>Bulk and shear modului of cemented-sand.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/models/_cemented_sand.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">dryframe_cemented_sand</span><span class="p">(</span>
+    <span class="n">k_sand</span><span class="p">,</span> <span class="n">mu_sand</span><span class="p">,</span> <span class="n">k_cem</span><span class="p">,</span> <span class="n">mu_cem</span><span class="p">,</span> <span class="n">phi0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">ncontacts</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="s2">&quot;scheme1&quot;</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dryframe moduli for Cemented-Sand model.</span>
+
+<span class="sd">    Assumes sand grains are in contact and cement fills the porespace between grains.</span>
+
+<span class="sd">    Scheme 1: Cement preferentially fills spaces around contacts increasing shear strength.</span>
+<span class="sd">    Scheme 2: Cement covers grains evenly but maintains contacts between sand grains.</span>
+<span class="sd">    Alpha as float: Specify a custom value for alpha.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        k_sand (array-like): Bulk modulus of sand grains.</span>
+<span class="sd">        mu_sand (array-like): Shear modulus of sand grains.</span>
+<span class="sd">        k_cem (array-like): Bulk modulus of cement.</span>
+<span class="sd">        mu_cem (array-like): Shear modulus of cement.</span>
+<span class="sd">        phi0 (array-like): Material porosity without any cement. For perfect spherical grains</span>
+<span class="sd">            phi0 = 0.36</span>
+<span class="sd">        phi (array-like): Material porosity after substituting in cememnt to porespace.</span>
+<span class="sd">        ncontacts (float): Number of contacts between grains.</span>
+<span class="sd">        alpha (str/float, Optional): The cement fill scheme to use. Defaults to &#39;scheme1.</span>
+<span class="sd">            One of [&#39;sheme1&#39;, &#39;scheme2&#39;, float]</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like, array-like): Bulk and shear modului of cemented-sand.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pois_sand</span> <span class="o">=</span> <span class="n">poisson_moduli</span><span class="p">(</span><span class="n">k_sand</span><span class="p">,</span> <span class="n">mu_sand</span><span class="p">)</span>
+    <span class="n">pois_cem</span> <span class="o">=</span> <span class="n">poisson_moduli</span><span class="p">(</span><span class="n">k_cem</span><span class="p">,</span> <span class="n">mu_cem</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">_cemented_sand_alpha</span><span class="p">(</span><span class="n">phi0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">ncontacts</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+
+    <span class="n">lam_tau</span> <span class="o">=</span> <span class="n">mu_cem</span> <span class="o">/</span> <span class="p">(</span><span class="n">pi</span> <span class="o">*</span> <span class="n">mu_sand</span><span class="p">)</span>
+    <span class="n">lam_n</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">mu_cem</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pois_sand</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pois_cem</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="n">pi</span> <span class="o">*</span> <span class="n">mu_sand</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pois_cem</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">pois_sand2</span> <span class="o">=</span> <span class="n">power</span><span class="p">(</span><span class="n">pois_sand</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">c_tau</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mf">10e-4</span>
+        <span class="o">*</span> <span class="p">(</span><span class="mf">9.654</span> <span class="o">*</span> <span class="n">pois_sand2</span> <span class="o">+</span> <span class="mf">4.945</span> <span class="o">*</span> <span class="n">pois_sand</span> <span class="o">+</span> <span class="mf">3.1</span><span class="p">)</span>
+        <span class="o">*</span> <span class="n">power</span><span class="p">(</span><span class="n">lam_tau</span><span class="p">,</span> <span class="mf">0.01867</span> <span class="o">*</span> <span class="n">pois_sand2</span> <span class="o">+</span> <span class="mf">0.4011</span> <span class="o">*</span> <span class="n">pois_sand</span> <span class="o">-</span> <span class="mf">1.8186</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">b_tau</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0573</span> <span class="o">*</span> <span class="n">pois_sand2</span> <span class="o">+</span> <span class="mf">0.0937</span> <span class="o">*</span> <span class="n">pois_sand</span> <span class="o">+</span> <span class="mf">0.202</span><span class="p">)</span> <span class="o">*</span> <span class="n">power</span><span class="p">(</span>
+        <span class="n">lam_tau</span><span class="p">,</span> <span class="mf">0.0274</span> <span class="o">*</span> <span class="n">pois_sand2</span> <span class="o">+</span> <span class="mf">0.0529</span> <span class="o">*</span> <span class="n">pois_sand</span> <span class="o">-</span> <span class="mf">0.8765</span>
+    <span class="p">)</span>
+    <span class="n">a_tau</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="o">-</span><span class="mf">0.01</span>
+        <span class="o">*</span> <span class="p">(</span><span class="mf">2.26</span> <span class="o">*</span> <span class="n">pois_sand2</span> <span class="o">+</span> <span class="mf">2.07</span> <span class="o">*</span> <span class="n">pois_sand</span> <span class="o">+</span> <span class="mf">2.3</span><span class="p">)</span>
+        <span class="o">*</span> <span class="n">power</span><span class="p">(</span><span class="n">lam_tau</span><span class="p">,</span> <span class="mf">0.079</span> <span class="o">*</span> <span class="n">pois_sand2</span> <span class="o">+</span> <span class="mf">0.1754</span> <span class="o">*</span> <span class="n">pois_sand</span> <span class="o">-</span> <span class="mf">1.342</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">s_tau</span> <span class="o">=</span> <span class="n">a_tau</span> <span class="o">*</span> <span class="n">power</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">b_tau</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">c_tau</span>
+    <span class="n">c_n</span> <span class="o">=</span> <span class="mf">0.00024649</span> <span class="o">*</span> <span class="n">power</span><span class="p">(</span><span class="n">lam_n</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.9864</span><span class="p">)</span>
+    <span class="n">b_n</span> <span class="o">=</span> <span class="mf">0.20405</span> <span class="o">*</span> <span class="n">power</span><span class="p">(</span><span class="n">lam_n</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.89008</span><span class="p">)</span>
+    <span class="n">a_n</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.024153</span> <span class="o">*</span> <span class="n">power</span><span class="p">(</span><span class="n">lam_n</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.3646</span><span class="p">)</span>
+    <span class="n">s_n</span> <span class="o">=</span> <span class="n">a_n</span> <span class="o">*</span> <span class="n">power</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">b_n</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">c_n</span>
+
+    <span class="n">keff</span> <span class="o">=</span> <span class="p">(</span><span class="n">ncontacts</span> <span class="o">*</span> <span class="n">k_cem</span> <span class="o">*</span> <span class="n">s_n</span> <span class="o">/</span> <span class="mi">6</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">phi0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">keff</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">keff</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">+</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">ncontacts</span> <span class="o">*</span> <span class="n">mu_cem</span> <span class="o">*</span> <span class="n">s_tau</span> <span class="o">/</span> <span class="mf">20.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">phi0</span><span class="p">))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="fluid_classes.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Fluid Classes" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Fluid Classes
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Tony Hallam
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigations.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5a9542cf.min.js"></script>
+      
+    
+  </body>
+</html>

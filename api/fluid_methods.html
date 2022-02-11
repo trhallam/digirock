@@ -1,0 +1,4196 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Tony Hallam">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.11">
+    
+    
+      
+        <title>Fluid Methods - digirock Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50e68009.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#batzle-and-wang-92" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="digirock Documentation" class="md-header__button md-logo" aria-label="digirock Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            digirock Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fluid Methods
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../index.html" class="md-tabs__link">
+        Home
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ug/framework.html" class="md-tabs__link">
+        User Guide
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="fluid_methods.html" class="md-tabs__link md-tabs__link--active">
+        API
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="digirock Documentation" class="md-nav__button md-logo" aria-label="digirock Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    digirock Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" data-md-state="indeterminate" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contrib.html" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contact.html" class="md-nav__link">
+        Contact
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/trhallam/digirock/issues" class="md-nav__link">
+        Issue Tracker
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" data-md-state="indeterminate" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          User Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ug/framework.html" class="md-nav__link">
+        Digirock Framework
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" data-md-state="indeterminate" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          Examples
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Examples" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/example_fluids.html" class="md-nav__link">
+        Fluids
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          API
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          API
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Fluid Methods
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="fluid_methods.html" class="md-nav__link md-nav__link--active">
+        Fluid Methods
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#batzle-and-wang-92" class="md-nav__link">
+    Batzle and Wang 92
+  </a>
+  
+    <nav class="md-nav" aria-label="Batzle and Wang 92">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92" class="md-nav__link">
+    digirock.fluids.bw92
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.bulkmod" class="md-nav__link">
+    bulkmod()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_adiabatic_bulkmod" class="md-nav__link">
+    gas_adiabatic_bulkmod()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_adiabatic_viscosity" class="md-nav__link">
+    gas_adiabatic_viscosity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_density" class="md-nav__link">
+    gas_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_isotherm_comp" class="md-nav__link">
+    gas_isotherm_comp()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_isotherm_vp" class="md-nav__link">
+    gas_isotherm_vp()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_oga_density" class="md-nav__link">
+    gas_oga_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_pseudocrit_pres" class="md-nav__link">
+    gas_pseudocrit_pres()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_pseudocrit_temp" class="md-nav__link">
+    gas_pseudocrit_temp()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_pseudored_pres" class="md-nav__link">
+    gas_pseudored_pres()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_pseudored_temp" class="md-nav__link">
+    gas_pseudored_temp()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_vmol" class="md-nav__link">
+    gas_vmol()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.mixed_bulkmod" class="md-nav__link">
+    mixed_bulkmod()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.mixed_density" class="md-nav__link">
+    mixed_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_bulkmod" class="md-nav__link">
+    oil_bulkmod()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_density" class="md-nav__link">
+    oil_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_fvf" class="md-nav__link">
+    oil_fvf()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_isothermal_density" class="md-nav__link">
+    oil_isothermal_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_rg" class="md-nav__link">
+    oil_rg()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_rho_pseudo" class="md-nav__link">
+    oil_rho_pseudo()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_rho_sat" class="md-nav__link">
+    oil_rho_sat()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_velocity" class="md-nav__link">
+    oil_velocity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_bulkmod" class="md-nav__link">
+    wat_bulkmod()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_density_brine" class="md-nav__link">
+    wat_density_brine()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_density_pure" class="md-nav__link">
+    wat_density_pure()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_salinity_brine" class="md-nav__link">
+    wat_salinity_brine()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_velocity_brine" class="md-nav__link">
+    wat_velocity_brine()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_velocity_pure" class="md-nav__link">
+    wat_velocity_pure()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eclipse" class="md-nav__link">
+    Eclipse
+  </a>
+  
+    <nav class="md-nav" aria-label="Eclipse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.ecl" class="md-nav__link">
+    digirock.fluids.ecl
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.ecl.e100_bw" class="md-nav__link">
+    e100_bw()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.ecl.oil_fvf_table" class="md-nav__link">
+    oil_fvf_table()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fluid_classes.html" class="md-nav__link">
+        Fluid Classes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="model_methods.html" class="md-nav__link">
+        Models
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#batzle-and-wang-92" class="md-nav__link">
+    Batzle and Wang 92
+  </a>
+  
+    <nav class="md-nav" aria-label="Batzle and Wang 92">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92" class="md-nav__link">
+    digirock.fluids.bw92
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.bulkmod" class="md-nav__link">
+    bulkmod()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_adiabatic_bulkmod" class="md-nav__link">
+    gas_adiabatic_bulkmod()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_adiabatic_viscosity" class="md-nav__link">
+    gas_adiabatic_viscosity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_density" class="md-nav__link">
+    gas_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_isotherm_comp" class="md-nav__link">
+    gas_isotherm_comp()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_isotherm_vp" class="md-nav__link">
+    gas_isotherm_vp()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_oga_density" class="md-nav__link">
+    gas_oga_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_pseudocrit_pres" class="md-nav__link">
+    gas_pseudocrit_pres()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_pseudocrit_temp" class="md-nav__link">
+    gas_pseudocrit_temp()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_pseudored_pres" class="md-nav__link">
+    gas_pseudored_pres()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_pseudored_temp" class="md-nav__link">
+    gas_pseudored_temp()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.gas_vmol" class="md-nav__link">
+    gas_vmol()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.mixed_bulkmod" class="md-nav__link">
+    mixed_bulkmod()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.mixed_density" class="md-nav__link">
+    mixed_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_bulkmod" class="md-nav__link">
+    oil_bulkmod()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_density" class="md-nav__link">
+    oil_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_fvf" class="md-nav__link">
+    oil_fvf()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_isothermal_density" class="md-nav__link">
+    oil_isothermal_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_rg" class="md-nav__link">
+    oil_rg()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_rho_pseudo" class="md-nav__link">
+    oil_rho_pseudo()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_rho_sat" class="md-nav__link">
+    oil_rho_sat()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.oil_velocity" class="md-nav__link">
+    oil_velocity()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_bulkmod" class="md-nav__link">
+    wat_bulkmod()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_density_brine" class="md-nav__link">
+    wat_density_brine()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_density_pure" class="md-nav__link">
+    wat_density_pure()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_salinity_brine" class="md-nav__link">
+    wat_salinity_brine()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_velocity_brine" class="md-nav__link">
+    wat_velocity_brine()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.bw92.wat_velocity_pure" class="md-nav__link">
+    wat_velocity_pure()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eclipse" class="md-nav__link">
+    Eclipse
+  </a>
+  
+    <nav class="md-nav" aria-label="Eclipse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.ecl" class="md-nav__link">
+    digirock.fluids.ecl
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.ecl.e100_bw" class="md-nav__link">
+    e100_bw()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock.fluids.ecl.oil_fvf_table" class="md-nav__link">
+    oil_fvf_table()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+  <h1>Fluid Methods</h1>
+
+<h2 id="batzle-and-wang-92">Batzle and Wang 92</h2>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="kn">from</span> <span class="nn">digirock.fluids</span> <span class="kn">import</span> <span class="n">bw92</span>
+</code></pre></div>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="digirock.fluids.bw92"></a>
+    <div class="doc doc-contents first">
+
+      <p>Function for calculating fluid properties in a reservoir</p>
+<table>
+<thead>
+<tr>
+<th>Symbols</th>
+<th>Definitions</th>
+<th>Units</th>
+<th>Function/s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rhow</td>
+<td>Density of brine</td>
+<td>g/cm3</td>
+<td></td>
+</tr>
+<tr>
+<td>rhog</td>
+<td>Density of gas</td>
+<td>g/cm3</td>
+<td></td>
+</tr>
+<tr>
+<td>rhoo</td>
+<td>Density of oil</td>
+<td>g/cm3</td>
+<td></td>
+</tr>
+<tr>
+<td>rho0</td>
+<td>Reference Density of Oil</td>
+<td>g/cm3</td>
+<td></td>
+</tr>
+<tr>
+<td>kwat</td>
+<td>Bulk modulus of water</td>
+<td>GPa</td>
+<td></td>
+</tr>
+<tr>
+<td>kgas</td>
+<td>Bulk modulus of gas</td>
+<td>GPa</td>
+<td></td>
+</tr>
+<tr>
+<td>koil</td>
+<td>Bulk modulus of oil</td>
+<td>GPa</td>
+<td></td>
+</tr>
+<tr>
+<td>g</td>
+<td>Specific gravity of gas</td>
+<td>API</td>
+<td></td>
+</tr>
+<tr>
+<td>p</td>
+<td>In-situ pressure</td>
+<td>MPa</td>
+<td></td>
+</tr>
+<tr>
+<td>t</td>
+<td>In-situ temperature</td>
+<td>degC</td>
+<td></td>
+</tr>
+<tr>
+<td>sal</td>
+<td>Salinity</td>
+<td>Wt.fraction</td>
+<td></td>
+</tr>
+<tr>
+<td>sw</td>
+<td>Water Saturation</td>
+<td>fraction</td>
+<td></td>
+</tr>
+<tr>
+<td>rg</td>
+<td>Gas-to-Oil ratio (GOR)</td>
+<td>Litre/litre</td>
+<td></td>
+</tr>
+<tr>
+<td>gas_R</td>
+<td>Gas constant</td>
+<td>m3 Pa K-1 mol-1</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition notes">
+<p class="admonition-title">Notes</p>
+<ul>
+<li>
+<p>The gas specific gravity G is the ratio of the gas density to air density
+at 15.6 degC and at atmospheric pressure. Typically gases have G values
+from 0.56 (Methane) to 1.8</p>
+</li>
+<li>
+<p>Salinity has units that can be converted as such
+35 g dissolved salt / kg sea water = 35 ppt = 35 o/oo = 3.5% = 35000 ppm = 35000 mg/l</p>
+</li>
+</ul>
+</div>
+<table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Variable Name</th>
+<th>Units</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gas Constant</td>
+<td><code>GAS_R</code></td>
+<td>(J K-1 mol-1) (m3 Pa K-1 mol-1)</td>
+<td>8.31441</td>
+</tr>
+<tr>
+<td>Atmospheric Pressures</td>
+<td><code>STD_ATM_PRESS</code></td>
+<td>Pa</td>
+<td>101325</td>
+</tr>
+<tr>
+<td>Molecular Weight of Air</td>
+<td><code>AIR_M_WEIGHT</code></td>
+<td>g/mol</td>
+<td>28.967</td>
+</tr>
+<tr>
+<td>Density of air at STD</td>
+<td><code>AIR_RHO</code></td>
+<td>g/m3</td>
+<td>AIR_M_WEIGHT * STD_ATM_PRESS / ((15.6 + 273.15) * GAS_R)</td>
+</tr>
+</tbody>
+</table>
+<p>These functions are based upon the work by:</p>
+<ol>
+<li>Batzle and Wang, 1992, Seismic Properties of Pore Fluids</li>
+<li>Kumar, D, 2006, A Tutorial on Gassmann Fluid Substitution: Formulation,
+        Algorithm and Matlab Code</li>
+</ol>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.bulkmod" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bulkmod</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">vel</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Single phase fluid bulk modulus</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rho</code></td>
+        <td><code>array-like</code></td>
+        <td><p>(g/cc)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>velp</code></td>
+        <td><code>array-like</code></td>
+        <td><p>material velocity (m/s)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>material bulk modulus (GPa)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">bulkmod</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">vel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Single phase fluid bulk modulus</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho (array-like): (g/cc)</span>
+<span class="sd">        velp (array-like): material velocity (m/s)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): material bulk modulus (GPa)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">vel</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-6</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_adiabatic_bulkmod" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_adiabatic_bulkmod</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the approximate adiabatic (constant pressure) bulk modulus of a gas</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Gas temperature in degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas pressure in MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>approximate gas bulk modulus in GPa</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_adiabatic_bulkmod</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the approximate adiabatic (constant pressure) bulk modulus of a gas</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t (array-like): Gas temperature in degC</span>
+<span class="sd">        p (array-like): The gas pressure in MPa</span>
+<span class="sd">        g (array-like): The gas specific gravity</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): approximate gas bulk modulus in GPa</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ppr</span> <span class="o">=</span> <span class="n">gas_pseudored_pres</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+    <span class="n">tpr</span> <span class="o">=</span> <span class="n">gas_pseudored_temp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mf">0.03</span> <span class="o">+</span> <span class="mf">0.00527</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.5</span> <span class="o">-</span> <span class="n">tpr</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mf">0.642</span> <span class="o">*</span> <span class="n">tpr</span> <span class="o">-</span> <span class="mf">0.007</span> <span class="o">*</span> <span class="n">tpr</span> <span class="o">**</span> <span class="mi">4</span> <span class="o">-</span> <span class="mf">0.52</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mf">0.109</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.85</span> <span class="o">-</span> <span class="n">tpr</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.45</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.56</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tpr</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">ppr</span> <span class="o">**</span> <span class="mf">1.2</span><span class="p">)</span> <span class="o">/</span> <span class="n">tpr</span><span class="p">)</span>
+    <span class="n">gamma</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mf">0.85</span>
+        <span class="o">+</span> <span class="mf">5.6</span> <span class="o">/</span> <span class="p">(</span><span class="n">ppr</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="o">+</span> <span class="mf">27.1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">ppr</span> <span class="o">+</span> <span class="mf">3.5</span><span class="p">)</span>
+        <span class="o">-</span> <span class="mf">8.7</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.65</span> <span class="o">*</span> <span class="p">(</span><span class="n">ppr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.45</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.56</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tpr</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">ppr</span> <span class="o">**</span> <span class="mf">0.2</span><span class="p">)</span> <span class="o">/</span> <span class="n">tpr</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="n">m</span> <span class="o">+</span> <span class="n">a</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">ppr</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">d</span>
+    <span class="k">return</span> <span class="n">p</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">*</span> <span class="mf">1e-3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">ppr</span> <span class="o">*</span> <span class="n">f</span> <span class="o">/</span> <span class="n">Z</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_adiabatic_viscosity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_adiabatic_viscosity</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the approximate adiabatic (constant pressure) viscoisty of a gas</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>float</code></td>
+        <td><p>The gas temperature in degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>float</code></td>
+        <td><p>The gas pressure in MPascals</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>float</code></td>
+        <td><p>The gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(float)</code></td>
+      <td><p>approximate gas bulk modulus in centipoise</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_adiabatic_viscosity</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the approximate adiabatic (constant pressure) viscoisty of a gas</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t (float): The gas temperature in degC</span>
+<span class="sd">        p (float): The gas pressure in MPascals</span>
+<span class="sd">        g (float): The gas specific gravity</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (float): approximate gas bulk modulus in centipoise</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ppr</span> <span class="o">=</span> <span class="n">gas_pseudored_pres</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+    <span class="n">tpr</span> <span class="o">=</span> <span class="n">gas_pseudored_temp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+    <span class="n">eta1</span> <span class="o">=</span> <span class="mf">0.0001</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="n">tpr</span> <span class="o">*</span> <span class="p">(</span><span class="mi">28</span> <span class="o">+</span> <span class="mi">48</span> <span class="o">*</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">g</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mf">6.47</span> <span class="o">*</span> <span class="n">g</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">35</span> <span class="o">/</span> <span class="n">g</span> <span class="o">+</span> <span class="mf">1.14</span> <span class="o">*</span> <span class="n">g</span> <span class="o">-</span> <span class="mf">15.55</span>
+    <span class="p">)</span>
+    <span class="n">eta2diveta1</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="mf">0.001</span>
+        <span class="o">*</span> <span class="n">ppr</span>
+        <span class="o">*</span> <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1057</span> <span class="o">-</span> <span class="mf">8.08</span> <span class="o">*</span> <span class="n">tpr</span><span class="p">)</span> <span class="o">/</span> <span class="n">ppr</span>
+            <span class="o">+</span> <span class="p">(</span><span class="mi">796</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">ppr</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">704</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">tpr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">ppr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="o">-</span> <span class="mf">3.24</span> <span class="o">*</span> <span class="n">tpr</span>
+            <span class="o">-</span> <span class="mi">38</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">eta2diveta1</span> <span class="o">*</span> <span class="n">eta1</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_density</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the density for and ideal gas</p>
+<p>B&amp;W 1992 Eq 2</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>m</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Molecular weight of the gas.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Temperature of the gas in degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Pressure of the gas in MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>the molar weight of the gas for ta and p</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_density</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the density for and ideal gas</span>
+
+<span class="sd">    B&amp;W 1992 Eq 2</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        m (array-like): Molecular weight of the gas.</span>
+<span class="sd">        t (array-like): Temperature of the gas in degC</span>
+<span class="sd">        p (array-like): Pressure of the gas in MPa</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): the molar weight of the gas for ta and p</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">*</span> <span class="n">GAS_R</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_isotherm_comp" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_isotherm_comp</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the isothermal compressibility of an ideal gas</p>
+<p>Two points of corresponding molecular volume and pressure must be known to calculate Bt
+for a given constant temperature.
+B&amp;W 1992 Eq 3</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>v1</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The first molecular volume of the gas</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>v2</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The second molecular volume of the gas</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p1</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The first pressure of the gas in Pa</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p2</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The second pressure of the gas in Pa</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Bt (array-like)</code></td>
+      <td><p>the isothermal compressibility</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_isotherm_comp</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the isothermal compressibility of an ideal gas</span>
+
+<span class="sd">    Two points of corresponding molecular volume and pressure must be known to calculate Bt</span>
+<span class="sd">    for a given constant temperature.</span>
+<span class="sd">    B&amp;W 1992 Eq 3</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        v1 (array-like): The first molecular volume of the gas</span>
+<span class="sd">        v2 (array-like): The second molecular volume of the gas</span>
+<span class="sd">        p1 (array-like): The first pressure of the gas in Pa</span>
+<span class="sd">        p2 (array-like): The second pressure of the gas in Pa</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Bt (array-like): the isothermal compressibility</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">v2</span> <span class="o">-</span> <span class="n">v1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">p2</span> <span class="o">-</span> <span class="n">p1</span><span class="p">)</span> <span class="o">/</span> <span class="n">v1</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_isotherm_vp" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_isotherm_vp</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the isothermal velocity of a compressional wave for an ideal gas</p>
+<p>B&amp;W 1992 Eq 4</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>m</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Molecular weight of gas</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Temperature of gas in degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>vp (array-like)</code></td>
+      <td><p>Isothermal compressional velocity for gas</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_isotherm_vp</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the isothermal velocity of a compressional wave for an ideal gas</span>
+
+<span class="sd">    B&amp;W 1992 Eq 4</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        m (array-like): Molecular weight of gas</span>
+<span class="sd">        t (array-like): Temperature of gas in degC</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        vp (array-like): Isothermal compressional velocity for gas</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">GAS_R</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_oga_density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_oga_density</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the approximate density of gas appropriate to the oil and gas industry</p>
+<p>Suitable for temperatures and pressures typically encountered in the oil and gas
+industry. This approximation is adequate as long as ppr and tpr are not both within
+about 0.1 of unity.
+B&amp;W 1992 Eq 10a</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas absolute temperature in degK</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas pressure in MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>the oil and gas appropriate approximate density in g/cc</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_oga_density</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the approximate density of gas appropriate to the oil and gas industry</span>
+
+<span class="sd">    Suitable for temperatures and pressures typically encountered in the oil and gas</span>
+<span class="sd">    industry. This approximation is adequate as long as ppr and tpr are not both within</span>
+<span class="sd">    about 0.1 of unity.</span>
+<span class="sd">    B&amp;W 1992 Eq 10a</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t (array-like): The gas absolute temperature in degK</span>
+<span class="sd">        p (array-like): The gas pressure in MPa</span>
+<span class="sd">        g (array-like): The gas specific gravity</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): the oil and gas appropriate approximate density in g/cc</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ppr</span> <span class="o">=</span> <span class="n">gas_pseudored_pres</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+    <span class="n">tpr</span> <span class="o">=</span> <span class="n">gas_pseudored_temp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ppr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">tpr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="s2">&quot;Values for ppr and trp are both within 0.1 of unity, the gas </span><span class="se">\</span>
+<span class="s2">            density assumptions will not be valid.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">a</span> <span class="o">=</span> <span class="mf">0.03</span> <span class="o">+</span> <span class="mf">0.00527</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.5</span> <span class="o">-</span> <span class="n">tpr</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mf">0.642</span> <span class="o">*</span> <span class="n">tpr</span> <span class="o">-</span> <span class="mf">0.007</span> <span class="o">*</span> <span class="n">tpr</span> <span class="o">**</span> <span class="mi">4</span> <span class="o">-</span> <span class="mf">0.52</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mf">0.109</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.85</span> <span class="o">-</span> <span class="n">tpr</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.45</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.56</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">tpr</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">ppr</span> <span class="o">**</span> <span class="mf">1.2</span><span class="p">)</span> <span class="o">/</span> <span class="n">tpr</span><span class="p">)</span>
+
+    <span class="n">E</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">d</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">ppr</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">E</span>
+
+    <span class="k">return</span> <span class="mf">28.8</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">GAS_R</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mf">273.15</span><span class="p">)))</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_pseudocrit_pres" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_pseudocrit_pres</span><span class="p">(</span><span class="n">g</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the gas pseudo critical pressure value</p>
+<p>B&amp;W 1992 Eq 9a</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>The pseudo critical pressure</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_pseudocrit_pres</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the gas pseudo critical pressure value</span>
+
+<span class="sd">    B&amp;W 1992 Eq 9a</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g (array-like): The gas specific gravity</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): The pseudo critical pressure</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">4.892</span> <span class="o">-</span> <span class="mf">0.4048</span> <span class="o">*</span> <span class="n">g</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_pseudocrit_temp" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_pseudocrit_temp</span><span class="p">(</span><span class="n">g</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the gas pseudo critical temperature value</p>
+<p>B&amp;W 1992 Eq 9b</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>The pseudo critical temperature</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_pseudocrit_temp</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the gas pseudo critical temperature value</span>
+
+<span class="sd">    B&amp;W 1992 Eq 9b</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g (array-like): The gas specific gravity</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">         (array-like): The pseudo critical temperature</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">94.72</span> <span class="o">+</span> <span class="mf">170.75</span> <span class="o">*</span> <span class="n">g</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_pseudored_pres" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_pseudored_pres</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the gas pseudo reduced pressure value</p>
+<p>B&amp;W 1992 Eq 9a</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas pressure in MPascals</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>the pseudo reduced or normalised pseudo critical pressure value</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_pseudored_pres</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the gas pseudo reduced pressure value</span>
+
+<span class="sd">    B&amp;W 1992 Eq 9a</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        p (array-like): The gas pressure in MPascals</span>
+<span class="sd">        g (array-like): The gas specific gravity</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">         (array-like): the pseudo reduced or normalised pseudo critical pressure value</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">p</span> <span class="o">/</span> <span class="n">gas_pseudocrit_pres</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_pseudored_temp" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_pseudored_temp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the gas pseudo reduced pressure value</p>
+<p>B&amp;W 1992 Eq 9b</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas absolute temperature in degK</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>the pseudo reduced or normalised pseudo critical temperature value</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_pseudored_temp</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the gas pseudo reduced pressure value</span>
+
+<span class="sd">    B&amp;W 1992 Eq 9b</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t (array-like): The gas absolute temperature in degK</span>
+<span class="sd">        g (array-like): The gas specific gravity</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): the pseudo reduced or normalised pseudo critical temperature value</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">/</span> <span class="n">gas_pseudocrit_temp</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.gas_vmol" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">gas_vmol</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates molar volume for and ideal gas</p>
+<p>B&amp;W 1992 Eq 1</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Temperature of the gas in degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The pressure of the gas in Pa</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>the molar volume of the gas for ta and p</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">gas_vmol</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates molar volume for and ideal gas</span>
+
+<span class="sd">    B&amp;W 1992 Eq 1</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t (array-like): Temperature of the gas in degC</span>
+<span class="sd">        p (array-like): The pressure of the gas in Pa</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): the molar volume of the gas for ta and p</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">GAS_R</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mf">273.15</span><span class="p">)</span> <span class="o">/</span> <span class="n">p</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.mixed_bulkmod" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">mixed_bulkmod</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">frac</span><span class="p">,</span> <span class="o">*</span><span class="n">argv</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Mixed fluid bulk modulus (Wood's Equation)</p>
+<p>Can take an arbitrary number of fluids and volume fractions.
+Volume fractions must sum to one for each sample.
+If the number of arguments is odd, the final frac is assumed to
+    be the complement of all other fracs to sum to 1
+All array-like must be the same shape</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>mod</code></td>
+        <td><code>array-like</code></td>
+        <td><p>first fluid modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>frac</code></td>
+        <td><code>array-like</code></td>
+        <td><p>[description]</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>arg3</code></td>
+        <td><code>array-like) </code></td>
+        <td><p>the next fluid modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>arg4</code></td>
+        <td><code>array-like) </code></td>
+        <td><p>the next fluid fraction</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>arg(3+2*n)</code></td>
+        <td><code>array-like) </code></td>
+        <td><p>the nth fluid modulus</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>arg(3+2*n)</code></td>
+        <td><code>array-like) </code></td>
+        <td><p>the nth fluid fraction</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>Wood's bulk modulus for a fluid mix</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">mixed_bulkmod</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">frac</span><span class="p">,</span> <span class="o">*</span><span class="n">argv</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mixed fluid bulk modulus (Wood&#39;s Equation)</span>
+
+
+<span class="sd">    Can take an arbitrary number of fluids and volume fractions.</span>
+<span class="sd">    Volume fractions must sum to one for each sample.</span>
+<span class="sd">    If the number of arguments is odd, the final frac is assumed to</span>
+<span class="sd">        be the complement of all other fracs to sum to 1</span>
+<span class="sd">    All array-like must be the same shape</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mod (array-like): first fluid modulus</span>
+<span class="sd">        frac (array-like): [description]</span>
+<span class="sd">        arg3 (array-like) : the next fluid modulus</span>
+<span class="sd">        arg4 (array-like) : the next fluid fraction</span>
+<span class="sd">        arg(3+2*n) (array-like) : the nth fluid modulus</span>
+<span class="sd">        arg(3+2*n) (array-like) : the nth fluid fraction</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): Wood&#39;s bulk modulus for a fluid mix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check arguments and find complement if necessary</span>
+    <span class="n">largv</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">largv</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">fvol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frac</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">largv</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">fvol</span> <span class="o">=</span> <span class="n">fvol</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">fvol</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">fvol</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">argv</span> <span class="o">=</span> <span class="n">argv</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">fvol</span><span class="p">,)</span>
+
+    <span class="c1"># reset</span>
+    <span class="n">fvol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frac</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">safe_divide</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frac</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mod</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">largv</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">K</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">fvol</span> <span class="o">=</span> <span class="n">fvol</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">fvol</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">safe_divide</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># change this to raise an appropriate error</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.mixed_density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">mixed_density</span><span class="p">(</span><span class="n">den</span><span class="p">,</span> <span class="n">frac</span><span class="p">,</span> <span class="o">*</span><span class="n">argv</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Returns the mixed fluid density based upon volume fractions</p>
+<p>Can take an arbitrary number of fluids and volume fractions.
+Volume fractions must sum to one for each sample.
+If the number of arguments is odd, the final frac is assumed to
+    be the complement of all other fracs to sum to 1
+All array-like must be the same shape</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>den</code></td>
+        <td><code>array-like</code></td>
+        <td><p>first fluid density</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>frac</code></td>
+        <td><code>array-like</code></td>
+        <td><p>[description]</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>arg3</code></td>
+        <td><code>array-like) </code></td>
+        <td><p>the next fluid density</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>arg4</code></td>
+        <td><code>array-like) </code></td>
+        <td><p>the next fluid fraction</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>arg(3+2*n)</code></td>
+        <td><code>array-like) </code></td>
+        <td><p>the nth fluid density</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>arg(3+2*n)</code></td>
+        <td><code>array-like) </code></td>
+        <td><p>the nth fluid fraction</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>mixed fluid density</p></td>
+    </tr>
+  </tbody>
+</table>      <p>Notes:</p>
+
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">mixed_density</span><span class="p">(</span><span class="n">den</span><span class="p">,</span> <span class="n">frac</span><span class="p">,</span> <span class="o">*</span><span class="n">argv</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the mixed fluid density based upon volume fractions</span>
+
+<span class="sd">    Can take an arbitrary number of fluids and volume fractions.</span>
+<span class="sd">    Volume fractions must sum to one for each sample.</span>
+<span class="sd">    If the number of arguments is odd, the final frac is assumed to</span>
+<span class="sd">        be the complement of all other fracs to sum to 1</span>
+<span class="sd">    All array-like must be the same shape</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        den (array-like): first fluid density</span>
+<span class="sd">        frac (array-like): [description]</span>
+<span class="sd">        arg3 (array-like) : the next fluid density</span>
+<span class="sd">        arg4 (array-like) : the next fluid fraction</span>
+<span class="sd">        arg(3+2*n) (array-like) : the nth fluid density</span>
+<span class="sd">        arg(3+2*n) (array-like) : the nth fluid fraction</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): mixed fluid density</span>
+<span class="sd">    Notes:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check arguments and find complement if necessary</span>
+    <span class="n">largv</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">largv</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">fvol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frac</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">largv</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">fvol</span> <span class="o">=</span> <span class="n">fvol</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">fvol</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">fvol</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">argv</span> <span class="o">=</span> <span class="n">argv</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">fvol</span><span class="p">,)</span>
+
+    <span class="c1"># reset</span>
+    <span class="n">fvol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frac</span><span class="p">)</span>
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">den</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">frac</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">largv</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">rho</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">fvol</span> <span class="o">=</span> <span class="n">fvol</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">fvol</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">rho</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># change this to raise an appropriate error</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.oil_bulkmod" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">oil_bulkmod</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">vp</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Oil bulk modulus GPa</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rho</code></td>
+        <td><code>array-like</code></td>
+        <td><p>In-situ oil density</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>vp</code></td>
+        <td><code>array-like</code></td>
+        <td><p>In-situ compressional velocity</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>Oil bulk modulus in GPa</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">oil_bulkmod</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">vp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Oil bulk modulus GPa</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho (array-like): In-situ oil density</span>
+<span class="sd">        vp (array-like): In-situ compressional velocity</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): Oil bulk modulus in GPa</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-6</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.oil_density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">oil_density</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the oil density for given pressure and temperature</p>
+<p>For a live oil rho should be the output of <code>oil_rho_sat</code> to compensate
+for disolved gas.</p>
+<p>B&amp;W 1992 Eq 19</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rho</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The oil density (g/cc)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Pressure (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Absolute temperature in degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>The oil density (g/cc) at pressure p and temperature ta</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">oil_density</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the oil density for given pressure and temperature</span>
+
+<span class="sd">    For a live oil rho should be the output of `oil_rho_sat` to compensate</span>
+<span class="sd">    for disolved gas.</span>
+
+<span class="sd">    B&amp;W 1992 Eq 19</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho (array-like): The oil density (g/cc)</span>
+<span class="sd">        p (array-like): Pressure (MPa)</span>
+<span class="sd">        t (array-like): Absolute temperature in degC</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): The oil density (g/cc) at pressure p and temperature ta</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">oil_isothermal_density</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+        <span class="mf">0.972</span> <span class="o">+</span> <span class="mf">3.81e-4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mf">17.78</span><span class="p">,</span> <span class="mf">1.175</span><span class="p">)</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.oil_fvf" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">oil_fvf</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">rs</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the oil formation volume factor b0</p>
+<p>Equation 23 from Batzle and Wang 1992
+All inputs must be broadcastable to an equivalent shape.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rho0</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The oil reference density (g/cc) at 15.6 degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>rs</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The Gas-to-Oil ratio Litre/litre</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>In-situ temperature degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>The oil formation volume factor (FVF/b0)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">oil_fvf</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">rs</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the oil formation volume factor b0</span>
+
+<span class="sd">    Equation 23 from Batzle and Wang 1992</span>
+<span class="sd">    All inputs must be broadcastable to an equivalent shape.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho0 (array-like): The oil reference density (g/cc) at 15.6 degC</span>
+<span class="sd">        g (array-like): The gas specific gravity</span>
+<span class="sd">        rs (array-like): The Gas-to-Oil ratio Litre/litre</span>
+<span class="sd">        t (array-like): In-situ temperature degC</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): The oil formation volume factor (FVF/b0)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># note: Dhannanjay 2006 shows 2.495 instead of 2.4 inside power bracket.</span>
+    <span class="k">return</span> <span class="mf">0.972</span> <span class="o">+</span> <span class="mf">0.00038</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mf">2.4</span> <span class="o">*</span> <span class="n">rs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">g</span> <span class="o">/</span> <span class="n">rho0</span><span class="p">)</span> <span class="o">+</span> <span class="n">t</span> <span class="o">+</span> <span class="mf">17.8</span><span class="p">,</span> <span class="mf">1.175</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.oil_isothermal_density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">oil_isothermal_density</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the oil density for a given pressure at 15.6 degC</p>
+<p>B&amp;W 1992 Equation 18</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rho</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The oil reference density (g/cc) at 15.6 degC
+can be compensated for disovled gases by running <code>oil_rho_sat</code> first.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Pressure (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>The oil density (g/cc) at pressure p</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">oil_isothermal_density</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the oil density for a given pressure at 15.6 degC</span>
+
+<span class="sd">    B&amp;W 1992 Equation 18</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho (array-like): The oil reference density (g/cc) at 15.6 degC</span>
+<span class="sd">            can be compensated for disovled gases by running `oil_rho_sat` first.</span>
+<span class="sd">        p (array-like): Pressure (MPa)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): The oil density (g/cc) at pressure p</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">rho</span>
+        <span class="o">+</span> <span class="p">(</span><span class="mf">0.00277</span> <span class="o">*</span> <span class="n">p</span> <span class="o">-</span> <span class="mf">1.71e-7</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">rho</span> <span class="o">-</span> <span class="mf">1.15</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="o">+</span> <span class="mf">3.49e-4</span> <span class="o">*</span> <span class="n">p</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.oil_rg" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">oil_rg</span><span class="p">(</span><span class="n">oil</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;rho&#39;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the Rg for oil with given paramters.</p>
+<p>Rg is the volume ratio of liberated gas to remaining oil at atmospheric
+pressure and 15.6degC. This covers equatsion 21a and 21b of B &amp; W 1992.</p>
+<p>One input can be an array but if multiple inputs are arrays they must
+all have length n.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>oil</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The density of the oil at 15.6degC or the api of
+the oil if mode = 'api'</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>array-like</code></td>
+        <td><p>gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>pres</code></td>
+        <td><code>array-like</code></td>
+        <td><p>reservoir pressure (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>temp</code></td>
+        <td><code>array-like</code></td>
+        <td><p>temperature (degC)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>mode</code></td>
+        <td><code>string</code></td>
+        <td><p>Default: 'rho', 'oil' argument mode:
+'rho' - oil input as density in g/cc
+'api' - oil input as API</p></td>
+        <td><code>&#39;rho&#39;</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>rg (array-like)</code></td>
+      <td><p>(L/L)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">oil_rg</span><span class="p">(</span><span class="n">oil</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;rho&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the Rg for oil with given paramters.</span>
+
+<span class="sd">    Rg is the volume ratio of liberated gas to remaining oil at atmospheric</span>
+<span class="sd">    pressure and 15.6degC. This covers equatsion 21a and 21b of B &amp; W 1992.</span>
+
+<span class="sd">    One input can be an array but if multiple inputs are arrays they must</span>
+<span class="sd">    all have length n.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        oil (array-like): The density of the oil at 15.6degC or the api of</span>
+<span class="sd">            the oil if mode = &#39;api&#39;</span>
+<span class="sd">        g (array-like): gas specific gravity</span>
+<span class="sd">        pres (array-like): reservoir pressure (MPa)</span>
+<span class="sd">        temp (array-like): temperature (degC)</span>
+<span class="sd">        mode (string): Default: &#39;rho&#39;, &#39;oil&#39; argument mode:</span>
+<span class="sd">            &#39;rho&#39; - oil input as density in g/cc</span>
+<span class="sd">            &#39;api&#39; - oil input as API</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        rg (array-like): (L/L)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;rho&quot;</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mf">0.02123</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="mf">4.072</span> <span class="o">/</span> <span class="n">oil</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;api&quot;</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="mf">2.03</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="mf">0.02878</span> <span class="o">*</span> <span class="n">oil</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;&#39;mode must be either &#39;rho&#39; or &#39;api&#39;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">pres</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="mf">0.00377</span> <span class="o">*</span> <span class="n">temp</span><span class="p">),</span> <span class="mf">1.205</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.oil_rho_pseudo" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">oil_rho_pseudo</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">rg</span><span class="p">,</span> <span class="n">b0</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculates the oil pseudo density</p>
+<p>B&amp;W 1992 Eq 22</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rho0</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The oil reference density (g/cc) at 15.6 degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>rg</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Gas-to-Oil ratio Litre/litre</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>b0</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Oil formation volume factor FVF</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>The pseudo-density of oil due to expansion from gas</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">oil_rho_pseudo</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">rg</span><span class="p">,</span> <span class="n">b0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculates the oil pseudo density</span>
+
+<span class="sd">    B&amp;W 1992 Eq 22</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho0 (array-like): The oil reference density (g/cc) at 15.6 degC</span>
+<span class="sd">        rg (array-like): Gas-to-Oil ratio Litre/litre</span>
+<span class="sd">        b0 (array-like): Oil formation volume factor FVF</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): The pseudo-density of oil due to expansion from gas</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">rho0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">0.001</span> <span class="o">*</span> <span class="n">rg</span><span class="p">)</span> <span class="o">/</span> <span class="n">b0</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.oil_rho_sat" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">oil_rho_sat</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">rg</span><span class="p">,</span> <span class="n">b0</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the gas saturated oil density</p>
+<p>B&amp;W Eq 24</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rho0</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The oil reference density (g/cc) at 15.6 degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>rg</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The Gas-to-Oil ratio Litre/litre</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>b0</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Oil formation volume factor FVF</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>The gas saturated oil density at 15.6 degC</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">oil_rho_sat</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">rg</span><span class="p">,</span> <span class="n">b0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the gas saturated oil density</span>
+
+<span class="sd">    B&amp;W Eq 24</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho0 (array-like): The oil reference density (g/cc) at 15.6 degC</span>
+<span class="sd">        g (array-like): The gas specific gravity</span>
+<span class="sd">        rg (array-like): The Gas-to-Oil ratio Litre/litre</span>
+<span class="sd">        b0 (array-like): Oil formation volume factor FVF</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): The gas saturated oil density at 15.6 degC</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">safe_divide</span><span class="p">((</span><span class="n">rho0</span> <span class="o">+</span> <span class="mf">0.0012</span> <span class="o">*</span> <span class="n">rg</span> <span class="o">*</span> <span class="n">g</span><span class="p">),</span> <span class="n">b0</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.oil_velocity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">oil_velocity</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">rg</span><span class="p">,</span> <span class="n">b0</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Oil compressional-wave velocity</p>
+<p>B&amp;W 1992 Eq 20a</p>
+<p>If b0 is None the B&amp;W approximation will be used.
+The pseudo density for live oil is calculated intrinsically.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rho0</code></td>
+        <td><code>array-like</code></td>
+        <td><p>The oil reference density (g/cc) at 15.6 degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>In-situ pressure MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>In-situ temperature degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>g</code></td>
+        <td><code>array-like</code></td>
+        <td><p>gas specific gravity</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>rg</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Gas-to-Oil ratio Litre/litre</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>The velocity of oil in m/s</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">oil_velocity</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">rg</span><span class="p">,</span> <span class="n">b0</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Oil compressional-wave velocity</span>
+
+<span class="sd">    B&amp;W 1992 Eq 20a</span>
+
+<span class="sd">    If b0 is None the B&amp;W approximation will be used.</span>
+<span class="sd">    The pseudo density for live oil is calculated intrinsically.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho0 (array-like): The oil reference density (g/cc) at 15.6 degC</span>
+<span class="sd">        p (array-like): In-situ pressure MPa</span>
+<span class="sd">        t (array-like): In-situ temperature degC</span>
+<span class="sd">        g (array-like): gas specific gravity</span>
+<span class="sd">        rg (array-like): Gas-to-Oil ratio Litre/litre</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): The velocity of oil in m/s</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">b0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">b0</span> <span class="o">=</span> <span class="n">oil_fvf</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">rg</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">rhops</span> <span class="o">=</span> <span class="n">oil_rho_pseudo</span><span class="p">(</span><span class="n">rho0</span><span class="p">,</span> <span class="n">rg</span><span class="p">,</span> <span class="n">b0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="mi">2096</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rhops</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.6</span> <span class="o">-</span> <span class="n">rhops</span><span class="p">))</span>
+        <span class="o">-</span> <span class="mf">3.7</span> <span class="o">*</span> <span class="n">t</span>
+        <span class="o">+</span> <span class="mf">4.64</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="o">+</span> <span class="mf">0.0115</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="mf">4.12</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.08</span> <span class="o">/</span> <span class="n">rhops</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.wat_bulkmod" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">wat_bulkmod</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">vp</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Brine bulk modulus K</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rho</code></td>
+        <td><code>array-like</code></td>
+        <td><p>water fluid density g/cc</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>vp</code></td>
+        <td><code>array-like</code></td>
+        <td><p>water fluid compressional velocity m/s</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>bulk modulus GPa</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">wat_bulkmod</span><span class="p">(</span><span class="n">rho</span><span class="p">,</span> <span class="n">vp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Brine bulk modulus K</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rho (array-like): water fluid density g/cc</span>
+<span class="sd">        vp (array-like): water fluid compressional velocity m/s</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): bulk modulus GPa</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">vp</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e-6</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.wat_density_brine" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">wat_density_brine</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">sal</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Returns the density of brine at t and p</p>
+<p>B&amp;W 1992 Eq 27b</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>temperature degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>pressure MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>sal</code></td>
+        <td><code>array-like</code></td>
+        <td><p>weight fraction of salt
+note: Salinity (ppm) = fractional weight * 1E6</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>density of brine (g/cc)</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">wat_density_brine</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">sal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the density of brine at t and p</span>
+
+<span class="sd">    B&amp;W 1992 Eq 27b</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t (array-like): temperature degC</span>
+<span class="sd">        p (array-like): pressure MPa</span>
+<span class="sd">        sal (array-like): weight fraction of salt</span>
+<span class="sd">            note: Salinity (ppm) = fractional weight * 1E6</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): density of brine (g/cc)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">wat_density_pure</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="n">sal</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="mf">0.668</span>
+        <span class="o">+</span> <span class="mf">0.44</span> <span class="o">*</span> <span class="n">sal</span>
+        <span class="o">+</span> <span class="p">(</span><span class="mf">1e-6</span><span class="p">)</span>
+        <span class="o">*</span> <span class="p">(</span>
+            <span class="mi">300</span> <span class="o">*</span> <span class="n">p</span>
+            <span class="o">-</span> <span class="mi">2400</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="n">sal</span>
+            <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="p">(</span><span class="mi">80</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">t</span> <span class="o">-</span> <span class="mi">3300</span> <span class="o">*</span> <span class="n">sal</span> <span class="o">-</span> <span class="mi">13</span> <span class="o">*</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">47</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="n">sal</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.wat_density_pure" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">wat_density_pure</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Returns the density of pure water at t and p</p>
+<p>B&amp;W 1992 Eq 27a</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>temperature degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>pressure MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>density of pure water g/cc</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">wat_density_pure</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the density of pure water at t and p</span>
+
+<span class="sd">    B&amp;W 1992 Eq 27a</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t (array-like): temperature degC</span>
+<span class="sd">        p (array-like): pressure MPa</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): density of pure water g/cc</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">1e-6</span> <span class="o">*</span> <span class="p">(</span>
+        <span class="o">-</span><span class="mi">80</span> <span class="o">*</span> <span class="n">t</span>
+        <span class="o">-</span> <span class="mf">3.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="o">+</span> <span class="mf">0.00175</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="o">+</span> <span class="mi">489</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="o">+</span> <span class="mf">0.016</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="o">-</span> <span class="mf">1.3e-5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="o">-</span> <span class="mf">0.333</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="o">-</span> <span class="mf">0.002</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.wat_salinity_brine" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">wat_salinity_brine</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">density</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Back out the salinity of a brine form it's density using root finding.</p>
+<p>Reverse B&amp;W 1992 Eq 27b</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>float</code></td>
+        <td><p>temperature degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>float</code></td>
+        <td><p>pressure MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>density</code></td>
+        <td><code>float</code></td>
+        <td><p>density of brine (g/cc)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(float)</code></td>
+      <td><p>weight fraction of salt; note: Salinity (ppm) = fractional weight * 1E6</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">wat_salinity_brine</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">density</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Back out the salinity of a brine form it&#39;s density using root finding.</span>
+
+<span class="sd">    Reverse B&amp;W 1992 Eq 27b</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t (float): temperature degC</span>
+<span class="sd">        p (float): pressure MPa</span>
+<span class="sd">        density (float): density of brine (g/cc)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (float): weight fraction of salt; note: Salinity (ppm) = fractional weight * 1E6</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">solve_density_for_salinity</span><span class="p">(</span><span class="n">sal</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">density</span> <span class="o">-</span> <span class="n">wat_density_brine</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">sal</span><span class="p">)</span>
+
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">root_scalar</span><span class="p">(</span>
+        <span class="n">solve_density_for_salinity</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;brentq&quot;</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">sol</span><span class="o">.</span><span class="n">converged</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sol</span><span class="o">.</span><span class="n">root</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not find solution for density to salinity&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.wat_velocity_brine" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">wat_velocity_brine</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">sal</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Velocity of a brine</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>temperature degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>pressure MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>sal</code></td>
+        <td><code>array-like</code></td>
+        <td><p>weight fraction of salt
+note: Salinity (ppm) = fractional weight * 1E6</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>compressional velocity of brine m/s</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">wat_velocity_brine</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">sal</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Velocity of a brine</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t (array-like): temperature degC</span>
+<span class="sd">        p (array-like): pressure MPa</span>
+<span class="sd">        sal (array-like): weight fraction of salt</span>
+<span class="sd">            note: Salinity (ppm) = fractional weight * 1E6</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">     (array-like): compressional velocity of brine m/s</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">wat_velocity_pure</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
+        <span class="n">sal</span>
+        <span class="o">*</span> <span class="p">(</span>
+            <span class="mi">1170</span>
+            <span class="o">-</span> <span class="mf">9.6</span> <span class="o">*</span> <span class="n">t</span>
+            <span class="o">+</span> <span class="mf">0.055</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="o">-</span> <span class="mf">8.5e-5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="o">+</span> <span class="mf">2.6</span> <span class="o">*</span> <span class="n">p</span>
+            <span class="o">+</span> <span class="mf">0.0029</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">p</span>
+            <span class="o">-</span> <span class="mf">0.0476</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">sal</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">780</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">p</span> <span class="o">+</span> <span class="mf">0.16</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="o">-</span> <span class="mi">1820</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">sal</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.bw92.wat_velocity_pure" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">wat_velocity_pure</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Returns the velocity of pure water at t and p
+t and p must have equal shape</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>t</code></td>
+        <td><code>array-like</code></td>
+        <td><p>temperature degC</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>pressure MPa</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>compressional velocity of pure water m/s</p></td>
+    </tr>
+  </tbody>
+</table>      <div class="admonition notes">
+<p class="admonition-title">Notes</p>
+<p>This approximation breaks down above pressures of 100MPa</p>
+</div>
+
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/bw92.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">wat_velocity_pure</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the velocity of pure water at t and p</span>
+<span class="sd">    t and p must have equal shape</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        t (array-like): temperature degC</span>
+<span class="sd">        p (array-like): pressure MPa</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): compressional velocity of pure water m/s</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        This approximation breaks down above pressures of 100MPa</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: catch bad inputs - mismatched shapes</span>
+    <span class="n">tl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">pl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tl</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">pl</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="n">vl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">tl</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">tl</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">():</span>
+        <span class="n">tl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">pl</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">vl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">pl</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pl</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">():</span>
+        <span class="n">pl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">tl</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+        <span class="n">vl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">tl</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span>
+
+    <span class="c1"># vw = np.zeros_like(WATC)</span>
+    <span class="n">dims</span> <span class="o">=</span> <span class="n">vl</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">_wat_velocity_pure_sum</span><span class="p">(</span><span class="n">tl</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">pl</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">vl</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+    <span class="n">vl</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">vl</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">vl</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="eclipse">Eclipse</h2>
+<div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="kn">from</span> <span class="nn">digirock.fluids</span> <span class="kn">import</span> <span class="n">ecl</span>
+</code></pre></div>
+
+
+  <div class="doc doc-object doc-module">
+
+<a id="digirock.fluids.ecl"></a>
+    <div class="doc doc-contents first">
+
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.ecl.e100_bw" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">e100_bw</span><span class="p">(</span><span class="n">pres</span><span class="p">,</span> <span class="n">ref_pres</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">visc</span><span class="p">,</span> <span class="n">cvisc</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Eclipse 100 method for calculating Bw</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>pres</code></td>
+        <td><code>array-like</code></td>
+        <td><p>Pressure to calculate Bw at.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>ref_pres</code></td>
+        <td><code>float</code></td>
+        <td><p>Reference pressure of bw, should be close to in-situ pressure (MPa).</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>bw</code></td>
+        <td><code>float</code></td>
+        <td><p>Water formation volume factor at ref_pres (frac).</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>comp</code></td>
+        <td><code>float</code></td>
+        <td><p>Compressibility of water at ref_pres (1/MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>visc</code></td>
+        <td><code>float</code></td>
+        <td><p>Water viscosity at ref_pres (cP)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>cvisc</code></td>
+        <td><code>float</code></td>
+        <td><p>Water viscosibility (1/MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>The formation volume factor for pres</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/ecl.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">e100_bw</span><span class="p">(</span>
+    <span class="n">pres</span><span class="p">:</span> <span class="n">NDArrayOrFloat</span><span class="p">,</span>
+    <span class="n">ref_pres</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">bw</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">comp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">visc</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">cvisc</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArrayOrFloat</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Eclipse 100 method for calculating Bw</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pres (array-like): Pressure to calculate Bw at.</span>
+<span class="sd">        ref_pres: Reference pressure of bw, should be close to in-situ pressure (MPa).</span>
+<span class="sd">        bw: Water formation volume factor at ref_pres (frac).</span>
+<span class="sd">        comp: Compressibility of water at ref_pres (1/MPa)</span>
+<span class="sd">        visc: Water viscosity at ref_pres (cP)</span>
+<span class="sd">        cvisc: Water viscosibility (1/MPa)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The formation volume factor for pres</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">comp</span> <span class="o">*</span> <span class="p">(</span><span class="n">pres</span> <span class="o">-</span> <span class="n">ref_pres</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bw</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h3 id="digirock.fluids.ecl.oil_fvf_table" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">oil_fvf_table</span><span class="p">(</span><span class="n">pres</span><span class="p">,</span> <span class="n">bo</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">extrap</span><span class="o">=</span><span class="s1">&#39;pchip&#39;</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Calculate the oil formation volume factor from a b0 or PVT table</p>
+<p>The PVT table can be obtained from most ECLIPSE simulation data files.
+PVT tables are assumed to be constant for approximately reservoir temperature
+(isothermal).</p>
+<p>Within the defined table the interpolation is linear. Outside of the table</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>pres</code></td>
+        <td><code>array-like</code></td>
+        <td><p>pressure array</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>bo</code></td>
+        <td><code>array-like</code></td>
+        <td><p>oil FVF function vs pres</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>p</code></td>
+        <td><code>array-like</code></td>
+        <td><p>the pressure at which to calculate the FVF</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>extrap</code></td>
+        <td><code>str) </code></td>
+        <td><p>['pchip', 'const'] extrapolate outside of the defined table
+            pchip uses PCHIP type extrapolation (honors gradient)
+            const uses the closest value to the extrapolated point</p></td>
+        <td><code>&#39;pchip&#39;</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>(array-like)</code></td>
+      <td><p>the FVF for each value in p</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>digirock/fluids/ecl.py</code></summary>
+          <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">oil_fvf_table</span><span class="p">(</span><span class="n">pres</span><span class="p">,</span> <span class="n">bo</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">extrap</span><span class="o">=</span><span class="s2">&quot;pchip&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the oil formation volume factor from a b0 or PVT table</span>
+
+<span class="sd">    The PVT table can be obtained from most ECLIPSE simulation data files.</span>
+<span class="sd">    PVT tables are assumed to be constant for approximately reservoir temperature</span>
+<span class="sd">    (isothermal).</span>
+
+<span class="sd">    Within the defined table the interpolation is linear. Outside of the table</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pres (array-like): pressure array</span>
+<span class="sd">        bo (array-like): oil FVF function vs pres</span>
+<span class="sd">        p (array-like): the pressure at which to calculate the FVF</span>
+<span class="sd">        extrap (str) : [&#39;pchip&#39;, &#39;const&#39;] extrapolate outside of the defined table</span>
+<span class="sd">                        pchip uses PCHIP type extrapolation (honors gradient)</span>
+<span class="sd">                        const uses the closest value to the extrapolated point</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (array-like): the FVF for each value in p</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">linear</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="n">bo</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extrap</span> <span class="o">==</span> <span class="s2">&quot;const&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">linear</span>
+    <span class="k">elif</span> <span class="n">extrap</span> <span class="o">==</span> <span class="s2">&quot;pchip&quot;</span><span class="p">:</span>
+        <span class="n">tmin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">pres</span><span class="p">)</span>
+        <span class="n">tmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pres</span><span class="p">)</span>
+        <span class="n">pchipf</span> <span class="o">=</span> <span class="n">PchipInterpolator</span><span class="p">(</span><span class="n">pres</span><span class="p">,</span> <span class="n">bo</span><span class="p">)</span>
+        <span class="n">pchip</span> <span class="o">=</span> <span class="n">pchipf</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">p</span> <span class="o">&gt;</span> <span class="n">tmin</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">p</span> <span class="o">&lt;</span> <span class="n">tmax</span><span class="p">),</span> <span class="n">linear</span><span class="p">,</span> <span class="n">pchip</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../examples/example_fluids.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Fluids" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Fluids
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="fluid_classes.html" class="md-footer__link md-footer__link--next" aria-label="Next: Fluid Classes" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Fluid Classes
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Tony Hallam
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigations.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5a9542cf.min.js"></script>
+      
+    
+  </body>
+</html>
