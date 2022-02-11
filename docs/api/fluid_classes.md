@@ -56,6 +56,16 @@
       
 ## Loading Methods
 
+### `digirock.load_pvtw`
 ::: digirock.load_pvtw
     rendering:
+      show_root_toc_entry: false
       heading_level: 3
+      show_source: false
+
+### `digirock.load_pvto`
+::: digirock.load_pvto
+    rendering:
+      show_root_toc_entry: false
+      heading_level: 3
+      show_source: false

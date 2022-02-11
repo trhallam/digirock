@@ -41,6 +41,7 @@ markdown_extensions:
 plugins:
   - search
   - simple
+  - autorefs
   - mkdocs-jupyter:
       execute: true
       kernel_name: python3
@@ -65,5 +66,7 @@ nav:
     - "Fluid Methods": api/fluid_methods.md
     - "Fluid Classes": api/fluid_classes.md
     - "Models": api/model_methods.md
+    - "Base Classes": api/base_classes.md
+
 
 

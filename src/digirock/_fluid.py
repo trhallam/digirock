@@ -1,6 +1,7 @@
 """Fluid models to simplify generation of fluid properties.
 
 """
+from pathlib import Path
 from typing import List
 
 # pylint: disable=invalid-name,no-value-for-parameter
@@ -10,17 +11,17 @@ from scipy.interpolate import interp1d
 
 from ._exceptions import PrototypeError, WorkflowError
 from .utils.file import read_eclipsekw_3dtable, read_eclipsekw_2dtable
-from .utils.ecl import EclStandardConditions, EclUnitScaler
-from .utils._decorators import mutually_exclusive
-from .utils.types import NDArrayOrFloat
+from .utils.ecl import EclStandardConditions, EclUnitMap, EclUnitScaler
+from .utils._decorators import mutually_exclusive, broadcastable
+from .utils.types import NDArrayOrFloat, Pathlike
 
 from .fluids import bw92
 from .fluids import ecl as fluid_ecl
 
-from ._base import BaseModelClass
+from ._base import BaseConsumerClass
 
 
-class Fluid(BaseModelClass):
+class Fluid(BaseConsumerClass):
     """Base Class for defining fluids, all new fluids should be based upon this class.
 
     Attributes:
@@ -28,47 +29,74 @@ class Fluid(BaseModelClass):
     """
 
     def __init__(self, name: str = None, keys: List[str] = None):
-        BaseModelClass.__init__(self, name, keys)
+        BaseConsumerClass.__init__(self, name, keys + ["temp", "pres"])
 
     def _check_defined(self, from_func, var):
         if self.__getattribute__(var) is None:
             raise WorkflowError(from_func, f"The {var} attribute is not defined.")
 
-    def density(self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs):
+    def density(
+        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+    ) -> NDArrayOrFloat:
         """Returns density of fluid at temp and pres.
 
         Args:
-            temp (array-like): Temperature (degC)
-            pres (array-like): Pressure (MPa)
+            temp: Temperature (degC)
+            pres: Pressure (MPa)
+            kwargs: ignored
 
         Returns:
-            array-like : Density for temp and pres (g/cc).
+            Density for temp and pres (g/cc).
         """
         raise PrototypeError(self.__class__.__name__, "density")
 
-    def velocity(self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs):
+    def velocity(
+        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+    ) -> NDArrayOrFloat:
         """Returns density of fluid at temp and pres.
 
         Args:
-            temp (array-like): Temperature (degC)
-            pres (array-like): Pressure (MPa)
+            temp: Temperature (degC)
+            pres: Pressure (MPa)
+            kwargs: ignored
 
         Returns:
-            array-like : Velocity for temp and pres (m/s).
+            Velocity for temp and pres (m/s).
         """
         raise PrototypeError(self.__class__.__name__, "velocity")
 
-    def modulus(self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs):
-        """Returns modulus of fluid at temp and pres.
+    def bulk_modulus(
+        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+    ) -> NDArrayOrFloat:
+        """Returns bulk_modulus of fluid at temp and pres.
 
         Args:
-            temp (array-like): Temperature (degC)
-            pres (array-like): Pressure (MPa)
+            temp: Temperature (degC)
+            pres: Pressure (MPa)
+            kwargs: ignored
 
         Returns:
             array-like : Modulus for temp and pres (GPa).
         """
         raise PrototypeError(self.__class__.__name__, "modulus")
+
+    def shear_modulus(
+        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+    ) -> NDArrayOrFloat:
+        """Fluid shear modulus is zero. Return zero for all fluids.
+
+        Args:
+            temp: Temperature (degC)
+            pres: Pressure (MPa)
+            kwargs: ignored
+
+        Returns:
+            Modulus for temp and pres (GPa).
+        """
+        temp_ar = np.atleast_1d(temp)
+        temp_pres = np.atleast_1d(pres)
+
+        return np.full(temp_ar.shape, 0.0)
 
     def get_summary(self) -> dict:
         """Return a dictionary containing a summary of the fluid.
@@ -76,9 +104,7 @@ class Fluid(BaseModelClass):
         Returns:
             dict: Summary of properties.
         """
-        summary = super().get_summary()
-        summary.update({"name": self.name})
-        return summary
+        return super().get_summary()
 
 
 class Water(Fluid):
@@ -99,22 +125,58 @@ class Water(Fluid):
         super().__init__(name=name)
         self.sal = salinity / 1e6
 
+    @broadcastable("temp", "pres")
     def density(
         self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
     ) -> NDArrayOrFloat:
-        """Temperature and pressure dependent density for water with fixed salt concentration."""
+        """Temperature and pressure dependent density for water with fixed salt concentration.
+
+        Uses BW92 [`wat_density_brine`][digirock.fluids.bw92.wat_density_brine].
+
+        Args:
+            temp: Temperature (degC)
+            pres: Pressure (MPa)
+            kwargs: ignored
+
+        Returns:
+            array-like: Water density (g/cc)
+        """
         return bw92.wat_density_brine(temp, pres, self.sal)
 
+    @broadcastable("temp", "pres")
     def velocity(
         self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
     ) -> NDArrayOrFloat:
-        """Temperature and pressure dependent acoustic velcoity for water with fixed salt concentration."""
+        """Temperature and pressure dependent acoustic velocity for water with fixed salt concentration.
+
+        Uses BW92 [`wat_velocity_brine`][digirock.fluids.bw92.wat_velocity_brine].
+
+        Args:
+            temp: Temperature (degC)
+            pres: Pressure (MPa)
+            kwargs: ignored
+
+        Returns:
+            Water velocity (m/s)
+        """
         return bw92.wat_velocity_brine(temp, pres, self.sal)
 
-    def modulus(
+    @broadcastable("temp", "pres")
+    def bulk_modulus(
         self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
     ) -> NDArrayOrFloat:
-        """Temperature and pressure dependent modulus for water with fixed salt concentration."""
+        """Temperature and pressure dependent bulk modulus for water with fixed salt concentration.
+
+        Uses BW92 [`wat_bulkmod`][digirock.fluids.bw92.wat_bulkmod].
+
+        Args:
+            temp: Temperature (degC)
+            pres: Pressure (MPa)
+            kwargs: ignored
+
+        Returns:
+            Water modulus (GPa)
+        """
         return bw92.wat_bulkmod(self.density(temp, pres), self.velocity(temp, pres))
 
     def get_summary(self) -> dict:
@@ -130,13 +192,14 @@ class WaterECL(Fluid):
 
     Attributes:
         name (str): name of the fluid
-        density_asc: Density (g/cc) at surface conditions.
-        pvt: list of pvt dicts, each table contains
-            ref_pres: Reference pressure of bw (MPa)
-            bw: Formation volume factor at ref_pres (rm3/sm3)
-            comp: Compressibility of fluid. l/MPa
-            visc: Viscosity of fluid cP
-            cvisc: Viscosibility (1/MPa)
+        density_asc (float): Density (g/cc) at surface conditions.
+        ref_pres (float): Reference pressure of bw (MPa)
+        bw (float): Formation volume factor at ref_pres (rm3/sm3)
+        comp (float): Compressibility of fluid. l/MPa
+        visc (float): Viscosity of fluid cP
+        cvisc (float): Viscosibility (1/MPa)
+        salinity (float): Salinity in
+        fvf1_pres (float): The reference pressure when the FVF=1.
     """
 
     def __init__(
@@ -150,16 +213,15 @@ class WaterECL(Fluid):
         salinity: int = 0,
         fvf1_pres: float = 0.101325,
     ):
-        """[summary]
-
+        """
         Args:
             ref_pres: Reference pressure of bw, should be close to in-situ pressure (MPa).
             bw: Water formation volume factor at ref_pres (frac).
             comp: Compressibility of water at ref_pres (1/MPa)
             visc: Water viscosity at ref_pres (cP)
             cvisc: Water viscosibility (1/MPa)
-            name (optional): [description]. Defaults to None.
-            salinity (optional): [description]. Defaults to None.
+            name (optional): Name for fluid. Defaults to None.
+            salinity (optional): Salinity of brine (ppm). Defaults to 0.
             fvf1_pres (optional): The reference pressure when the FVF=1. Defaults to 0.101325 MPa.
         """
         super().__init__(name=name)
@@ -172,16 +234,35 @@ class WaterECL(Fluid):
         self.fvf1_pres = fvf1_pres
 
     @property
-    def density_asc(self):
-        "Density at atmospheric conditions."
+    def density_asc(self) -> float:
+        """Density at atmospheric conditions.
+
+        Uses Batzle and Wang 92 with Eclipse Standard Condition values.
+
+        Returns:
+            Water density (g/cc)
+        """
         return bw92.wat_density_brine(
             EclStandardConditions.TEMP.value, EclStandardConditions.PRES.value, self.sal
         )
 
+    @broadcastable("temp", "pres")
     def density(
         self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
     ) -> NDArrayOrFloat:
-        """Temperature and pressure dependent density for water with fixed salt concentration adjusted for FVF."""
+        """Temperature and pressure dependent density for water with fixed salt concentration adjusted for FVF.
+
+        Uses Eclipse [`e100_bw`][digirock.fluids.ecl.e100_bw] for calculating FVF. Eclipse multiplies the surface presure
+        the expansion factor FVF relative to surface conditions to calculate the adjusted density.
+
+        Args:
+            temp: Temperature in degC
+            pres: Pressure in MPa
+            kwargs: ignored
+
+        Returns:
+            Water density (g/cc)
+        """
         # pressure at atmospehric conditions i.e. fvf = 1
         bw_asc = fluid_ecl.e100_bw(
             self.fvf1_pres, self.ref_pres, self.bw, self.comp, self.visc, self.cvisc
@@ -192,16 +273,40 @@ class WaterECL(Fluid):
         # density at atmospheric conditions
         return self.density_asc * bw_asc / bw
 
+    @broadcastable("temp", "pres")
     def velocity(
         self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
     ) -> NDArrayOrFloat:
-        """This function overides the velocity function in etlpy.pem.Fluid"""
+        """Temperature and pressure dependent velocity for a fixed fixed salt concentration.
+
+        Uses BW92 [`wat_velocity_brine`][digirock.fluids.bw92.wat_velocity_brine].
+
+        Args:
+            temp: Temperature in degC
+            pres: Pressure in MPa
+            kwargs: ignored
+
+        Returns:
+            velocity: Water velocity in m/s
+        """
         return bw92.wat_velocity_brine(temp, pres, self.sal)
 
-    def modulus(
+    @broadcastable("temp", "pres")
+    def bulk_modulus(
         self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
     ) -> NDArrayOrFloat:
-        """This function overides the modulus function in etlpy.pem.Fluid"""
+        """Temperature and pressure dependent bulk modulus for a fixed fixed salt concentration.
+
+        Uses BW92 [`wat_bulkmod`][digirock.fluids.bw92.wat_bulkmod].
+
+        Args:
+            temp: Temperature in degC
+            pres: Pressure in MPa
+            kwargs: ignored
+
+        Returns:
+            modulus: Water modulus in GPa
+        """
         return bw92.wat_bulkmod(self.density(temp, pres), self.velocity(temp, pres))
 
     def get_summary(self):
@@ -221,23 +326,42 @@ class WaterECL(Fluid):
 
 
 def load_pvtw(
-    filepath,
+    filepath: Pathlike,
     units: str = "METRIC",
     prefix: str = "pvtw",
     salinity: List[int] = None,
 ) -> dict:
-    """Load a PVTW table into multiple WaterECL classes.
+    """Load a PVTW table into multiple [`WaterECL`][digirock.WaterECL] classes.
 
-    If salinity is None,
+    PVTW tables have the form (where units may differ):
+
+    ```
+    PVTW
+    --RefPres        Bw          Cw           Vw         dVw
+    --   bara       rm3/m3       1/bara        cP        1/bara
+        268.5      1.03382    0.31289E-04   0.38509    0.97801E-04 / --  #1
+        268.5      1.03382    0.31289E-04   0.38509    0.97801E-04 / --  #2
+    ```
+
+    If salinity is None, the salinity is backed out from the Water density using BW92
+    [`wat_salinity_brine`][digirock.fluids.bw92.wat_salinity_brine]. the DENSITY keyword must
+    be present in the same input file.
 
     Args:
-        filepath ([type]): [description]
-        units (str, optional): [description]. Defaults to 'METRIC'.
-        prefix (optional): The prefix to apply to the name of each loaded fluid.
-        salinity (optional): The salinity of the pvt tables in PPM
+        filepath: Filepath or str to text file containing PVTW keyword tables.
+        units: The Eclipse units of the PVTW table, one of ['METRIC', 'PVTM', 'FIELD', 'LAB']. Defaults to 'METRIC'.
+        prefix: The prefix to apply to the name of each loaded fluid.
+        salinity: The salinity of the pvt tables in PPM
+
+    Returns:
+        A dictionary of WaterECL instance for each PVT table entry.
+
     Raises:
-        ValueError: [description]
+        AssertionError: units is not valid
+        ValueError: DENSITY kw not in file with PVTW
     """
+    assert units in EclUnitMap.__members__
+
     table = dict()
     _ut: dict = EclUnitScaler[units].value
 
@@ -270,11 +394,11 @@ def load_pvtw(
             "Require either DENSITY kw in input file or user specified salinity."
         )
 
-    salinity = np.atleast_1d(salinity)
-    if salinity.size == 1:
+    salinity_ar = np.atleast_1d(salinity)
+    if salinity_ar.size == 1:
         salinity = np.full(len(rawpvt), salinity[0])
 
-    for i, (rawtab, sal) in enumerate(zip(rawpvt, salinity)):
+    for i, (rawtab, sal) in enumerate(zip(rawpvt, salinity_ar)):
         name = f"{prefix}{i}"
         tab = [
             _ut[units] * float(val)
@@ -290,25 +414,26 @@ def load_pvtw(
 
 
 class DeadOil(Fluid):
-    """Dead Oil fluid class for oils with no disolved gasses.
+    """Dead Oil fluid class for oils with no dissolved gasses.
 
     Attributes:
         name (str): name of the fluid
-        api: API gravity of oil.
-        std_density: Standard bulk density in g/cc at 15.6degC.
+        api (float): API gravity of oil.
+        std_density (float): Standard bulk density in g/cc at 15.6degC.
         bo (float, xarray.DataArray): The formation volume factor or table.
     """
 
     @mutually_exclusive("api", "std_density")
-    def __init__(self, name=None, api=None, std_density=None):
+    def __init__(self, name: str = None, api: float = None, std_density: float = None):
         """
-        api and std_density are mutually exclusive inputs.
+        `api` and `std_density` are mutually exclusive inputs.
 
         Args:
-            name (str, optional): Name of fluid. Defaults to None.
-            api (int, optional): Water salinity in ppm. Defaults to 0.
+            name: Name of fluid
+            api: Oil API
+            std_density: Standard bulk density in g/cc at 15.6degC
         """
-        super().__init__(name=name, keys=["bo", "rs", "pvt"])
+        super().__init__(name=name, keys=["bo"])
         if api is not None:
             self.set_api(api)
         elif std_density is not None:
@@ -320,20 +445,20 @@ class DeadOil(Fluid):
         self.bo = None
         self._bo_istable = False
 
-    def set_api(self, api):
+    def set_api(self, api: float):
         """Set the density of the oil using API gravity.
 
         Args:
-            api (float): Api of oil.
+            api: Api of oil.
         """
         self.api = api
         self.std_density = 141.5 / (self.api + 131.5)
 
-    def set_standard_density(self, std_density):
-        """Set the density of the oil at standard pressure and 15.6degC.
+    def set_standard_density(self, std_density: float):
+        """Set the density of the oil at standard pressure and temperature (15.6 degC).
 
         Args:
-            std_density (float): The density of oil (g/cc)
+            std_density: The density of oil at standard conditions (g/cc)
         """
         self.std_density = std_density
         self.api = 141.5 / self.std_density - 131.5
@@ -342,13 +467,13 @@ class DeadOil(Fluid):
         self.bo = xr.DataArray(bo, coords=[pres], dims=["pres"])
         self._bo_istable = True
 
-    def set_fvf(self, bo, pres=None):
+    def set_fvf(self, bo: NDArrayOrFloat, pres: NDArrayOrFloat = None):
         """Set the FVF factor relationship for the oil. If pressure is not
         specified bo should be a constant.
 
         Args:
-            bo (float, array-like): Bo constant or table matching pressure input.
-            pres (array-like, Optional): Pressures that bo is defined at. Defaults to None.
+            bo: Bo constant or table matching pressure input.
+            pres: Pressures that bo is defined at. Defaults to None.
 
         Raises:
             ValueError: When inputs are incorrect.
@@ -366,14 +491,14 @@ class DeadOil(Fluid):
 
             self._fvf_array_from_table(pres, bo)
 
-    def fvf(self, pres=None):
+    def fvf(self, pres: NDArrayOrFloat = None) -> NDArrayOrFloat:
         """Get the formation volume factor at pressure if specified.
 
         Args:
-            pres(array-like): Pressure to sample bo (MPa)
+            pres: Pressure to sample bo (MPa), required when Bo is a table.
 
         Returns:
-            array-like: Formation volume factor fvf (frac)
+            Formation volume factor fvf (frac)
         """
         if self._bo_istable and pres is None:
             raise ValueError(
@@ -385,12 +510,12 @@ class DeadOil(Fluid):
         else:
             return fluid_ecl.oil_fvf_table(self.bo.pres.values, self.bo.values, pres)
 
-    def calc_fvf(self, temp):
-        """Calculate the oil formation volume factor using Batzle and Wang 1992.
+    def calc_fvf(self, temp: float):
+        """Calculate the oil formation volume factor using BW92.
+
+        Uses [`oil_fvf`][digirock.fluids.bw92.oil_fvf] gas Rs is assumed 0.
 
         Args:
-            gas_sg (float): The disolved gas specific gravity.
-            rs (array-like): The gas to oil ratio (frac).
             temp (float): The in-situ temperature degC
         """
         if self.std_density is not None:
@@ -400,20 +525,71 @@ class DeadOil(Fluid):
                 "std_density", "Set an oil standard density or api first."
             )
 
-    def density(self, temp, pres):
-        """This function overides the density function in etlpy.pem.Fluid"""
+    @broadcastable("temp", "pres")
+    def density(
+        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+    ) -> NDArrayOrFloat:
+        """Temperature and pressure dependent density for dead oil adjusted for FVF.
+
+        Uses BW92 [`oil_density`][digirock.fluids.bw92.oil_density].
+
+        Args:
+            temp: Temperature in degC
+            pres: Pressure in MPa
+            kwargs: ignored
+
+        Returns:
+            Oil density (g/cc)
+        """
         return bw92.oil_density(self.std_density, pres, temp)
 
-    def velocity(self, temp, pres):
-        """This function overides the velocity function in etlpy.pem.Fluid"""
-        bo = self.fvf(pres)
+    @broadcastable("temp", "pres")
+    def velocity(
+        self,
+        temp: NDArrayOrFloat,
+        pres: NDArrayOrFloat,
+        bo: NDArrayOrFloat = None,
+        **kwargs,
+    ) -> NDArrayOrFloat:
+        """Temperature and pressure dependent acoustic velocity for dead oil adjusted for FVF.
+
+        Uses BW92 [`oil_velocity`][digirock.fluids.bw92.oil_velocity], gas Rs is assumed to be 0.
+
+        Args:
+            temp: Temperature in degC
+            pres: Pressure in MPa
+            bo: Set bo (vfrac) explicitly, else use class constant or table.
+            kwargs: ignored
+
+        Returns:
+            Oil acoustic velocity (m/s)
+        """
+        if bo is None:
+            bo = self.fvf(pres)
         return bw92.oil_velocity(self.std_density, pres, temp, 0, 0, bo)
 
-    def modulus(self, temp, pres):
-        """This function overides the modulus function in etlpy.pem.Fluid"""
-        return bw92.bulkmod(self.density(temp, pres), self.velocity(temp, pres))
+    @broadcastable("temp", "pres")
+    def bulk_modulus(
+        self,
+        temp: NDArrayOrFloat,
+        pres: NDArrayOrFloat,
+        **kwargs,
+    ) -> NDArrayOrFloat:
+        """Temperature and pressure dependent bulk modulus for dead oil adjusted for FVF.
 
-    def get_summary(self):
+        Uses BW92 [`oil_bulkmod`][digirock.fluids.bw92.oil_bulkmod].
+
+        Args:
+            temp: Temperature in degC
+            pres: Pressure in MPa
+            kwargs: ignored
+
+        Returns:
+            Oil modulus (GPa)
+        """
+        return bw92.oil_bulkmod(self.density(temp, pres), self.velocity(temp, pres))
+
+    def get_summary(self) -> dict:
         if self._bo_istable:
             bo = "table"
         else:
@@ -424,33 +600,34 @@ class DeadOil(Fluid):
 
 
 class Oil(DeadOil):
-    """Oil fluid class for oils with disolved gas, i.e. Live Oil.
+    """Oil fluid class for oils with dissolved gas, i.e. Live Oil.
 
     Attributes:
-        As per Fluid base class.
-        As per DeadOil base class.
-        gas_sg (float): The disolved gas standard gravity.
-        rs (float, xarray.DataArray): The disolved gas ratio or table.
-        _rs_istable (bool): Fluid has rs as table.
+        name (str): name of the fluid
+        api (float): API gravity of oil.
+        std_density (float): Standard bulk density in g/cc at 15.6degC.
+        bo (float, xarray.DataArray): The formation volume factor or table.
+        gas_sg (float): The dissolved gas standard gravity.
+        rs (float, xarray.DataArray): The dissolved gas ratio or table.
         sal (float): Brine salinity in ppm
     """
 
-    gas_sg = None
-    rs = None
-    _rs_istable = False
-
     @mutually_exclusive("api", "std_density")
-    def __init__(self, name=None, api=None, std_density=None):
+    def __init__(self, name: str = None, api: float = None, std_density: float = None):
         """
-        api and std_density are mutually exclusive inputs.
+        `api` and `std_density` are mutually exclusive inputs.
 
         Args:
-            name (str, optional): Name of fluid. Defaults to None.
-            api (int, optional): Water salinity in ppm. Defaults to 0.
+            name: Name of fluid
+            api: Oil API
+            std_density: Standard bulk density in g/cc at 15.6degC
         """
-        super().__init__(name=name, api=api, std_density=std_density)
+        self.gas_sg = None
+        self.rs = None
+        self._rs_istable = False
+        super().__init__(name=name, api=api, std_density=std_density, keys=["rs", "bo"])
 
-    def _fvf_array_from_table(self, pres, bo, rs, append=True):
+    def _fvf_array_from_table(self, pres: NDArrayOrFloat, bo, rs, append=True):
         if not isinstance(rs, (int, float)):
             raise ValueError("rs should be a single value of type (float, int)")
 
@@ -468,15 +645,23 @@ class Oil(DeadOil):
                 )
             )
 
-    def set_fvf(self, bo, rs, pres=None, append=True):
+    def set_fvf(
+        self,
+        bo: NDArrayOrFloat,
+        rs: float,
+        pres: NDArrayOrFloat = None,
+        append: bool = True,
+    ):
         """Set the formation volume factor for fluid.
 
-        Multiple values of bo for different rs values can be specified using the
+        Multiple values of `bo` for different `rs` values can be specified using the
         append keyword to create a multi-dimensional table.
 
         Args:
-            bo (float, array-like): Can be a float of table of pressure (MPa) and bo (frac) pairs.
-            rs (float): The solution gas ratio for bo or bo table.
+            bo: Can be a float of table of pressure (MPa) and bo (frac) pairs.
+            rs: The solution gas ratio for bo or bo table.
+            pres: Pressure values (MPa) to match bo
+            append: Append to the existing fvf table with another `rs` point.
         """
         try:
             n = bo.size
@@ -496,60 +681,22 @@ class Oil(DeadOil):
         else:
             raise ValueError(f"Unknow type for bo {type(bo)}")
 
-    def load_pvto(self, filepath, table=0, pres_units=None):
-        """Load and fvf table from a PVTO Eclipse keyword in a textfile.
-
-        Args:
-            filepath (str): The filepath of the file text file containing the PVTO tables.
-            table (int): Which PVTO table to load.
-        """
-        pvt = read_eclipsekw_3dtable(filepath, "PVTO")
-
-        pvt_float = []
-        for p in pvt:
-            q_float = []
-            for q in p:
-                q_float = q_float + [np.array(q.split()).astype(float)]
-            pvt_float = pvt_float + [q_float]
-
-        pvt_rs_float = []
-        for p in pvt_float:
-            rs_float = []
-            q_float = []
-            for q in p:
-                try:
-                    rs_float.append(q[0])
-                except IndexError:
-                    continue
-                q_float = q_float + [q[1:].reshape(-1, 3)]
-            pvt_rs_float = pvt_rs_float + [[rs_float, q_float]]
-
-        if table >= len(pvt_rs_float):
-            raise ValueError(
-                f"selected PVT table number {table} must be less than"
-                " number of tables found {}".format(len(pvt_rs_float))
-            )
-        pvt = pvt_rs_float[table]
-        for rs, bo in zip(pvt[0], pvt[1]):
-            self.set_fvf(bo[:, 1], rs, bo[:, 0])
-
-        if pres_units == "bar":
-            self.bo["pres"] = self.bo.pres / 10
-
-    def _rs_array_from_table(self, pres, rs):
+    def _rs_array_from_table(self, pres: NDArrayOrFloat, rs: NDArrayOrFloat):
 
         if not (rs.ndim == 1 and pres.ndim == 1):
-            raise ValueError("bo and pres must be 1D arrays")
+            raise ValueError("rs and pres must be 1D arrays")
 
         self.rs = xr.DataArray(rs, coords=[pres], dims=["pres"])
 
-    def set_disolved_gas(self, gas_sg, rs, pres=None):
-        """Set the disolved gas properties.
+    def set_dissolved_gas(
+        self, gas_sg: float, rs: NDArrayOrFloat, pres: NDArrayOrFloat = None
+    ):
+        """Set the dissolved gas properties.
 
         Args:
-            gas_sg (float): The disolved gas specific gravity.
-            rs (float, array-like): The gas to oil ratio (frac).
-            pres (array-like): Required if rs is array-like. Defaults to None.
+            gas_sg: The dissolved gas specific gravity
+            rs: The gas to oil ratio (vfrac)
+            pres: Required if `rs` is NDArray
         """
         if pres is None:
             try:
@@ -568,14 +715,14 @@ class Oil(DeadOil):
         else:
             raise ValueError(f"Unknown type for rs {type(rs)}")
 
-    def calc_fvf(self, temp, pres):
-        """Calculate the oil formation volume factor using Batzle and Wang 1992.
+    def calc_fvf(self, temp: float, pres: float):
+        """Calculate the oil formation volume factor using BW92.
+
+        Set the attribute `bo` using BW92 [oil_fvf][digirock.fluids.bw92.oil_fvf].
 
         Args:
-            gas_sg (float): The disolved gas specific gravity.
-            rs (array-like): The gas to oil ratio (frac).
-            temp (float): The in-situ temperature degC
-            pres (float): The pressure to calculate the gas rs for. Necesarry is rs is specified as
+            temp: The in-situ temperature (degC)
+            pres: The pressure to calculate the gas `rs` for. Necessary if rs is specified as
                 a table.
         """
         if self._rs_istable:
@@ -590,7 +737,7 @@ class Oil(DeadOil):
                 "std_density", "Set an oil standard density or api first."
             )
 
-    def _get_rsfvf(self, pres):
+    def _get_rsfvf(self, pres: float):
         self._check_defined("fvf", "rs")
         self._check_defined("fvf", "bo")
 
@@ -613,21 +760,42 @@ class Oil(DeadOil):
             fvf = self.bo
         return rs, fvf
 
-    def fvf(self, pres):
+    def fvf(self, pres: NDArrayOrFloat) -> NDArrayOrFloat:
         """Get the formation volume factor at pressure.
         TODO: Implement for different rs values
 
         Args:
-            pres(array-like): Pressure to sample bo (MPa)
+            pres: Pressure to sample bo (MPa)
 
         Returns:
-            array-like: Formation volume factor fvf (frac)
+            Formation volume factor fvf (frac)
         """
         _, fvf = self._get_rsfvf(pres)
         return fvf
 
-    def density(self, temp, pres, rs=None, fvf=None):
-        """This function overides the density function in etlpy.pem.Fluid"""
+    @broadcastable("temp", "pres")
+    def density(
+        self,
+        temp: NDArrayOrFloat,
+        pres: NDArrayOrFloat,
+        rs: NDArrayOrFloat = None,
+        fvf: NDArrayOrFloat = None,
+        **kwargs,
+    ) -> NDArrayOrFloat:
+        """Temperature and pressure dependent density for Oil with adjusted for RS and FVF.
+
+        Density is calculated using BW92 [oil_density][digirock.fluids.bw92.oil_density].
+
+        Args:
+            temp: Temperature in degC
+            pres: Pressure in MPa
+            rs: If None, uses set values or table
+            fvf: If None, uses set values or table
+            kwargs: ignored
+
+        Returns:
+            Oil density (g/cc)
+        """
         if rs is None and fvf is None:
             rs, fvf = self._get_rsfvf(pres)
         elif rs is None and fvf is not None:
@@ -639,8 +807,29 @@ class Oil(DeadOil):
         oil_rho = bw92.oil_density(oil_rho_s, pres, temp)
         return oil_rho
 
-    def velocity(self, temp, pres, rs=None, fvf=None):
-        """This function overides the velocity function in etlpy.pem.Fluid"""
+    @broadcastable("temp", "pres")
+    def velocity(
+        self,
+        temp: NDArrayOrFloat,
+        pres: NDArrayOrFloat,
+        rs: NDArrayOrFloat = None,
+        fvf: NDArrayOrFloat = None,
+        **kwargs,
+    ) -> NDArrayOrFloat:
+        """Temperature and pressure dependent acoustic velocity for Oil with adjusted for RS and FVF.
+
+        Velocity is calculated using BW92 [oil_velocity][digirock.fluids.bw92.oil_velocity].
+
+        Args:
+            temp: Temperature in degC
+            pres: Pressure in MPa
+            rs: If None, uses set values or table
+            fvf: If None, uses set values or table
+            kwargs: ignored
+
+        Returns:
+            Oil velocity (m/s)
+        """
         if rs is None and fvf is None:
             rs, fvf = self._get_rsfvf(pres)
         elif rs is None and fvf is not None:
@@ -650,9 +839,30 @@ class Oil(DeadOil):
 
         return bw92.oil_velocity(self.std_density, pres, temp, self.gas_sg, rs, fvf)
 
-    def modulus(self, temp, pres, rs=None, fvf=None):
-        """This function overides the modulus function in etlpy.pem.Fluid"""
-        return bw92.bulkmod(
+    @broadcastable("temp", "pres")
+    def bulk_modulus(
+        self,
+        temp: NDArrayOrFloat,
+        pres: NDArrayOrFloat,
+        rs: NDArrayOrFloat = None,
+        fvf: NDArrayOrFloat = None,
+        **kwargs,
+    ) -> NDArrayOrFloat:
+        """Temperature and pressure dependent bulk modulus for Oil with adjusted for RS and FVF.
+
+        Modulus is calculated using BW92 [oil_bulkmod][digirock.fluids.bw92.oil_bulkmod].
+
+        Args:
+            temp: Temperature in degC
+            pres: Pressure in MPa
+            rs: If None, uses set values or table
+            fvf: If None, uses set values or table
+            kwargs: ignored
+
+        Returns:
+            Oil modulus (GPa)
+        """
+        return bw92.oil_bulkmod(
             self.density(temp, pres, rs=rs, fvf=fvf),
             self.velocity(temp, pres, rs=rs, fvf=fvf),
         )
@@ -665,6 +875,54 @@ class Oil(DeadOil):
         summary = super().get_summary()
         summary.update({"rs": rs})
         return summary
+
+
+def load_pvto(filepath: Pathlike, units: str = "METRIC", prefix: str = "pvto") -> dict:
+    """Load a PVTO Eclipse keyword from a textfile into multiple [`Oil`][digirock.Oil] classes.
+
+    Args:
+        filepath: The filepath of the file text file containing the PVTO tables.
+        units: The Eclipse units of the PVTW table, one of ['METRIC', 'PVTM', 'FIELD', 'LAB']. Defaults to 'METRIC'.
+        prefix: The prefix to apply to the name of each loaded fluid.
+
+    Raises:
+        AssertionError: units is not valid
+    """
+    assert units in EclUnitMap.__members__
+    pvt = read_eclipsekw_3dtable(filepath, "PVTO")
+
+    pvt_float = []
+    for p in pvt:
+        q_float = []
+        for q in p:
+            q_float = q_float + [np.array(q.split()).astype(float)]
+        pvt_float = pvt_float + [q_float]
+
+    pvt_rs_float = []
+    for p in pvt_float:
+        rs_float = []
+        q_float = []
+        for q in p:
+            try:
+                rs_float.append(q[0])
+            except IndexError:
+                continue
+            q_float = q_float + [q[1:].reshape(-1, 3)]
+        pvt_rs_float = pvt_rs_float + [[rs_float, q_float]]
+
+    if table >= len(pvt_rs_float):
+        raise ValueError(
+            f"selected PVT table number {table} must be less than"
+            " number of tables found {}".format(len(pvt_rs_float))
+        )
+    pvt = pvt_rs_float[table]
+    for rs, bo in zip(pvt[0], pvt[1]):
+        self.set_fvf(bo[:, 1], rs, bo[:, 0])
+
+    if pres_units == "bar":
+        self.bo["pres"] = self.bo.pres / 10
+
+    return {}
 
 
 class Gas(Fluid):
@@ -909,7 +1167,7 @@ class FluidModel:
         as the complement.
 
         Args:
-            kwargs (array-like): Volume fraction array.
+            kwargs: Volume fraction array.
         """
         # TODO: check temp and pres are good dims with kwargs
 
@@ -937,12 +1195,12 @@ class FluidModel:
         complement.
 
         Args:
-            temp (array-like): Temperature for sameple point/s.
-            pres (array-like): Pressure for sample point/s.
-            kwargs (array-like): Volume fraction array for fluid kw.
+            temp: Temperature for sameple point/s.
+            pres: Pressure for sample point/s.
+            kwargs: Volume fraction array for fluid kw.
 
         Returns:
-            (array-like): The modulus of the mixed fluid for temp and pres points.
+           : The modulus of the mixed fluid for temp and pres points.
         """
         kwargs, bo, rs = self._strip_oil_kwargs(kwargs)
         kwargs = self._check_kwargs(vol_frac_tol=vol_frac_tol, **kwargs)

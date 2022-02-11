@@ -1,7 +1,13 @@
 from typing import List
 
 
-class BaseModelClass:
+class BaseConsumerClass:
+    """Base consumer class from which all other consumer classes are defined.
+    For example, uses to define input consumer classes like fluids, mineral mixing models etc.
+
+    Attributes:
+       name (str): The name of the Model.
+    """
 
     _protected_kw_registry: list = list()
 
@@ -34,8 +40,14 @@ class BaseModelClass:
             )
 
     @classmethod
-    def keys(self):
+    def keys(self) -> list:
+        """Returns a list of keys this class will require for computation.
+
+        Returns:
+            The keys this class requires.
+        """
         return self._protected_kw_registry
 
-    def get_summary(self):
-        return {"class": self.__class__}
+    def get_summary(self) -> dict:
+        """Returns a summary of this class."""
+        return {"class": self.__class__, "name": self.name}

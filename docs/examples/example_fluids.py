@@ -43,7 +43,7 @@ t = 110
 temp = np.linspace(80, 150, 10)
 
 # %%
-from digirock import Water, WaterPVTW
+from digirock import Water, WaterECL, load_pvtw
 
 # Initialisation of BW92 Water requires the salinity in PPM.
 wat = Water(name="water", salinity=0)
@@ -84,106 +84,53 @@ print("Modulus 2 array values (GPa):", wat.density(temp.reshape(2, -1), pres.res
 # An inbuilt class exists for using PVTW tables from Eclipse include files. The density is then calculated using the Eclipse formula.
 
 # %%
-wat_pvtw = WaterPVTW(name="wat_pvtw", salinity=0)
-
-# load the table directly from a text file
-wat_pvtw.load_pvtw("example_data/COMPLEX_PVT.inc")
+# load the Eclipse table directly from a text file
+wat_pvtw = load_pvtw("example_data/COMPLEX_PVT.inc", salinity=0)
 
 # look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example
-print(wat_pvtw.pvt[0])
+print(wat_pvtw["pvtw0"].get_summary())
+
+# %% [markdown]
+# Let's look at the denisty for the first table entry that was loaded for this PVTW.
+
+# %%
+pvtw0 = wat_pvtw["pvtw0"]
 
 # we need to tell the fluid which pvt table to use either with each call to a method
-print("Density single values (g/cc):", wat_pvtw.density(t, p, pvt=1))
+print("Density single values (g/cc):", pvtw0.density(t, p))
 
-# or we can set it permanently
-wat_pvtw.set_active_pvtn(1)
-print("Density array values (g/cc):", wat_pvtw.density(temp, pres), '\n')
+# with arrays
+print("Density array values (g/cc):", pvtw0.density(temp, pres), '\n')
+print("Bulk Modulus array values (g/cc):", pvtw0.bulk_modulus(temp, pres), '\n')
 
-# pvt can also be an array
-print("Density all array values (g/cc):", wat_pvtw.density(temp, pres, pvt=np.arange(10)), '\n')
-
-# the wat pvwt summary has extra information
-wat_pvtw.get_summary()
+# %% [markdown]
+# ## Oil Types
 
 # %%
-from digirock import WaterECL
+from digirock import DeadOil, Oil
+
+# %% [markdown]
+# `DeadOil` is a class for fluids with no dissolved gas and it is initialised by either specifying an oil API or standard density.
 
 # %%
-print("Density single values (g/cc):", a.density(t, p))
+doil_api = DeadOil(api=35)
+print(doil_api.get_summary())
+
+doil_sd = DeadOil(std_density=0.84985)
+print(doil_sd.get_summary())
+
+# %% [markdown]
+# Note that `bo` is mentioned in the summary but isn't yet set. Default behaviour for `DeadOil` is to calculate the formation volume factor (fvf) using Batzle and Wang 92 when a bo relationship isn't specified. The `bo` is temperature specific and stored in the `bo` attribute.
 
 # %%
-wat_pvtw.modulus(10, 1, pvt=0)
+# fvf is based upon temperature in degC
+doil_api.calc_fvf(110)
+print(doil_api.bo)
 
 # %%
-wat.modulus(25, 1)
-
-
-# %%
-def load_pvtw(self, filepath, units: str = "METRIC"):
-    """
-
-    Args:
-        filepath ([type]): [description]
-        units (str, optional): [description]. Defaults to 'METRIC'.
-
-    Raises:
-        ValueError: [description]
-    """
-    _ut: dict = EclUnitScaler[units].value
-
-    rawpvt = read_eclipsekw_2dtable(filepath, "PVTW")
-    self.pvt = list()
-    for rawtab in rawpvt:
-        tab = dict()
-        for val, units, name in zip(
-            rawtab,
-            ["pressure", "unitless", "ipressure", "unitless", "ipressure"],
-            ["ref_pres", "bw", "comp", "visc", "cvisc"],
-        ):
-            tab[name] = _ut[units] * float(val)
-        self.pvt.append(tab)
-
-    try:
-        dens = read_eclipsekw_2dtable(filepath, "DENSITY")[0]
-        dens = [_ut["density"] * float(d) for d in dens]
-    except KeyError:
-        grav = read_eclipsekw_2dtable(filepath, "GRAVITY")
-        raise NotImplementedError(
-            "GRAVITY KW not yet implemented contact via Github for help."
-        )
-        # convert to density
-
-    self.density_asc = dens[1]
-
+doil_api.keys()
 
 # %%
-from scipy.optimize import root_scalar
-
-# %%
-from digirock.fluids import bw92
-from digirock.utils.ecl import EclStandardConditions
-
-# %%
-EclStandardConditions.PRES.value
-
-# %%
-bw92.wat_density_brine(EclStandardConditions.TEMP.value, EclStandardConditions.PRES.value, 142366.6294070789*1E-6)
-
-# %%
-bw92.wat_salinity_brine(EclStandardConditions.TEMP.value, EclStandardConditions.PRES.value, 1.108193)
-
-
-# %%
-from digirock._fluid import load_pvtw
-
-# %%
-a = load_pvtw("example_data/COMPLEX_PVT.inc")["pvtw0"]
-a.get_summary()
-
-# %%
-a.get_summary()["salinity"] * 1E6
-
-# %%
-a.density(p, t)
+WaterECL.keys()
 
 # %%

@@ -3,6 +3,7 @@
 
 from functools import wraps
 import numpy as np
+from inspect import getfullargspec
 
 
 def mutually_exclusive(keyword, *keywords):
@@ -62,6 +63,43 @@ def mutually_inclusive(keyword, *keywords):
                     "Expected none or all of keywords"
                     f"{', '.join(keywords)} to be defined."
                 )
+            return func(*args, **kwargs)
+
+        return inner
+
+    return wrapper
+
+
+def broadcastable(keyword: str, *keywords: str):
+    """Checks if the argument names listed are broadcastable as Numpy arrays.
+
+    Args:
+        keyword: argument to check
+        keywords: other arguments to check against keyword
+
+    Raises:
+        ValueError: if the arrays cannot be broadcast
+    """
+    keywords = (keyword,) + keywords
+
+    def wrapper(func):
+        argspec = getfullargspec(func)
+
+        @wraps(func)
+        def inner(*args, **kwargs):
+
+            check_args = {name: arg for name, arg in zip(argspec.args, args)}
+            check_args.update(kwargs)
+
+            check_argshapes = [np.atleast_1d(arg).shape for arg in check_args.values()]
+
+            try:
+                _ = np.broadcast_shapes(*tuple(check_argshapes))
+            except:
+                msg = f"Cannot broadcast shapes: " + ", ".join(
+                    [f"{name}:{shp}" for name, shp in zip(check_args, check_argshapes)]
+                )
+                raise ValueError(msg)
             return func(*args, **kwargs)
 
         return inner
