@@ -1494,14 +1494,14 @@
 
 
 <h3 id="digirock._fluid.Fluid.bulk_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Returns bulk_modulus of fluid at temp and pres.</p>
+      <p>Returns bulk_modulus of fluid</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -1515,16 +1515,10 @@
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature (degC)</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure (MPa)</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties required.</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -1544,7 +1538,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>array-like </code></td>
+      <td></td>
       <td><p>Modulus for temp and pres (GPa).</p></td>
     </tr>
   </tbody>
@@ -1560,14 +1554,14 @@
 
 
 <h3 id="digirock._fluid.Fluid.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Returns density of fluid at temp and pres.</p>
+      <p>Returns density of fluid</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -1581,16 +1575,10 @@
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature (degC)</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure (MPa)</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties required.</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -1610,7 +1598,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td></td>
       <td><p>Density for temp and pres (g/cc).</p></td>
     </tr>
   </tbody>
@@ -1661,7 +1649,7 @@
 
 
 <h3 id="digirock._fluid.Fluid.shear_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">shear_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">shear_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -1682,16 +1670,10 @@
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature (degC)</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure (MPa)</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties required.</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -1712,7 +1694,7 @@
   <tbody>
     <tr>
       <td><code>Union[numpy.ndarray, float]</code></td>
-      <td><p>Modulus for temp and pres (GPa).</p></td>
+      <td><p>Modulus for temp and pres (GPa). Always 0.0</p></td>
     </tr>
   </tbody>
 </table>
@@ -1727,14 +1709,14 @@
 
 
 <h3 id="digirock._fluid.Fluid.velocity" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Returns density of fluid at temp and pres.</p>
+      <p>Returns acoustic velocity of fluid</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -1748,16 +1730,10 @@
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature (degC)</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure (MPa)</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties required.</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -1777,7 +1753,7 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td></td>
       <td><p>Velocity for temp and pres (m/s).</p></td>
     </tr>
   </tbody>
@@ -1805,6 +1781,7 @@
     <div class="doc doc-contents first">
 
       <p>Water fluid class based upon B&amp;W 92.</p>
+<p>Temperature (degC) and pressure (MPa) dependent.</p>
 
 <p><strong>Attributes:</strong></p>
 <table>
@@ -1893,7 +1870,7 @@
 
 
 <h3 id="digirock._fluid.Water.bulk_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -1915,16 +1892,10 @@
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature (degC)</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure (MPa)</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -1960,7 +1931,7 @@
 
 
 <h3 id="digirock._fluid.Water.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -1982,16 +1953,10 @@
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature (degC)</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure (MPa)</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -2062,7 +2027,7 @@
 
 
 <h3 id="digirock._fluid.Water.velocity" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2084,16 +2049,10 @@
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature (degC)</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure (MPa)</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -2340,7 +2299,7 @@
 
 
 <h3 id="digirock._fluid.WaterECL.bulk_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2362,16 +2321,10 @@
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature in degC</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure in MPa</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -2407,7 +2360,7 @@
 
 
 <h3 id="digirock._fluid.WaterECL.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2430,16 +2383,10 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature in degC</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure in MPa</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -2494,7 +2441,7 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
   </thead>
   <tbody>
     <tr>
-      <td><code>dict</code></td>
+      <td></td>
       <td><p>Summary of properties.</p></td>
     </tr>
   </tbody>
@@ -2510,7 +2457,7 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
 
 
 <h3 id="digirock._fluid.WaterECL.velocity" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2532,16 +2479,10 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature in degC</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure in MPa</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -2694,7 +2635,7 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
 
 
 <h3 id="digirock._fluid.DeadOil.bulk_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2716,16 +2657,10 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature in degC</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure in MPa</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional bo (vfrac) else use class constant or table.</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -2801,7 +2736,7 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
 
 
 <h3 id="digirock._fluid.DeadOil.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2823,16 +2758,10 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature in degC</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure in MPa</p></td>
-        <td><em>required</em></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -3096,7 +3025,7 @@ specified bo should be a constant.</p>
 
 
 <h3 id="digirock._fluid.DeadOil.velocity" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="n">bo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -3118,21 +3047,9 @@ specified bo should be a constant.</p>
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature in degC</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure in MPa</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>bo</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Set bo (vfrac) explicitly, else use class constant or table.</p></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional bo (vfrac) else use class constant or table.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
@@ -3527,7 +3444,7 @@ TODO: Implement for different rs values</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>dict</code></td>
+      <td></td>
       <td><p>Summary of properties.</p></td>
     </tr>
   </tbody>
@@ -3873,7 +3790,7 @@ append keyword to create a multi-dimensional table.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>dict</code></td>
+      <td></td>
       <td><p>Summary of properties.</p></td>
     </tr>
   </tbody>
