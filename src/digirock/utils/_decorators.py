@@ -1,22 +1,28 @@
 """Common decorators for functions.
 """
+from tabnanny import check
+from typing import Dict, Callable, Tuple
 
 from functools import wraps
 import numpy as np
 from inspect import getfullargspec
 
+from .types import NDArrayOrFloat
+from ._utils import check_broadcastable
 
-def mutually_exclusive(keyword, *keywords):
-    """[summary]
+
+def mutually_exclusive(keyword: str, *keywords: str) -> Callable:
+    """Set keywords as being mutually exclusive
 
     Args:
-        keyword ([type]): [description]
+        keyword: The first keyword that is exclusive.
+        *keywords: The second or more keywords that are exclusive.
 
     Raises:
         TypeError: [description]
 
     Returns:
-        [type]: [description]
+        mutually_exclusive checked function
 
     Ref:
         https://stackoverflow.com/a/54487188
@@ -70,8 +76,8 @@ def mutually_inclusive(keyword, *keywords):
     return wrapper
 
 
-def broadcastable(keyword: str, *keywords: str):
-    """Checks if the argument names listed are broadcastable as Numpy arrays.
+def broadcastable(keyword: str, *keywords: str) -> Callable:
+    """Wrapp to check if the argument names listed are broadcastable as Numpy arrays.
 
     Args:
         keyword: argument to check
@@ -87,20 +93,40 @@ def broadcastable(keyword: str, *keywords: str):
 
         @wraps(func)
         def inner(*args, **kwargs):
-
             check_args = {name: arg for name, arg in zip(argspec.args, args)}
             check_args.update(kwargs)
-
-            check_argshapes = [np.atleast_1d(arg).shape for arg in check_args.values()]
-
-            try:
-                _ = np.broadcast_shapes(*tuple(check_argshapes))
-            except:
-                msg = f"Cannot broadcast shapes: " + ", ".join(
-                    [f"{name}:{shp}" for name, shp in zip(check_args, check_argshapes)]
-                )
-                raise ValueError(msg)
+            _ = check_broadcastable(**check_args)
             return func(*args, **kwargs)
+
+        return inner
+
+    return wrapper
+
+
+def check_props(*required_props: str, broadcastable: Tuple[str] = None) -> Callable:
+    """Wrapper to check props dictionary has required keywords.
+
+    Args:
+        required_props: strings of keys required in the props argument of the wrapped function
+        broadcastable: strings in props that must be broadcastable if present, assumes all props if `broadcastable=None`
+    """
+
+    def wrapper(func):
+        @wraps(func)
+        def inner(props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+            missing = [p for p in props if p not in required_props]
+            if missing:
+                raise ValueError(
+                    f"{func} requires props kws: {required_props}, missing: {missing}"
+                )
+
+            if broadcastable is None:
+                bc = tuple(props.keys())
+            else:
+                bc = broadcastable
+
+            _ = check_broadcastable(**{name: props.get(name) for name in bc})
+            return func(props=props, **kwargs)
 
         return inner
 

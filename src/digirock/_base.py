@@ -1,5 +1,10 @@
-from typing import List
+from functools import wraps, reduce
+from typing import List, Dict
+from more_itertools import all_equal
 
+import numpy as np
+
+from .utils.types import NDArrayOrFloat
 
 class BaseConsumerClass:
     """Base consumer class from which all other consumer classes are defined.
@@ -9,9 +14,8 @@ class BaseConsumerClass:
        name (str): The name of the Model.
     """
 
-    _protected_kw_registry: list = list()
-
     def __init__(self, name: str = None, keys: List[str] = None):
+        self._protected_kw_registry = list()
         self.name = name
         if keys:
             for key in keys:
@@ -20,7 +24,6 @@ class BaseConsumerClass:
                 except ValueError:
                     pass  # ignore already registered keys if created using init
 
-    @classmethod
     def register_key(self, key: str):
         """Register a new keyword across digirock classes"""
         if key in self._protected_kw_registry:
@@ -29,7 +32,6 @@ class BaseConsumerClass:
             )
         self._protected_kw_registry.append(key)
 
-    @classmethod
     def deregister_key(self, key: str):
         """Deregister a keyword across the digirock classes"""
         try:
@@ -39,7 +41,6 @@ class BaseConsumerClass:
                 f"The key: {key}, is not currently in the digirock registry."
             )
 
-    @classmethod
     def keys(self) -> list:
         """Returns a list of keys this class will require for computation.
 
@@ -50,4 +51,4 @@ class BaseConsumerClass:
 
     def get_summary(self) -> dict:
         """Returns a summary of this class."""
-        return {"class": self.__class__, "name": self.name}
+        return {"class": self.__class__, "name": self.name, "props_keys":self.keys()}

@@ -2,7 +2,7 @@
 
 """
 from pathlib import Path
-from typing import List
+from typing import List, Dict
 
 # pylint: disable=invalid-name,no-value-for-parameter
 import xarray as xr
@@ -12,8 +12,9 @@ from scipy.interpolate import interp1d
 from ._exceptions import PrototypeError, WorkflowError
 from .utils.file import read_eclipsekw_3dtable, read_eclipsekw_2dtable
 from .utils.ecl import EclStandardConditions, EclUnitMap, EclUnitScaler
-from .utils._decorators import mutually_exclusive, broadcastable
+from .utils._decorators import mutually_exclusive, check_props, broadcastable
 from .utils.types import NDArrayOrFloat, Pathlike
+
 
 from .fluids import bw92
 from .fluids import ecl as fluid_ecl
@@ -29,20 +30,17 @@ class Fluid(BaseConsumerClass):
     """
 
     def __init__(self, name: str = None, keys: List[str] = None):
-        BaseConsumerClass.__init__(self, name, keys + ["temp", "pres"])
+        BaseConsumerClass.__init__(self, name, keys if keys else [])
 
     def _check_defined(self, from_func, var):
         if self.__getattribute__(var) is None:
             raise WorkflowError(from_func, f"The {var} attribute is not defined.")
 
-    def density(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
-    ) -> NDArrayOrFloat:
-        """Returns density of fluid at temp and pres.
+    def density(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+        """Returns density of fluid
 
         Args:
-            temp: Temperature (degC)
-            pres: Pressure (MPa)
+            props: A dictionary of properties required.
             kwargs: ignored
 
         Returns:
@@ -50,14 +48,11 @@ class Fluid(BaseConsumerClass):
         """
         raise PrototypeError(self.__class__.__name__, "density")
 
-    def velocity(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
-    ) -> NDArrayOrFloat:
-        """Returns density of fluid at temp and pres.
+    def velocity(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+        """Returns acoustic velocity of fluid
 
         Args:
-            temp: Temperature (degC)
-            pres: Pressure (MPa)
+            props: A dictionary of properties required.
             kwargs: ignored
 
         Returns:
@@ -65,50 +60,47 @@ class Fluid(BaseConsumerClass):
         """
         raise PrototypeError(self.__class__.__name__, "velocity")
 
-    def bulk_modulus(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
-    ) -> NDArrayOrFloat:
-        """Returns bulk_modulus of fluid at temp and pres.
+    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+        """Returns bulk_modulus of fluid
 
         Args:
-            temp: Temperature (degC)
-            pres: Pressure (MPa)
-            kwargs: ignored
-
-        Returns:
-            array-like : Modulus for temp and pres (GPa).
-        """
-        raise PrototypeError(self.__class__.__name__, "modulus")
-
-    def shear_modulus(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
-    ) -> NDArrayOrFloat:
-        """Fluid shear modulus is zero. Return zero for all fluids.
-
-        Args:
-            temp: Temperature (degC)
-            pres: Pressure (MPa)
+            props: A dictionary of properties required.
             kwargs: ignored
 
         Returns:
             Modulus for temp and pres (GPa).
         """
-        temp_ar = np.atleast_1d(temp)
-        temp_pres = np.atleast_1d(pres)
+        raise PrototypeError(self.__class__.__name__, "modulus")
 
-        return np.full(temp_ar.shape, 0.0)
+    def shear_modulus(
+        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
+    ) -> NDArrayOrFloat:
+        """Fluid shear modulus is zero. Return zero for all fluids.
+
+        Args:
+            props: A dictionary of properties required.
+            kwargs: ignored
+
+        Returns:
+            Modulus for temp and pres (GPa). Always 0.0
+        """
+        # temp_ar = np.atleast_1d(temp)
+        # temp_pres = np.atleast_1d(pres)
+        return 0.0
 
     def get_summary(self) -> dict:
         """Return a dictionary containing a summary of the fluid.
 
         Returns:
-            dict: Summary of properties.
+            Summary of properties.
         """
         return super().get_summary()
 
 
 class Water(Fluid):
     """Water fluid class based upon B&W 92.
+
+    Temperature (degC) and pressure (MPa) dependent.
 
     Attributes:
         name (str): name of the fluid
@@ -125,59 +117,58 @@ class Water(Fluid):
         super().__init__(name=name)
         self.sal = salinity / 1e6
 
-    @broadcastable("temp", "pres")
+    @check_props("temp", "pres")
     def density(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for water with fixed salt concentration.
 
         Uses BW92 [`wat_density_brine`][digirock.fluids.bw92.wat_density_brine].
 
         Args:
-            temp: Temperature (degC)
-            pres: Pressure (MPa)
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa)
             kwargs: ignored
 
         Returns:
             array-like: Water density (g/cc)
         """
-        return bw92.wat_density_brine(temp, pres, self.sal)
+        return bw92.wat_density_brine(props["temp"], props["pres"], self.sal)
 
-    @broadcastable("temp", "pres")
+    @check_props("temp", "pres")
     def velocity(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent acoustic velocity for water with fixed salt concentration.
 
         Uses BW92 [`wat_velocity_brine`][digirock.fluids.bw92.wat_velocity_brine].
 
         Args:
-            temp: Temperature (degC)
-            pres: Pressure (MPa)
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa)
             kwargs: ignored
 
         Returns:
             Water velocity (m/s)
         """
-        return bw92.wat_velocity_brine(temp, pres, self.sal)
+        return bw92.wat_velocity_brine(props["temp"], props["pres"], self.sal)
 
-    @broadcastable("temp", "pres")
     def bulk_modulus(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for water with fixed salt concentration.
 
         Uses BW92 [`wat_bulkmod`][digirock.fluids.bw92.wat_bulkmod].
 
         Args:
-            temp: Temperature (degC)
-            pres: Pressure (MPa)
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa)
             kwargs: ignored
 
         Returns:
             Water modulus (GPa)
         """
-        return bw92.wat_bulkmod(self.density(temp, pres), self.velocity(temp, pres))
+        return bw92.wat_bulkmod(
+            self.density(props),
+            self.velocity(props),
+        )
 
     def get_summary(self) -> dict:
         summary = super().get_summary()
@@ -246,9 +237,9 @@ class WaterECL(Fluid):
             EclStandardConditions.TEMP.value, EclStandardConditions.PRES.value, self.sal
         )
 
-    @broadcastable("temp", "pres")
+    @check_props("temp", "pres")
     def density(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for water with fixed salt concentration adjusted for FVF.
 
@@ -256,8 +247,7 @@ class WaterECL(Fluid):
         the expansion factor FVF relative to surface conditions to calculate the adjusted density.
 
         Args:
-            temp: Temperature in degC
-            pres: Pressure in MPa
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa)
             kwargs: ignored
 
         Returns:
@@ -268,46 +258,46 @@ class WaterECL(Fluid):
             self.fvf1_pres, self.ref_pres, self.bw, self.comp, self.visc, self.cvisc
         )
         bw = fluid_ecl.e100_bw(
-            pres, self.ref_pres, self.bw, self.comp, self.visc, self.cvisc
+            props["pres"], self.ref_pres, self.bw, self.comp, self.visc, self.cvisc
         )
         # density at atmospheric conditions
         return self.density_asc * bw_asc / bw
 
-    @broadcastable("temp", "pres")
+    @check_props("temp", "pres")
     def velocity(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent velocity for a fixed fixed salt concentration.
 
         Uses BW92 [`wat_velocity_brine`][digirock.fluids.bw92.wat_velocity_brine].
 
         Args:
-            temp: Temperature in degC
-            pres: Pressure in MPa
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa)
             kwargs: ignored
 
         Returns:
             velocity: Water velocity in m/s
         """
-        return bw92.wat_velocity_brine(temp, pres, self.sal)
+        return bw92.wat_velocity_brine(props["temp"], props["pres"], self.sal)
 
-    @broadcastable("temp", "pres")
     def bulk_modulus(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for a fixed fixed salt concentration.
 
         Uses BW92 [`wat_bulkmod`][digirock.fluids.bw92.wat_bulkmod].
 
         Args:
-            temp: Temperature in degC
-            pres: Pressure in MPa
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa)
             kwargs: ignored
 
         Returns:
             modulus: Water modulus in GPa
         """
-        return bw92.wat_bulkmod(self.density(temp, pres), self.velocity(temp, pres))
+        return bw92.wat_bulkmod(
+            self.density(props),
+            self.velocity(props),
+        )
 
     def get_summary(self):
         summary = super().get_summary()
@@ -525,30 +515,27 @@ class DeadOil(Fluid):
                 "std_density", "Set an oil standard density or api first."
             )
 
-    @broadcastable("temp", "pres")
+    @check_props("temp", "pres")
     def density(
-        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat, **kwargs
+        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for dead oil adjusted for FVF.
 
         Uses BW92 [`oil_density`][digirock.fluids.bw92.oil_density].
 
         Args:
-            temp: Temperature in degC
-            pres: Pressure in MPa
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa)
             kwargs: ignored
 
         Returns:
             Oil density (g/cc)
         """
-        return bw92.oil_density(self.std_density, pres, temp)
+        return bw92.oil_density(self.std_density, props["pres"], props["temp"])
 
-    @broadcastable("temp", "pres")
+    @check_props("temp", "pres", broadcastable=("temp", "pres", "bo"))
     def velocity(
         self,
-        temp: NDArrayOrFloat,
-        pres: NDArrayOrFloat,
-        bo: NDArrayOrFloat = None,
+        props: Dict[str, NDArrayOrFloat] = None,
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent acoustic velocity for dead oil adjusted for FVF.
@@ -556,23 +543,22 @@ class DeadOil(Fluid):
         Uses BW92 [`oil_velocity`][digirock.fluids.bw92.oil_velocity], gas Rs is assumed to be 0.
 
         Args:
-            temp: Temperature in degC
-            pres: Pressure in MPa
-            bo: Set bo (vfrac) explicitly, else use class constant or table.
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa); optional bo (vfrac) else use class constant or table.
             kwargs: ignored
 
         Returns:
             Oil acoustic velocity (m/s)
         """
+        bo = props.get("bo")
         if bo is None:
-            bo = self.fvf(pres)
-        return bw92.oil_velocity(self.std_density, pres, temp, 0, 0, bo)
+            bo = self.fvf(props["pres"])
+        return bw92.oil_velocity(
+            self.std_density, props["pres"], props["temp"], 0, 0, bo
+        )
 
-    @broadcastable("temp", "pres")
     def bulk_modulus(
         self,
-        temp: NDArrayOrFloat,
-        pres: NDArrayOrFloat,
+        props: Dict[str, NDArrayOrFloat] = None,
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for dead oil adjusted for FVF.
@@ -580,14 +566,13 @@ class DeadOil(Fluid):
         Uses BW92 [`oil_bulkmod`][digirock.fluids.bw92.oil_bulkmod].
 
         Args:
-            temp: Temperature in degC
-            pres: Pressure in MPa
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa); optional bo (vfrac) else use class constant or table.
             kwargs: ignored
 
         Returns:
             Oil modulus (GPa)
         """
-        return bw92.oil_bulkmod(self.density(temp, pres), self.velocity(temp, pres))
+        return bw92.oil_bulkmod(self.density(props), self.velocity(props))
 
     def get_summary(self) -> dict:
         if self._bo_istable:
@@ -773,7 +758,7 @@ class Oil(DeadOil):
         _, fvf = self._get_rsfvf(pres)
         return fvf
 
-    @broadcastable("temp", "pres")
+    @check_props("temp", "pres")
     def density(
         self,
         temp: NDArrayOrFloat,
@@ -807,7 +792,7 @@ class Oil(DeadOil):
         oil_rho = bw92.oil_density(oil_rho_s, pres, temp)
         return oil_rho
 
-    @broadcastable("temp", "pres")
+    @check_props("temp", "pres")
     def velocity(
         self,
         temp: NDArrayOrFloat,
@@ -839,7 +824,7 @@ class Oil(DeadOil):
 
         return bw92.oil_velocity(self.std_density, pres, temp, self.gas_sg, rs, fvf)
 
-    @broadcastable("temp", "pres")
+    @check_props("temp", "pres")
     def bulk_modulus(
         self,
         temp: NDArrayOrFloat,

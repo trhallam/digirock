@@ -1,5 +1,7 @@
 import numpy as np
 
+from digirock.utils.types import NDArrayOrFloat
+
 
 def _check_kwargs_vfrac(**kwargs):
     """Check that kwargs sum to volume fraction of one.
@@ -48,6 +50,32 @@ def _check_kwargs_vfrac(**kwargs):
             raise ValueError(f"Input volume fractions must sum to 1 if no complement.")
 
     return kwargs
+
+
+def check_broadcastable(**kwargs: NDArrayOrFloat) -> tuple:
+    """Check that kwargs can be numpy broadcast against each other for matrix
+    operations.
+
+    Args:
+        kwargs: Keywords to check with float of array-like values.
+
+    Returns
+        Shapes of broadcast keywords
+
+    Raises:
+        ValueError if not broadcastable
+    """
+    check_argshapes = [np.atleast_1d(arg).shape for arg in kwargs.values()]
+
+    try:
+        shapes = np.broadcast_shapes(*tuple(check_argshapes))
+    except:
+        msg = f"Cannot broadcast shapes: " + ", ".join(
+            [f"{name}:{shp}" for name, shp in zip(kwargs, check_argshapes)]
+        )
+        raise ValueError(msg)
+
+    return shapes
 
 
 def safe_divide(a, b):
