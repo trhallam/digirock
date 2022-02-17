@@ -1,24 +1,10 @@
-"""Fluid models to simplify generation of fluid properties.
-
+"""Fluid base class to prototype generation of fluid properties.
 """
-from typing import List, Dict, Tuple
+from typing import List, Dict
 
-# pylint: disable=invalid-name,no-value-for-parameter
-import xarray as xr
-import numpy as np
-from scipy.interpolate import interp1d
-
-from ._exceptions import PrototypeError, WorkflowError
-from .utils.file import read_eclipsekw_3dtable, read_eclipsekw_2dtable
-from .utils.ecl import EclStandardConditions, EclUnitMap, EclUnitScaler
-from .utils._decorators import mutually_exclusive, check_props, broadcastable
-from .utils.types import NDArrayOrFloat, Pathlike
-
-
-from .fluids import bw92
-from .fluids import ecl as fluid_ecl
-
-from ._base import BaseConsumerClass
+from .._exceptions import PrototypeError, WorkflowError
+from ..utils.types import NDArrayOrFloat
+from .._base import BaseConsumerClass
 
 
 class Fluid(BaseConsumerClass):

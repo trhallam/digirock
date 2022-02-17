@@ -3,6 +3,7 @@ model specific.
 """
 from typing import Dict, List, Tuple
 from ..utils.types import NDArrayOrFloat
+from ..utils._decorators import check_props
 from .._base import BaseConsumerClass
 from .._exceptions import WorkflowError, PrototypeError
 
@@ -25,7 +26,7 @@ class AdjustmentModel(BaseConsumerClass):
         if self.__getattribute__(var) is None:
             raise WorkflowError(from_func, f"The {var} attribute is not defined.")
 
-    def adjust(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+    def adjust(self, props: Dict[str, NDArrayOrFloat], **kwargs):
         """Adjust props to return props with adjustments applied.
 
         Args:
@@ -70,7 +71,7 @@ class MacBethStressAdjustment(AdjustmentModel):
     @check_props("pres_e", "pres_ei")
     def adjust(
         self,
-        props: Dict[str, NDArrayOrFloat] = None,
+        props: Dict[str, NDArrayOrFloat],
         k_dry: str = "k_dry",
         mu_dry: str = "mu_dry",
         **kwargs,

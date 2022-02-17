@@ -1,17 +1,19 @@
 """Functions that simplify loading of Eclipse fluid properties into digirock classes."""
 
-from typing import List, Union
+from typing import List, Union, Dict
 
 # pylint: disable=invalid-name,no-value-for-parameter
 import numpy as np
 
-from .utils.file import read_eclipsekw_3dtable, read_eclipsekw_2dtable
-from .utils.ecl import EclStandardConditions, EclUnitMap, EclUnitScaler
-from .utils.types import Pathlike
-from .utils._decorators import mutually_exclusive
+from ..utils.file import read_eclipsekw_3dtable, read_eclipsekw_2dtable
+from ..utils.ecl import EclStandardConditions, EclUnitMap, EclUnitScaler
+from ..utils.types import Pathlike
+from ..utils._decorators import mutually_exclusive
 
-from .fluids import bw92
-from ._fluid import WaterECL, OilPVT, GasECL
+from ..fluids import bw92
+from ._water import WaterECL
+from ._oil import OilPVT
+from ._gas import GasPVT
 
 
 def load_pvtw(
@@ -19,7 +21,7 @@ def load_pvtw(
     units: str = "METRIC",
     prefix: str = "pvtw",
     salinity: List[int] = None,
-) -> dict:
+) -> Dict[str, WaterECL]:
     """Load a PVTW table into multiple [`WaterECL`][digirock.WaterECL] classes.
 
     PVTW tables have the form (where units may differ):
@@ -109,7 +111,7 @@ def load_pvto(
     prefix: str = "pvto",
     api: Union[List[float], float] = None,
     std_density: Union[List[float], float] = None,
-) -> dict:
+) -> Dict[str, OilPVT]:
     """Load a PVTO table into multiple [`Oil`][digirock.Oil] classes.
 
     PVTO tables have the form (where units may differ):
@@ -203,7 +205,7 @@ def load_pvto(
     table = dict()
     for i, (subtab, ap, sd) in enumerate(zip(pvt_rs_float, api_iter, sd_iter)):
         tabname = f"{prefix}{i}"
-        table[tabname] = Oil(tabname, api=ap, std_density=sd)
+        table[tabname] = OilPVT(tabname, api=ap, std_density=sd)
         for rs, bo in zip(subtab[0], subtab[1]):
             table[tabname].set_fvf(bo[:, 1], rs, pres=_ut["pressure"] * bo[:, 0])
 
@@ -214,7 +216,7 @@ def load_pvdg(
     filepath: Pathlike,
     units: str = "METRIC",
     prefix: str = "pvtw",
-) -> dict:
+) -> Dict[str, GasPVT]:
     """Load a PVTG table into multiple [`WaterECL`][digirock.WaterECL] classes.
 
     PVTW tables have the form (where units may differ):

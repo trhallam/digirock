@@ -2,18 +2,19 @@
 import sys
 from ._version import version as __version__
 
-from ._fluid import (
+from ._fluids import (
     FluidModel,
     Fluid,
-    Water,
+    WaterBW92,
     WaterECL,
     DeadOil,
     OilBW92,
     OilPVT,
-    Gas,
-    GasECL,
+    BaseOil,
+    GasBW92,
+    GasPVT,
 )
-from ._fluid_loaders import (
+from ._fluids._fluid_loaders import (
     load_pvtw,
     load_pvto,
     load_pvdg,

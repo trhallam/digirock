@@ -43,13 +43,14 @@ t = 110
 temp = np.linspace(80, 150, 10)
 
 # %%
-from digirock import Water, WaterECL, load_pvtw
+from digirock import WaterBW92, WaterECL, load_pvtw
 
 # Initialisation of BW92 Water requires the salinity in PPM.
-wat = Water(name="water", salinity=0)
+wat = WaterBW92(name="water", salinity=0)
 
 # check the summary - note the input salinity has been converted from PPM to ...
-wat.get_summary()
+print(wat.get_summary())
+wat.tree
 
 # %% [markdown]
 # Then let's check the elastic properties of this water with a mixture of constants and arrays or both.
@@ -95,6 +96,7 @@ wat_pvtw = load_pvtw("example_data/COMPLEX_PVT.inc", salinity=0)
 
 # look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example
 print(wat_pvtw["pvtw0"].get_summary())
+wat_pvtw["pvtw0"].tree
 
 # %% [markdown]
 # Let's look at the denisty for the first table entry that was loaded for this PVTW.
@@ -135,15 +137,10 @@ print("Bo with table RS at 110degC and pres=10Mpa", obw92.bo(95, 12))
 obw92.density(props_ar1)
 obw92.velocity(props_ar1)
 obw92.bulk_modulus(props_ar1)
+obw92.tree
 
 # %% [markdown]
 # `DeadOil` is a class for fluids with no dissolved gas and it is initialised by either specifying an oil API or standard density.
-
-# %%
-o.pvt["bo_table"]["rs"]=np.arange(5, 10)
-
-# %%
-o.pvt["bo_table"]
 
 # %%
 doil_api = DeadOil(api=35)
@@ -151,6 +148,7 @@ print(doil_api.get_summary())
 
 doil_sd = DeadOil(std_density=0.84985)
 print(doil_sd.get_summary())
+doil_sd.tree
 
 # %% [markdown]
 # Note that `bo` is mentioned in the summary but isn't yet set. Default behaviour for `DeadOil` is to calculate the formation volume factor (fvf) using Batzle and Wang 92 when a bo relationship isn't specified. The `bo` is temperature specific and stored in the `bo` attribute.
@@ -164,6 +162,6 @@ print(doil_api.bo)
 doil_api.keys()
 
 # %%
-load_pvto("example_data/COMPLEX_PVT.inc", api=40)['pvto0'].bo
+load_pvto("example_data/COMPLEX_PVT.inc", api=40)['pvto0']
 
 # %%
