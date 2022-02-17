@@ -6,6 +6,7 @@ import numpy as np
 
 from .utils.types import NDArrayOrFloat
 
+
 class BaseConsumerClass:
     """Base consumer class from which all other consumer classes are defined.
     For example, uses to define input consumer classes like fluids, mineral mixing models etc.
@@ -51,4 +52,4 @@ class BaseConsumerClass:
 
     def get_summary(self) -> dict:
         """Returns a summary of this class."""
-        return {"class": self.__class__, "name": self.name, "props_keys":self.keys()}
+        return {"class": self.__class__, "name": self.name, "props_keys": self.keys()}

@@ -8,11 +8,15 @@ from ._fluid import (
     Water,
     WaterECL,
     DeadOil,
-    Oil,
+    OilBW92,
+    OilPVT,
     Gas,
-    GasPVDG,
+    GasECL,
+)
+from ._fluid_loaders import (
     load_pvtw,
     load_pvto,
+    load_pvdg,
 )
 
 from ._frame import (

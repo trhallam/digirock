@@ -1,6 +1,5 @@
 """Common decorators for functions.
 """
-from tabnanny import check
 from typing import Dict, Callable, Tuple
 
 from functools import wraps
@@ -103,7 +102,9 @@ def broadcastable(keyword: str, *keywords: str) -> Callable:
     return wrapper
 
 
-def check_props(*required_props: str, broadcastable: Tuple[str] = None) -> Callable:
+def check_props(
+    *required_props: str, broadcastable: Tuple[str] = None, props_argument="props"
+) -> Callable:
     """Wrapper to check props dictionary has required keywords.
 
     Args:
@@ -112,41 +113,27 @@ def check_props(*required_props: str, broadcastable: Tuple[str] = None) -> Calla
     """
 
     def wrapper(func):
+        argspec = getfullargspec(func)
+        assert props_argument in argspec.args
+
         @wraps(func)
-        def inner(props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+        def inner(*args, **kwargs):
+            props = [
+                arg for arg, name in zip(args, argspec.args) if name == props_argument
+            ][0]
             missing = [p for p in props if p not in required_props]
             if missing:
                 raise ValueError(
                     f"{func} requires props kws: {required_props}, missing: {missing}"
                 )
-
             if broadcastable is None:
                 bc = tuple(props.keys())
             else:
                 bc = broadcastable
 
             _ = check_broadcastable(**{name: props.get(name) for name in bc})
-            return func(props=props, **kwargs)
+            return func(*args[:-1], props=props, **kwargs)
 
         return inner
 
     return wrapper
-
-
-# pylint: disable=all
-if __name__ == "__main__":
-    # @mutually_exclusive('a', 'b')
-    # def f(a=None, b=None):
-    #     print(a, b)
-
-    # f()
-    # f(a=1)
-    # f(b=1)
-    # f(a=1, b=None)
-
-    @mutually_inclusive("a", "b")
-    def f(a=None, b=None):
-        print(a, b)
-
-    f()
-    f(a=None, b=False)

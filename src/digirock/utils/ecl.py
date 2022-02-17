@@ -1,4 +1,4 @@
-"""Mappings for key ecl properties.
+"""Mappings for key Eclipse Properties
 """
 from enum import Enum, unique
 
