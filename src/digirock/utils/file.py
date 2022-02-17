@@ -58,23 +58,6 @@ def get_type(a):
         return str
 
 
-def grouper(n, iterable):
-    """Iterate over an iterable by chunks of n
-
-    Method taken from https://stackoverflow.com/a/8991553
-
-    Arguments:
-        n (int): Number of items to return per iteration.
-        iterable (object): An iterable ojbect e.g. list or tuple
-    """
-    it = iter(iterable)
-    while True:
-        chunk = tuple(itertools.islice(it, n))
-        if not chunk:
-            return
-        yield chunk
-
-
 def scan_eclipsekw(filepath, overloaded_kw=False):
     """Scans an eclipse row-wise property file from ascii to determine which
     keywords are present.

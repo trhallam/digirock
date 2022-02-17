@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.13.7
+#       jupytext_version: 1.13.6
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -55,29 +55,35 @@ wat.get_summary()
 # Then let's check the elastic properties of this water with a mixture of constants and arrays or both.
 
 # %%
+props = dict(temp=t, pres=p)
+props_ar1 = dict(temp=t, pres=pres)
+props_ar2 = dict(temp=temp, pres=pres)
+props_ar3 = dict(temp=temp.reshape(2, -1), pres=pres.reshape(2, -1))
+
 # density
-print("Density single values (g/cc):", wat.density(t, p))
-print("Density 1 array values (g/cc):", wat.density(t, pres))
+print("Density single values (g/cc):", wat.density(props))
+print("Density 1 array values (g/cc):", wat.density(props_ar1))
 
 # arrays can be used, but they must be the same shape
-print("Density 2 array values (g/cc):", wat.density(temp, pres))
-print("Density 2 array values (g/cc):", wat.density(temp.reshape(2, -1), pres.reshape(2, -1)), '\n')
+print("Density 2 array values (g/cc):", wat.density(props_ar2))
+print("Density 2 array values (g/cc):", wat.density(props_ar3), '\n')
 
 # velocity
-print("Velocity single values (m/s):", wat.density(t, p))
-print("Velocity 1 array values (m/s):", wat.density(t, pres))
+print("Velocity single values (m/s):", wat.density(props))
+print("Velocity 1 array values (m/s):", wat.density(props_ar1))
 
 # arrays can be used, but they must be the same shape
-print("Velocity 2 array values (m/s):", wat.density(temp, pres))
-print("Velocity 2 array values (m/s):", wat.density(temp.reshape(2, -1), pres.reshape(2, -1)), '\n')
+print("Velocity 2 array values (m/s):", wat.density(props_ar2))
+print("Velocity 2 array values (m/s):", wat.density(props_ar3), '\n')
 
 # modulus
-print("Modulus single values (GPa):", wat.density(t, p))
-print("Modulus 1 array values (GPa):", wat.density(t, pres))
+print("Modulus single values (GPa):", wat.density(props))
+print("Modulus 1 array values (GPa):", wat.density(props_ar1))
 
 # arrays can be used, but they must be the same shape
-print("Modulus 2 array values (GPa):", wat.density(temp, pres))
-print("Modulus 2 array values (GPa):", wat.density(temp.reshape(2, -1), pres.reshape(2, -1)))
+print("Modulus 2 array values (GPa):", wat.density(props_ar2))
+print("Modulus 2 array values (GPa):", wat.density(props_ar3))
+
 
 
 # %% [markdown]
@@ -97,20 +103,47 @@ print(wat_pvtw["pvtw0"].get_summary())
 pvtw0 = wat_pvtw["pvtw0"]
 
 # we need to tell the fluid which pvt table to use either with each call to a method
-print("Density single values (g/cc):", pvtw0.density(t, p))
+print("Density single values (g/cc):", pvtw0.density(props))
 
 # with arrays
-print("Density array values (g/cc):", pvtw0.density(temp, pres), '\n')
-print("Bulk Modulus array values (g/cc):", pvtw0.bulk_modulus(temp, pres), '\n')
+print("Density array values (g/cc):", pvtw0.density(props_ar1), '\n')
+print("Bulk Modulus array values (g/cc):", pvtw0.bulk_modulus(props_ar2), '\n')
 
 # %% [markdown]
 # ## Oil Types
 
 # %%
-from digirock import DeadOil, Oil
+from digirock import DeadOil, OilBW92, OilPVT, load_pvto
+import numpy as np
+
+### Batzle and Wang Oils
+
+# create a basic oil
+obw92 = OilBW92(api=45, gas_sg=0.7)
+
+#Set Oil with constant solution gas (rs), which is pressure independent
+obw92.set_pvt(rs=100)
+print(obw92.get_summary())
+print("Bo with constant RS at 110degC (pres ignored)", obw92.bo(110, 50))
+
+#Set Oil with solution gas (rs) to pressure (pres) table
+obw92.set_pvt(rs=110, pres=np.arange(9,100,0.5))
+print(obw92.get_summary())
+print("Bo with table RS at 110degC and pres=10Mpa", obw92.bo(110, 10))
+print("Bo with table RS at 110degC and pres=10Mpa", obw92.bo(95, 12))
+
+obw92.density(props_ar1)
+obw92.velocity(props_ar1)
+obw92.bulk_modulus(props_ar1)
 
 # %% [markdown]
 # `DeadOil` is a class for fluids with no dissolved gas and it is initialised by either specifying an oil API or standard density.
+
+# %%
+o.pvt["bo_table"]["rs"]=np.arange(5, 10)
+
+# %%
+o.pvt["bo_table"]
 
 # %%
 doil_api = DeadOil(api=35)
@@ -131,6 +164,6 @@ print(doil_api.bo)
 doil_api.keys()
 
 # %%
-WaterECL.keys()
+load_pvto("example_data/COMPLEX_PVT.inc", api=40)['pvto0'].bo
 
 # %%

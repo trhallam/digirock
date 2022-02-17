@@ -1,8 +1,7 @@
 """Fluid models to simplify generation of fluid properties.
 
 """
-from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
 # pylint: disable=invalid-name,no-value-for-parameter
 import xarray as xr
@@ -36,7 +35,7 @@ class Fluid(BaseConsumerClass):
         if self.__getattribute__(var) is None:
             raise WorkflowError(from_func, f"The {var} attribute is not defined.")
 
-    def density(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs):
         """Returns density of fluid
 
         Args:
@@ -48,7 +47,7 @@ class Fluid(BaseConsumerClass):
         """
         raise PrototypeError(self.__class__.__name__, "density")
 
-    def velocity(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+    def velocity(self, props: Dict[str, NDArrayOrFloat], **kwargs):
         """Returns acoustic velocity of fluid
 
         Args:
@@ -60,7 +59,7 @@ class Fluid(BaseConsumerClass):
         """
         raise PrototypeError(self.__class__.__name__, "velocity")
 
-    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
         """Returns bulk_modulus of fluid
 
         Args:
@@ -73,7 +72,7 @@ class Fluid(BaseConsumerClass):
         raise PrototypeError(self.__class__.__name__, "modulus")
 
     def shear_modulus(
-        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
     ) -> NDArrayOrFloat:
         """Fluid shear modulus is zero. Return zero for all fluids.
 
@@ -118,9 +117,7 @@ class Water(Fluid):
         self.sal = salinity / 1e6
 
     @check_props("temp", "pres")
-    def density(
-        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
-    ) -> NDArrayOrFloat:
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for water with fixed salt concentration.
 
         Uses BW92 [`wat_density_brine`][digirock.fluids.bw92.wat_density_brine].
@@ -135,9 +132,7 @@ class Water(Fluid):
         return bw92.wat_density_brine(props["temp"], props["pres"], self.sal)
 
     @check_props("temp", "pres")
-    def velocity(
-        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
-    ) -> NDArrayOrFloat:
+    def velocity(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent acoustic velocity for water with fixed salt concentration.
 
         Uses BW92 [`wat_velocity_brine`][digirock.fluids.bw92.wat_velocity_brine].
@@ -152,7 +147,7 @@ class Water(Fluid):
         return bw92.wat_velocity_brine(props["temp"], props["pres"], self.sal)
 
     def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for water with fixed salt concentration.
 
@@ -238,9 +233,7 @@ class WaterECL(Fluid):
         )
 
     @check_props("temp", "pres")
-    def density(
-        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
-    ) -> NDArrayOrFloat:
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for water with fixed salt concentration adjusted for FVF.
 
         Uses Eclipse [`e100_bw`][digirock.fluids.ecl.e100_bw] for calculating FVF. Eclipse multiplies the surface presure
@@ -264,9 +257,7 @@ class WaterECL(Fluid):
         return self.density_asc * bw_asc / bw
 
     @check_props("temp", "pres")
-    def velocity(
-        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
-    ) -> NDArrayOrFloat:
+    def velocity(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent velocity for a fixed fixed salt concentration.
 
         Uses BW92 [`wat_velocity_brine`][digirock.fluids.bw92.wat_velocity_brine].
@@ -281,7 +272,7 @@ class WaterECL(Fluid):
         return bw92.wat_velocity_brine(props["temp"], props["pres"], self.sal)
 
     def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for a fixed fixed salt concentration.
 
@@ -315,102 +306,13 @@ class WaterECL(Fluid):
         return summary
 
 
-def load_pvtw(
-    filepath: Pathlike,
-    units: str = "METRIC",
-    prefix: str = "pvtw",
-    salinity: List[int] = None,
-) -> dict:
-    """Load a PVTW table into multiple [`WaterECL`][digirock.WaterECL] classes.
-
-    PVTW tables have the form (where units may differ):
-
-    ```
-    PVTW
-    --RefPres        Bw          Cw           Vw         dVw
-    --   bara       rm3/m3       1/bara        cP        1/bara
-        268.5      1.03382    0.31289E-04   0.38509    0.97801E-04 / --  #1
-        268.5      1.03382    0.31289E-04   0.38509    0.97801E-04 / --  #2
-    ```
-
-    If salinity is None, the salinity is backed out from the Water density using BW92
-    [`wat_salinity_brine`][digirock.fluids.bw92.wat_salinity_brine]. the DENSITY keyword must
-    be present in the same input file.
-
-    Args:
-        filepath: Filepath or str to text file containing PVTW keyword tables.
-        units: The Eclipse units of the PVTW table, one of ['METRIC', 'PVTM', 'FIELD', 'LAB']. Defaults to 'METRIC'.
-        prefix: The prefix to apply to the name of each loaded fluid.
-        salinity: The salinity of the pvt tables in PPM
-
-    Returns:
-        A dictionary of WaterECL instance for each PVT table entry.
-
-    Raises:
-        AssertionError: units is not valid
-        ValueError: DENSITY kw not in file with PVTW
-    """
-    assert units in EclUnitMap.__members__
-
-    table = dict()
-    _ut: dict = EclUnitScaler[units].value
-
-    rawpvt = read_eclipsekw_2dtable(filepath, "PVTW")
-    dens = None
-
-    try:
-        dens = read_eclipsekw_2dtable(filepath, "DENSITY")
-        dens = [_ut["density"] * float(d[1]) for d in dens]
-        salinity = list(
-            map(
-                lambda x: bw92.wat_salinity_brine(
-                    EclStandardConditions.TEMP.value,
-                    EclStandardConditions.PRES.value,
-                    x,
-                ),
-                dens,
-            )
-        )
-
-    except KeyError:
-        grav = read_eclipsekw_2dtable(filepath, "GRAVITY")
-        raise NotImplementedError(
-            "GRAVITY KW not yet implemented contact via Github for help."
-        )
-        # convert to density
-
-    if dens is None and salinity is None:
-        raise ValueError(
-            "Require either DENSITY kw in input file or user specified salinity."
-        )
-
-    salinity_ar = np.atleast_1d(salinity)
-    if salinity_ar.size == 1:
-        salinity = np.full(len(rawpvt), salinity[0])
-
-    for i, (rawtab, sal) in enumerate(zip(rawpvt, salinity_ar)):
-        name = f"{prefix}{i}"
-        tab = [
-            _ut[units] * float(val)
-            for val, units, name in zip(
-                rawtab,
-                ["pressure", "unitless", "ipressure", "unitless", "ipressure"],
-                ["ref_pres", "bw", "comp", "visc", "cvisc"],
-            )
-        ]
-        table[name] = WaterECL(*tab, name=name, salinity=sal * 1e6)
-
-    return table
-
-
-class DeadOil(Fluid):
-    """Dead Oil fluid class for oils with no dissolved gasses.
+class BaseOil(Fluid):
+    """Base Oil Class for common methods.
 
     Attributes:
         name (str): name of the fluid
         api (float): API gravity of oil.
         std_density (float): Standard bulk density in g/cc at 15.6degC.
-        bo (float, xarray.DataArray): The formation volume factor or table.
     """
 
     @mutually_exclusive("api", "std_density")
@@ -432,8 +334,47 @@ class DeadOil(Fluid):
             self.api = None
             self.std_density = None
 
-        self.bo = None
-        self._bo_istable = False
+    def set_api(self, api: float):
+        """Set the density of the oil using API gravity.
+
+        Args:
+            api: Api of oil.
+        """
+        self.api = api
+        self.std_density = 141.5 / (self.api + 131.5)
+
+    def set_standard_density(self, std_density: float):
+        """Set the density of the oil at standard pressure and temperature (15.6 degC).
+
+        Args:
+            std_density: The density of oil at standard conditions (g/cc)
+        """
+        self.std_density = std_density
+        self.api = 141.5 / self.std_density - 131.5
+
+
+class DeadOil(BaseOil):
+    """Dead Oil fluid class for oils with no dissolved gasses.
+
+    Attributes:
+        name (str): name of the fluid
+        api (float): API gravity of oil.
+        std_density (float): Standard bulk density in g/cc at 15.6degC.
+        bo (float, xarray.DataArray): The formation volume factor or table.
+    """
+
+    @mutually_exclusive("api", "std_density")
+    def __init__(self, name: str = None, api: float = None, std_density: float = None):
+        """
+        `api` and `std_density` are mutually exclusive inputs.
+
+        Args:
+            name: Name of fluid
+            api: Oil API
+            std_density: Standard bulk density in g/cc at 15.6degC
+        """
+        super().__init__(name=name, std_density=std_density, api=api)
+        self.pvt = None
 
     def set_api(self, api: float):
         """Set the density of the oil using API gravity.
@@ -453,12 +394,8 @@ class DeadOil(Fluid):
         self.std_density = std_density
         self.api = 141.5 / self.std_density - 131.5
 
-    def _fvf_array_from_table(self, pres, bo):
-        self.bo = xr.DataArray(bo, coords=[pres], dims=["pres"])
-        self._bo_istable = True
-
-    def set_fvf(self, bo: NDArrayOrFloat, pres: NDArrayOrFloat = None):
-        """Set the FVF factor relationship for the oil. If pressure is not
+    def set_pvt(self, bo: NDArrayOrFloat, pres: NDArrayOrFloat = None):
+        """Set the PVT table for DeadOil. If pressure is not
         specified bo should be a constant.
 
         Args:
@@ -469,7 +406,7 @@ class DeadOil(Fluid):
             ValueError: When inputs are incorrect.
         """
         if pres is None and isinstance(bo, (float, int)):
-            self.bo = bo
+            self.pvt = {"type": "constant", "bo": bo}
         elif pres is None:
             raise ValueError(f"bo input is wrong type, got {type(bo)}")
         else:
@@ -479,10 +416,15 @@ class DeadOil(Fluid):
             if bo.shape != pres.shape and bo.ndim > 1:
                 raise ValueError("Expected 1d arrays of same length.")
 
-            self._fvf_array_from_table(pres, bo)
+            self.pvt = {
+                "type": "table",
+                "bo": "table",
+                "pres": "table",
+                "bo_table": xr.DataArray(bo, coords=[pres], dims=["pres"]),
+            }
 
-    def fvf(self, pres: NDArrayOrFloat = None) -> NDArrayOrFloat:
-        """Get the formation volume factor at pressure if specified.
+    def bo(self, pres: NDArrayOrFloat = None) -> NDArrayOrFloat:
+        """Get the formation volume factor (bo) at pressure if specified.
 
         Args:
             pres: Pressure to sample bo (MPa), required when Bo is a table.
@@ -490,35 +432,20 @@ class DeadOil(Fluid):
         Returns:
             Formation volume factor fvf (frac)
         """
-        if self._bo_istable and pres is None:
+        if self.pvt["type"] == "table" and pres is None:
             raise ValueError(
                 "Bo is a table and the pressure argument must be specified."
             )
 
-        if not self._bo_istable:
-            return self.bo
+        if self.pvt["type"] == "constant":
+            return self.pvt["bo"]
         else:
-            return fluid_ecl.oil_fvf_table(self.bo.pres.values, self.bo.values, pres)
-
-    def calc_fvf(self, temp: float):
-        """Calculate the oil formation volume factor using BW92.
-
-        Uses [`oil_fvf`][digirock.fluids.bw92.oil_fvf] gas Rs is assumed 0.
-
-        Args:
-            temp (float): The in-situ temperature degC
-        """
-        if self.std_density is not None:
-            self.bo = bw92.oil_fvf(self.std_density, 0, 0, temp)
-        else:
-            raise WorkflowError(
-                "std_density", "Set an oil standard density or api first."
+            return fluid_ecl.oil_fvf_table(
+                self.pvt["bo_table"].pres.values, self.pvt["bo_table"].values, pres
             )
 
     @check_props("temp", "pres")
-    def density(
-        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
-    ) -> NDArrayOrFloat:
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for dead oil adjusted for FVF.
 
         Uses BW92 [`oil_density`][digirock.fluids.bw92.oil_density].
@@ -535,7 +462,7 @@ class DeadOil(Fluid):
     @check_props("temp", "pres", broadcastable=("temp", "pres", "bo"))
     def velocity(
         self,
-        props: Dict[str, NDArrayOrFloat] = None,
+        props: Dict[str, NDArrayOrFloat],
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent acoustic velocity for dead oil adjusted for FVF.
@@ -551,14 +478,14 @@ class DeadOil(Fluid):
         """
         bo = props.get("bo")
         if bo is None:
-            bo = self.fvf(props["pres"])
+            bo = self.bo(props["pres"])
         return bw92.oil_velocity(
             self.std_density, props["pres"], props["temp"], 0, 0, bo
         )
 
     def bulk_modulus(
         self,
-        props: Dict[str, NDArrayOrFloat] = None,
+        props: Dict[str, NDArrayOrFloat],
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for dead oil adjusted for FVF.
@@ -580,25 +507,31 @@ class DeadOil(Fluid):
         else:
             bo = self.bo
         summary = super().get_summary()
-        summary.update({"api": self.api, "std_density": self.std_density, "bo": bo})
+        summary.update(
+            {"api": self.api, "std_density": self.std_density, "pvt": self.pvt}
+        )
         return summary
 
 
-class Oil(DeadOil):
+class OilBW92(BaseOil):
     """Oil fluid class for oils with dissolved gas, i.e. Live Oil.
 
     Attributes:
         name (str): name of the fluid
         api (float): API gravity of oil.
         std_density (float): Standard bulk density in g/cc at 15.6degC.
-        bo (float, xarray.DataArray): The formation volume factor or table.
         gas_sg (float): The dissolved gas standard gravity.
-        rs (float, xarray.DataArray): The dissolved gas ratio or table.
-        sal (float): Brine salinity in ppm
+        pvt (dict, xarray.DataArray): PVT table for Oil
     """
 
     @mutually_exclusive("api", "std_density")
-    def __init__(self, name: str = None, api: float = None, std_density: float = None):
+    def __init__(
+        self,
+        name: str = None,
+        api: float = None,
+        std_density: float = None,
+        gas_sg: float = None,
+    ):
         """
         `api` and `std_density` are mutually exclusive inputs.
 
@@ -607,98 +540,330 @@ class Oil(DeadOil):
             api: Oil API
             std_density: Standard bulk density in g/cc at 15.6degC
         """
-        self.gas_sg = None
-        self.rs = None
-        self._rs_istable = False
-        super().__init__(name=name, api=api, std_density=std_density, keys=["rs", "bo"])
+        self.gas_sg = gas_sg
+        self.pvt = None
+        super().__init__(name=name, api=api, std_density=std_density)
+        self.register_key("rs")
 
-    def _fvf_array_from_table(self, pres: NDArrayOrFloat, bo, rs, append=True):
-        if not isinstance(rs, (int, float)):
-            raise ValueError("rs should be a single value of type (float, int)")
-
-        if not (bo.ndim == 1 and pres.ndim == 1):
-            raise ValueError("bo and pres must be 1D arrays")
-
-        if not isinstance(self.bo, xr.DataArray) or not append:
-            self.bo = xr.DataArray(
-                np.expand_dims(bo, 0), coords=[[rs], pres], dims=["rs", "pres"]
-            )
-        else:
-            self.bo = self.bo.combine_first(
-                xr.DataArray(
-                    np.expand_dims(bo, 0), coords=[[rs], pres], dims=["rs", "pres"]
-                )
-            )
-
-    def set_fvf(
+    def set_pvt(
         self,
-        bo: NDArrayOrFloat,
-        rs: float,
+        rs: NDArrayOrFloat,
         pres: NDArrayOrFloat = None,
-        append: bool = True,
     ):
-        """Set the formation volume factor for fluid.
+        """Set the PVT table for Oil.
 
-        Multiple values of `bo` for different `rs` values can be specified using the
-        append keyword to create a multi-dimensional table.
+        The solution gas ratio `rs` i[] set for tables of `bo` and `pres`.
 
         Args:
-            bo: Can be a float of table of pressure (MPa) and bo (frac) pairs.
-            rs: The solution gas ratio for bo or bo table.
-            pres: Pressure values (MPa) to match bo
-            append: Append to the existing fvf table with another `rs` point.
+            rs: The solution gas ratio for bo or bo table. Has shape (M, )
+            pres: Pressure values (MPa) to match rs if defined. Has shape (M, ).
         """
-        try:
-            n = bo.size
-        except AttributeError:
-            n = 1
+        rs = np.atleast_1d(rs)
+        pres = np.atleast_1d(pres) if pres is not None else None
 
-        if pres is None:
-            pres = np.full(n, np.nan)
-
-        self._bo_istable = True
-        if isinstance(bo, np.ndarray) and isinstance(pres, np.ndarray):
-            self._fvf_array_from_table(pres, bo, rs=rs, append=append)
-        elif isinstance(bo, np.ndarray) and pres is None:
-            raise ValueError("pres array required for bo array input")
-        elif isinstance(bo, (int, float)):
-            self._fvf_array_from_table(pres, np.r_[bo], rs=rs, append=append)
+        # constants for rs and bo
+        if rs.size == 1:
+            self.pvt = {"type": "constant", "rs": rs[0], "pres": pres}
+        elif len(rs.shape) > 1 and pres is None:
+            raise ValueError("presure requires for list of `rs`")
+        elif rs.shape != pres.shape:
+            raise ValueError(
+                f"`pres` {pres.shape} and `rs` {rs.shape} must have same shape"
+            )
+        elif rs.shape == pres.shape:
+            table = xr.DataArray(data=rs, coords={"pres": pres})
+            self.pvt = {
+                "type": "table",
+                "rs": "table",
+                "pres": "table",
+                "rs_table": table,
+            }
         else:
-            raise ValueError(f"Unknow type for bo {type(bo)}")
+            raise NotImplementedError("Unknown combination of rs and bo")
 
-    def _rs_array_from_table(self, pres: NDArrayOrFloat, rs: NDArrayOrFloat):
-
-        if not (rs.ndim == 1 and pres.ndim == 1):
-            raise ValueError("rs and pres must be 1D arrays")
-
-        self.rs = xr.DataArray(rs, coords=[pres], dims=["pres"])
-
-    def set_dissolved_gas(
-        self, gas_sg: float, rs: NDArrayOrFloat, pres: NDArrayOrFloat = None
-    ):
+    def set_dissolved_gas(self, gas_sg: float):
         """Set the dissolved gas properties.
 
         Args:
             gas_sg: The dissolved gas specific gravity
-            rs: The gas to oil ratio (vfrac)
-            pres: Required if `rs` is NDArray
         """
-        if pres is None:
-            try:
-                _ = rs.size
-                raise ValueError("pres must be provided if rs is array-like")
-            except AttributeError:
-                pass
-
         self.gas_sg = gas_sg
-        self._rs_istable = True
-        if isinstance(rs, np.ndarray):
-            self._rs_array_from_table(pres, rs)
-        elif isinstance(rs, (int, float)):
-            self.rs = rs
-            self._rs_istable = False
+
+    @broadcastable("temp", "pres")
+    def _get_rsbo(
+        self, temp: NDArrayOrFloat, pres: NDArrayOrFloat
+    ) -> Tuple[NDArrayOrFloat, NDArrayOrFloat]:
+        if self.pvt is None:
+            raise WorkflowError(
+                "RS/PRESSURE relationship needs to be set using `set_pvt()`"
+            )
+
+        if self.pvt["type"] == "constant":
+            rs = self.pvt["rs"]
+        elif self.pvt["type"] == "table":
+            rs = self.pvt["rs_table"].interp(pres=pres).values
         else:
-            raise ValueError(f"Unknown type for rs {type(rs)}")
+            raise NotImplementedError(f"PVT of type {self.pvt['type']} is unknown")
+
+        if self.std_density is not None:
+            fvf = bw92.oil_fvf(self.std_density, self.gas_sg, rs, temp)
+        else:
+            raise WorkflowError(
+                "std_density", "Set an oil standard density or api first."
+            )
+
+        return rs, fvf
+
+    def bo(self, temp: NDArrayOrFloat, pres: NDArrayOrFloat) -> NDArrayOrFloat:
+        """Calculate the oil formation volume factor (bo) using BW92.
+
+        Set the attribute `bo` using BW92 [oil_fvf][digirock.fluids.bw92.oil_fvf].
+
+        Args:
+            temp: The in-situ temperature (degC)
+            pres: The pressure to calculate the gas `rs` for. Necessary if rs is specified as
+                a table.
+        """
+        _, fvf = self._get_rsbo(temp, pres)
+        return fvf
+
+    def rs(self, pres: NDArrayOrFloat) -> NDArrayOrFloat:
+        """Calculate the solution gas (rs) from pressure table.
+
+        Args:
+            pres: The pressure to calculate the gas `rs` for. Necessary if rs is specified as
+                a table.
+        """
+        # temperatue is dummy
+        rs, _ = self._get_rsbo(100.0, pres)
+        return rs
+
+    def _process_bo_rs(
+        self, props: Dict[str, NDArrayOrFloat]
+    ) -> Tuple[NDArrayOrFloat, NDArrayOrFloat]:
+        # If RS or BO are not supplied, calculate from the table
+        rs = props.get("rs")
+        fvf = props.get("bo")
+        if rs is None or fvf is None:
+            rs_l, fvf_l = self._get_rsbo(props["temp"], props["pres"])
+            return fvf_l if fvf is None else fvf, rs_l if rs is None else rs
+        else:
+            return fvf, rs
+
+    @check_props("temp", "pres", broadcastable=("temp", "pres", "rs", "bo"))
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Temperature and pressure dependent density for Oil with adjustments for `rs` (solution gas) and `bo` (FVF).
+
+        Density is calculated using BW92 [oil_density][digirock.fluids.bw92.oil_density] after adjusting for gas saturation with [oil_rho_sat][digirock.fluids.bw92.oil_rho_sat].
+
+        Args:
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa); optional `bo` (vfrac) and `rs` (v/v) else use class consstant or table.
+            kwargs: ignored
+
+        Returns:
+            Oil density (g/cc)
+        """
+        fvf, rs = self._process_bo_rs(props)
+        oil_rho_s = bw92.oil_rho_sat(self.std_density, self.gas_sg, rs, fvf)
+        oil_rho = bw92.oil_density(oil_rho_s, props["pres"], props["temp"])
+        return oil_rho
+
+    @check_props("temp", "pres", broadcastable=("temp", "pres", "rs", "bo"))
+    def velocity(
+        self,
+        props: Dict[str, NDArrayOrFloat],
+        **kwargs,
+    ) -> NDArrayOrFloat:
+        """Temperature and pressure dependent acoustic velocity for Oil adjusted for `rs` (solution gas) and `bo` (FVF).
+
+        Velocity is calculated using BW92 [oil_velocity][digirock.fluids.bw92.oil_velocity].
+
+        Args:
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa); optional `bo` (vfrac) and `rs` (v/v) else use class consstant or table.
+            kwargs: ignored
+
+        Returns:
+            Oil velocity (m/s)
+        """
+        fvf, rs = self._process_bo_rs(props)
+        return bw92.oil_velocity(
+            self.std_density, props["pres"], props["temp"], self.gas_sg, rs, fvf
+        )
+
+    def bulk_modulus(
+        self,
+        props: Dict[str, NDArrayOrFloat],
+        **kwargs,
+    ) -> NDArrayOrFloat:
+        """Temperature and pressure dependent bulk modulus for Oil adjusted for `rs` (solution gas) and `bo` (FVF).
+
+        Modulus is calculated using BW92 [oil_bulkmod][digirock.fluids.bw92.oil_bulkmod].
+
+        Args:
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa); optional `bo` (vfrac) and
+            kwargs: ignored
+
+        Returns:
+            Oil modulus (GPa)
+        """
+        return bw92.oil_bulkmod(
+            self.density(props),
+            self.velocity(props),
+        )
+
+    def get_summary(self) -> dict:
+        summary = super().get_summary()
+        summary.update({"pvt": self.pvt})
+        return summary
+
+
+class OilPVT(OilBW92):
+    """Oil fluid class for oils with dissolved gas using PVT Tables, i.e. Live Oil.
+
+    Uses BW92 elastic properties but replaces the `bo` calculation of BW92 with an
+    explicit table.
+
+    Attributes:
+        name (str): name of the fluid
+        api (float): API gravity of oil.
+        std_density (float): Standard bulk density in g/cc at 15.6degC.
+        gas_sg (float): The dissolved gas standard gravity.
+        pvt (dict, xarray.DataArray): PVT table for Oil
+    """
+
+    @mutually_exclusive("api", "std_density")
+    def __init__(
+        self,
+        name: str = None,
+        api: float = None,
+        std_density: float = None,
+        gas_sg: float = None,
+    ):
+        """
+        `api` and `std_density` are mutually exclusive inputs.
+
+        Args:
+            name: Name of fluid
+            api: Oil API
+            std_density: Standard bulk density in g/cc at 15.6degC
+        """
+        self.gas_sg = gas_sg
+        self.pvt = None
+        super().__init__(name=name, api=api, std_density=std_density)
+        self.register_key("rs")
+
+    def set_pvt(
+        self,
+        rs: NDArrayOrFloat,
+        bo: NDArrayOrFloat,
+        pres: NDArrayOrFloat = None,
+    ):
+        """Set the PVT table for Oil.
+
+        The solution gas ratio `rs` i[] set for tables of `bo` and `pres`.
+
+        Args:
+            rs: The solution gas ratio for bo or bo table. Has shape (M, )
+            bo: Can be a float of table of pressure (MPa) and bo (frac) pairs. Has shape (M, N)
+            pres: Pressure values (MPa) to match bo. Has shape (M, N).
+        """
+        rs = np.atleast_1d(rs)
+        bo = np.atleast_1d(bo)
+        pres = np.atleast_1d(pres) if pres is not None else None
+
+        # constants for rs and bo
+        if rs.size == 1 and bo.size == 1:
+            self.pvt = {"type": "constant", "rs": rs[0], "bo": bo[0], "pres": pres}
+
+        # constant for rs and table for bo
+        elif rs.size == 1 and bo.size > 1:
+            if len(bo.shape) != 1:
+                raise ValueError(
+                    f"If `rs` is constant bo can only be 1d got shape {bo.shape}"
+                )
+            if pres is None:
+                raise ValueError(
+                    f"`pres` must be given for `bo` table with shape {bo.shape}"
+                )
+            elif pres.shape != bo.shape:
+                raise ValueError(
+                    f"`pres` {pres.shape} and `bo` {bo.shape} must have same shape"
+                )
+
+            table = xr.DataArray(data=np.arange(5), coords={"pres": np.arange(5) * 10})
+            self.pvt = {
+                "type": "fixed_rs",
+                "rs": rs[0],
+                "bo": "table",
+                "pres": "table",
+                "bo_table": table,
+            }
+            self.pvt.update(
+                {
+                    "bo_min": table.min().values,
+                    "bo_max": table.max().values,
+                    "pres_min": table["pres"].min().values,
+                    "pres_max": table["pres"].max().values,
+                }
+            )
+
+        # table for rs and table for bo
+        elif rs.size > 1 and bo.size > 1:
+            if len(rs.shape) > 1:
+                raise ValueError(f"`rs` can at most be 1d got shape {rs.shape}")
+            if len(bo.shape) != 2:
+                raise ValueError(
+                    f"If `rs` is a list bo can only be 2d got shape {bo.shape}"
+                )
+            if bo.shape[0] != rs.shape[0]:
+                raise ValueError(
+                    f"bo should have shape (M, N) for rs shape (M), got bo {bo.shape} and rs {rs.shape}"
+                )
+            if pres is None:
+                raise ValueError(
+                    f"`pres` must be given for `bo` table with shape {bo.shape}"
+                )
+            elif pres.shape != bo.shape:
+                raise ValueError(
+                    f"`pres` {pres.shape} and `bo` {bo.shape} must have same shape"
+                )
+
+            table = xr.concat(
+                [
+                    xr.DataArray(data=bo_i, coords={"pres": pres_i})
+                    for bo_i, pres_i in zip(bo, pres)
+                ],
+                "rs",
+            )
+            table["rs"] = rs
+            self.pvt = {
+                "type": "full",
+                "rs": "table",
+                "bo": "table",
+                "pres": "table",
+                "bo_table": table,
+            }
+            self.pvt.update(
+                {
+                    "bo_min": table.min().values,
+                    "bo_max": table.max().values,
+                    "pres_min": table["pres"].min().values,
+                    "pres_max": table["pres"].max().values,
+                    "rs_min": table["rs"].min().values,
+                    "rs_max": table["rs"].max().values,
+                }
+            )
+
+        else:
+            raise NotImplementedError("Unknown combination of rs and bo")
+
+    def set_dissolved_gas(self, gas_sg: float):
+        """Set the dissolved gas properties.
+
+        Args:
+            gas_sg: The dissolved gas specific gravity
+        """
+        self.gas_sg = gas_sg
 
     def calc_fvf(self, temp: float, pres: float):
         """Calculate the oil formation volume factor using BW92.
@@ -758,174 +923,29 @@ class Oil(DeadOil):
         _, fvf = self._get_rsfvf(pres)
         return fvf
 
-    @check_props("temp", "pres")
-    def density(
-        self,
-        temp: NDArrayOrFloat,
-        pres: NDArrayOrFloat,
-        rs: NDArrayOrFloat = None,
-        fvf: NDArrayOrFloat = None,
-        **kwargs,
-    ) -> NDArrayOrFloat:
-        """Temperature and pressure dependent density for Oil with adjusted for RS and FVF.
-
-        Density is calculated using BW92 [oil_density][digirock.fluids.bw92.oil_density].
-
-        Args:
-            temp: Temperature in degC
-            pres: Pressure in MPa
-            rs: If None, uses set values or table
-            fvf: If None, uses set values or table
-            kwargs: ignored
-
-        Returns:
-            Oil density (g/cc)
-        """
-        if rs is None and fvf is None:
-            rs, fvf = self._get_rsfvf(pres)
-        elif rs is None and fvf is not None:
-            rs, _ = self._get_rsfvf(pres)
-        elif rs is not None and fvf is None:
-            _, fvf = self._get_rsfvf(pres)
-
-        oil_rho_s = bw92.oil_rho_sat(self.std_density, self.gas_sg, rs, fvf)
-        oil_rho = bw92.oil_density(oil_rho_s, pres, temp)
-        return oil_rho
-
-    @check_props("temp", "pres")
-    def velocity(
-        self,
-        temp: NDArrayOrFloat,
-        pres: NDArrayOrFloat,
-        rs: NDArrayOrFloat = None,
-        fvf: NDArrayOrFloat = None,
-        **kwargs,
-    ) -> NDArrayOrFloat:
-        """Temperature and pressure dependent acoustic velocity for Oil with adjusted for RS and FVF.
-
-        Velocity is calculated using BW92 [oil_velocity][digirock.fluids.bw92.oil_velocity].
-
-        Args:
-            temp: Temperature in degC
-            pres: Pressure in MPa
-            rs: If None, uses set values or table
-            fvf: If None, uses set values or table
-            kwargs: ignored
-
-        Returns:
-            Oil velocity (m/s)
-        """
-        if rs is None and fvf is None:
-            rs, fvf = self._get_rsfvf(pres)
-        elif rs is None and fvf is not None:
-            rs, _ = self._get_rsfvf(pres)
-        elif rs is not None and fvf is None:
-            _, fvf = self._get_rsfvf(pres)
-
-        return bw92.oil_velocity(self.std_density, pres, temp, self.gas_sg, rs, fvf)
-
-    @check_props("temp", "pres")
-    def bulk_modulus(
-        self,
-        temp: NDArrayOrFloat,
-        pres: NDArrayOrFloat,
-        rs: NDArrayOrFloat = None,
-        fvf: NDArrayOrFloat = None,
-        **kwargs,
-    ) -> NDArrayOrFloat:
-        """Temperature and pressure dependent bulk modulus for Oil with adjusted for RS and FVF.
-
-        Modulus is calculated using BW92 [oil_bulkmod][digirock.fluids.bw92.oil_bulkmod].
-
-        Args:
-            temp: Temperature in degC
-            pres: Pressure in MPa
-            rs: If None, uses set values or table
-            fvf: If None, uses set values or table
-            kwargs: ignored
-
-        Returns:
-            Oil modulus (GPa)
-        """
-        return bw92.oil_bulkmod(
-            self.density(temp, pres, rs=rs, fvf=fvf),
-            self.velocity(temp, pres, rs=rs, fvf=fvf),
-        )
-
-    def get_summary(self):
-        if self._rs_istable:
-            rs = "table"
-        else:
-            rs = self.rs
-        summary = super().get_summary()
-        summary.update({"rs": rs})
-        return summary
-
-
-def load_pvto(filepath: Pathlike, units: str = "METRIC", prefix: str = "pvto") -> dict:
-    """Load a PVTO Eclipse keyword from a textfile into multiple [`Oil`][digirock.Oil] classes.
-
-    Args:
-        filepath: The filepath of the file text file containing the PVTO tables.
-        units: The Eclipse units of the PVTW table, one of ['METRIC', 'PVTM', 'FIELD', 'LAB']. Defaults to 'METRIC'.
-        prefix: The prefix to apply to the name of each loaded fluid.
-
-    Raises:
-        AssertionError: units is not valid
-    """
-    assert units in EclUnitMap.__members__
-    pvt = read_eclipsekw_3dtable(filepath, "PVTO")
-
-    pvt_float = []
-    for p in pvt:
-        q_float = []
-        for q in p:
-            q_float = q_float + [np.array(q.split()).astype(float)]
-        pvt_float = pvt_float + [q_float]
-
-    pvt_rs_float = []
-    for p in pvt_float:
-        rs_float = []
-        q_float = []
-        for q in p:
-            try:
-                rs_float.append(q[0])
-            except IndexError:
-                continue
-            q_float = q_float + [q[1:].reshape(-1, 3)]
-        pvt_rs_float = pvt_rs_float + [[rs_float, q_float]]
-
-    if table >= len(pvt_rs_float):
-        raise ValueError(
-            f"selected PVT table number {table} must be less than"
-            " number of tables found {}".format(len(pvt_rs_float))
-        )
-    pvt = pvt_rs_float[table]
-    for rs, bo in zip(pvt[0], pvt[1]):
-        self.set_fvf(bo[:, 1], rs, bo[:, 0])
-
-    if pres_units == "bar":
-        self.bo["pres"] = self.bo.pres / 10
-
-    return {}
-
 
 class Gas(Fluid):
     """Gas fluid class.
 
+    Notes that the acoustic velocity of gas is undefined.
+
     Attributes:
         name (str): name of the fluid
+        gas_sg (float): Gas specific gravity.
+        gas_density (float): Gas density (g/cc)
     """
 
     @mutually_exclusive("gas_sg", "gas_density")
-    def __init__(self, name=None, gas_sg=None, gas_density=None):
+    def __init__(
+        self, name: str = None, gas_sg: float = None, gas_density: float = None
+    ):
         """
         gas_sg and gas_density are mutually exclusive inputs.
 
         Args:
-            name (str, optional): Name of fluid. Defaults to None.
-            gas_sg (float, optional): Gas specific gravity.
-            gas_density (float, optional): Gas density (g/cc)
+            name: Name of fluid
+            gas_sg: Gas specific gravity
+            gas_density: Gas density (g/cc)
         """
         super().__init__(name=name)
         if gas_density is not None:
@@ -933,39 +953,69 @@ class Gas(Fluid):
         if gas_sg is not None:
             self.set_gas_sg(gas_sg)
 
-    def set_gas_sg(self, gas_sg):
-        """
+    def set_gas_sg(self, gas_sg: float):
+        """Set the gas sepcific gravity
+
+        Calculates `gas_density` using BW92 density of air.
 
         Args:
-            gas_sg ([type]): [description]
+            gas_sg: gas specific gravity
         """
         self.gas_sg = gas_sg
         self.gas_density = self.gas_sg * bw92.AIR_RHO
 
-    def set_gas_density(self, gas_density):
-        """[summary]
+    def set_gas_density(self, gas_density: float):
+        """Sets the gas density
+
+        Calculates `gas_sg` using BW92 density of air.
 
         Args:
-            gas_density ([type]): [description]
+            gas_density: Density of gas
         """
         self.gas_density = gas_density
         self.gas_sg = self.gas_density / bw92.AIR_RHO
 
-    def density(self, temp, pres):
-        """This function overides the density function in etlpy.pem.Fluid"""
-        return bw92.gas_oga_density(temp, pres, self.gas_sg)
+    @check_props("temp", "pres")
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Temperature and pressure dependent density for Gas.
 
-    def modulus(self, temp, pres):
-        """This function overides the modulus function in etlpy.pem.Fluid"""
-        return bw92.gas_adiabatic_bulkmod(temp, pres, self.gas_sg)
+        Uses BW92 [`gas_oga_density`][digirock.fluids.bw92.gas_oga_density].
 
-    def get_summary(self):
+        Args:
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa)
+            kwargs: ignored
+
+        Returns:
+            Gas density (g/cc)
+        """
+        return bw92.gas_oga_density(props["temp"], props["pres"], self.gas_sg)
+
+    @check_props("temp", "pres")
+    def bulk_modulus(
+        self,
+        props: Dict[str, NDArrayOrFloat],
+        **kwargs,
+    ) -> NDArrayOrFloat:
+        """Temperature and pressure dependent bulk modulus for Gas.
+
+        Uses BW92 [`gas_adiabatic_bulkmod`][digirock.fluids.bw92.gas_adiabatic_bulkmod].
+
+        Args:
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa)
+            kwargs: ignored
+
+        Returns:
+            Oil modulus (GPa)
+        """
+        return bw92.gas_adiabatic_bulkmod(props["temp"], props["pres"], self.gas_sg)
+
+    def get_summary(self) -> dict:
         summary = super().get_summary()
         summary.update({"density": self.gas_density, "sg": self.gas_sg})
         return summary
 
 
-class GasPVDG(Gas):
+class GasECL(Gas):
     """Gas fluid class which uses values from PVDG table and Density/Gravity Tables of ECL PROPS
     section.
 
@@ -996,38 +1046,6 @@ class GasPVDG(Gas):
         """Set the active PVT-N. To use for modelling."""
         # TODO: raise error if pvtn is larger than the number of tables in pvt
         self._actpvtn = int(pvtn)
-
-    def load_pvdg(self, filepath, units="METRIC"):
-        """
-
-        Args:
-            filepath ([type]): [description]
-            units (str, optional): [description]. Defaults to 'METRIC'.
-        """
-        _ut = EclUnitScaler[units].value
-
-        rawpvd = read_eclipsekw_2dtable(filepath, "PVDG")
-        pvd = list()
-        for rawtab in rawpvd:
-            tab = dict()
-            tab_ = np.array(rawtab, dtype=float).reshape(-1, 3)
-            tab["pressure"] = _ut["pressure"] * tab_[:, 0]
-            tab["bg"] = tab_[:, 1].copy()
-            tab["visc"] = tab_[:, 2].copy()
-            pvd.append(tab)
-        self.pvd = pvd
-
-        try:
-            dens = read_eclipsekw_2dtable(filepath, "DENSITY")[0]
-            dens = [_ut["density_kg"] * float(d) for d in dens]
-        except KeyError:
-            grav = read_eclipsekw_2dtable(filepath, "GRAVITY")
-            raise NotImplementedError(
-                "GRAVITY KW not yet implemented contact ETLP for help."
-            )
-            # convert to density
-
-        self.set_gas_density(dens[2])
 
     def density(self, temp, pres):
         """This function overides the density function in etlpy.pem.Fluid"""
@@ -1201,5 +1219,5 @@ class FluidModel:
         if self.mixing_model == "woods":
             return bw92.mixed_bulkmod(*args)
 
-    def get_summary(self):
+    def get_summary(self) -> dict:
         return {comp: self.components[comp].get_summary() for comp in self.components}
