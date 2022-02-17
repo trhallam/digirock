@@ -2,6 +2,7 @@ import numpy as np
 from scipy.interpolate import PchipInterpolator
 
 from ..utils.types import NDArrayOrFloat
+from ..utils.ecl import E100MetricConst, EclUnitScaler
 
 
 def oil_fvf_table(pres, bo, p, extrap="pchip"):
@@ -60,3 +61,19 @@ def e100_bw(
     """
     x = comp * (pres - ref_pres)
     return bw / (1 + x + x * x / 2)
+
+def e100_oil_density(api: NDArrayOrFloat ) -> NDArrayOrFloat:
+    """Calculate the oil density from API using Eclipse formula.
+
+    $$
+    \\rho_{API} = \\frac{141.5}{l_g} - 131.5;
+    l_g = \\fracd{\\rho_{oil}}{\\rho_{wat}}
+    $$
+
+    Args:
+        api
+
+    Returns:
+        Oil density $\\rho_{oil}$ at surface conditions (g/cc)
+    """
+    return E100MetricConst.RHO_WAT.value * (141.5 / (api + 131.5)) * EclUnitScaler.METRIC.value["density"]

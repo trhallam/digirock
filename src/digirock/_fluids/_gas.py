@@ -110,7 +110,7 @@ class GasPVT(Fluid):
     Attributes:
         name (str): name of the fluid
         density_asc: Density (g/cc) at surface conditions.
-        pvt: list of pvt dicts, each table contains
+        pvt: pvt dicts, contains
             ref_pres: Reference pressure of bw (MPa)
             bw: Formation volume factor at ref_pres (rm3/sm3)
             comp: Compressibility of fluid. l/MPa
@@ -118,38 +118,80 @@ class GasPVT(Fluid):
             cvisc: Viscosibility (1/MPa)
     """
 
-    density_asc = None
-    pvd = None
-    _actpvtn = 0
-
-    def __init__(self, name=None):
+    def __init__(self, density_asc: float, name: str = None):
         """
 
         Args:
-            name ([type], optional): [description]. Defaults to None.
+            density: The gas density at surface conditions (g/cc)
+            name: The fluid ID
         """
         super().__init__(name=name)
+        self.density_asc = density_asc
+        self.register_key(density_asc)
+        self.pvt = None
+        self.register_key("temp")
+        self.register_key("pres")
 
-    def set_active_pvtn(self, pvtn):
-        """Set the active PVT-N. To use for modelling."""
-        # TODO: raise error if pvtn is larger than the number of tables in pvt
-        self._actpvtn = int(pvtn)
+    def set_pvt(self, pres: NDArrayOrFloat, bg: NDArrayOrFloat):
+        """Set the PVT table for the gas expansion for a given pressure.
+        Args:
+            pres: Pressure (MPa)
+            bg: Expansion relative to surface conditions (vfrac)
+        """
+        pres = np.atleast_1d(pres)
+        bg = np.atleast_1d(bg)
+        try:
+            assert len(pres.shape) == 1
+        except AssertionError:
+            raise ValueError("pres must be 1d")
 
-    def density(self, temp, pres):
-        """This function overides the density function in etlpy.pem.Fluid"""
-        bg_func = interp1d(
-            self.pvd[0]["pressure"],
-            self.pvd[0]["bg"],
+        try:
+            assert len(bg.shape) == 1
+        except AssertionError:
+            raise ValueError("bg must be 1d")
+
+        try:
+            assert bg.shape == pres.shape
+        except AssertionError:
+            raise ValueError("pres and bg must have same shape")
+
+        self.pvt = {"pres": pres, "bg": bg}
+
+        self._bg_func = interp1d(
+            self.pvt["pres"],
+            self.pvt["bg"],
             bounds_error=False,
             fill_value="extrapolate",
         )
 
-        bg = bg_func(pres)
-        density = super().density(temp, pres)
-        return density / bg
+    @check_props("pres")
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Pressure dependent density for Gas.
 
-    def modulus(self, temp, pres):
-        """This function overides the modulus function in etlpy.pem.Fluid
-        Temperature argument is ignored assume const temp.
+        Uses BW92 [`gas_oga_density`][digirock.fluids.bw92.gas_oga_density] with
+        bg from table.
+
+        Args:
+            props: A dictionary of properties; requires `temp` (degC) and `pressure` (MPa)
+            kwargs: ignored
+
+        Returns:
+            Gas density (g/cc)
         """
-        return pres / 100.0
+        bg = self._bg_func(props["pres"])
+        return self.density_asc / bg
+
+    def get_summary(self) -> dict:
+        summary = super().get_summary()
+        summary.update({"density_asc": self.density_asc, "pvt": self.pvt})
+        return summary
+
+    # def bulk_modulus(
+    #     self,
+    #     props: Dict[str, NDArrayOrFloat],
+    #     **kwargs,
+    # ) -> NDArrayOrFloat:
+    #     """This function overides the modulus function in etlpy.pem.Fluid
+    #     Temperature argument is ignored assume const temp.
+    #     """
+    #     return pres / 100.0

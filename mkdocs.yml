@@ -3,7 +3,7 @@ site_author: Tony Hallam
 docs_dir: docs
 theme:
   name: material
-  language: 'en'
+  language: "en"
   features:
     - navigations.instant
     - navigation.tracking
@@ -12,7 +12,7 @@ theme:
     - navigation.expand
 use_directory_urls: false
 
-copyright: 'Tony Hallam'
+copyright: "Tony Hallam"
 
 markdown_extensions:
   - admonition
@@ -50,7 +50,7 @@ plugins:
   - simple
   - autorefs
   - mkdocs-jupyter:
-      execute: true
+      execute: false
       kernel_name: python3
   - mkdocstrings:
       default_handler: python
@@ -59,25 +59,22 @@ plugins:
 
 nav:
   - "Home":
-    - "About": index.md
-    - "Contributing": "contrib.md"
-    - "Contact": "contact.md"
-    - "Issue Tracker":  https://github.com/trhallam/digirock/issues
+      - "About": index.md
+      - "Contributing": "contrib.md"
+      - "Contact": "contact.md"
+      - "Issue Tracker": https://github.com/trhallam/digirock/issues
 
   - "User Guide":
-    - "Digirock Framework": "ug/framework.md"
-    - "Examples":
-      - "Fluids": examples/example_fluids.py
-      - "Stress Models": examples/example_stress.py
+      - "Digirock Framework": "ug/framework.md"
+      - "Examples":
+          - "Fluids": examples/example_fluids.py
+          - "Stress Models": examples/example_stress.py
 
   - "API":
-    - "Fluid Methods": api/fluid_methods.md
-    - "Fluid Classes": api/fluid_classes.md
-    - "Minerals": api/minerals.md
-    - "Vertical Stress Classes": api/stress_classes.md
-    - "Models": api/model_methods.md
-    - "Elastic": api/elastic.md
-    - "Base Classes": api/base_classes.md
-
-
-
+      - "Fluid Methods": api/fluid_methods.md
+      - "Fluid Classes": api/fluid_classes.md
+      - "Minerals": api/minerals.md
+      - "Vertical Stress Classes": api/stress_classes.md
+      - "Models": api/model_methods.md
+      - "Elastic": api/elastic.md
+      - "Base Classes": api/base_classes.md

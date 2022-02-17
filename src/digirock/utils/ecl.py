@@ -1,6 +1,7 @@
 """Mappings for key Eclipse Properties
 """
 from enum import Enum, unique
+from time import gmtime
 
 # pylint: disable=missing-docstring
 
@@ -28,6 +29,27 @@ class EclUnitMap(Enum):
 class EclStandardConditions(Enum):
     TEMP = 15.5556  # degC from 60F
     PRES = 0.101325  # MPa from 1 Atm
+
+
+class E100MetricConst(Enum):
+    PRES_ATMS = 1.013  # barsa
+    RHO_AIR = 1.22  # kg/m3
+    RHO_WAT = 1000.0  # kg/m3
+    GAS_CONST = 0.083143  # m3bars/K/kg-M
+
+
+class E100GravConst(Enum):
+    METRIC = 0.0000981  # m2bars/kg
+    FIELD = 0.00694  # ft2psi/lb
+    LAB = 0.0009678  # cm2atm/gm
+    PVTM = 1
+
+
+class E300GravConst(Enum):
+    METRIC = 0.0000980665  # m2bars/kg
+    FIELD = 0.00694444  # ft2psi/lb
+    LAB = 0.000967841  # cm2atm/gm
+    PVTM = 0.0000967841
 
 
 class EclUnitScaler(Enum):

@@ -90,7 +90,7 @@
 
 ### `digirock.load_pvdg`
 
-::: digirock.load_pvto
+::: digirock.load_pvdg
     rendering:
       show_root_toc_entry: false
       heading_level: 3

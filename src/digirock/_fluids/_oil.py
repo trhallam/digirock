@@ -458,7 +458,6 @@ class OilPVT(OilBW92):
         self.gas_sg = gas_sg
         self.pvt = None
         super().__init__(name=name, api=api, std_density=std_density)
-        self.register_key("rs")
 
     def set_pvt(
         self,
@@ -498,7 +497,7 @@ class OilPVT(OilBW92):
                     f"`pres` {pres.shape} and `bo` {bo.shape} must have same shape"
                 )
 
-            table = xr.DataArray(data=np.arange(5), coords={"pres": np.arange(5) * 10})
+            table = xr.DataArray(data=bo, coords={"pres": pres})
             self.pvt = {
                 "type": "fixed_rs",
                 "rs": rs[0],
