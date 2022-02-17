@@ -1,10 +1,6 @@
-from functools import wraps, reduce
 from typing import List, Dict
-from more_itertools import all_equal
+from rich.tree import Tree
 
-import numpy as np
-
-from .utils.types import NDArrayOrFloat
 
 class BaseConsumerClass:
     """Base consumer class from which all other consumer classes are defined.
@@ -51,4 +47,18 @@ class BaseConsumerClass:
 
     def get_summary(self) -> dict:
         """Returns a summary of this class."""
-        return {"class": self.__class__, "name": self.name, "props_keys":self.keys()}
+        return {"class": self.__class__, "name": self.name, "props_keys": self.keys()}
+
+    @property
+    def tree(self) -> Tree:
+        """Prints a rich tree view of the Class"""
+        summary = self.get_summary()
+        name = summary.pop("name")
+        if name is None:
+            name = summary.pop("class")
+
+        tree = Tree(str(name))
+        for var, val in summary.items():
+            tree.add(f"{var} : {val}")
+
+        return tree

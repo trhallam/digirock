@@ -1,131 +1,168 @@
-# import xarray as xr
-import numpy as np
-
-from ._exceptions import WorkflowError
+"""Classes for handling Stress fields.
+"""
+from typing import Iterable, List, Dict
+from inspect import getargspec
 from addict import Dict as AttributeDict
+from addict import Dict as AttributeDict
+from idna import valid_contextj
 
-from .models._mod import dryframe_dpres
+from ._exceptions import WorkflowError, PrototypeError
+from .utils.types import NDArrayOrFloat
+from .utils._decorators import check_props
+from ._base import BaseConsumerClass
 
 
-class StressModel:
-    """Build a stress model for a rock.
+class StressModel(BaseConsumerClass):
+    """Base Class for defining stress fields, all new stress fields should be based upon this class.
 
     Attributes:
-        sp (dict): Stress sensitivity parameters
+        name (str): name of the field
+    """
+
+    def __init__(self, name: str = None, keys: List[str] = None):
+        if keys is None:
+            keys = ["depth", "pres"]
+        BaseConsumerClass.__init__(self, name, keys)
+
+    def _check_defined(self, from_func, var):
+        if self.__getattribute__(var) is None:
+            raise WorkflowError(from_func, f"The {var} attribute is not defined.")
+
+    def vertical_stress(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+        """Returns the vertical stress $S_v$ for the class.
+
+        Args:
+            props: A dictionary of properties required
+            kwargs: ignored
+        """
+        raise PrototypeError(self.__class__.__name__, "vertical_stress")
+
+    # @check_props("depth", "pres")
+    def effective_stress(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+        """Returns the effective stress $S_e$ for the class at a given depth $(z)$ and for a
+        particular formation pressure $p_f$.
+
+        $S_e = S_v(d) - p_f$
+
+        Args:
+            props: A dictionary of properties; requires `depth` (m) and `pres` (MPa)
+            kwargs: ignored
+
+        Returns:
+            effective stress (MPa)
+        """
+        return self.vertical_stress(props) - props["pres"]
+
+    def get_summary(self) -> dict:
+        """Return a dictionary containing a summary of the fluid.
+
+        Returns:
+            Summary of properties.
+        """
+        return super().get_summary()
+
+
+class FStressModel(StressModel):
+    """Build a stress model for a rock using a user defined function.
+
+    The function `func` passed to the constructor should be of the form
+
+    ```
+    def stress_func(props: Dict[str, NDArrayOrFloat] = None, **kwargs) -> NDArrayOrFloat:
+        return props.
+    ```
+
+    where props contains constants or properties for each calculation point and returns an NDArray of the same
+    size or a constant. The keys required by stress_func should be given to the `keys` argument of the constructor
+    to enable property_checks at runtime.
+
+    Attributes:
+        stress_func (callable): Stress function
+    """
+
+    def __init__(self, func, name: str = None, keys: List[str] = None):
+        """
+
+        Args:
+            func: the vertical stress function
+            name: name of the model
+            keys: A list of property keys that this function requires, e.g. `'depth'`
+        """
+        super().__init__(name=name, keys=keys)
+        if keys is None:
+            keys = []
+
+        # check func should have form func(props, **kwargs)
+        spec = getargspec(func)
+        try:
+            assert len(spec.args) == 1
+            assert spec.keywords == "kwargs"
+        except AssertionError:
+            raise ValueError("func must have the form `func(props, **kwargs)`")
+
+        # TODO: get update chekc_props
+        # self.stress_func = check_props(*tuple(keys))(func)
+        self.stress_func = func
+
+    def vertical_stress(
+        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
+    ) -> NDArrayOrFloat:
+        """Returns the vertical stress using user defined function `vertical_stress`.
+
+        Returns:
+            vertical stress (MPa)
+        """
+        return self.stress_func(props, **kwargs)
+
+    def get_summary(self) -> dict:
+        summary = super().get_summary()
+        summary.update(
+            {
+                "func": self.stress_func.__name__,
+                "func_argspec": getargspec(self.stress_func),
+            }
+        )
+        return summary
+
+
+class LGStressModel(StressModel):
+    """Build a stress model for a rock using a linear gradient (LG).
+
+    Attributes:
         grad (float): Stress overburden gradient
         ref_pres (float): Pressure (MPa) at ref_depth
         ref_depth (float): Reference depth (mTVDSS) for ref_pres.
     """
 
-    _has_stress_sens = False
-    _has_ob_stress = False
-    # sp = AttributeDict(
-    #   {"ek": None, "pk": None, "infk": None, "eg": None, "pg": None, "infg": None}
-    # )
     grad = None
     ref_pres = None
     ref_depth = None
 
-    def __init__(self, name=None):
-        self.name = name
-        save_header = "etlpy StressModel class instance save file"
-        super().__init__(save_header)
-
-    def set_sensitivity(self, ek, pk, eg, pg):
-        """Stress sensitivity parameters."""
-        self.sp = AttributeDict(
-            {
-                "ek": ek,
-                "pk": pk,
-                "eg": eg,
-                "pg": pg,
-            }
-        )
-        self._has_stress_sens = True
-
-    def set_stress_env(self, grad, ref_pres, ref_depth):
-        """Background stress gradient - can by hydrostatic for example.
-
+    def __init__(self, grad: float, ref_pres: float, ref_depth: float = 0, name=None):
+        """Background stress set using a linear gradient
+        ```
         Sv = grad*(depth-ref_depth) + ref_pres
+        ```
 
         Args:
-            grad (float): The gradient of the background stress in MPa/m
-            ref_pres (float): The intercept of the stress graident trend i.e. at ref_depth (MPa)
-            ref_depth (float): Depth at reference pressure (TVDSS)
+            grad: The gradient of the background stress in MPa/m
+            ref_pres: The intercept of the stress gradient trend i.e. at `ref_depth` (MPa)
+            ref_depth: Depth at reference pressure (mTVDSS)
         """
         self.grad = grad
         self.ref_pres = ref_pres
         self.ref_depth = ref_depth
-        self._has_ob_stress = True
-        self._sv_func = self._vertical_stress_from_env
+        super().__init__(name, keys=["depth", "pres"])
 
-    def _vertical_stress_from_env(self, depth):
-        """Calculate vertical stress from linear gradient terms.
+    # @check_props("depth")
+    def vertical_stress(
+        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
+    ) -> NDArrayOrFloat:
+        return self.grad * (props["depth"] - self.ref_depth) + self.ref_pres
 
-        Args:
-            depth (array-like): Depth to calculate at.
-
-        Returns:
-            (array-like): Vertical stress (MPa)
-        """
-        if not self._has_ob_stress:
-            raise WorkflowError(
-                "vertical_stress", "overburden stress must be set using set_stress_env"
-            )
-        return self.grad * (depth - self.ref_depth) + self.ref_pres
-
-    def set_vertical_stress_func(self, func):
-        """Set a custom stress function for the overburden.
-
-        Depths are positive down.
-
-        Args:
-            func (function): A function which takes a single argument (tvdss) and
-                returns an array of the same size for vertical pressure in MPa
-
-        """
-        test = np.arange(0, 4000)
-        assert func(test).size == test.size
-        assert np.all(func(test) >= 0)
-        self._sv_func = func
-
-    def vertical_stress(self, depth):
-        return self._sv_func(depth)
-
-    def effective_stress(self, depth, res_pres):
-        """Effective stress by taking difference of vertical stress and reservoir pressure.
-
-        Args:
-            depth (array-like): depth of calculation (m TVDSS)
-            res_pres (array-like): reservoir pressure (MPa)
-
-        Returns:
-            (array-like): effective stress (MPa)
-        """
-        return self.vertical_stress(depth) - res_pres
-
-    def stress_dryframe_moduli(self, depth, pres1, pres2, mod_dry, component="bulk"):
-        """Calculate the dryframe stress sensitive moduli
-
-        Args:
-            depth ([type]): [description]
-            pres1 ([type]): [description]
-            pres2 (array-like):
-            mod_dry (array-like): Dryframe modulus at pressure 1.
-        """
-        if not self._has_stress_sens:
-            raise WorkflowError(
-                "dryframe_moduli",
-                "The stress sensitivity parameters have not been set.",
-            )
-
-        if component not in ["bulk", "shear"]:
-            raise ValueError(f"Unknown component {component}")
-
-        peffi = self.effective_stress(depth, pres1)
-        peff = self.effective_stress(depth, pres2)
-
-        if component == "bulk":
-            return dryframe_dpres(mod_dry, peffi, peff, self.sp.ek, self.sp.pk)
-        if component == "shear":
-            return dryframe_dpres(mod_dry, peffi, peff, self.sp.eg, self.sp.pg)
+    def get_summary(self) -> dict:
+        summary = super().get_summary()
+        summary.update(
+            {"grad": self.grad, "ref_pres": self.ref_pres, "ref_depth": self.ref_depth}
+        )
+        return summary

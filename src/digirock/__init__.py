@@ -15,20 +15,26 @@ from ._fluid import (
     load_pvto,
 )
 
-from ._frame import (
-    PoroAdjModel,
-    DefaultPoroAdjModel,
-    NurCriticalPoro,
-    WoodsideCementPoro,
-    LeeConsolodationPoro,
-    RockFrame,
-    VRHFrame,
-    HSFrame,
-    CementedSandFrame,
-)
+from ._frames._minerals import Mineral
 
-from ._rock import Mineral, RockModel, FaciesModel, MultiRockModel
-from ._stress import StressModel
+from ._stress import StressModel, FStressModel, LGStressModel
+
+# from ._frames._poro_adjust import (
+#     PoroAdjModel,
+#     DefaultPoroAdjModel,
+#     NurCriticalPoro,
+#     WoodsideCementPoro,
+#     LeeConsolodationPoro,
+# )
+# from ._frames._frames import (
+#     RockFrame,
+#     VRHFrame,
+#     HSFrame,
+#     CementedSandFrame,
+# )
+
+# from ._rock import Mineral, RockModel, FaciesModel, MultiRockModel
+
 from ._mineral_lib import minerals as _minerals
 
 for mineral, vals in _minerals.items():

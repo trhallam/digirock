@@ -8,7 +8,7 @@ Refs:
 # pylint: disable=invalid-name
 
 from numpy import power, pi
-from ..elastic import poisson_moduli
+from ..elastic import poisson_ratio
 
 
 def _alpha_scheme1(phi0, phi, ncontacts):
@@ -83,8 +83,8 @@ def dryframe_cemented_sand(
     Returns:
         (array-like, array-like): Bulk and shear modului of cemented-sand.
     """
-    pois_sand = poisson_moduli(k_sand, mu_sand)
-    pois_cem = poisson_moduli(k_cem, mu_cem)
+    pois_sand = poisson_ratio(k_sand, mu_sand)
+    pois_cem = poisson_ratio(k_cem, mu_cem)
     alpha = _cemented_sand_alpha(phi0, phi, ncontacts, alpha)
 
     lam_tau = mu_cem / (pi * mu_sand)

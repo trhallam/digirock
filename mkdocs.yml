@@ -37,6 +37,13 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
   - search
@@ -61,11 +68,15 @@ nav:
     - "Digirock Framework": "ug/framework.md"
     - "Examples":
       - "Fluids": examples/example_fluids.py
+      - "Stress Models": examples/example_stress.py
 
   - "API":
     - "Fluid Methods": api/fluid_methods.md
     - "Fluid Classes": api/fluid_classes.md
+    - "Minerals": api/minerals.md
+    - "Vertical Stress Classes": api/stress_classes.md
     - "Models": api/model_methods.md
+    - "Elastic": api/elastic.md
     - "Base Classes": api/base_classes.md
 
 
