@@ -1,13 +1,14 @@
 """Classes for handling Stress fields.
 """
-from typing import Iterable, List, Dict
 from inspect import getargspec
+from typing import Dict, Iterable, List
+
 from addict import Dict as AttributeDict
 
-from ._exceptions import WorkflowError, PrototypeError
-from .utils.types import NDArrayOrFloat
-from .utils._decorators import check_props
 from ._base import Element
+from ._exceptions import PrototypeError, WorkflowError
+from .utils._decorators import check_props
+from .utils.types import NDArrayOrFloat
 
 
 class StressModel(Element):
@@ -36,7 +37,7 @@ class StressModel(Element):
         raise PrototypeError(self.__class__.__name__, "vertical_stress")
 
     # @check_props("depth", "pres")
-    def effective_stress(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+    def effective_stress(self, props: Dict[str, NDArrayOrFloat], **kwargs):
         """Returns the effective stress $S_e$ for the class at a given depth $(z)$ and for a
         particular formation pressure $p_f$.
 

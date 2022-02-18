@@ -1,6 +1,6 @@
 """Fluid base class to prototype generation of fluid properties.
 """
-from typing import List, Dict
+from typing import List, Dict, Type
 
 from .._exceptions import PrototypeError, WorkflowError
 from ..utils.types import NDArrayOrFloat
@@ -21,7 +21,7 @@ class Fluid(Element):
         if self.__getattribute__(var) is None:
             raise WorkflowError(from_func, f"The {var} attribute is not defined.")
 
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
         """Returns density of fluid
 
         Args:
@@ -33,7 +33,7 @@ class Fluid(Element):
         """
         raise PrototypeError(self.__class__.__name__, "density")
 
-    def velocity(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def velocity(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
         """Returns acoustic velocity of fluid
 
         Args:
@@ -45,7 +45,9 @@ class Fluid(Element):
         """
         raise PrototypeError(self.__class__.__name__, "velocity")
 
-    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def bulk_modulus(
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
+    ) -> NDArrayOrFloat:
         """Returns bulk_modulus of fluid
 
         Args:
@@ -99,5 +101,5 @@ class FluidSwitch(Switch):
 
     _methods = ["density", "bulk_modulus", "shear_modulus", "velocity"]
 
-    def __init__(self, switch_key: str, elements: List[Element], name=None):
+    def __init__(self, switch_key: str, elements: List[Type[Fluid]], name=None):
         super().__init__(switch_key, elements, methods=self._methods, name=name)

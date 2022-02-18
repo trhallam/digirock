@@ -1,6 +1,6 @@
 """Common decorators for functions.
 """
-from typing import Dict, Callable, Tuple
+from typing import Dict, Callable, Sequence
 
 from functools import wraps
 import numpy as np
@@ -93,7 +93,9 @@ def broadcastable(keyword: str, *keywords: str) -> Callable:
         @wraps(func)
         def inner(*args, **kwargs):
             # add args filtering to keywords check
-            check_args = {name: arg for name, arg in zip(argspec.args, args) if name in keywords}
+            check_args = {
+                name: arg for name, arg in zip(argspec.args, args) if name in keywords
+            }
             # add keywords filtering to keywords check
             check_args.update({kw: val for kw, val in kwargs.items() if kw in keywords})
             _ = check_broadcastable(**check_args)
@@ -105,7 +107,7 @@ def broadcastable(keyword: str, *keywords: str) -> Callable:
 
 
 def check_props(
-    *required_props: str, broadcastable: Tuple[str] = None, props_argument="props"
+    *required_props: str, broadcastable: Sequence[str] = None, props_argument="props"
 ) -> Callable:
     """Wrapper to check props dictionary has required keywords.
 

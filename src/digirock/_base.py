@@ -1,4 +1,4 @@
-from typing import List, Dict, Union
+from typing import List, Dict, Union, Type, Any
 from rich.tree import Tree
 
 import numpy as np
@@ -45,7 +45,7 @@ class Element:
                 f"The key: {key}, is not currently in the digirock registry."
             )
 
-    def keys(self) -> list:
+    def keys(self) -> List[str]:
         """Returns a list of keys this class will require for computation.
 
         Returns:
@@ -53,7 +53,7 @@ class Element:
         """
         return self._protected_kw_registry
 
-    def get_summary(self) -> dict:
+    def get_summary(self) -> Dict[str, Any]:
         """Returns a summary of this class."""
         return {"class": self.__class__, "name": self.name, "props_keys": self.keys()}
 
@@ -72,7 +72,7 @@ class Element:
         return tree
 
 
-def _element_check(elements: List[Element], methods: List[str]):
+def _element_check(elements: List[Type[Element]], methods: List[str]):
     """Check elements have methods
 
     Raises:
@@ -86,7 +86,7 @@ def _element_check(elements: List[Element], methods: List[str]):
                 )
 
 
-def _volume_sum_check(props: Dict[str, NDArrayOrFloat], atol=1e-3) -> bool:
+def _volume_sum_check(props: Dict[str, NDArrayOrFloat], sum_to=1, atol=1e-3) -> bool:
     """Check arrays all sum to no more than 1"""
     check_broadcastable(**props)
     sum_ar = np.zeros((1,))
@@ -95,9 +95,10 @@ def _volume_sum_check(props: Dict[str, NDArrayOrFloat], atol=1e-3) -> bool:
         sum_ar = sum_ar + props[prop]
 
     try:
-        assert sum_ar.max() <= 1.0 + atol
+        assert sum_ar.max() <= sum_to + atol
     except AssertionError:
         raise ValueError(f"Volume fractions for {props.keys()} sum to greater than one")
+    return True
 
 
 def _get_complement(props: Dict[str, NDArrayOrFloat]) -> NDArrayOrFloat:
@@ -132,7 +133,7 @@ class Switch(Element):
     def __init__(
         self,
         switch_key: str,
-        elements: List[Element],
+        elements: List[Type[Element]],
         methods: List[str],
         name: str = None,
     ):
@@ -140,17 +141,17 @@ class Switch(Element):
         self._methods = methods
         self._switch_key = switch_key
         self._elements = elements
-        _element_check(self.elements, self.methods)
+        _element_check(self._elements, self.methods)
 
         for meth in self._methods:
             self._method_factory(meth)
 
     @property
     def n_elements(self) -> int:
-        return len(self.elements)
+        return len(self._elements)
 
     @property
-    def elements(self) -> List[Element]:
+    def elements(self) -> List[Type[Element]]:
         return self._elements
 
     @property
@@ -180,7 +181,7 @@ class Switch(Element):
         )
 
         @check_props(self.switch_key)
-        def func(props: Dict[str, NDArrayOrFloat], **element_kwargs):
+        def func(props: Dict[str, NDArrayOrFloat], **element_kwargs) -> NDArrayOrFloat:
             was_int = isinstance(props[self.switch_key], int)
             switches = np.atleast_1d(props[self.switch_key])
             unique_switches = np.unique(switches)
@@ -205,7 +206,7 @@ class Switch(Element):
         func.__doc__ = docs
         self.__setattr__(method_name, func)
 
-    def get_summary(self) -> dict:
+    def get_summary(self) -> Dict[str, Any]:
         """Returns a summary of this class."""
         summary = super().get_summary()
         summary.update(
@@ -262,8 +263,8 @@ class Blend(Element):
 
     def __init__(
         self,
-        blend_keys: Union[List[str], str],
-        elements: List[Element],
+        blend_keys: List[str],
+        elements: List[Type[Element]],
         methods: List[str],
         name=None,
     ):
@@ -286,7 +287,7 @@ class Blend(Element):
         return len(self.elements)
 
     @property
-    def elements(self) -> List[Element]:
+    def elements(self) -> List[Type[Element]]:
         return self._elements
 
     @property
@@ -294,10 +295,10 @@ class Blend(Element):
         return self._methods
 
     @property
-    def blend_keys(self) -> str:
+    def blend_keys(self) -> List[str]:
         return self._blend_keys
 
-    def get_summary(self) -> dict:
+    def get_summary(self) -> Dict[str, Any]:
         """Returns a summary of this class."""
         summary = super().get_summary()
         summary.update(
