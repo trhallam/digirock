@@ -31,6 +31,8 @@ share/python-wheels/
 MANIFEST
 requirements.txt
 *.ipynb
+pytest-coverage.txt
+pytest.xml
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

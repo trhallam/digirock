@@ -22,6 +22,10 @@ jobs:
         os: ["ubuntu-latest"]
         python: ["3.8"]
 
+    outputs:
+      coverage: ${{ steps.coverage.outputs.coverage }}
+      coverage_color: ${{ steps.coverage.outputs.color }}
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -50,8 +54,17 @@ jobs:
           pip install .
 
       - name: Run tests
+        # additional configuration in pyproject.toml
         run: |
-          pytest -v
+          pytest -v | tee ./pytest-coverage.txt
+
+      - name: Pytest coverage comment
+        id: coverageComment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
+          title: Coverage Report ${{ matrix.os }} Python ${{ matrix.python }}
 
       - name: Build wheels
         run: pip wheel . -w dist --no-deps
@@ -93,6 +106,17 @@ jobs:
         logoColor: white
         message: ${{ env.BADGE_MSG }}
         color: ${{ env.BADGE_COLOUR }}
+
+    - name: Create the coverage badge
+      uses: schneegans/dynamic-badges-action@v1.0.0
+      with:
+        auth: ${{ secrets.GIST_TOKEN }}
+        gistID: 0da415ee1bf30b0fc37a2fc4ddafbdee
+        filename: ${{ env.PACKAGE }}_coverage.json
+        label: Coverage
+        message: ${{ needs.build-test.outputs.coverage }}
+        color: ${{ needs.build-test.outputs.coverage_color }}
+        namedLogo: python
 
   publish:
     name: Publish to test.PyPI and PyPI
