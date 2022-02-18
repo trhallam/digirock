@@ -101,7 +101,7 @@ class WaterECL(Fluid):
         visc (float): Viscosity of fluid cP
         cvisc (float): Viscosibility (1/MPa)
         salinity (float): Salinity in
-        fvf1_pres (float): The reference pressure when the FVF=1.
+        fvf1_pres (float): The reference pressure when the FVF=1. Defaults to 1Atm
     """
 
     def __init__(
@@ -113,7 +113,7 @@ class WaterECL(Fluid):
         cvisc: float,
         name: str = None,
         salinity: int = 0,
-        fvf1_pres: float = 0.101325,
+        fvf1_pres: float = None,
     ):
         """
         Args:
@@ -122,9 +122,9 @@ class WaterECL(Fluid):
             comp: Compressibility of water at ref_pres (1/MPa)
             visc: Water viscosity at ref_pres (cP)
             cvisc: Water viscosibility (1/MPa)
-            name (optional): Name for fluid. Defaults to None.
-            salinity (optional): Salinity of brine (ppm). Defaults to 0.
-            fvf1_pres (optional): The reference pressure when the FVF=1. Defaults to 0.101325 MPa.
+            name: Name for fluid. Defaults to None.
+            salinity: Salinity of brine (ppm). Defaults to 0.
+            fvf1_pres: The reference pressure when the FVF=1. Defaults to 0.101325 MPa.
         """
         super().__init__(name=name)
         self.sal = salinity / 1e6
@@ -133,7 +133,7 @@ class WaterECL(Fluid):
         self.comp = comp
         self.visc = visc
         self.cvisc = cvisc
-        self.fvf1_pres = fvf1_pres
+        self.fvf1_pres = fvf1_pres if fvf1_pres else EclStandardConditions["PRES"].value
 
     @property
     def density_asc(self) -> float:

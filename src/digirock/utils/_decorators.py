@@ -76,7 +76,7 @@ def mutually_inclusive(keyword, *keywords):
 
 
 def broadcastable(keyword: str, *keywords: str) -> Callable:
-    """Wrapp to check if the argument names listed are broadcastable as Numpy arrays.
+    """Wrapper to check if the argument names listed are broadcastable as Numpy arrays.
 
     Args:
         keyword: argument to check
@@ -92,8 +92,10 @@ def broadcastable(keyword: str, *keywords: str) -> Callable:
 
         @wraps(func)
         def inner(*args, **kwargs):
-            check_args = {name: arg for name, arg in zip(argspec.args, args)}
-            check_args.update(kwargs)
+            # add args filtering to keywords check
+            check_args = {name: arg for name, arg in zip(argspec.args, args) if name in keywords}
+            # add keywords filtering to keywords check
+            check_args.update({kw: val for kw, val in kwargs.items() if kw in keywords})
             _ = check_broadcastable(**check_args)
             return func(*args, **kwargs)
 

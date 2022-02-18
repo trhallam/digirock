@@ -69,8 +69,6 @@ class Fluid(Element):
         Returns:
             Modulus for temp and pres (GPa). Always 0.0
         """
-        # temp_ar = np.atleast_1d(temp)
-        # temp_pres = np.atleast_1d(pres)
         return 0.0
 
     def get_summary(self) -> dict:
@@ -102,4 +100,4 @@ class FluidSwitch(Switch):
     _methods = ["density", "bulk_modulus", "shear_modulus", "velocity"]
 
     def __init__(self, switch_key: str, elements: List[Element], name=None):
-        Switch.__init__(switch_key, elements, methods=self._methods, name=name)
+        super().__init__(switch_key, elements, methods=self._methods, name=name)
