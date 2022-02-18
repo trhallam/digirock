@@ -3,8 +3,6 @@
 from typing import Iterable, List, Dict
 from inspect import getargspec
 from addict import Dict as AttributeDict
-from addict import Dict as AttributeDict
-from idna import valid_contextj
 
 from ._exceptions import WorkflowError, PrototypeError
 from .utils.types import NDArrayOrFloat
