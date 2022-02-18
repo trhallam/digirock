@@ -46,6 +46,8 @@ import numpy as np
 
 from scipy.optimize import root_scalar
 
+from digirock.utils.types import NDArrayOrFloat
+
 from ..utils import safe_divide
 
 #  define constants
@@ -645,15 +647,15 @@ def wat_salinity_brine(t: float, p: float, density: float) -> float:
         raise ValueError("Could not find solution for density to salinity")
 
 
-def wat_bulkmod(rho, vp):
+def wat_bulkmod(rho: NDArrayOrFloat, vp: NDArrayOrFloat) -> NDArrayOrFloat:
     """Brine bulk modulus K
 
     Args:
-        rho (array-like): water fluid density g/cc
-        vp (array-like): water fluid compressional velocity m/s
+        rho: water fluid density (g/cc)
+        vp: water fluid compressional velocity (m/s)
 
     Returns:
-        (array-like): bulk modulus GPa
+        bulk modulus (GPa)
     """
     return rho * np.power(vp, 2) * 1e-6
 

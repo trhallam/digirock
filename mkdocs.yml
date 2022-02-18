@@ -67,12 +67,15 @@ nav:
   - "User Guide":
       - "Digirock Framework": "ug/framework.md"
       - "Examples":
+          - "BW92": examples/batzle_wang_1992.py
           - "Fluids": examples/example_fluids.py
           - "Stress Models": examples/example_stress.py
+          - "Switches": examples/example_switches.py
 
   - "API":
       - "Fluid Methods": api/fluid_methods.md
       - "Fluid Classes": api/fluid_classes.md
+      - "Fluid Blending": api/fluid_blend.md
       - "Minerals": api/minerals.md
       - "Vertical Stress Classes": api/stress_classes.md
       - "Models": api/model_methods.md

@@ -4,10 +4,10 @@ from typing import List, Dict
 
 from .._exceptions import PrototypeError, WorkflowError
 from ..utils.types import NDArrayOrFloat
-from .._base import BaseConsumerClass
+from .._base import Element, Switch
 
 
-class Fluid(BaseConsumerClass):
+class Fluid(Element):
     """Base Class for defining fluids, all new fluids should be based upon this class.
 
     Attributes:
@@ -15,7 +15,7 @@ class Fluid(BaseConsumerClass):
     """
 
     def __init__(self, name: str = None, keys: List[str] = None):
-        BaseConsumerClass.__init__(self, name, keys if keys else [])
+        Element.__init__(self, name, keys if keys else [])
 
     def _check_defined(self, from_func, var):
         if self.__getattribute__(var) is None:
@@ -80,3 +80,26 @@ class Fluid(BaseConsumerClass):
             Summary of properties.
         """
         return super().get_summary()
+
+
+class FluidSwitch(Switch):
+    """Class for fluid switching, e.g. when different fluid properties are needed in different PVT zones
+
+    Implements the following [`Switch`][digirock.Switch] methods:
+
+      - `density`
+      - `bulk_modulus`
+      - `shear_modulus`
+      - `velocity`
+
+    Attributes:
+        name (str): Name for switch
+        switch_key (str): Key to use for switching
+        elements (list): A list of elements
+        n_elements (int): The number of elements
+    """
+
+    _methods = ["density", "bulk_modulus", "shear_modulus", "velocity"]
+
+    def __init__(self, switch_key: str, elements: List[Element], name=None):
+        Switch.__init__(switch_key, elements, methods=self._methods, name=name)

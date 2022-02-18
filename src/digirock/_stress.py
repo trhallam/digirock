@@ -9,10 +9,10 @@ from idna import valid_contextj
 from ._exceptions import WorkflowError, PrototypeError
 from .utils.types import NDArrayOrFloat
 from .utils._decorators import check_props
-from ._base import BaseConsumerClass
+from ._base import Element
 
 
-class StressModel(BaseConsumerClass):
+class StressModel(Element):
     """Base Class for defining stress fields, all new stress fields should be based upon this class.
 
     Attributes:
@@ -22,7 +22,7 @@ class StressModel(BaseConsumerClass):
     def __init__(self, name: str = None, keys: List[str] = None):
         if keys is None:
             keys = ["depth", "pres"]
-        BaseConsumerClass.__init__(self, name, keys)
+        Element.__init__(self, name, keys)
 
     def _check_defined(self, from_func, var):
         if self.__getattribute__(var) is None:

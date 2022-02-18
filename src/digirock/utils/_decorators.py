@@ -121,7 +121,7 @@ def check_props(
             props = [
                 arg for arg, name in zip(args, argspec.args) if name == props_argument
             ][0]
-            missing = [p for p in props if p not in required_props]
+            missing = [p for p in required_props if p not in props]
             if missing:
                 raise ValueError(
                     f"{func} requires props kws: {required_props}, missing: {missing}"

@@ -3,12 +3,12 @@
 
 from typing import Tuple
 from .._exceptions import WorkflowError
-from .._base import BaseConsumerClass
+from .._base import Element
 
 from ..elastic import acoustic_vel
 
 
-class Mineral(BaseConsumerClass):
+class Mineral(Element):
     """Base Class for defining Minerals. They are rock frame constituents.
 
     Attributes:

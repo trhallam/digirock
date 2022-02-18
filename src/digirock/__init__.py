@@ -2,24 +2,9 @@
 import sys
 from ._version import version as __version__
 
-from ._fluids import (
-    FluidModel,
-    Fluid,
-    WaterBW92,
-    WaterECL,
-    DeadOil,
-    OilBW92,
-    OilPVT,
-    BaseOil,
-    GasBW92,
-    GasPVT,
-)
-from ._fluids._fluid_loaders import (
-    load_pvtw,
-    load_pvto,
-    load_pvdg,
-)
+from ._base import Element, Switch, Blend
 
+from ._fluids import *
 from ._frames._minerals import Mineral
 
 from ._stress import StressModel, FStressModel, LGStressModel

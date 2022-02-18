@@ -4,13 +4,13 @@ model specific.
 from typing import Dict, List, Tuple
 from ..utils.types import NDArrayOrFloat
 from ..utils._decorators import check_props
-from .._base import BaseConsumerClass
+from .._base import Element
 from .._exceptions import WorkflowError, PrototypeError
 
 from ..models import dryframe_dpres
 
 
-class AdjustmentModel(BaseConsumerClass):
+class AdjustmentModel(Element):
     """Base Class for adjusting properties, all new adjustment models should be based upon this class.
 
     Attributes:
@@ -20,7 +20,7 @@ class AdjustmentModel(BaseConsumerClass):
     def __init__(self, name: str = None, keys: List[str] = None):
         if keys is None:
             keys = []
-        BaseConsumerClass.__init__(self, name, keys)
+        Element.__init__(self, name, keys)
 
     def _check_defined(self, from_func, var):
         if self.__getattribute__(var) is None:
