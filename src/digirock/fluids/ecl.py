@@ -35,7 +35,9 @@ def oil_fvf_table(pres, bo, p, extrap="pchip"):
         pchip = pchipf(p)
         return np.where((p > tmin) & (p < tmax), linear, pchip)
     else:
-        raise KeyError
+        raise ValueError(
+            f"Unknown `extrap` {extrap}, expected one of `pchip`, `const`."
+        )
 
 
 def e100_bw(
@@ -62,7 +64,8 @@ def e100_bw(
     x = comp * (pres - ref_pres)
     return bw / (1 + x + x * x / 2)
 
-def e100_oil_density(api: NDArrayOrFloat ) -> NDArrayOrFloat:
+
+def e100_oil_density(api: NDArrayOrFloat) -> NDArrayOrFloat:
     """Calculate the oil density from API using Eclipse formula.
 
     $$
@@ -76,4 +79,8 @@ def e100_oil_density(api: NDArrayOrFloat ) -> NDArrayOrFloat:
     Returns:
         Oil density $\\rho_{oil}$ at surface conditions (g/cc)
     """
-    return E100MetricConst.RHO_WAT.value * (141.5 / (api + 131.5)) * EclUnitScaler.METRIC.value["density"]
+    return (
+        E100MetricConst.RHO_WAT.value
+        * (141.5 / (api + 131.5))
+        * EclUnitScaler.METRIC.value["density"]
+    )

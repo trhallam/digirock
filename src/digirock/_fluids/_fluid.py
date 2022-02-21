@@ -17,10 +17,6 @@ class Fluid(Element):
     def __init__(self, name: str = None, keys: List[str] = None):
         Element.__init__(self, name, keys if keys else [])
 
-    def _check_defined(self, from_func, var):
-        if self.__getattribute__(var) is None:
-            raise WorkflowError(from_func, f"The {var} attribute is not defined.")
-
     def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
         """Returns density of fluid
 
