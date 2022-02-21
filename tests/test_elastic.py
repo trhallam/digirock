@@ -47,15 +47,20 @@ def n_varshp_arrays(draw, n):
     return tuple(draw(np_ints_or_floats(shp=shp)) for shp in shps)
 
 
+@pytest.fixture
+def np_shapes():
+    return ((2,), (2, 3), (2, 3, 4))
+
+
 @pytest.mark.parametrize(
     "vp,vs,rhob,k_ans,mu_ans", ((2, 1, 2, 16 / 3 * 1e-6, 2 * 1e-6),)
 )
-def test_acoustic_moduli(vp, vs, rhob, k_ans, mu_ans):
+def test_acoustic_moduli(vp, vs, rhob, k_ans, mu_ans, np_shapes):
     k, mu = acoustic_moduli(vp, vs, rhob)
     assert np.allclose(k, k_ans)
     assert np.allclose(mu, mu_ans)
 
-    for shp in ((2,), (2, 3), (2, 3, 4)):
+    for shp in np_shapes:
         k, mu = acoustic_moduli(
             np.full(shp, vp),
             np.full(shp, vs),
@@ -68,12 +73,12 @@ def test_acoustic_moduli(vp, vs, rhob, k_ans, mu_ans):
 @pytest.mark.parametrize(
     "vp_ans,vs_ans,rhob,k,mu", ((2, 1, 2, 16 / 3 * 1e-6, 2 * 1e-6),)
 )
-def test_acoustic_vel(vp_ans, vs_ans, rhob, k, mu):
+def test_acoustic_vel(vp_ans, vs_ans, rhob, k, mu, np_shapes):
     vp, vs = acoustic_vel(k, mu, rhob)
     assert np.allclose(vp, vp_ans)
     assert np.allclose(vs, vs_ans)
 
-    for shp in ((2,), (2, 3), (2, 3, 4)):
+    for shp in np_shapes:
         vp, vs = acoustic_vel(
             np.full(shp, k),
             np.full(shp, mu),
@@ -81,6 +86,18 @@ def test_acoustic_vel(vp_ans, vs_ans, rhob, k, mu):
         )
         assert np.allclose(np.full(shp, vp_ans), vp)
         assert np.allclose(np.full(shp, vs_ans), vs)
+
+
+@pytest.mark.parametrize("k,mu,pr", ((2, 1, 0.2857142857142857),))
+def test_poisson_ratio(k, mu, pr, np_shapes):
+    assert poisson_ratio(k, mu) == pr
+
+    for shp in np_shapes:
+        pr_ans = poisson_ratio(
+            np.full(shp, k),
+            np.full(shp, mu),
+        )
+        assert np.allclose(np.full(shp, pr), pr_ans)
 
 
 # TODO: broadcatable from hypothesis seems tempremental
