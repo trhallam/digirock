@@ -1,4 +1,5 @@
 from telnetlib import EL
+from unittest import mock
 import pytest
 import numpy as np
 
@@ -13,17 +14,16 @@ from digirock._base import (
 )
 
 
-@pytest.fixture(scope="module")
-def mock_Element():
+@pytest.fixture(scope="module", params=[{"name": None}, {"name": "test"}])
+def mock_Element(request):
+    name = request.param["name"]
     words = "hello world"
-    test = Element("test")
+    test = Element(name)
     for word in words.split(" "):
         test.register_key(word)
+
+    assert test.name == name
     return test
-
-
-def test_Element_name(mock_Element):
-    assert mock_Element.name == "test"
 
 
 def test_Element_keys(mock_Element):
@@ -43,6 +43,10 @@ def test_Element_not_registered(mock_Element):
 def test_Element_deregister(mock_Element):
     mock_Element.deregister_key("hello")
     assert mock_Element.keys() == ["world"]
+
+
+def test_Element_tree(mock_Element):
+    isinstance(str(mock_Element.tree), str)
 
 
 def test_element_check():
@@ -162,21 +166,23 @@ def test_Switch_methods(mock_Switch):
         mock_Switch.attr2({"test_key": [2, 0]})
 
 
-@pytest.fixture(scope="module")
-def mock_Blend():
+@pytest.fixture(scope="module", params=[{"name": None}, {"name": "test"}])
+def mock_Blend(request):
     e3 = Element("test1", keys=["e3_key"])
     e3.attr1 = lambda props, **kwargs: 31.0
     e3.attr2 = lambda props, **kwargs: 32.0
-    e4 = Element("test2")
+    e4 = Element()
     e4.attr1 = lambda props, **kwargs: 41.0
     e4.attr2 = lambda props, **kwargs: 42.0
 
+    name = request.param["name"]
     blend = Blend(
         ["test_b_key1", "test_b_key2"],
         [e3, e4],
         methods=["attr1", "attr2"],
-        name="testBlend",
+        name=name,
     )
+    assert blend.name == name
     return blend
 
 

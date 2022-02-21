@@ -23,10 +23,7 @@ class Element:
         self.name = name
         if keys:
             for key in keys:
-                try:
-                    self.register_key(key)
-                except ValueError:
-                    pass  # ignore already registered keys if created using init
+                self.register_key(key)
 
     def register_key(self, key: str):
         """Register a new keyword across digirock classes"""
@@ -167,9 +164,9 @@ class Switch(Element):
 
         docs = """
         Switch Factory Method for {0}
-        
+
         Method requires props to contain `{0}`
-            
+
         Args:
             props: A dictionary of properties to pass to elements of this switch.
             element_kwargs: passed to elements
@@ -274,13 +271,6 @@ class Blend(Element):
         self._methods = methods
 
         _element_check(self._elements, self._methods)
-
-    def _check_props(self, props: Dict[str, NDArrayOrFloat]):
-        for key in self._blend_keys:
-            try:
-                assert key in props
-            except AssertionError:
-                raise ValueError(f"Missing {key} from `props` input for {self.name}")
 
     @property
     def n_elements(self) -> int:
