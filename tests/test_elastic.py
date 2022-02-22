@@ -1,50 +1,11 @@
 import pytest
 from hypothesis import given
-from hypothesis.strategies import composite, floats, integers, one_of
-from hypothesis.extra.numpy import arrays, array_shapes, broadcastable_shapes
+
+from .strategies import n_varshp_arrays
 
 import numpy as np
 
 from digirock.elastic import acoustic_moduli, acoustic_vel, poisson_ratio
-
-
-@composite
-def np_ints_or_floats(draw, shp=None, min_value=1.0, max_value=1.0e10):
-    if shp is None:
-        shp = (1,)
-    kwargs = dict(min_value=min_value, max_value=max_value)
-    # i = draw(integers(min_value=0, max_value=3))
-    return draw(
-        one_of(
-            arrays(
-                float,
-                shape=shp,
-                elements=floats(**kwargs),
-            ),
-            arrays(
-                int,
-                shape=shp,
-                elements=integers(min_value=min_value, max_value=max_value),
-            ),
-            floats(
-                allow_nan=False,
-                allow_infinity=False,
-                min_value=min_value,
-                max_value=max_value,
-            ),
-            integers(min_value=min_value, max_value=max_value),
-        )
-    )
-
-
-@composite
-def n_varshp_arrays(draw, n):
-    # create a base shape
-    shp = draw(array_shapes(min_dims=1, max_dims=3, min_side=1, max_side=5))
-    # create a set of broadcast compatable shapes
-    shps = broadcastable_shapes(shp, min_dims=1)
-    shps = tuple(draw(shps) for _ in range(n))
-    return tuple(draw(np_ints_or_floats(shp=shp)) for shp in shps)
 
 
 @pytest.fixture
@@ -101,11 +62,12 @@ def test_poisson_ratio(k, mu, pr, np_shapes):
 
 
 # TODO: broadcatable from hypothesis seems tempremental
-# @given(n_varshp_arrays(3))
-# def test_vel_modulus_inverse(s):
-#     s = tuple(map(lambda x: np.abs(x) + 0.001, s))
-#     # velocity first because always creates positive values
-#     vp, vs = acoustic_vel(*s)
-#     k, mu = acoustic_moduli(vp, vs, s[2])
-#     assert np.allclose(k, s[0], atol=1e-5)
-#     assert np.allclose(mu, s[1], atol=1e-5)
+@given(n_varshp_arrays(3, min_value=1, max_value=50))
+def test_vel_modulus_inverse(s):
+    args, result_shape = s
+    # s = tuple(map(lambda x: np.abs(x) + 0.001, s))
+    # velocity first because always creates positive values
+    vp, vs = acoustic_vel(*args)
+    k, mu = acoustic_moduli(vp, vs, args[2])
+    assert np.allclose(k, args[0], atol=1e-5)
+    assert np.allclose(mu, args[1], atol=1e-5)

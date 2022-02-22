@@ -1,4 +1,3 @@
-from multiprocessing import sharedctypes
 import pathlib
 import pytest
 
