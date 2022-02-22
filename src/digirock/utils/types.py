@@ -1,6 +1,6 @@
 from typing import Union
-import numpy as np
+from numpy.typing import NDArray
 import pathlib
 
-NDArrayOrFloat = Union[np.ndarray, float]
+NDArrayOrFloat = Union[NDArray, float]
 Pathlike = Union[str, pathlib.Path]
