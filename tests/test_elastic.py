@@ -61,11 +61,9 @@ def test_poisson_ratio(k, mu, pr, np_shapes):
         assert np.allclose(np.full(shp, pr), pr_ans)
 
 
-# TODO: broadcatable from hypothesis seems tempremental
 @given(n_varshp_arrays(3, min_value=1, max_value=50))
 def test_vel_modulus_inverse(s):
     args, result_shape = s
-    # s = tuple(map(lambda x: np.abs(x) + 0.001, s))
     # velocity first because always creates positive values
     vp, vs = acoustic_vel(*args)
     k, mu = acoustic_moduli(vp, vs, args[2])
