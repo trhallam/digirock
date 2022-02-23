@@ -14,8 +14,8 @@ class Mineral(Element):
     Attributes:
         name (str): name of the mineral
         density (float): density of the mineral in g/cc
-        k (float): Bulk modulus (compression) of the mineral in GPa
-        mu (float): Shear modulus of the mineral in GPa
+        bulk_modulus (float): Bulk modulus (compression) of the mineral in GPa
+        shear_modulus (float): Shear modulus of the mineral in GPa
     """
 
     def __init__(
@@ -25,10 +25,10 @@ class Mineral(Element):
         shear_modulus: float,
         name: str = None,
     ):
-        self.name = name
+        super().__init__(name=name)
         self.density = density
-        self.k = bulk_modulus
-        self.mu = shear_modulus
+        self.bulk_modulus = bulk_modulus
+        self.shear_modulus = shear_modulus
 
     def _check_defined(self, from_func, var):
         if self.__getattribute__(var) is None:
@@ -64,8 +64,8 @@ class Mineral(Element):
         summary.update(
             {
                 "name": self.name,
-                "k": self.k,
-                "mu": self.mu,
+                "bulk_modulus": self.bulk_modulus,
+                "shear_modulus": self.shear_modulus,
                 "dens": dens,
                 "vp": vp,
                 "vs": vs,

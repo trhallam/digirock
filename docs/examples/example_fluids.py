@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.13.7
+#       jupytext_version: 1.13.6
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -118,28 +118,9 @@ print("Bulk Modulus array values (g/cc):", pvtw0.bulk_modulus(props_ar2), '\n')
 from digirock import DeadOil, OilBW92, OilPVT, load_pvto
 import numpy as np
 
-### Batzle and Wang Oils
-
-# create a basic oil
-obw92 = OilBW92(api=45, gas_sg=0.7)
-
-#Set Oil with constant solution gas (rs), which is pressure independent
-obw92.set_pvt(rs=100)
-print(obw92.get_summary())
-print("Bo with constant RS at 110degC (pres ignored)", obw92.bo(110, 50))
-
-#Set Oil with solution gas (rs) to pressure (pres) table
-obw92.set_pvt(rs=110, pres=np.arange(9,100,0.5))
-print(obw92.get_summary())
-print("Bo with table RS at 110degC and pres=10Mpa", obw92.bo(110, 10))
-print("Bo with table RS at 110degC and pres=10Mpa", obw92.bo(95, 12))
-
-obw92.density(props_ar1)
-obw92.velocity(props_ar1)
-obw92.bulk_modulus(props_ar1)
-obw92.tree
-
 # %% [markdown]
+#
+#
 # `DeadOil` is a class for fluids with no dissolved gas and it is initialised by either specifying an oil API or standard density.
 
 # %%
@@ -164,30 +145,89 @@ doil_sd.set_pvt(np.linspace(1, 1.1, 11), pres=np.linspace(0, 50, 11))
 doil_sd.tree
 
 # %% [markdown]
+# An oil with gas in it can be created using the `OilBW92` class. This class uses the BW92 equations to calculate elastic properties. There are many different ways to calculate the elastic properties with this class.
+#
+#  - Explicit values for FVF `bo` and solution gas `rs` can be passed in the `props` keyword to the BW92 elastic equations.
+#  - An RS to Pressure table can be set using the `set_rst` method. This allows the solution gas to be pressure dependent. The `rs` and `bo` props are then not required. `bo` is calculated per BW92.
+#  - A constatnt RS can be set using the `set_rst` method. The `rs` and `bo` props are then not required. `bo` is calculated per BW92 for constant `rs`.
+
+# %% [markdown]
+# An example with no `rs` table.
+
+# %%
+bwoil_norst = OilBW92("norst", api=35, gas_sg=0.6)
+display(bwoil_norst.tree)
+display(bwoil_norst.density(dict(temp=110, pres=50, rs=110, bo=1.1)))
+
+# %% [markdown]
+# An example with a constant `rs`. Note, that `bo` and `rs` are no longer required in `props`, but if we pass them they will overwrite the use of the table.
+
+# %%
+bwoil_rsc = OilBW92("norst", api=35, gas_sg=0.6)
+bwoil_rsc.set_rst(120)
+display(bwoil_rsc.tree)
+print("using set table: ", bwoil_rsc.density(dict(temp=110, pres=50)))
+print("using properties: ", bwoil_rsc.density(dict(temp=110, pres=50, rs=110, bo=1.1))) # overwrite table rs and bw92 bo 
+
+# %% [markdown]
+# Finally, we can make `rs` pressure dependent by passing a table to `set_rst`.
+
+# %%
+bwoil_rst = OilBW92("norst", api=35, gas_sg=0.6)
+bwoil_rst.set_rst([80, 100, 120], pres=[10, 40, 100])
+display(bwoil_rst.tree)
+print("using set table: ", bwoil_rst.density(dict(temp=110, pres=50)))
+
+# %% [markdown]
+# When the `rst` has been set in some manner it is possible to query `rs` and `bo` directly. Note, `rs` only needs the pressure.
+
+# %%
+print("Bo: ", bwoil_rst.bo({"temp":110, "pres":50}))
+print("Rs: ", bwoil_rst.rs({"pres":50}))
+
+# %% [markdown]
 # If you have an Eclipse PVTO table you can load those oil properties using `load_pvto`.
 
 # %%
 pvtos = load_pvto("example_data/COMPLEX_PVT.inc", api=40)
 
 # %% [markdown]
-# ## Blend Fluids
+# `pvtos` is a dictionary, one for each pvto table. The returned fluid has the `OilPVT` class. This uses the BW92 equations for elastic properties, but eclusively uses `rs` and `bo` calculated from the tables loaded into the class.
 
 # %%
-from digirock import WaterBW92, DeadOil, WoodsFluid
-import numpy as np
+print(pvtos.keys())
 
-# Initialisation of BW92 Water requires the salinity in PPM.
-wat = WaterBW92(name="water", salinity=0)
-doil_api = DeadOil(api=35)
-doil_api.set_pvt(np.linspace(1, 1.1, 11), pres=np.linspace(0, 70, 11))
-
-wf = WoodsFluid(["sw", "so"], [wat, doil_api], name="wf")
+# %% [markdown]
+# Access the individual pvt fluids using the appropriate key.
 
 # %%
-wf.tree
+ecloil0 = pvtos["pvto0"]
+ecloil0.tree
+
+# %% [markdown]
+# DataArrays are easy to plot
 
 # %%
-props = dict(temp=110, pres=50, sw=[1.0, 0.7, 0.9], so=[0.0, 0.3, 0.1])
-wf.velocity(props)
+ecloil0.pvt["bo_table"].plot()
+
+# %% [markdown]
+# We can get the value of bo for any `pres` and `rs` combination. Eclipse100 PVT models are not temperature dependent for `bo`.
+
+# %%
+print("Bo: ", ecloil0.bo({"pres":50, "rs":np.array([[100, 120], [100, 120]])}))
+
+# %% [markdown]
+# Getting elastic properties
+
+# %%
+props = dict(temp=np.r_[100, 110], pres=np.r_[50, 60], rs=np.r_[100, 150])
+print("Density: ", ecloil0.density(props))
+
+props = dict(temp=110, pres=50, rs=100)
+print("Velocity: ", ecloil0.velocity(props))
+print("Bulk Modulus: ", ecloil0.bulk_modulus(props))
+
+# %% [markdown]
+# # Gas Types
 
 # %%

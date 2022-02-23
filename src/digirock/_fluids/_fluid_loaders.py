@@ -1,13 +1,18 @@
 """Functions that simplify loading of Eclipse fluid properties into digirock classes."""
-
-from re import U
 from typing import List, Union, Dict
+from collections.abc import Iterable
 
 # pylint: disable=invalid-name,no-value-for-parameter
 import numpy as np
+import pandas as pd
 
 from ..utils.file import read_eclipsekw_3dtable, read_eclipsekw_2dtable
-from ..utils.ecl import EclStandardConditions, EclUnitMap, EclUnitScaler
+from ..utils.ecl import (
+    E100MetricConst,
+    EclStandardConditions,
+    EclUnitMap,
+    EclUnitScaler,
+)
 from ..utils.types import Pathlike
 from ..utils._decorators import mutually_exclusive
 
@@ -173,6 +178,7 @@ def load_pvto(
     prefix: str = "pvto",
     api: Union[List[float], float] = None,
     std_density: Union[List[float], float] = None,
+    gas_sg: Union[List[float], float] = None,
 ) -> Dict[str, OilPVT]:
     """Load a PVTO table into multiple [`OilPVT`][digirock.OilPVT] classes.
 
@@ -205,14 +211,15 @@ def load_pvto(
     /
     ```
 
-    `api` and `std_density` cannot be specified together.
+    `api` and `std_density` cannot be specified together. If both are `None` then the DENSITY keyword must be present in the same input file to get the oil density.
 
     Args:
-        filepath: Filepath or str to text file containing PVTW keyword tables.
-        units: The Eclipse units of the PVTW table, one of ['METRIC', 'PVTM', 'FIELD', 'LAB']. Defaults to 'METRIC'.
-        prefix: The prefix to apply to the name of each loaded fluid.
-        api: A single oil API or list of API values for each PVT Region in the file.
-        std_density: A single standard density in g/cc at 15.6degC or a list of values for each PVT Region in the file.
+        filepath: Filepath or str to text file containing PVTW keyword tables
+        units: The Eclipse units of the PVTW table, one of ['METRIC', 'PVTM', 'FIELD', 'LAB']. Defaults to 'METRIC'
+        prefix: The prefix to apply to the name of each loaded fluid
+        api: A single oil API or list of API values for each PVT Region in the file
+        std_density: A single standard density in g/cc at 15.6degC or a list of values for each PVT Region in the file
+        gas_sg: A single standard gravity for the disovled gas or a list of values for each PVT Region in the file
 
     Returns:
         A dictionary of Oil instance for each PVT table entry.
@@ -222,8 +229,30 @@ def load_pvto(
     """
     assert units in EclUnitMap.__members__
     _ut: dict = EclUnitScaler[units].value
-    if api is None and std_density is None:
-        raise ValueError("One of api or std_density must be given")
+
+    try:
+        ecl_dens_tab = load_density(filepath, units=units)
+    except KeyError:
+        ecl_dens_tab = None
+
+    # here but not implemented yet
+    try:
+        ecl_grav_tab = load_gravity(filepath, units=units)
+    except KeyError:
+        ecl_grav_tab = None
+
+    if api is None and std_density is None and ecl_dens_tab is not None:
+        std_density = list(ecl_dens_tab["oil"])
+
+    if gas_sg is None and ecl_dens_tab is not None:
+        gas_sg = [
+            1000 * rho_g / E100MetricConst.RHO_AIR.value
+            for rho_g in ecl_dens_tab["gas"]
+        ]
+    else:
+        raise ValueError(
+            "Input file does not contain DENSITY table, `gas_sg` required."
+        )
 
     pvt = read_eclipsekw_3dtable(filepath, "PVTO")
 
@@ -246,30 +275,41 @@ def load_pvto(
             q_float = q_float + [q[1:].reshape(-1, 3)]
         pvt_rs_float = pvt_rs_float + [[rs_float, q_float]]
 
+    def _bc_helper(inv, n):
+        if inv is None:
+            return [None] * n
+        elif isinstance(inv, Iterable):
+            assert len(inv) == n
+            return inv
+        else:
+            return [inv] * n
+
     # check api/std_density against ntab
     ntab = len(pvt_rs_float)
-    if api is None:
-        api_iter = [None] * ntab
-    elif isinstance(api, list):
-        assert len(api) == ntab
-        api_iter = api
-    else:
-        api_iter = [api] * ntab
-
-    if std_density is None:
-        sd_iter = [None] * ntab
-    elif isinstance(api, list):
-        assert len(std_density) == ntab
-        sd_iter = std_density
-    else:
-        sd_iter = [std_density] * ntab
+    api_iter = _bc_helper(api, ntab)
+    sd_iter = _bc_helper(std_density, ntab)
+    sg_iter = _bc_helper(gas_sg, ntab)
 
     table = dict()
-    for i, (subtab, ap, sd) in enumerate(zip(pvt_rs_float, api_iter, sd_iter)):
+    for i, (subtab, ap, sd, sg) in enumerate(
+        zip(pvt_rs_float, api_iter, sd_iter, sg_iter)
+    ):
         tabname = f"{prefix}{i}"
-        table[tabname] = OilPVT(tabname, api=ap, std_density=sd)
-        for rs, bo in zip(subtab[0], subtab[1]):
-            table[tabname].set_pvt(rs, bo[:, 1], pres=_ut["pressure"] * bo[:, 0])
+        table[tabname] = OilPVT(tabname, api=ap, std_density=sd, gas_sg=sg)
+        _tdf = pd.concat(
+            [
+                pd.DataFrame(
+                    data=dict(bo=bo[:, 1], pres=_ut["pressure"] * bo[:, 0], rs=rs)
+                )
+                for rs, bo in zip(subtab[0], subtab[1])
+            ]
+        )
+        _tdf = _tdf.pivot("pres", "rs", values="bo")
+        table[tabname].set_pvt(
+            _tdf.columns.values,
+            _tdf.values.T,
+            pres=np.broadcast_to(_tdf.index.values, _tdf.values.T.shape),
+        )
 
     return table
 

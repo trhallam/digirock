@@ -29,4 +29,4 @@ from ._mineral_lib import minerals as _minerals
 
 for mineral, vals in _minerals.items():
     bulk, shear, density = vals
-    setattr(sys.modules[__name__], mineral, Mineral(mineral, density, bulk, shear))
+    setattr(sys.modules[__name__], mineral, Mineral(density, bulk, shear, name=mineral))

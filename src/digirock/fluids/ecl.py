@@ -51,7 +51,7 @@ def e100_bw(
     """Eclipse 100 method for calculating Bw
 
     Args:
-        pres (array-like): Pressure to calculate Bw at.
+        pres: Pressure to calculate Bw at.
         ref_pres: Reference pressure of bw, should be close to in-situ pressure (MPa).
         bw: Water formation volume factor at ref_pres (frac).
         comp: Compressibility of water at ref_pres (1/MPa)
