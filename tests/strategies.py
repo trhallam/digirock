@@ -40,17 +40,25 @@ def n_varshp_arrays(draw, n, min_value=-1e10, max_value=1e10):
 
     # create a base shape
     shp = draw(stn.array_shapes(min_dims=1, max_dims=3, min_side=1, max_side=5))
+
     # create a set of broadcast compatable shapes
-    shps = draw(
-        stn.mutually_broadcastable_shapes(
-            num_shapes=num_shapes - 1, base_shape=shp, min_dims=1
+    if num_shapes > 1:
+        shps = draw(
+            stn.mutually_broadcastable_shapes(
+                num_shapes=num_shapes - 1, base_shape=shp, min_dims=1
+            )
         )
-    )
-    input_shapes = [shp] + list(shps.input_shapes)
-    result_shape = shps.result_shape
-    print(input_shapes)
+        input_shapes = [shp] + list(shps.input_shapes)
+        result_shape = shps.result_shape
+    else:
+        input_shapes = [shp]
+        result_shape = shp
+
     if isinstance(n, tuple):
-        return tuple(np.full(bc_shp, val) for bc_shp, val in zip(input_shapes, n))
+        return (
+            tuple(np.full(bc_shp, val) for bc_shp, val in zip(input_shapes, n)),
+            result_shape,
+        )
     else:
         return (
             tuple(

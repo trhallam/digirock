@@ -1,3 +1,4 @@
+from tabnanny import check
 import numpy as np
 
 from digirock.utils.types import NDArrayOrFloat
@@ -78,21 +79,18 @@ def check_broadcastable(**kwargs: NDArrayOrFloat) -> tuple:
     return shapes
 
 
-def safe_divide(a, b):
-    """Helper function to avoid divide by zero in many areas.
+def safe_divide(a: NDArrayOrFloat, b: NDArrayOrFloat) -> NDArrayOrFloat:
+    """Helper function to avoid divide by zero in arrays and floats.
+
     Args:
-        a (array-like): Numerator
-        b (array-like): Deominator
+        a: Numerator
+        b: Deominator
+
     Returns:
-        a/b (array-like): Replace div0 by 0
+        a/b replace div0 by 0
     """
-    a = np.atleast_1d(a)
-    b = np.atleast_1d(b)
-    shp = a.shape
-    a = np.squeeze(a)
-    b = np.squeeze(b)
-    shp = a.shape if a.size != 1 else b.shape
-    return np.divide(a, b, out=np.zeros(shp), where=b != 0.0)
+    bc_shp = check_broadcastable(a=a, b=b)
+    return np.divide(a, b, out=np.zeros(bc_shp), where=b != 0.0)
 
 
 def ndim_index_list(n):
