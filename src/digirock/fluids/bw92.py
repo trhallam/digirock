@@ -40,7 +40,7 @@ These functions are based upon the work by:
 
 """
 import warnings
-
+from more_itertools import chunked
 import numba
 import numpy as np
 from numpy.typing import NDArray
@@ -50,6 +50,7 @@ from scipy.optimize import root_scalar
 from digirock.utils.types import NDArrayOrFloat
 
 from ..utils import safe_divide, check_broadcastable
+from ..utils._utils import _process_vfrac
 
 #  define constants
 GAS_R = 8.31441  #  gas constant (J K-1 mol-1) (m3 Pa K-1 mol-1)
@@ -495,24 +496,25 @@ def oil_bulkmod(rho, vp):
     return rho * np.power(vp, 2) * 1e-6
 
 
-def _mwat_velocity_pure_sum(tl, pl, vl):
-    """Pure Water Calc
-    Input vectors should be type float64 to prevent overflow
+# use number version instead - python is too slow
+# def _mwat_velocity_pure_sum(tl, pl, vl):
+#     """Pure Water Calc
+#     Input vectors should be type float64 to prevent overflow
 
-    B&W Matrix Summation with water coefficients
+#     B&W Matrix Summation with water coefficients
 
-    Args:
-        tl (array-like): Temperature decC
-        pl (array-like): Pressure MPa
-        vl (array-like): Output velocity vector will be modified
-    """
-    for v, (tt, pp) in enumerate(zip(tl.ravel(), pl.ravel())):
-        # using np.float64 may sacrifice some accuracy but was required for large powers
-        t_ar = np.power(np.array([tt] * 5), np.arange(0, 5))
-        p_ar = np.power(np.array([pp] * 4), np.arange(0, 4))
-        p_ar = np.tile(p_ar, 5).reshape(5, 4)
-        t_ar = t_ar.repeat(4).reshape(5, 4)
-        vl[v] = np.sum(WATC * t_ar * p_ar)
+#     Args:
+#         tl (array-like): Temperature decC
+#         pl (array-like): Pressure MPa
+#         vl (array-like): Output velocity vector will be modified
+#     """
+#     for v, (tt, pp) in enumerate(zip(tl.ravel(), pl.ravel())):
+#         # using np.float64 may sacrifice some accuracy but was required for large powers
+#         t_ar = np.power(np.array([tt] * 5), np.arange(0, 5))
+#         p_ar = np.power(np.array([pp] * 4), np.arange(0, 4))
+#         p_ar = np.tile(p_ar, 5).reshape(5, 4)
+#         t_ar = t_ar.repeat(4).reshape(5, 4)
+#         vl[v] = np.sum(WATC * t_ar * p_ar)
 
 
 @numba.njit
@@ -596,17 +598,17 @@ def wat_velocity_brine(
     )
 
 
-def wat_density_pure(t, p):
+def wat_density_pure(t: NDArrayOrFloat, p: NDArrayOrFloat) -> NDArrayOrFloat:
     """Returns the density of pure water at t and p
 
     B&W 1992 Eq 27a
 
     Args:
-        t (array-like): temperature degC
-        p (array-like): pressure MPa
+        t: temperature (degC)
+        p: pressure (MPa)
 
     Returns:
-        (array-like): density of pure water g/cc
+        density of pure water (g/cc)
     """
     return 1 + 1e-6 * (
         -80 * t
@@ -621,19 +623,23 @@ def wat_density_pure(t, p):
     )
 
 
-def wat_density_brine(t, p, sal):
+def wat_density_brine(
+    t: NDArrayOrFloat, p: NDArrayOrFloat, sal: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Returns the density of brine at t and p
 
     B&W 1992 Eq 27b
 
+    Note:
+        Salinity (ppm) = fractional weight * 1E6
+
     Args:
-        t (array-like): temperature degC
-        p (array-like): pressure MPa
-        sal (array-like): weight fraction of salt
-            note: Salinity (ppm) = fractional weight * 1E6
+        t: temperature (degC)
+        p: pressure (MPa)
+        sal: weight fraction of salt
 
     Returns:
-        (array-like): density of brine (g/cc)
+        density of brine (g/cc)
     """
     return wat_density_pure(t, p) + sal * (
         0.668
@@ -650,12 +656,14 @@ def wat_density_brine(t, p, sal):
 def wat_salinity_brine(t: float, p: float, density: float) -> float:
     """Back out the salinity of a brine form it's density using root finding.
 
+    This is not efficient on arrays so limited to floats.
+
     Reverse B&W 1992 Eq 27b
 
     Args:
-        t (float): temperature degC
-        p (float): pressure MPa
-        density (float): density of brine (g/cc)
+        t: temperature degC
+        p: pressure MPa
+        density: density of brine (g/cc)
 
     Returns:
         (float): weight fraction of salt; note: Salinity (ppm) = fractional weight * 1E6
@@ -686,104 +694,84 @@ def wat_bulkmod(rho: NDArrayOrFloat, vp: NDArrayOrFloat) -> NDArrayOrFloat:
     return rho * np.power(vp, 2) * 1e-6
 
 
-def mixed_density(den, frac, *argv):
-    """Returns the mixed fluid density based upon volume fractions
+def mixed_density(
+    den: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
+    """Mixed fluid density $\\rho_M$ based upon volume fractions
 
-    Can take an arbitrary number of fluids and volume fractions.
-    Volume fractions must sum to one for each sample.
-    If the number of arguments is odd, the final frac is assumed to
-        be the complement of all other fracs to sum to 1
-    All array-like must be the same shape
+    $$
+    \\rho_M = \sum_{i=1}^N \\phi_i \\rho_i
+    $$
+
+    Can take an arbitrary number of fluid denisties $\\rho_i$ and volume fractions $\\phi_i$.
+    Volume fractions must sum to one. If the number of arguments is odd, the final
+    volume fraction is assumed to be the ones complement of all other fractions.
+
+    Inputs must be [broadcastable](https://numpy.org/doc/stable/user/basics.broadcasting.html).
+
+    `argv` as the form `(component_1, vfrac_1, component_2, vfrac2, ...)` or to use the complement for the final
+    component `(component_1, vfrac_1, component_2)`
 
     Args:
-        den (array-like): first fluid density
-        frac (array-like): [description]
-        arg3 (array-like) : the next fluid density
-        arg4 (array-like) : the next fluid fraction
-        arg(3+2*n) (array-like) : the nth fluid density
-        arg(3+2*n) (array-like) : the nth fluid fraction
+        den: first fluid density
+        frac: first fluid volume fraction
+        argv: additional fluid and volume fraction pairs.
 
     Returns:
-        (array-like): mixed fluid density
-    Notes:
+        mixed density for combined fluid
     """
-    # check arguments and find complement if necessary
-    largv = len(argv)
-    if largv % 2 == 1:
-        fvol = np.array(frac)
-        for i in range(1, largv, 2):
-            fvol = fvol + np.array(argv[i])
-        if np.any(fvol < 0.0) or np.any(fvol > 1.0):
-            raise ValueError
-        else:
-            argv = argv + (1.0 - fvol,)
-
-    # reset
-    fvol = np.array(frac)
-    rho = np.array(den) * np.array(frac)
-    for i in range(0, largv, 2):
-        rho = rho + np.array(argv[i]) * np.array(argv[i + 1])
-        fvol = fvol + np.array(argv[i + 1])
-
-    if np.allclose(fvol, 1):
-        return rho
-    else:
-        return None  # change this to raise an appropriate error
+    args = _process_vfrac(*((den, frac) + argv))
+    den_sum = 0
+    for deni, vfraci in chunked(args, 2):
+        den_sum = den_sum + np.array(vfraci) * np.array(deni)
+    return den_sum
 
 
-def bulkmod(rho, vel):
+def bulkmod(rho: NDArrayOrFloat, vel: NDArrayOrFloat) -> NDArrayOrFloat:
     """Single phase fluid bulk modulus
 
+    $$
+    \kappa_M = \\rho v_p^2
+    $$
+
     Args:
-        rho (array-like): (g/cc)
-        velp (array-like): material velocity (m/s)
+        rho: bulk density (g/cc)
+        velp: material velocity (m/s)
 
     Returns:
-        (array-like): material bulk modulus (GPa)
+        material bulk modulus (GPa)
     """
     return rho * np.power(vel, 2) * 1e-6
 
 
-def mixed_bulkmod(mod, frac, *argv):
-    """Mixed fluid bulk modulus (Wood's Equation)
+def woods_bulkmod(
+    mod: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
+    """Mixed fluid bulk modulus $\\kappa_M$ (Wood's Equation)
 
+    $$
+    \\frac{1}{\kappa_M} = \sum_{i=1}^N \\frac{\\phi_i}{\\kappa_i}
+    $$
 
-    Can take an arbitrary number of fluids and volume fractions.
-    Volume fractions must sum to one for each sample.
-    If the number of arguments is odd, the final frac is assumed to
-        be the complement of all other fracs to sum to 1
-    All array-like must be the same shape
+    Can take an arbitrary number of fluids moduli $\\kappa_i$ and volume fractions $\\phi_i$.
+    Volume fractions must sum to one. If the number of arguments is odd, the final
+    volume fraction is assumed to be the ones complement of all other fractions.
+
+    Inputs must be [broadcastable](https://numpy.org/doc/stable/user/basics.broadcasting.html).
+
+    `argv` as the form `(component_1, vfrac_1, component_2, vfrac2, ...)` or to use the complement for the final
+    component `(component_1, vfrac_1, component_2)`
 
     Args:
-        mod (array-like): first fluid modulus
-        frac (array-like): [description]
-        arg3 (array-like) : the next fluid modulus
-        arg4 (array-like) : the next fluid fraction
-        arg(3+2*n) (array-like) : the nth fluid modulus
-        arg(3+2*n) (array-like) : the nth fluid fraction
+        mod: first fluid modulus
+        frac: first fluid volume fraction
+        argv: additional fluid and volume fraction pairs.
 
     Returns:
-        (array-like): Wood's bulk modulus for a fluid mix
+        Wood's bulk modulus for a fluid mix
     """
-    # check arguments and find complement if necessary
-    largv = len(argv)
-    if largv % 2 == 1:
-        fvol = np.array(frac)
-        for i in range(1, largv, 2):
-            fvol = fvol + np.array(argv[i])
-        if np.any(fvol < 0.0) or np.any(fvol > 1.0):
-            raise ValueError
-        else:
-            argv = argv + (1.0 - fvol,)
-
-    # reset
-    fvol = np.array(frac)
-    K = safe_divide(np.array(frac), np.array(mod))
-    for i in range(0, largv, 2):
-        K = K + np.array(argv[i + 1]) / np.array(argv[i])
-        fvol = fvol + np.array(argv[i + 1])
-
-    if np.allclose(fvol, 1):
-        return safe_divide(1, K)
-    else:
-        return None  # change this to raise an appropriate error
+    args = _process_vfrac(*((mod, frac) + argv))
+    mod_sum = 0
+    for modi, vfraci in chunked(args, 2):
+        mod_sum = mod_sum + safe_divide(np.array(vfraci), np.array(modi))
+    return safe_divide(1, mod_sum)

@@ -19,36 +19,6 @@ def tol():
     }
 
 
-@pytest.fixture
-def dummy_values(request: SubRequest):
-    param = getattr(request, "param", None)
-    keys = param[:-1]
-    ans = param[-1]
-    values = {
-        "tk": 373,  # temperature in kelvin
-        "t": 273.15,  # temperature in degc
-        "p": 10 * 1e6,  # pressure in pascals
-        "orho": 0.8,  # oil density g/cc
-        "M": 16.04,  # methane gas molecular weight
-        "G": 0.56,  # methane specific gravity
-        "ta": np.array([273.15, 273.15 + 100]),  # temperature array in kelvin
-        "pa": np.array([10 * 1e6, 50 * 1e6]),  # pressure array in pascals
-        "orho_a": np.array([0.8, 0.9]),
-        "rg": 120,  # solution gas
-        "sal": 32000,
-        "sal_a": np.r_[32000, 150000],
-        "vel": 1300,
-        "vel_a": np.r_[1300, 1450],
-        "wrho": 1.0,
-        "wrho_a": np.r_[1.0, 1.1],
-    }
-    if keys:
-        v = tuple(values[k] for k in keys)
-    else:
-        v = tuple(values.values)
-    yield v, ans
-
-
 def test_GAS_R():
     assert bw92.GAS_R == 8.31441
 
@@ -477,6 +447,49 @@ def test_wat_velocity_brine(args, ans, data, tol):
     assert np.allclose(test, ans, rtol=tol["rel"])
 
 
+# p (MPa), t (degC)
+@pytest.mark.parametrize(
+    "args,ans", (((10 * 1e6, 273.15), 0.77622433), ((50 * 1e6, 373.15), 0.66363597))
+)
+@given(data=st.data())
+def test_wat_density_pure(args, ans, data, tol):
+    (
+        test_p,
+        test_t,
+    ), result_shape = data.draw(n_varshp_arrays(args))
+    test = bw92.wat_density_pure(test_t, test_p / 1e6)
+    assert np.allclose(test, ans, rtol=tol["rel"])
+    assert test.shape == result_shape
+
+# p (MPa), t (degC), sal (ppm)
+@pytest.mark.parametrize(
+    "args,ans", (((10 * 1e6, 273.15, 32000), 0.80405636), ((50 * 1e6, 373.15, 150000), 0.79606398))
+)
+@given(data=st.data())
+def test_wat_density_brine(args, ans, data, tol):
+    (
+        test_p,
+        test_t,
+        test_sal
+    ), result_shape = data.draw(n_varshp_arrays(args))
+    test = bw92.wat_density_brine(test_t, test_p / 1e6, test_sal / 1e6)
+    assert np.allclose(test, ans, rtol=tol["rel"])
+
+
+# p (MPa), t (degC), sal (ppm)
+@pytest.mark.parametrize(
+    "args,ans", (((10 * 1e6, 273.15, 32000), None), ((50 * 1e6, 373.15, 150000), None))
+)
+def test_wat_salinity_brine(args, ans):
+    (
+        test_p,
+        test_t,
+        test_sal
+    ) = args
+    test_den = bw92.wat_density_brine(test_t, test_p / 1e6, test_sal / 1e6)
+    test = bw92.wat_salinity_brine(test_t, test_p / 1e6, test_den) * 1e6
+    assert test == approx(test_sal, abs=250)
+
 # rho (g/cc), v (m/s)
 @pytest.mark.parametrize(
     "args,ans", (((1.0, 1300), 1.69), ((1.1, 1450), 2.31275))
@@ -491,10 +504,23 @@ def test_wat_bulkmod(args, ans, data, tol):
     assert np.allclose(test, ans, rtol=tol["rel"])
     assert test.shape == result_shape
 
+# rho (g/cc), v (vfrac), ...
+@pytest.mark.parametrize(
+    "args,ans",
+    (
+        ((2, 0.5, 2, 0.5), 2),
+        ((2, 0.5, 1, 0.5),  1.5),
+        ((2, 0.3, 2, 0.3, 2,), 2),
+        ((2, 0.5, 1, 0.5, 2,),  1.5),
+    )
+)
+@given(data=st.data())
+def test_mixed_density(args, ans, data, tol):
+    args, result_shape = data.draw(n_varshp_arrays(args))
+    test = bw92.mixed_density(*args)
+    assert np.allclose(test, ans, rtol=tol["rel"])
+    assert test.shape == result_shape
 
-# def test_mixed_density(den, frac, *argv):
-#     param, ans = dummy_values
-#     p, t, G = param
 
 # rho (g/cc), v (m/s)
 @pytest.mark.parametrize(
@@ -510,7 +536,19 @@ def test_bulkmod(args, ans, data, tol):
     assert np.allclose(test, ans, rtol=tol["rel"])
     assert test.shape == result_shape
 
-
-# def test_mixed_bulkmod(mod, frac, *argv):
-#     param, ans = dummy_values
-#     p, t, G = param
+# k (GPa), v (vfrac), ...
+@pytest.mark.parametrize(
+    "args,ans",
+    (
+        ((2, 0.5, 2, 0.5), 2),
+        ((2, 0.5, 1, 0.5),  1.3333),
+        ((2, 0.3, 2, 0.3, 2,), 2),
+        ((2, 0.5, 1, 0.5, 2,),  1.3333),
+    )
+)
+@given(data=st.data())
+def test_woods_bulkmod(args, ans, data, tol):
+    args, result_shape = data.draw(n_varshp_arrays(args))
+    test = bw92.woods_bulkmod(*args)
+    assert np.allclose(test, ans, rtol=tol["rel"])
+    assert test.shape == result_shape
