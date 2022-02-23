@@ -483,17 +483,19 @@ def oil_velocity(
     )
 
 
-def oil_bulkmod(rho, vp):
+def oil_bulkmod(rho: NDArrayOrFloat, vel: NDArrayOrFloat) -> NDArrayOrFloat:
     """Oil bulk modulus GPa
 
+    Uses [bulkmod][digirock.fluids.bw92.bulkmod].
+
     Args:
-        rho (array-like): In-situ oil density
-        vp (array-like): In-situ compressional velocity
+        rho: In-situ oil density (g/cc)
+        vel: In-situ compressional velocity (g/cc)
 
     Returns:
-        (array-like): Oil bulk modulus in GPa
+        Oil bulk modulus in (GPa)
     """
-    return rho * np.power(vp, 2) * 1e-6
+    return bulkmod(rho, vel)
 
 
 # use number version instead - python is too slow
@@ -681,17 +683,19 @@ def wat_salinity_brine(t: float, p: float, density: float) -> float:
         raise ValueError("Could not find solution for density to salinity")
 
 
-def wat_bulkmod(rho: NDArrayOrFloat, vp: NDArrayOrFloat) -> NDArrayOrFloat:
+def wat_bulkmod(rho: NDArrayOrFloat, vel: NDArrayOrFloat) -> NDArrayOrFloat:
     """Brine bulk modulus K
+
+    Uses [bulkmod][digirock.fluids.bw92.bulkmod].
 
     Args:
         rho: water fluid density (g/cc)
-        vp: water fluid compressional velocity (m/s)
+        vel: water fluid compressional velocity (m/s)
 
     Returns:
         bulk modulus (GPa)
     """
-    return rho * np.power(vp, 2) * 1e-6
+    return bulkmod(rho, vel)
 
 
 def mixed_density(
@@ -736,7 +740,7 @@ def bulkmod(rho: NDArrayOrFloat, vel: NDArrayOrFloat) -> NDArrayOrFloat:
 
     Args:
         rho: bulk density (g/cc)
-        velp: material velocity (m/s)
+        vel: material velocity (m/s)
 
     Returns:
         material bulk modulus (GPa)
