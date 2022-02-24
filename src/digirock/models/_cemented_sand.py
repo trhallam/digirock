@@ -75,10 +75,10 @@ def dryframe_cemented_sand(
         mu_cem (array-like): Shear modulus of cement.
         phi0 (array-like): Material porosity without any cement. For perfect spherical grains
             phi0 = 0.36
-        phi (array-like): Material porosity after substituting in cememnt to porespace.
+        phi (array-like): Material porosity after substituting in cement to porespace.
         ncontacts (float): Number of contacts between grains.
         alpha (str/float, Optional): The cement fill scheme to use. Defaults to 'scheme1.
-            One of ['sheme1', 'scheme2', float]
+            One of ['scheme1', 'scheme2', float]
 
     Returns:
         (array-like, array-like): Bulk and shear modului of cemented-sand.

@@ -13,80 +13,103 @@ Refs:
     MacBeth, 2004, A classification for the pressure-sensitivity properties of a sandstone rock frame\n
     Smith, Sondergeld and Rai, 2003, Gassmann fluid substitutions: A tutorial, Geophysics, 68, pp430-440
 """
-
+from more_itertools import chunked
 import numpy as np
 
 # pylint: disable=unused-import
-from ..utils import safe_divide
+from ..utils._utils import safe_divide, _process_vfrac
+from ..typing import NDArrayOrFloat
 
 
-def _vr_bound(m, f, bound):
-    """Common function for voight_upper and reuss_lower
-
-    Args:
-        m (array-like): Modulus
-        f (array-like): Volume fraction
-        bound (str): Bound, one of ['voigt', 'reuss']
-    """
-    m = np.array(m).squeeze()
-    f = np.array(f).squeeze()
-    if m.shape[-1] == f.shape[-1]:
-        if np.allclose(np.sum(f, axis=-1), 1.0):
-            if bound == "voigt":
-                return np.sum(np.multiply(m, f), axis=-1)
-            elif bound == "reuss":
-                return 1.0 / np.sum(np.divide(f, m), axis=-1)
-        else:
-            raise ValueError(
-                f"Input f must sum to 1.0 current sum is {np.sum(f, axis=-1)}"
-            )
-    else:
-        raise ValueError("Inputs m and f must have equal length")
-
-
-def voigt_upper_bound(m, f):
+def voigt_upper_bound(
+    mod: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculate the Voigt upper bound for material moduli
 
     Args:
-        m (array_like): the material moduli
-        f (array_like): the material volume fractions where sum(f, axis=-1) = 1
+        mod: first fluid modulus
+        frac: first fluid volume fraction
+        argv: additional fluid and volume fraction pairs.
 
     Returns:
-        (): the Voigt upper bound modulus
+        Voigt upper bound for modulus mix
     """
-    return _vr_bound(m, f, "voigt")
+    args = _process_vfrac(*((mod, frac) + argv))
+    mod_sum = 0
+    for modi, vfraci in chunked(args, 2):
+        mod_sum = mod_sum + np.array(vfraci) * np.array(modi)
+    return mod_sum
 
 
-def reuss_lower_bound(m, f):
+def reuss_lower_bound(
+    mod: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculate the Reuss lower bound for material moduli
 
     Args:
-        m: the material moduli
-        f: the material volume fractions where sum(f) = 1
+        mod: first fluid modulus
+        frac: first fluid volume fraction
+        argv: additional fluid and volume fraction pairs.
 
     Returns:
-        (): the Reuss lower vound modulus
+        Reuss upper bound for modulus mix
     """
-    return _vr_bound(m, f, "reuss")
+    args = _process_vfrac(*((mod, frac) + argv))
+    mod_sum = 0
+    for modi, vfraci in chunked(args, 2):
+        mod_sum = mod_sum + safe_divide(np.array(vfraci), np.array(modi))
+    return safe_divide(1, mod_sum)
 
 
-def vrh_avg(mclay, mnonclay, vclay):
-    """Calculates the Voigt-Reuss-Hill mix for a simple other/shale mix.
+def vrh_avg(
+    mod: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
+    """Calculates the Voigt-Reuss-Hill average for a multi-modulus mix.
 
     Args:
-        mclay (array-like): clay component moduli
-        mnonclay (array-like): non-clay component moduli
-        vclay (array-like): fraction of material that is clay where 0 < fclay < 1
+        mod: first modulus
+        frac: first volume fraction
+        argv: additional modulus and volume fraction pairs.
 
     Returns:
-        (array-like): Voigt-Reuss-Hill average modulus
+        Voigt-Reuss-Hill average modulus
     """
-    fclay = vclay
-    fnonclay = 1 - vclay
-    return 0.5 * (
-        voigt_upper_bound([mnonclay, mclay], np.transpose([fnonclay, fclay]))
-        + reuss_lower_bound([mnonclay, mclay], np.transpose([fnonclay, fclay]))
-    )
+    vub = voigt_upper_bound(mod, frac, *argv)
+    rlb = reuss_lower_bound(mod, frac, *argv)
+    return 0.5 * (vub + rlb)
+
+
+def mixed_density(
+    den: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
+    """Mixed density $\\rho_M$ based upon volume fractions
+
+    $$
+    \\rho_M = \sum_{i=1}^N \\phi_i \\rho_i
+    $$
+
+    Can take an arbitrary number of denisties $\\rho_i$ and volume fractions $\\phi_i$.
+    Volume fractions must sum to one. If the number of arguments is odd, the final
+    volume fraction is assumed to be the ones complement of all other fractions.
+
+    Inputs must be [broadcastable](https://numpy.org/doc/stable/user/basics.broadcasting.html).
+
+    `argv` as the form `(component_1, vfrac_1, component_2, vfrac2, ...)` or to use the complement for the final
+    component `(component_1, vfrac_1, component_2)`
+
+    Args:
+        den: first fluid density
+        frac: first fluid volume fraction
+        argv: additional fluid and volume fraction pairs.
+
+    Returns:
+        mixed density for combined material
+    """
+    args = _process_vfrac(*((den, frac) + argv))
+    den_sum = 0
+    for deni, vfraci in chunked(args, 2):
+        den_sum = den_sum + np.array(vfraci) * np.array(deni)
+    return den_sum
 
 
 def dryframe_delta_pres(erp_init, erp, mod_vrh, mod_e, mod_p, phi, phic):

@@ -3,214 +3,240 @@
 """
 
 # pylint: disable=invalid-name,no-value-for-parameter
+from typing import Dict, Sequence, Type, Any
 
-import xarray as xr
 import numpy as np
-from scipy.interpolate import interp1d
 
-from ..utils.file import read_eclipsekw_3dtable, read_eclipsekw_2dtable
+from ..typing import NDArrayOrFloat
+from .._base import Transform, Element
 from .._exceptions import PrototypeError, WorkflowError
-from ..utils._decorators import mutually_exclusive
-from ..utils.ecl import EclUnitScaler
-from ..utils._utils import _check_kwargs_vfrac
-
+from ..utils._decorators import check_props
 from ..models import _mod
-from .._stress import StressModel
+from ..elastic import acoustic_velp, acoustic_vels
 from ..models._cemented_sand import dryframe_cemented_sand
 
 
-class PoroAdjModel:
-    """Base Class for defining porosity adjustment models.
+class PoroAdjust(Transform):
+    """Base porosity adjustment class
+
+    Implements porosity adjustments for density, vp and vs.
+    Classes which inherit this class should implement the modifications to the bulk and shear moduli.
 
     Attributes:
-        name (str): name of the model
+
     """
 
-    def __init__(self, name=None):
-        save_header = "etlpy porosity adjustment model class"
-        super().__init__(save_header)
-        self.name = name
+    _methods = ["bulk_modulus", "vp", "vs", "shear_modulus", "density"]
 
-    def transform(self, porosity, component="bulk", **min_kwargs):
-        """Transform input porosity using model"""
-        raise PrototypeError(self.__class__.__name__, "porosity model")
+    def __init__(
+        self,
+        transform_keys: Sequence[str],
+        element: Type[Element],
+        name: str = None,
+    ):
+        super().__init__(transform_keys, element, self._methods, name=name)
+
+    @check_props("poro")
+    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+        """Applies the class porosity adjustment to the bulk modulus."""
+        raise PrototypeError(self.__class__.__name__, "bulk_modulus")
+
+    @check_props("poro")
+    def shear_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+        """Applies the class porosity adjustment to the shear modulus."""
+        raise PrototypeError(self.__class__.__name__, "shear_modulus")
+
+    @check_props("poro")
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Returns density of RockFrame using volume fraction average, see [mixed_denisty][digirock.models._mod.mixed_density].
+
+        Args:
+            props: A dictionary of properties required.
+            kwargs: ignored
+
+        Returns:
+            density (g/cc)
+        """
+        dens = self.element.density(props, **kwargs)
+        return dens * (1 - props["poro"])
+
+    def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Returns compression velocity of RockFrame
+
+        Args:
+            props: A dictionary of properties required.
+            kwargs: ignored
+
+        Returns:
+            velocity (m/s).
+        """
+        density = self.density(props, **kwargs)
+        bulk = self.bulk_modulus(props, **kwargs)
+        shear = self.shear_modulus(props, **kwargs)
+        return acoustic_velp(bulk, shear, density)
+
+    def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Returns shear velocity of RockFrame
+
+        Args:
+            props: A dictionary of properties required.
+            kwargs: ignored
+
+        Returns:
+            velocity (m/s).
+        """
+        density = self.density(props, **kwargs)
+        shear = self.shear_modulus(props, **kwargs)
+        return acoustic_vels(shear, density)
 
 
-class DefaultPoroAdjModel:
-    """Default porosity adjustment case
+class FixedPoroAdjust(PoroAdjust):
+    """Fixed Porosity Adjustment
 
-    Attributes:
-        name (str): name of the model
+    Modulii $m$ are transformed by porosity $\\phi$
+
+    $$
+    m_{\\phi} = m * (1-2.8 *\\phi)
+    $$
     """
 
-    def __init__(self, name=None):
-        save_header = "etlpy porosity adjustment model class"
-        super().__init__(save_header)
-        self.name = name
+    def __init__(
+        self,
+        transform_keys: Sequence[str],
+        element: Type[Element],
+        name: str = None,
+    ):
+        super().__init__(transform_keys, element, name=name)
 
-    def transform(self, porosity, component="bulk", **min_kwargs):
-        """Transform input porosity using model"""
-        return 1 - 2.8 * porosity
+    @check_props("poro")
+    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+        """Applies the class porosity adjustment to the bulk modulus."""
+        k0 = self.element.bulk_modulus(props, **kwargs)
+        return (1 - 2.8 * props["poro"]) * k0
+
+    @check_props("poro")
+    def shear_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+        """Applies the class porosity adjustment to the shear modulus."""
+        k0 = self.element.shear_modulus(props, **kwargs)
+        return (1 - 2.8 * props["poro"]) * k0
 
 
-class NurCriticalPoro(PoroAdjModel):
+class NurCriticalPoro(PoroAdjust):
     """Nur's Critical porosity adjustment."""
 
-    def __init__(self, name=None, critical_poro=None):
-        super().__init__(name)
-        self.set_critical_porosity(critical_poro)
-
-    def set_critical_porosity(self, crit_por):
-        """Critical porosity parameters for Nur's critical porosity model.
+    def __init__(
+        self,
+        transform_keys: Sequence[str],
+        element: Type[Element],
+        critical_poro: float,
+        name: str = None,
+    ):
+        """
 
         Args:
-            crit_por (float): Critical porosity inflection point in Por vs Vp (0 < crit_por < 1)
+            critical_poro: Critical porosity inflection point in Por vs Vp (0 < crit_por < 1)
         """
-        self.crit_porosity = crit_por
+        super().__init__(transform_keys, element, name=name)
+        if not (0 <= critical_poro <= 1):
+            raise ValueError("Critical porosity should be 0 <= cp <= 1")
+        self._critphi = critical_poro
 
-    def transform(self, porosity, component="bulk", **min_kwargs):
-        """Transform the input porosity using Nur's critical porosity model.
+    @property
+    def critical_poro(self):
+        return self._critphi
 
-        component is ignored for Nur's CPor model.
-        """
-        if self.crit_porosity is None:
-            raise WorkflowError(
-                "porosity_adjustment",
-                "Critical porosity must be set to use Nur critical model",
-            )
-        if not (0 <= self.crit_porosity <= 1):
-            raise ValueError("Critical posority (cp) should be 0 <= cp <= 1")
+    def _tranform(self, poro: NDArrayOrFloat) -> NDArrayOrFloat:
+        return np.where(poro >= self._critphi, 0.0, 1 - poro / self._critphi)
 
-        return np.where(
-            porosity >= self.crit_porosity, 0.0, 1 - porosity / self.crit_porosity
+    @check_props("poro")
+    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+        """Applies the class porosity adjustment to the bulk modulus."""
+        k0 = self.element.bulk_modulus(props, **kwargs)
+        k0_fact = self._tranform(props["poro"])
+        return k0_fact * k0
+
+    @check_props("poro")
+    def shear_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+        """Applies the class porosity adjustment to the shear modulus."""
+        mu0 = self.element.shear_modulus(props, **kwargs)
+        mu0_fact = self._tranform(props["poro"])
+        return mu0_fact * mu0
+
+    def get_summary(self) -> Dict[str, Any]:
+        """Returns a summary of this class."""
+        summary = super().get_summary()
+        summary.update(
+            {
+                "critical_poro": self.critical_poro,
+            }
         )
+        return summary
 
 
-class LeeConsolodationPoro(PoroAdjModel):
-    """Lee/Pride 2005 Consolidation parameter porosity adjustment."""
+class LeeConsolodationPoro(PoroAdjust):
+    """Lee/Pride 2005 Consolidation parameter porosity adjustment.
 
-    def __init__(self, name=None, cons_alpha=None):
-        super().__init__(name)
-        if cons_alpha is not None:
-            self.set_consolidation(cons_alpha)
-        else:
-            self.cons_alpha = None
+    Attributes:
 
-    def set_consolidation(self, alpha, gamma=None):
-        """Set consolidation parameters after Lee (2005).
+    """
 
-        dry frame modulus will be modified after
-            kdry = k0 * (1 - phi)/(1 - alpha*phi)
-            mudry = mu0 * (1 - phi)/(1 - alpha*gamma*phi)
+    def __init__(
+        self,
+        transform_keys: Sequence[str],
+        element: Type[Element],
+        cons_alpha: float,
+        gamma: float = None,
+        name: str = None,
+    ):
+        """
 
         If gamma is None:
-            gamma = (1 + 2*alpha) / (1 + alpha)
+
+        $$
+        \\gamma = \\frac{1 + 2\\alpha}{1 + \\alpha}
+        $$
 
         Args:
-            alpha (): [description]
+
         """
-        self.cons_alpha = alpha
-        if gamma is None:
-            self.cons_gamma = (1 + 2 * alpha) / (1 + alpha)
-        else:
-            self.cons_gamma = gamma
+        super().__init__(transform_keys, element, name=name)
+        self._cons_alpha = cons_alpha
+        self._cons_gamma = (
+            (1 + 2 * cons_alpha) / (1 + cons_alpha) if gamma is None else gamma
+        )
 
-    def transform(self, porosity, component="bulk", **min_kwargs):
-        """Transform the input porosity using Lee's consolidation porosity model."""
-        if self.cons_alpha is None:
-            raise WorkflowError(
-                "porosity_adjustment",
-                " consolidation parameter must be set",
-            )
+    @check_props("poro")
+    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+        """Applies the class porosity adjustment to the bulk modulus.
 
-        if component == "bulk":
-            return (1 - porosity) / (1 + self.cons_alpha * porosity)
-        elif component == "shear":
-            return (1 - porosity) / (1 + self.cons_gamma * self.cons_alpha * porosity)
-        else:
-            raise ValueError(f"Unknown component type {component}")
-
-
-class WoodsideCementPoro(PoroAdjModel):
-    """Woodside's cemented sand model"""
-
-    def __init__(self, name=None):
-        super().__init__(name)
-        self.cement_index = dict()
-
-    def set_cement_index(self, cement_index, component="bulk"):
-        """Cement Index for Woodside Modulus Adjustment
-
-        Args:
-            cement_index ([type]): [description]
-            component (str, optional): [description]. Defaults to "bulk".
+        $$
+        k_{dry} = k_0 * \\frac{1 - \\phi}{1 - \\alpha\\phi}
+        $$
         """
-        self.cement_index[component] = cement_index
+        k0 = self.element.bulk_modulus(props, **kwargs)
+        k0_fact = (1 - props["poro"]) / (1 + self._cons_alpha * props["poro"])
+        return k0_fact * k0
 
-    def transform(self, porosity, component="bulk", **min_kwargs):
-        """Transform the input porosity using Lee's consolidation porosity model."""
-        try:
-            ci = self.cement_index[component]
-        except KeyError:
-            raise WorkflowError(
-                "porosity_adjustment",
-                f" cement index for component ({component}) must be set",
-            )
+    @check_props("poro")
+    def shear_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+        """Applies the class porosity adjustment to the shear modulus.
 
-        return 1 - porosity / (porosity + ci)
-
-
-class ETLPConsolodationPoro(PoroAdjModel):
-
-    """ETLP original sim2seis Consolidation parameter porosity adjustment."""
-
-    def __init__(self, name=None):
-        raise NotImplementedError("This model is not finished yet")
-        super().__init__(name)
-        self.etlp_cons = None
-
-    def set_etlp_consolidation(self, **kwargs):
-        """ETLP Consolidation Parameters c1, c2, c3, c4, phi & depth must be set.
-
-        cX should be replaced by the mineral key passed as a vfrac in transform.
-
-        Args:
-            alphas (dict): [description]
+        $$
+        \\mu_{dry} = \\mu_0\\frac{1 - \\phi}{1 - \\alpha\\gamma\\phi}
+        $$
         """
-        if len(kwargs) > 0:
-            self.etlp_cons = kwargs
+        mu0 = self.element.shear_modulus(props, **kwargs)
+        mu0_fact = (1 - props["poro"]) / (
+            1 + self.cons_gamma * self._cons_alpha * props["poro"]
+        )
+        return mu0_fact * mu0
 
-    def transform(self, porosity, component="bulk", **min_kwargs):
-        """Transform the input porosity using ETLP consolidation porosity
-        model.
-
-        Notes:
-            True origin is not well documents but is coded up in the original matlab sim2seis.
-        """
-        if self.etlp_cons is None:
-            raise WorkflowError(
-                "ETLP Consolodation Parameter",
-                "ETLP Consolodation Parameters must be set",
-            )
-        try:
-            por_cp = self.etlp_cons["phi"]
-        except KeyError:
-            raise WorkflowError(
-                "ETLP Consolodation Parameter",
-                "The consolodation parameter for porosity phi is missing",
-            )
-
-        try:
-            depth_cp = self.etlp_cons["depth"]
-        except KeyError:
-            raise WorkflowError(
-                "ETLP Consolodation Parameter",
-                "The consolodation parameter for depth is missing",
-            )
-
-        out = np.zeros_like(porosity)
-        for mineral in min_kwargs:
-            out = out + self.etlp_cons[mineral] * min_kwargs[mineral]
-        # out = out + depth_cp * depth / 1000.0
-        out = (1 - porosity) / (1 + out * porosity)
-        return out
+    def get_summary(self) -> Dict[str, Any]:
+        """Returns a summary of this class."""
+        summary = super().get_summary()
+        summary.update(
+            {
+                "critical_poro": self.critical_poro,
+            }
+        )
+        return summary

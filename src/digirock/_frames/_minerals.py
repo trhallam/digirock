@@ -1,11 +1,14 @@
 """Mineral base class. Minerals are the end consumers for FrameModels.
 """
 
-from typing import Tuple
+from tkinter import N
+from typing import Tuple, Dict, Any
+
+from ..typing import NDArrayOrFloat
 from .._exceptions import WorkflowError
 from .._base import Element
 
-from ..elastic import acoustic_vel
+from ..elastic import acoustic_velp, acoustic_vels
 
 
 class Mineral(Element):
@@ -26,49 +29,76 @@ class Mineral(Element):
         name: str = None,
     ):
         super().__init__(name=name)
-        self.density = density
-        self.bulk_modulus = bulk_modulus
-        self.shear_modulus = shear_modulus
+        self._density = density
+        self._bulk_modulus = bulk_modulus
+        self._shear_modulus = shear_modulus
 
-    def _check_defined(self, from_func, var):
-        if self.__getattribute__(var) is None:
-            raise WorkflowError(from_func, f"The {var} attribute is not defined.")
+    def density(self, props: Any, **kwargs) -> float:
+        """Return the density.
 
-    def elastic(self) -> Tuple[float, float, float]:
+        Args:
+            props: ignored
+            kwargs: ignored
+
+        Returns:
+            constant value for Mineral density
+        """
+        return self._density
+
+    def bulk_modulus(self, props: Any, **kwargs) -> float:
+        """Return the bulk modulus.
+
+        Args:
+            props: ignored
+            kwargs: ignored
+
+        Returns:
+            constant value for Mineral bulk modulus
+        """
+        return self._bulk_modulus
+
+    def shear_modulus(self, props: Any, **kwargs) -> float:
+        """Return the shear modulus.
+
+        Args:
+            props: ignored
+            kwargs: ignored
+
+        Returns:
+            constant value for Mineral shear modulus
+        """
+        return self._shear_modulus
+
+    def elastic(
+        self, props: Any, **kwargs
+    ) -> Tuple[NDArrayOrFloat, NDArrayOrFloat, NDArrayOrFloat]:
         """Pure elastic properties of mineral.
 
         Uses [`acoustic_vel`][digirock.elastic.acoustic_vel].
 
-
         Returns:
             compressional velocity (m/s), shear velocity (m/s), density (g/cc)
         """
-        vp, vs = acoustic_vel(self.bulk_modulus, self.shear_modulus, self.density)
-        return vp, vs, self.density
+        return self.vp(None), self.vs(None), self.density(None)
 
-    @property
-    def vp(self) -> float:
+    def vp(self, props: Any, **kwargs) -> NDArrayOrFloat:
         """Compressional Velocity (m/s)"""
-        vp, _, _ = self.elastic()
-        return vp
+        return acoustic_velp(self._bulk_modulus, self._shear_modulus, self._density)
 
-    @property
-    def vs(self) -> float:
+    def vs(self, props: Any, **kwargs) -> NDArrayOrFloat:
         """Shear Velocity (m/s)"""
-        _, vs, _ = self.elastic()
-        return vs
+        return acoustic_vels(self._shear_modulus, self._density)
 
     def get_summary(self) -> dict:
         summary = super().get_summary()
-        vp, vs, dens = self.elastic()
         summary.update(
             {
                 "name": self.name,
-                "bulk_modulus": self.bulk_modulus,
-                "shear_modulus": self.shear_modulus,
-                "dens": dens,
-                "vp": vp,
-                "vs": vs,
+                "bulk_modulus": self.bulk_modulus(None),
+                "shear_modulus": self.shear_modulus(None),
+                "dens": self.density(None),
+                "vp": self.vp(None),
+                "vs": self.vs(None),
             }
         )
         return summary

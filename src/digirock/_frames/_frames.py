@@ -1,256 +1,236 @@
 """Classes for various RockFrames, new RockFrames should inherit `RockFrame` as a base class.
 """
+from typing import Sequence, Dict, Type, List
+from .._base import Blend, Element
+from ..typing import NDArrayOrFloat
+from ..models import _mod
+from ..elastic import acoustic_vels, acoustic_velp
 
 
-class RockFrame:
+class RockFrame(Blend):
     """Base Class for defining rock frame models all new rock frames should be based upon this class.
 
     Attributes:
         name (str): name of the fluid
+        blend_keys (list): Keys to use for blending
+        elements (list): A list of elements
+        methods (list): A list of methods each element must have
+        n_elements (int): The number of elements
     """
 
     def __init__(
         self,
+        blend_keys: Sequence[str],
+        elements: Sequence[Type[Element]],
         name=None,
-        minerals=None,
-        porosity_adjust=None,
-        stress_model=None,
     ):
-        """[summary]
+        """
+
+        Elements must implement `density()`, `vp()`, `vs()`, `shear_modulus()`, `bulk_modulus()`, `shear_modulus()`
 
         Args:
-            name (str, optional): [description]. Defaults to None.
-            minerals (list/dict, optional): Mineral components of the FrameModel. Defaults to None.
+            blend_keys:
+            elements:
+            methods:
+            name: Name of the rock frame
 
         """
-        save_header = "etlpy RockFrame class instance save file"
-        super().__init__(save_header)
-        self.name = name
+        methods = ["density", "vp", "vs", "shear_modulus", "bulk_modulus"]
+        super().__init__(blend_keys, elements, methods, name=name)
 
-        self.minerals = None
-        if minerals is None:
-            pass
-        elif isinstance(minerals, list):
-            for mineral in minerals:
-                self.add_mineral(mineral.name, mineral)
-        elif isinstance(minerals, dict):
-            self.minerals = minerals
-        else:
+    def _process_props_get_method(
+        self, props: Dict[str, NDArrayOrFloat], method, **kwargs
+    ) -> Sequence[NDArrayOrFloat]:
+        """Process the props to find if all required keys are present for blending
+
+        Uses self.blend_keys for check and get the result of method by passing props.
+
+        Args:
+
+        Returns:
+            result for method from elements in order of `blend_keys`
+        """
+        missing = [key for key in self.blend_keys if key not in props]
+        if len(missing) > 1:
             raise ValueError(
-                "minerals should be of type "
-                f"{(type(list), type(dict))} got {type(minerals)}"
+                f"Had {len(missing)} missing volume fractions, only 1 missing volume fraction allowed: please add to props {missing}"
             )
+        has_keys = [key for key in self.blend_keys if key in props]
 
-        if porosity_adjust is None:
-            self.porosity_adjust = DefaultPoroAdjModel("defaulted_poroadj")
-        else:
-            self.porosity_adjust = porosity_adjust
+        args = []
+        for key in has_keys:
+            eli = self.blend_keys.index(key)
+            args += [
+                getattr(self._elements[eli], method)(props, **kwargs),
+                props[key],
+            ]
 
-        if stress_model is None:
-            self.stress_model = None
-            self._is_stress_sens = False
-        else:
-            self.set_stress_model(stress_model)
-            self._is_stress_sens = True
+        if missing:
+            eli = self.blend_keys.index(missing[0])
+            args += [
+                getattr(self._elements[eli], method)(props, **kwargs),
+            ]
 
-    def set_porosity_adjust_model(self, porosity_adjust):
-        """Set the porosity adjustment model"""
-        if not isinstance(porosity_adjust, PoroAdjModel):
-            raise ValueError(
-                f"porosity adjustment model should be of type {PoroAdjModel}"
-            )
-        self.porosity_adjust = porosity_adjust
+        return tuple(args)
 
-    def set_stress_model(self, stress_model, calibration_pressure):
-        if isinstance(stress_model, StressModel):
-            self.stress_model = stress_model
-            if self.stress_model._has_stress_sens:
-                self._is_stress_sens = True
-        elif stress_model is not None:
-            raise ValueError(
-                f"stress model must be {StressModel} got {type(stress_model)}"
-            )
-        self.calb_pres = calibration_pressure
-
-    def _check_defined(self, from_func, var):
-        if self.__getattribute__(var) is None:
-            raise WorkflowError(from_func, f"The {var} attribute is not defined.")
-
-    def add_mineral(self, name, mineral):
-        """Add a mineral component to the rock model.
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Returns density of RockFrame using volume fraction average, see [mixed_denisty][digirock.models._mod.mixed_density].
 
         Args:
-            name (str): Name of the mineral
-            mineral (etlp.pem.Mineral): Mineral component class.
-        """
-        if self.minerals is None:
-            self.minerals = dict()
-        self.minerals[name] = mineral
-
-    def reuss_bound(self, **kwargs):
-        """Returns the reuss bounds for mineral components."""
-        kwargs = _check_kwargs_vfrac(**kwargs)
-        mods = [self.minerals[key].bulk_modulus for key in kwargs]
-        fracs = [val for val in kwargs.values()]
-        fracs = np.array(fracs).T
-        return _mod.reuss_lower_bound(mods, fracs)
-
-    def density(self, porosity, temp, pres, depth, **min_kwargs):
-        """Returns density of mineral frame at porosity, temp and pres.
-
-        By default this is bulk density with vacuum in the porespace.
-
-        Temp and pres are included for sub-classing but not used by this implementation.
-
-        Args:
-            porosity (array-like): Porosity vfrac (0-1)
-            temp (array-like): Temperature (degC)
-            pres (array-like): Pressure (MPa)
+            props: A dictionary of properties required.
+            kwargs: ignored
 
         Returns:
-            array-like : Density for porosity, temp and pres (g/cc).
+            density (g/cc)
         """
-        min_kwargs = _check_kwargs_vfrac(**min_kwargs)
-        n_min = len(min_kwargs)
-        min_frac = np.zeros((np.array(porosity).size, n_min))
-        i = 0
-        for minkw, vals in min_kwargs.items():
-            min_frac[:, i] = self.minerals[minkw]["rho"] * vals
-            i = i + 1
-        min_dens = min_frac.sum(axis=1)
-        return (1 - porosity) * min_dens
+        args = self._process_props_get_method(props, "density")
+        return _mod.mixed_density(*args)
+        # raise PrototypeError(self.__class__.__name__, "density")
 
-    def velocity(self, porosity, temp, pres, depth, **min_kwargs):
-        """Returns density of fluid at temp and pres.
+    def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Returns compression velocity of RockFrame
 
         Args:
-            temp (array-like): Temperature (degC)
-            pres (array-like): Pressure (MPa)
+            props: A dictionary of properties required.
+            kwargs: ignored
 
         Returns:
-            array-like : Velocity for temp and pres (m/s).
+            velocity (m/s).
         """
-        raise PrototypeError(self.__class__.__name__, "velocity")
+        density = self.density(props, **kwargs)
+        bulk = self.bulk_modulus(props, **kwargs)
+        shear = self.shear_modulus(props, **kwargs)
+        return acoustic_velp(bulk, shear, density)
 
-    def dry_frame_bulk_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-        """"""
-        raise PrototypeError(self.__class__.__name__, "modulus")
-
-    def bulk_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-        """Returns modulus of fluid at temp and pres.
+    def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Returns shear velocity of RockFrame
 
         Args:
-            temp (array-like): Temperature (degC)
-            pres (array-like): Pressure (MPa)
+            props: A dictionary of properties required.
+            kwargs: ignored
 
         Returns:
-            array-like : Modulus for temp and pres (GPa).
+            velocity (m/s).
         """
-        raise PrototypeError(self.__class__.__name__, "modulus")
+        density = self.density(props, **kwargs)
+        shear = self.shear_modulus(props, **kwargs)
+        return acoustic_vels(shear, density)
 
-    def dry_frame_shear_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-        raise PrototypeError(self.__class__.__name__, "modulus")
-
-    def shear_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-        raise PrototypeError(self.__class__.__name__, "modulus")
-
-    def get_summary(self):
-        """Return a dictionary containing a summary of the fluid.
-
-        Returns:
-            dict: Summary of properties.
-        """
-        summary = super().get_summary()
-        summary.update({"name": self.name})
-        return summary
-
-
-class VRHFrame(RockFrame):
-    def __init__(self, minerals=None):
-        """Voight-Reuss-Hill Averaging Type Frame for two minerals.
+    def bulk_modulus(
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
+    ) -> NDArrayOrFloat:
+        """Returns bulk modulus of RockFrame
 
         Args:
-            minerals ([type], optional): [description]. Defaults to None.
-        """
-        super().__init__(minerals=minerals)
+            props: A dictionary of properties required.
+            kwargs: ignored
 
-    def _vrh_avg_moduli(self, min_kwargs, component="bulk"):
+        Returns:
+            bulk modulus (GPa).
+        """
+        raise PrototypeError(self.__class__.__name__, "bulk_modulus")
+
+    def shear_modulus(
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
+    ) -> NDArrayOrFloat:
+        """Returns shear modulus of RockFrame
+
+        Args:
+            props: A dictionary of properties required.
+            kwargs: ignored
+
+        Returns:
+            shear modulus (GPa).
+        """
+        raise PrototypeError(self.__class__.__name__, "shear_modulus")
+
+
+class VRHAvg(RockFrame):
+    """Voight-Reuss-Hill Averaging Class for combing mineral mixes based upon averaging.
+
+    Attributes:
+        name (str): name of the fluid
+        blend_keys (list): Keys to use for blending
+        elements (list): A list of elements
+        methods (list): A list of methods each element must have
+        n_elements (int): The number of elements
+
+    """
+
+    def __init__(
+        self,
+        blend_keys: List[str],
+        elements: List[Type[Element]],
+        name=None,
+    ):
+        """
+
+        Elements must implement `density()`, `vp()`, `vs()`, `shear_modulus()`, `bulk_modulus()`, `shear_modulus()`
+
+        Args:
+            blend_keys:
+            elements:
+            methods:
+            name: Name of the rock frame
+
+        """
+        super().__init__(
+            blend_keys,
+            elements,
+            name=name,
+        )
+
+    def _vrh_avg_moduli(
+        self,
+        props: Dict[str, NDArrayOrFloat],
+        component: str = "bulk_modulus",
+        **kwargs,
+    ) -> NDArrayOrFloat:
         """VRH avg moduli helper
 
         Args:
-            min_kwargs (dict): Two mineral compontents to mix.
-        """
-        if len(min_kwargs) != 2:
-            raise ValueError("VRH averaging requires exactly two mineral components.")
-
-        min1, min2 = tuple(min_kwargs.keys())
-        m0 = _mod.vrh_avg(
-            self.minerals[min1][component],
-            self.minerals[min2][component],
-            min_kwargs[min1],
-        )
-        return m0
-
-    def dry_frame_bulk_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-        """No stress sensitivity applied."""
-        min_kwargs = _check_kwargs_vfrac(**min_kwargs)
-        k0 = self._vrh_avg_moduli(min_kwargs, component="bulk")
-        phi_fact = self.porosity_adjust.transform(
-            porosity, component="bulk", **min_kwargs
-        )
-        return k0 * phi_fact
-
-    def bulk_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-        """Returns modulus of dry frame at conditions.
-
-        Args:
-            porosity
-            temp (array-like): Temperature (degC)
-            pres (array-like): Pressure (MPa)
+            props: A dictionary of properties required.
+            component: One of ["bulk_modulus", "shear_modulus"]
+            kwargs: passed to elements
 
         Returns:
-            array-like : Modulus for temp and pres (GPa).
+            Voigt-Reuss-Hill Average modulus
         """
-        kdry = self.dry_frame_bulk_modulus(porosity, temp, pres, depth, **min_kwargs)
-        if self._is_stress_sens and self.calb_pres is None:
-            raise WorkflowError(
-                "bulk_modulus",
-                "Calibration pressure for stress dryframe adjustment not set.",
-            )
+        args = self._process_props_get_method(props, component, **kwargs)
 
-        if self._is_stress_sens:
-            kdryf = self.stress_model.stress_dryframe_moduli(
-                depth, self.calb_pres, pres, kdry, component="bulk"
-            )
-        else:
-            kdryf = kdry
+        return _mod.vrh_avg(*tuple(args))
 
-        return kdryf
+    def bulk_modulus(
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
+    ) -> NDArrayOrFloat:
+        """Returns bulk modulus of VRH average
 
-    def dry_frame_shear_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-        min_kwargs = _check_kwargs_vfrac(**min_kwargs)
-        mu0 = self._vrh_avg_moduli(min_kwargs, component="shear")
-        phi_fact = self.porosity_adjust.transform(
-            porosity, component="shear", **min_kwargs
-        )
-        return mu0 * phi_fact
+        `props` must contain a volume fraction for each element
 
-    def shear_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-        mudry = self.dry_frame_shear_modulus(porosity, temp, pres, depth, **min_kwargs)
-        if self._is_stress_sens and self.calb_pres is None:
-            raise WorkflowError(
-                "shear_modulus",
-                "Calibration pressure for stress dryframe adjustment not set.",
-            )
+        Args:
+            props: A dictionary of properties required
+            kwargs: passed to elements
 
-        if self._is_stress_sens:
-            mudryf = self.stress_model.stress_dryframe_moduli(
-                depth, self.calb_pres, pres, mudry, component="shear"
-            )
-        else:
-            mudryf = mudry
+        Returns:
+            Bulk modulus
+        """
+        return self._vrh_avg_moduli(props, component="bulk_modulus", **kwargs)
 
-        return mudryf
+    def shear_modulus(
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
+    ) -> NDArrayOrFloat:
+        """Returns shear modulus of VRH average
+
+        `props` must contain a volume fraction for each element
+
+        Args:
+            props: A dictionary of properties required
+            kwargs: passed to elements
+
+        Returns:
+            Shear modulus
+        """
+        return self._vrh_avg_moduli(props, component="shear_modulus", **kwargs)
 
 
 class HSFrame(RockFrame):
