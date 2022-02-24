@@ -8,7 +8,7 @@ from addict import Dict as AttributeDict
 from ._base import Element
 from ._exceptions import PrototypeError, WorkflowError
 from .utils._decorators import check_props
-from .utils.types import NDArrayOrFloat
+from .typing import NDArrayOrFloat
 
 
 class StressModel(Element):
@@ -21,13 +21,9 @@ class StressModel(Element):
     def __init__(self, name: str = None, keys: List[str] = None):
         if keys is None:
             keys = ["depth", "pres"]
-        Element.__init__(self, name, keys)
+        super().__init__(name, keys)
 
-    def _check_defined(self, from_func, var):
-        if self.__getattribute__(var) is None:
-            raise WorkflowError(from_func, f"The {var} attribute is not defined.")
-
-    def vertical_stress(self, props: Dict[str, NDArrayOrFloat] = None, **kwargs):
+    def vertical_stress(self, props: Dict[str, NDArrayOrFloat], **kwargs):
         """Returns the vertical stress $S_v$ for the class.
 
         Args:
@@ -36,7 +32,6 @@ class StressModel(Element):
         """
         raise PrototypeError(self.__class__.__name__, "vertical_stress")
 
-    # @check_props("depth", "pres")
     def effective_stress(self, props: Dict[str, NDArrayOrFloat], **kwargs):
         """Returns the effective stress $S_e$ for the class at a given depth $(z)$ and for a
         particular formation pressure $p_f$.
@@ -104,7 +99,7 @@ class FStressModel(StressModel):
         self.stress_func = func
 
     def vertical_stress(
-        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
     ) -> NDArrayOrFloat:
         """Returns the vertical stress using user defined function `vertical_stress`.
 
@@ -155,7 +150,7 @@ class LGStressModel(StressModel):
 
     # @check_props("depth")
     def vertical_stress(
-        self, props: Dict[str, NDArrayOrFloat] = None, **kwargs
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
     ) -> NDArrayOrFloat:
         return self.grad * (props["depth"] - self.ref_depth) + self.ref_pres
 
