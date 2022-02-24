@@ -1,13 +1,13 @@
 """Fluid models to simplify generation of fluid properties.
 
 """
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Type, Sequence, Any
 
 # pylint: disable=invalid-name,no-value-for-parameter
 import numpy as np
 
 from .._base import Blend, _get_complement, _volume_sum_check, Element
-from ..utils.types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 
 from ..fluids import bw92
 
@@ -33,7 +33,7 @@ class WoodsFluid(Blend):
     def __init__(
         self,
         vol_keys: List[str],
-        elements: List[Element],
+        elements: List[Type[Element]],
         name: str = None,
         check_vol_sum: bool = True,
         vol_frac_tol: float = 1e-3,
@@ -46,7 +46,7 @@ class WoodsFluid(Blend):
 
     def _build_args(
         self, props: Dict[str, NDArrayOrFloat], method_name, **element_kwargs
-    ) -> Dict[str, NDArrayOrFloat]:
+    ) -> Sequence[Any]:
         blend_props = {
             key: val for key, val in props.items() if key in self._blend_keys
         }

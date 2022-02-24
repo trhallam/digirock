@@ -47,7 +47,7 @@ from numpy.typing import NDArray
 
 from scipy.optimize import root_scalar
 
-from digirock.utils.types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 
 from ..utils import safe_divide, check_broadcastable
 from ..utils._utils import _process_vfrac

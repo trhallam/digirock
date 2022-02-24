@@ -1,7 +1,6 @@
 """Mappings for key Eclipse Properties
 """
 from enum import Enum, unique
-from time import gmtime
 
 # pylint: disable=missing-docstring
 

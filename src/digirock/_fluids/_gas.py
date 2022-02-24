@@ -6,7 +6,7 @@ import xarray as xr
 from scipy.interpolate import interp1d
 
 from ..utils._decorators import check_props, mutually_exclusive, broadcastable
-from ..utils.types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 from ..fluids import bw92
 
 from ._fluid import Fluid

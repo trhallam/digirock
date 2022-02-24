@@ -13,7 +13,7 @@ from ..utils.ecl import (
     EclUnitMap,
     EclUnitScaler,
 )
-from ..utils.types import Pathlike
+from ..typing import Pathlike
 from ..utils._decorators import mutually_exclusive
 
 from ..fluids import bw92, ecl

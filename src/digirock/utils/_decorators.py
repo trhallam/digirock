@@ -6,7 +6,7 @@ from functools import wraps
 import numpy as np
 from inspect import getfullargspec
 
-from .types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 from ._utils import check_broadcastable
 
 

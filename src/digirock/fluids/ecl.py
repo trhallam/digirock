@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.interpolate import PchipInterpolator
 
-from ..utils.types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 from ..utils.ecl import E100MetricConst, EclUnitScaler
 
 

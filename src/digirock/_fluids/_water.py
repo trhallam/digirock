@@ -5,7 +5,7 @@ import numpy as np
 
 from ..utils.ecl import EclStandardConditions
 from ..utils._decorators import check_props
-from ..utils.types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 from ..fluids import bw92
 from ..fluids import ecl as fluid_ecl
 

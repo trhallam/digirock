@@ -1,7 +1,7 @@
 from typing import Sequence
 import numpy as np
 
-from digirock.utils.types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 
 
 # def _check_kwargs_vfrac(**kwargs):

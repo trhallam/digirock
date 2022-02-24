@@ -3,7 +3,7 @@
 from typing import List, Dict, Type
 
 from .._exceptions import PrototypeError, WorkflowError
-from ..utils.types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 from .._base import Element, Switch
 
 

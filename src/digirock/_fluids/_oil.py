@@ -7,7 +7,7 @@ from .._exceptions import WorkflowError
 from ..utils.ecl import EclStandardConditions
 from ..utils._decorators import check_props, mutually_exclusive, broadcastable
 from ..utils import check_broadcastable
-from ..utils.types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 from ..fluids import bw92
 from ..fluids import ecl as fluid_ecl
 
