@@ -20,7 +20,7 @@ class Element:
 
     def __init__(self, name: str = None, keys: List[str] = None):
         self._protected_kw_registry = list()
-        self.name = name
+        self.name = name if name is not None else f"{type(self).__name__}_{id(self)}"
         if keys:
             for key in keys:
                 self.register_key(key)
@@ -68,6 +68,57 @@ class Element:
 
         return tree
 
+    def trace(
+        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+    ) -> Dict[str, Any]:
+        """Returns a props trace for all methods, switching keys in props are ignored.
+
+        Args:
+            props:
+            methods:
+            **kwargs: passed to methods
+
+        Returns:
+            trace of method values through model tree
+        """
+        if isinstance(methods, str):
+            methods = [methods]
+
+        trace = {
+            meth: getattr(self, meth, lambda props, **kwargs: None)(props, **kwargs)
+            for meth in methods
+        }
+        return trace
+
+    def trace_tree(
+        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+    ) -> Tree:
+        """Returns a props trace for all methods, switching keys in props are ignored.
+
+        Args:
+            props:
+            methods:
+            **kwargs: passed to methods
+
+        Returns:
+            tree view of the trace
+        """
+        contains_dict = False
+        trace = self.trace(props, methods, **kwargs)
+        for key in trace:
+            if isinstance(trace[key], dict):
+                contains_dict = True
+                break
+
+        if contains_dict:
+            name, trace = trace.popitem()
+            t = Tree(name)
+        else:
+            t = Tree(self.name)
+
+        _trace_tree(trace, t)
+        return t
+
 
 def _element_check(elements: List[Type[Element]], methods: List[str]):
     """Check elements have methods
@@ -107,6 +158,18 @@ def _get_complement(props: Dict[str, NDArrayOrFloat]) -> NDArrayOrFloat:
         sum_ar = sum_ar + props[prop]
 
     return np.clip(1 - sum_ar, 0, 1)
+
+
+def _trace_tree(trace: dict, tree: Tree) -> None:
+    """Recursively build a Tree with directory contents."""
+    # Sort dirs first then by filename
+
+    for key, item in trace.items():
+        if isinstance(item, dict):
+            branch = tree.add(key)
+            _trace_tree(item, branch)
+        else:
+            tree.add(f"{key} : {item}")
 
 
 class Switch(Element):
@@ -234,6 +297,29 @@ class Switch(Element):
             tree.add(el.tree)
 
         return tree
+
+    def trace(
+        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+    ) -> Dict[str, Any]:
+        """Returns a props trace for all methods, switching keys in props are ignored.
+
+        Args:
+            props:
+            methods:
+            **kwargs: passed to methods
+
+        Returns:
+            trace of method values through model tree
+        """
+        if isinstance(methods, str):
+            methods = [methods]
+
+        switch_trace = {
+            self.name: {
+                el.name: el.trace(props, methods, **kwargs) for el in self._elements
+            }
+        }
+        return switch_trace
 
     def all_keys(self) -> list:
         """Get keys from all levels"""
