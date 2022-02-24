@@ -1,11 +1,12 @@
-from typing import List, Dict, Union, Type, Any
+from typing import List, Dict, Sequence, Union, Type, Any
+from attr import Attribute
 from rich.tree import Tree
 
 import numpy as np
 
 from .utils import check_broadcastable
 from .utils._decorators import check_props
-from .utils.types import NDArrayOrFloat
+from .typing import NDArrayOrFloat
 
 
 class Element:
@@ -18,7 +19,13 @@ class Element:
        name (str): The name of the Model.
     """
 
-    def __init__(self, name: str = None, keys: List[str] = None):
+    def __init__(self, name: str = None, keys: Sequence[str] = None):
+        """
+
+        Args:
+            name: The Element name/id, if None will be assigned an instance ID
+            keys: Keys this element will consume, keys must be unique
+        """
         self._protected_kw_registry = list()
         self.name = name if name is not None else f"{type(self).__name__}_{id(self)}"
         if keys:
@@ -88,6 +95,7 @@ class Element:
             meth: getattr(self, meth, lambda props, **kwargs: None)(props, **kwargs)
             for meth in methods
         }
+        trace["name"] = self.name
         return trace
 
     def trace_tree(
@@ -103,20 +111,11 @@ class Element:
         Returns:
             tree view of the trace
         """
-        contains_dict = False
         trace = self.trace(props, methods, **kwargs)
-        for key in trace:
-            if isinstance(trace[key], dict):
-                contains_dict = True
-                break
-
-        if contains_dict:
-            name, trace = trace.popitem()
-            t = Tree(name)
-        else:
-            t = Tree(self.name)
-
+        name = trace.pop("name")
+        t = Tree(name)
         _trace_tree(trace, t)
+
         return t
 
 
@@ -164,12 +163,24 @@ def _trace_tree(trace: dict, tree: Tree) -> None:
     """Recursively build a Tree with directory contents."""
     # Sort dirs first then by filename
 
+    sub_items = []
     for key, item in trace.items():
         if isinstance(item, dict):
-            branch = tree.add(key)
-            _trace_tree(item, branch)
+            sub_items.append(item)
         else:
             tree.add(f"{key} : {item}")
+
+    for item in sub_items:
+        name = item.pop("name")
+        branch = tree.add(name)
+        _trace_tree(item, branch)
+
+    # for key, item in trace.items():
+    #     if isinstance(item, dict):
+    #         branch = tree.add(key)
+    #         _trace_tree(item, branch)
+    #     else:
+    #         tree.add(f"{key} : {item}")
 
 
 class Switch(Element):
@@ -338,7 +349,7 @@ class Blend(Element):
 
     Attributes:
         name (str): Name for switch
-        blend_keys (list): Keys to use for blending
+        blend_keys (list): Keys to use for blending (must be unique)
         elements (list): A list of elements
         methods (list): A list of methods that the Switch should implement to match the Elements.
         n_elements (int): The number of elements
@@ -346,15 +357,15 @@ class Blend(Element):
 
     def __init__(
         self,
-        blend_keys: List[str],
-        elements: List[Type[Element]],
-        methods: List[str],
+        blend_keys: Sequence[str],
+        elements: Sequence[Type[Element]],
+        methods: Sequence[str],
         name=None,
     ):
         super().__init__(name=name, keys=blend_keys)
         self._blend_keys = blend_keys if isinstance(blend_keys, list) else [blend_keys]
-        self._elements = elements
-        self._methods = methods
+        self._elements = tuple(elements)
+        self._methods = tuple(methods)
 
         _element_check(self._elements, self._methods)
 
@@ -402,14 +413,159 @@ class Blend(Element):
             tree.add(f"{var} : {val}")
 
         for el in self.elements:
-            tree.add(el.tree)
+            _trace_tree({el.name: el.get_summary()}, tree)
 
         return tree
+
+    def trace(
+        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+    ) -> Dict[str, Any]:
+        """Returns a props trace for all methods, switching keys in props are ignored.
+
+        Args:
+            props:
+            methods:
+            **kwargs: passed to methods
+
+        Returns:
+            trace of method values through model tree
+        """
+        if isinstance(methods, str):
+            methods = [methods]
+
+        blend_trace = {
+            el.name: el.trace(props, methods, **kwargs) for el in self._elements
+        }
+        blend_trace["name"] = self.name
+
+        for meth in methods:
+            blend_trace[meth] = getattr(self, meth, None)(props, **kwargs)
+        return blend_trace
 
     def all_keys(self) -> list:
         """Get keys from all levels"""
         all_keys = self.keys()
         for el in self._elements:
+            for key in el.keys():
+                if key not in all_keys:
+                    all_keys.append(key)
+        return all_keys
+
+
+class Transform(Element):
+    """Transform `Element` types to adjust the outputs of those Elements.
+
+    The transform process is specific to the implementation which inherits Transform.
+
+    Attributes:
+        name (str): Name for switch
+        transform_keys (list): Keys to use for transforming (must be unique)
+        element: The element to transform
+        methods (list): A list of methods that the Transform should implement to match the Element.
+    """
+
+    def __init__(
+        self,
+        transform_keys: Sequence[str],
+        element: Type[Element],
+        methods: Sequence[str],
+        name=None,
+    ):
+        super().__init__(name=name, keys=transform_keys)
+        self._transform_keys = (
+            transform_keys if isinstance(transform_keys, list) else [transform_keys]
+        )
+        self._element = element
+        self._methods = tuple(methods)
+
+        _element_check([self._element], self._methods)
+
+    @property
+    def element(self) -> Type[Element]:
+        return self._element
+
+    @property
+    def elements(self) -> List[Type[Element]]:
+        return [self._element]
+
+    @property
+    def methods(self) -> List[str]:
+        return self._methods
+
+    @property
+    def transform_keys(self) -> List[str]:
+        return self._transform_keys
+
+    def __getattr__(self, attr):
+        print(attr)
+        print(self.__class__)
+        if attr in self.__dict__:
+            return getattr(self, attr)
+        elif attr in self.methods:
+            return getattr(self._element, attr)
+        else:
+            raise AttributeError(f"{attr} not available")
+
+    def get_summary(self) -> Dict[str, Any]:
+        """Returns a summary of this class."""
+        summary = super().get_summary()
+        summary.update(
+            {
+                "transform_keys": self.transform_keys,
+                "methods": self.methods,
+                "elements": [el.get_summary() for el in self.elements],
+            }
+        )
+        return summary
+
+    @property
+    def tree(self) -> Tree:
+        """Prints a rich tree view of the Class"""
+        summary = self.get_summary()
+        name = summary.pop("name")
+        if name is None:
+            name = summary.pop("class")
+
+        _ = summary.pop("elements")
+
+        tree = Tree(str(name))
+        for var, val in summary.items():
+            tree.add(f"{var} : {val}")
+
+        for el in self.elements:
+            _trace_tree({el.name: el.get_summary()}, tree)
+
+        return tree
+
+    def trace(
+        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+    ) -> Dict[str, Any]:
+        """Returns a props trace for all methods, switching keys in props are ignored.
+
+        Args:
+            props:
+            methods:
+            **kwargs: passed to methods
+
+        Returns:
+            trace of method values through model tree
+        """
+        if isinstance(methods, str):
+            methods = [methods]
+
+        blend_trace = {
+            el.name: el.trace(props, methods, **kwargs) for el in self.elements
+        }
+        blend_trace["name"] = self.name
+
+        for meth in methods:
+            blend_trace[meth] = getattr(self, meth, None)(props, **kwargs)
+        return blend_trace
+
+    def all_keys(self) -> list:
+        """Get keys from all levels"""
+        all_keys = self.keys()
+        for el in self.elements:
             for key in el.keys():
                 if key not in all_keys:
                     all_keys.append(key)
