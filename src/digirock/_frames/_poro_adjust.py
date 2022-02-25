@@ -121,7 +121,7 @@ class FixedPoroAdjust(PoroAdjust):
         return (1 - 2.8 * props["poro"]) * k0
 
 
-class NurCriticalPoro(PoroAdjust):
+class NurCriticalPoroAdjust(PoroAdjust):
     """Nur's Critical porosity adjustment."""
 
     def __init__(
@@ -173,7 +173,7 @@ class NurCriticalPoro(PoroAdjust):
         return summary
 
 
-class LeeConsolodationPoro(PoroAdjust):
+class LeeConsPoroAdjust(PoroAdjust):
     """Lee/Pride 2005 Consolidation parameter porosity adjustment.
 
     Attributes:

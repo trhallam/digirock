@@ -41,6 +41,14 @@ class Fluid(Element):
         """
         raise PrototypeError(self.__class__.__name__, "velocity")
 
+    def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Alias for velocity"""
+        return self.velocity(props, **kwargs)
+
+    def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Always returns 0"""
+        return 0.0
+
     def bulk_modulus(
         self, props: Dict[str, NDArrayOrFloat], **kwargs
     ) -> NDArrayOrFloat:

@@ -80,7 +80,7 @@ def check_broadcastable(**kwargs: NDArrayOrFloat) -> tuple:
 
 
 def _process_vfrac(
-    *argv: NDArrayOrFloat, tol: float = 1e-6
+    *argv: NDArrayOrFloat, i=1, tol: float = 1e-6
 ) -> Sequence[NDArrayOrFloat]:
     """Process an arbitrary number of components to return broadcastable arrays for volume based mixing.
 
@@ -90,6 +90,7 @@ def _process_vfrac(
 
     Inputs must be [broadcastable][https://numpy.org/doc/stable/user/basics.broadcasting.html].
 
+    When i==1:
     `argv` as the form `(component_1, vfrac_1, component_2, vfrac2, ...)` or to use the complement for the final
     component `(component_1, vfrac_1, component_2)`
 
@@ -103,15 +104,21 @@ def _process_vfrac(
     Raises:
         ValueError: Volume fractions != 1 +- tol
     """
+    interval = i + 1
+    try:
+        assert (len(argv) - 1) % interval - (interval - 2) >= 0
+    except AssertionError:
+        raise ValueError(
+            f"Length of arguments was l={len(argv)}, expected n*{interval} or n*{interval}-1"
+        )
     to_shp = check_broadcastable(**{f"argv{i}": arg for i, arg in enumerate(argv)})
-
     # check arguments and find complement if necessary
     sum_vol = 0
-    for arg in argv[1::2]:
+    for arg in argv[i::interval]:
         sum_vol = sum_vol + np.array(arg)
 
     # find complement if necessary
-    if len(argv) % 2 == 1:
+    if len(argv) % interval != 0:
         fvol = np.clip(1 - sum_vol, 0, 1)
         sum_vol = sum_vol + fvol
         argv = argv + (np.clip(fvol, 0, 1),)
@@ -130,13 +137,27 @@ def safe_divide(a: NDArrayOrFloat, b: NDArrayOrFloat) -> NDArrayOrFloat:
 
     Args:
         a: Numerator
-        b: Deominator
+        b: Denominator
 
     Returns:
         a/b replace div0 by 0
     """
     bc_shp = check_broadcastable(a=a, b=b)
     return np.divide(a, b, out=np.zeros(bc_shp), where=b != 0.0)
+
+
+def nan_divide(a: NDArrayOrFloat, b: NDArrayOrFloat) -> NDArrayOrFloat:
+    """Helper function to avoid divide by zero in arrays and floats.
+
+    Args:
+        a: Numerator
+        b: Denominator
+
+    Returns:
+        a/b replace div0 by np.nan
+    """
+    bc_shp = check_broadcastable(a=a, b=b)
+    return np.divide(a, b, out=np.full(bc_shp, np.nan), where=b != 0.0)
 
 
 def ndim_index_list(n):

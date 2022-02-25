@@ -112,53 +112,66 @@ def mixed_density(
     return den_sum
 
 
-def dryframe_delta_pres(erp_init, erp, mod_vrh, mod_e, mod_p, phi, phic):
-    """Calculates the dry rock frame for a given stress regieme and depth by factoring the
-    difference between two pressure regiemes.
+def dryframe_delta_pres(
+    erp_init: NDArrayOrFloat,
+    erp: NDArrayOrFloat,
+    mod_vrh: NDArrayOrFloat,
+    mod_e: NDArrayOrFloat,
+    mod_p: NDArrayOrFloat,
+) -> NDArrayOrFloat:
+    """Calculates the dry rock frame for a given stress regime by factoring the
+    difference between two pressure regimes.
+
+    $$
+    m(P) = m * \\frac{1 + E_m e^{\\tfrac{-P_{e_i}}{P_m}}}{1 + E_m e^{\\tfrac{-P_{e}}{P_m}}}
+    $$
 
     Args:
-        erp_init (array_like): Effective Initial Reservoir Pressure (MPa)
-                                = Overburden Pressure - Initial Reservoir Pressure
-        erp (array_like): Effective Current Reservoir Pressure (MPa)
-                                = Overburden Pressure - Current Reservoir Pressure
-        mod_vrh: Voigt-Reuss-Hill average modulus (check this).
-        mod_e: modulus stress sensitivity metric *2
-        mod_p: modulus characteristic pressure constant *2
-        phi: rock porosity
-        c (list: Default:None): If 'c=None' constant porosity is used else c is a critical
-            porosity (phic) list of length 5 e.g. [c1, c2, c3, c4, c5] where when phi < c3;
-            phic = c1 + c2*phi and when phi >= c3 phic = c3 + c4*phi
+        erp_init: Effective Initial Reservoir Pressure $P_{e_i}$ (MPa) = Overburden Pressure - Initial Reservoir Pressure
+        erp: Effective Current Reservoir Pressure $P_e$ (MPa) = Overburden Pressure - Current Reservoir Pressure
+        mod_vrh: Voigt-Reuss-Hill average modulus $m$ (GPa)
+        mod_e: modulus stress sensitivity metric $E_m$
+        mod_p: modulus characteristic pressure constant $P_m$
 
     Returns:
-        moddry (array_like): the dry-frame modulus for inputs
+        stress adjusted modulus (GPa)
 
     References:
         [1] Amini and Alvarez (2014)
         [2] MacBeth (2004)
     """
     # Calcuate Bulk Modulus for Dry Frame
-    dry1 = np.where(phi >= phic, 0.0, mod_vrh * (1 - phi / phic))
-    moddry = (
-        dry1
+    # dry1 = np.where(phi >= phic, 0.0, mod_vrh * (1 - phi / phic))
+    return (
+        mod_vrh
         * (1 + (mod_e * np.exp(-erp_init / mod_p)))
         / (1 + (mod_e * np.exp(-erp / mod_p)))
     )
-    return moddry
 
 
-def dryframe_dpres(dry_mod, pres1, pres2, sse, ssp):
-    """Calculates the dry rock frame for a given stress regieme and depth by factoring the
-    difference between two pressure regiemes.
+def dryframe_dpres(
+    dry_mod: NDArrayOrFloat,
+    pres1: NDArrayOrFloat,
+    pres2: NDArrayOrFloat,
+    sse: NDArrayOrFloat,
+    ssp: NDArrayOrFloat,
+) -> NDArrayOrFloat:
+    """Calculates the dry rock frame for a given stress regime by factoring the
+    difference between two formation pressure scenarios.
+
+    $$
+    m(P) = m \\frac{1 + S_E e^{\\tfrac{-P_1}{S_P}}}{1 + S_E e^{\\tfrac{-P_2}{S_P}}}
+    $$
 
     Args:
-        dry_mod (array-like): Dryframe modulus (MPa)
-        pres1 (array-like): Pressure calibrated to dryframe modulus. (MPa)
-        pres2 (array-like): Pressure of output (MPa)
-        sse (float): Stress-sensitivity parameter E
-        ssp (float): Stress-sensitivity parameter P
+        dry_mod: Dryframe modulus (MPa)
+        pres1: Pressure calibrated to dryframe modulus. (MPa)
+        pres2: Pressure of output (MPa)
+        sse: Stress-sensitivity parameter E
+        ssp: Stress-sensitivity parameter P
 
     Returns:
-        array_like: the dry-frame modulus adjusted to pressure (pres2)
+        the dry-frame modulus adjusted to pressure (pres2)
 
     References:
         [1] Amini and Alvarez (2014)
@@ -185,17 +198,22 @@ def dryframe_stress(mod_e, mod_p, inf, p):
     return inf / (1 + (mod_e * np.exp(-p / mod_p)))
 
 
-def dryframe_acoustic(ksat, kfl, k0, phi):
+def dryframe_acoustic(
+    ksat: NDArrayOrFloat, kfl: NDArrayOrFloat, k0: NDArrayOrFloat, phi: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Dry frame bulk modulus from material saturated modulus
 
+    This is essentially inverse Gassmann fluid substitution and assumes you know the bulk modulus of
+    the matrix material `k0`.
+
     Args:
-        ksat (array_like): saturated bulk modulus
-        kfl (array_like): fluid bulk modulus
-        k0 (array_like): matrix bulk modulus
-        phi (array_like): porosity (frac)
+        ksat: saturated bulk modulus
+        kfl: fluid bulk modulus
+        k0: matrix bulk modulus
+        phi: porosity (frac)
 
     Returns:
-        kdry (array_like): backed-out dry fame bulk modulus (inverse Gassman_fluidsub)
+        backed-out dry fame bulk modulus
     """
     return (ksat * (phi * k0 / kfl + 1 - phi) - k0) / (
         phi * k0 / kfl + ksat / k0 - 1 - phi

@@ -25,7 +25,7 @@
 #  - `density` which returns the density of the fluid with minimum arguments of temperature and pressure.
 #  - `velocity` which returns the acoustic velocity of the fluid with minimum arguments of temperature and pressure.
 #  - `modulus` which returns the modulus of the fluid with minimum arguments of temperature and pressure.
-#  
+#
 # Additional keyword arguments to each method can be added as differentiators when fluids become more complex, for example when there are PVT zones.
 
 # %% [markdown] tags=[]
@@ -35,6 +35,13 @@
 
 # %%
 import numpy as np
+import os
+import pathlib
+
+cur_dir = os.path.abspath("")
+parent_path = pathlib.Path(cur_dir)
+print(parent_path)
+
 # Presure in MPa
 p = 50
 pres = np.linspace(10, 100, 10)
@@ -67,7 +74,7 @@ print("Density 1 array values (g/cc):", wat.density(props_ar1))
 
 # arrays can be used, but they must be the same shape
 print("Density 2 array values (g/cc):", wat.density(props_ar2))
-print("Density 2 array values (g/cc):", wat.density(props_ar3), '\n')
+print("Density 2 array values (g/cc):", wat.density(props_ar3), "\n")
 
 # velocity
 print("Velocity single values (m/s):", wat.density(props))
@@ -75,7 +82,7 @@ print("Velocity 1 array values (m/s):", wat.density(props_ar1))
 
 # arrays can be used, but they must be the same shape
 print("Velocity 2 array values (m/s):", wat.density(props_ar2))
-print("Velocity 2 array values (m/s):", wat.density(props_ar3), '\n')
+print("Velocity 2 array values (m/s):", wat.density(props_ar3), "\n")
 
 # modulus
 print("Modulus single values (GPa):", wat.density(props))
@@ -86,13 +93,13 @@ print("Modulus 2 array values (GPa):", wat.density(props_ar2))
 print("Modulus 2 array values (GPa):", wat.density(props_ar3))
 
 
-
 # %% [markdown]
 # An inbuilt class exists for using PVTW tables from Eclipse include files. The density is then calculated using the Eclipse formula.
 
 # %%
 # load the Eclipse table directly from a text file
-wat_pvtw = load_pvtw("example_data/COMPLEX_PVT.inc", salinity=0)
+parent_path = pathlib.Path(__file__).parent
+wat_pvtw = load_pvtw(parent_path / "example_data/COMPLEX_PVT.inc", salinity=0)
 
 # look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example
 print(wat_pvtw["pvtw0"].get_summary())
@@ -108,8 +115,8 @@ pvtw0 = wat_pvtw["pvtw0"]
 print("Density single values (g/cc):", pvtw0.density(props))
 
 # with arrays
-print("Density array values (g/cc):", pvtw0.density(props_ar1), '\n')
-print("Bulk Modulus array values (g/cc):", pvtw0.bulk_modulus(props_ar2), '\n')
+print("Density array values (g/cc):", pvtw0.density(props_ar1), "\n")
+print("Bulk Modulus array values (g/cc):", pvtw0.bulk_modulus(props_ar2), "\n")
 
 # %% [markdown]
 # ## Oil Types
@@ -132,7 +139,7 @@ print(doil_sd.get_summary())
 doil_sd.tree
 
 # %% [markdown]
-# Note that `pvt` is mentioned in the summary but isn't yet set. Default behaviour for `DeadOil` is to calculate the formation volume factor (fvf) using a constant or a presure and FVF table. 
+# Note that `pvt` is mentioned in the summary but isn't yet set. Default behaviour for `DeadOil` is to calculate the formation volume factor (fvf) using a constant or a presure and FVF table.
 
 # %%
 # set a constant bo
@@ -167,7 +174,9 @@ bwoil_rsc = OilBW92("norst", api=35, gas_sg=0.6)
 bwoil_rsc.set_rst(120)
 display(bwoil_rsc.tree)
 print("using set table: ", bwoil_rsc.density(dict(temp=110, pres=50)))
-print("using properties: ", bwoil_rsc.density(dict(temp=110, pres=50, rs=110, bo=1.1))) # overwrite table rs and bw92 bo 
+print(
+    "using properties: ", bwoil_rsc.density(dict(temp=110, pres=50, rs=110, bo=1.1))
+)  # overwrite table rs and bw92 bo
 
 # %% [markdown]
 # Finally, we can make `rs` pressure dependent by passing a table to `set_rst`.
@@ -182,14 +191,14 @@ print("using set table: ", bwoil_rst.density(dict(temp=110, pres=50)))
 # When the `rst` has been set in some manner it is possible to query `rs` and `bo` directly. Note, `rs` only needs the pressure.
 
 # %%
-print("Bo: ", bwoil_rst.bo({"temp":110, "pres":50}))
-print("Rs: ", bwoil_rst.rs({"pres":50}))
+print("Bo: ", bwoil_rst.bo({"temp": 110, "pres": 50}))
+print("Rs: ", bwoil_rst.rs({"pres": 50}))
 
 # %% [markdown]
 # If you have an Eclipse PVTO table you can load those oil properties using `load_pvto`.
 
 # %%
-pvtos = load_pvto("example_data/COMPLEX_PVT.inc", api=40)
+pvtos = load_pvto(parent_path / "example_data/COMPLEX_PVT.inc", api=40)
 
 # %% [markdown]
 # `pvtos` is a dictionary, one for each pvto table. The returned fluid has the `OilPVT` class. This uses the BW92 equations for elastic properties, but eclusively uses `rs` and `bo` calculated from the tables loaded into the class.
@@ -214,7 +223,7 @@ ecloil0.pvt["bo_table"].plot()
 # We can get the value of bo for any `pres` and `rs` combination. Eclipse100 PVT models are not temperature dependent for `bo`.
 
 # %%
-print("Bo: ", ecloil0.bo({"pres":50, "rs":np.array([[100, 120], [100, 120]])}))
+print("Bo: ", ecloil0.bo({"pres": 50, "rs": np.array([[100, 120], [100, 120]])}))
 
 # %% [markdown]
 # Getting elastic properties

@@ -50,7 +50,7 @@ plugins:
     - simple
     - autorefs
     - mkdocs-jupyter:
-          execute: false
+          execute: true
           kernel_name: python3
     - mkdocstrings:
           default_handler: python
@@ -71,13 +71,17 @@ nav:
                 - "Fluids": examples/example_fluids.py
                 - "Stress Models": examples/example_stress.py
                 - "Switches": examples/example_switches.py
+                - "Frames": examples/example_frames.py
 
     - "API":
           - "Fluid Methods": api/fluid_methods.md
-          - "Fluid Classes": api/fluid_classes.md
+          - "Fluids": api/fluid_classes.md
           - "Fluid Blending": api/fluid_blend.md
           - "Minerals": api/minerals.md
-          - "Vertical Stress Classes": api/stress_classes.md
+          - "Rock Frame": api/rock_frame_classes.md
+          - "Porosity Adjustment Models": api/poro_adjust_classes.md
+          - "Vertical Stress Models": api/stress_classes.md
+          - "Stress Adjustment Models": api/stress_adjust.md
           - "Models": api/model_methods.md
           - "Elastic": api/elastic.md
           - "Base Classes": api/base_classes.md

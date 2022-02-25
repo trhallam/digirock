@@ -22,7 +22,10 @@ def mock_Element(request):
     for word in words.split(" "):
         test.register_key(word)
 
-    assert test.name == name
+    if name is None:
+        assert isinstance(test.name, str)
+    else:
+        assert test.name == name
     return test
 
 
@@ -182,7 +185,11 @@ def mock_Blend(request):
         methods=["attr1", "attr2"],
         name=name,
     )
-    assert blend.name == name
+    if name is None:
+        assert isinstance(blend.name, str)
+    else:
+        assert blend.name == name
+
     return blend
 
 
@@ -190,7 +197,7 @@ def test_Blend_properties(mock_Blend):
     assert mock_Blend.n_elements == 2
     for el in mock_Blend.elements:
         assert isinstance(el, Element)
-    assert mock_Blend.methods == ["attr1", "attr2"]
+    assert mock_Blend.methods == ("attr1", "attr2")
     assert mock_Blend.blend_keys == ["test_b_key1", "test_b_key2"]
 
 

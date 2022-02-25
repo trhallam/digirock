@@ -5,23 +5,9 @@ from ._version import version as __version__
 from ._base import Element, Switch, Blend, Transform
 
 from ._fluids import *
-from ._frames._minerals import Mineral
+from ._frames import *
 
 from ._stress import StressModel, FStressModel, LGStressModel
-
-from ._frames._poro_adjust import (
-    PoroAdjust,
-    FixedPoroAdjust,
-    NurCriticalPoro,
-    LeeConsolodationPoro,
-)
-
-from ._frames._frames import (
-    RockFrame,
-    VRHAvg,
-    # HSFrame,
-    # CementedSandFrame,
-)
 
 # from ._rock import Mineral, RockModel, FaciesModel, MultiRockModel
 
