@@ -77,11 +77,11 @@ def _hsw_get_minmax(
     for modi, vfraci in chunked(args, 2):
         modi = np.where(vfraci == 0, np.nan, modi)
         arg_list.append(modi)
-    out = np.dstack(tuple(np.broadcast_to(modi, to_shp) for modi in arg_list))
+    out = np.stack(tuple(np.broadcast_to(modi, to_shp) for modi in arg_list))
     if minmax == "min":
-        return np.squeeze(np.nanmin(out, axis=-1))
+        return np.nanmin(out, axis=0)
     elif minmax == "max":
-        return np.squeeze(np.nanmax(out, axis=-1))
+        return np.nanmax(out, axis=0)
     else:
         raise ValueError("Unknown value for minmax")
 
@@ -220,8 +220,16 @@ def hsw_bounds(
     mu_hsm = _hsw_shear_modulus_avg(
         zeta_hsm, *(v for i, v in enumerate(args) if i % 3 != 0)
     )
+    to_shp = check_broadcastable(
+        **{
+            "k_hsp": k_hsp,
+            "k_hsm": k_hsm,
+            "mu_hsp": mu_hsm,
+            "mu_hsm": mu_hsm,
+        }
+    )
 
-    return k_hsp, k_hsm, mu_hsp, mu_hsm
+    return tuple(np.broadcast_to(ar, to_shp) for ar in (k_hsp, k_hsm, mu_hsp, mu_hsm))
 
 
 def hsw_avg(

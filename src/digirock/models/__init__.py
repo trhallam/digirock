@@ -2,7 +2,7 @@ from ._mod import (
     voigt_upper_bound,
     reuss_lower_bound,
     vrh_avg,
-    dryframe_delta_pres,
+    # dryframe_delta_pres,
     dryframe_dpres,
     dryframe_stress,
     dryframe_acoustic,

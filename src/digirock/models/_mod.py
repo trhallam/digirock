@@ -112,41 +112,41 @@ def mixed_density(
     return den_sum
 
 
-def dryframe_delta_pres(
-    erp_init: NDArrayOrFloat,
-    erp: NDArrayOrFloat,
-    mod_vrh: NDArrayOrFloat,
-    mod_e: NDArrayOrFloat,
-    mod_p: NDArrayOrFloat,
-) -> NDArrayOrFloat:
-    """Calculates the dry rock frame for a given stress regime by factoring the
-    difference between two pressure regimes.
+# def dryframe_delta_pres(
+#     erp_init: NDArrayOrFloat,
+#     erp: NDArrayOrFloat,
+#     mod_vrh: NDArrayOrFloat,
+#     mod_e: NDArrayOrFloat,
+#     mod_p: NDArrayOrFloat,
+# ) -> NDArrayOrFloat:
+#     """Calculates the dry rock frame for a given stress regime by factoring the
+#     difference between two pressure regimes.
 
-    $$
-    m(P) = m * \\frac{1 + E_m e^{\\tfrac{-P_{e_i}}{P_m}}}{1 + E_m e^{\\tfrac{-P_{e}}{P_m}}}
-    $$
+#     $$
+#     m(P) = m * \\frac{1 + E_m e^{\\tfrac{-P_{e_i}}{P_m}}}{1 + E_m e^{\\tfrac{-P_{e}}{P_m}}}
+#     $$
 
-    Args:
-        erp_init: Effective Initial Reservoir Pressure $P_{e_i}$ (MPa) = Overburden Pressure - Initial Reservoir Pressure
-        erp: Effective Current Reservoir Pressure $P_e$ (MPa) = Overburden Pressure - Current Reservoir Pressure
-        mod_vrh: Voigt-Reuss-Hill average modulus $m$ (GPa)
-        mod_e: modulus stress sensitivity metric $E_m$
-        mod_p: modulus characteristic pressure constant $P_m$
+#     Args:
+#         erp_init: Effective Initial Reservoir Pressure $P_{e_i}$ (MPa) = Overburden Pressure - Initial Reservoir Pressure
+#         erp: Effective Current Reservoir Pressure $P_e$ (MPa) = Overburden Pressure - Current Reservoir Pressure
+#         mod_vrh: Voigt-Reuss-Hill average modulus $m$ (GPa)
+#         mod_e: modulus stress sensitivity metric $E_m$
+#         mod_p: modulus characteristic pressure constant $P_m$
 
-    Returns:
-        stress adjusted modulus (GPa)
+#     Returns:
+#         stress adjusted modulus (GPa)
 
-    References:
-        [1] Amini and Alvarez (2014)
-        [2] MacBeth (2004)
-    """
-    # Calcuate Bulk Modulus for Dry Frame
-    # dry1 = np.where(phi >= phic, 0.0, mod_vrh * (1 - phi / phic))
-    return (
-        mod_vrh
-        * (1 + (mod_e * np.exp(-erp_init / mod_p)))
-        / (1 + (mod_e * np.exp(-erp / mod_p)))
-    )
+#     References:
+#         [1] Amini and Alvarez (2014)
+#         [2] MacBeth (2004)
+#     """
+#     # Calcuate Bulk Modulus for Dry Frame
+#     # dry1 = np.where(phi >= phic, 0.0, mod_vrh * (1 - phi / phic))
+#     return (
+#         mod_vrh
+#         * (1 + (mod_e * np.exp(-erp_init / mod_p)))
+#         / (1 + (mod_e * np.exp(-erp / mod_p)))
+#     )
 
 
 def dryframe_dpres(
@@ -250,7 +250,9 @@ def saturated_density(rhog, rhofl, phi):
     return rhog * (1 - phi) + rhofl * phi
 
 
-def gassmann_fluidsub(kdry, kfl, k0, phi):
+def gassmann_fluidsub(
+    kdry: NDArrayOrFloat, kfl: NDArrayOrFloat, k0: NDArrayOrFloat, phi: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Gassmann fluid substitution for saturated rock bulk modulus
 
     Gassmann fluid substitution assumes:
@@ -263,13 +265,13 @@ def gassmann_fluidsub(kdry, kfl, k0, phi):
             inappropriate for production timescales.
 
     Args:
-        kdry (array_like): dry frame rock bulk modulus
-        kfl (array_like): fluid bulk modulus
-        k0 (array_like): matrix bulk modulus
-        phi (array_like): porosity (frac)
+        kdry: dry frame rock bulk modulus
+        kfl: fluid bulk modulus
+        k0: matrix bulk modulus
+        phi: porosity (frac)
 
     Returns:
-        ksat (array_like): saturated rock bulk modulus
+        ksat saturated rock bulk modulus
     """
     return kdry + np.power(1 - kdry / k0, 2) / (
         safe_divide(phi, kfl)
