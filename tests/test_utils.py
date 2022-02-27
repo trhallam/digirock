@@ -16,7 +16,7 @@ from .strategies import np_ints_or_floats
 import numpy as np
 
 from digirock.utils import ndim_index_list, check_broadcastable, safe_divide
-from digirock.utils._utils import _process_vfrac
+from digirock.utils._utils import _process_vfrac, nan_divide
 
 
 @pytest.fixture(scope="module")
@@ -79,6 +79,12 @@ def test_safe_divide():
     assert safe_divide(1.0, 0.0) == 0.0
 
 
+def test_nan_divide():
+    assert np.all(np.isnan(nan_divide(np.arange(10), np.zeros(10))))
+    assert np.all(np.isnan(nan_divide(np.arange(10), 0.0)))
+    assert np.all(np.isnan(nan_divide(1.0, 0.0)))
+
+
 @given(shps=stn.mutually_broadcastable_shapes(num_shapes=6, min_dims=1, max_dims=4))
 def test_proces_vfrac_all_args(shps):
     shps = list(shps.input_shapes)
@@ -128,3 +134,30 @@ def test_proces_vfrac_bad_vfrac(shps):
     )
     with pytest.raises(ValueError):
         assert _process_vfrac(*argv)
+
+
+@given(shps=stn.mutually_broadcastable_shapes(num_shapes=6, min_dims=1, max_dims=4))
+def test_process_vfrac_n_args(shps):
+    shps = list(shps.input_shapes)
+    comp_shp = np.broadcast_shapes(shps[1], shps[3])
+    argv = (
+        np.full(shps[0], 1.0),
+        np.full(shps[1], 2.4),
+        np.full(shps[2], 0.6),
+        np.full(shps[3], 2.3),
+        np.full(shps[4], 3.0),
+        np.full(comp_shp, 0.4),
+    )
+
+    test = _process_vfrac(*argv, i=2)
+    assert len(test) == len(argv)
+    for v, u in zip(test, argv):
+        assert np.allclose(v, u)
+
+    test = _process_vfrac(*argv[:-1], i=2)
+    assert len(test) == len(argv)
+    for v, u in zip(test, argv):
+        assert np.allclose(v, u)
+
+    with pytest.raises(ValueError):
+        assert _process_vfrac(*argv[:-2], i=2)
