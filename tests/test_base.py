@@ -1,5 +1,3 @@
-from telnetlib import EL
-from unittest import mock
 import pytest
 import numpy as np
 
@@ -11,6 +9,7 @@ from digirock._base import (
     _get_complement,
     Switch,
     Blend,
+    Transform,
 )
 
 
@@ -26,6 +25,9 @@ def mock_Element(request):
         assert isinstance(test.name, str)
     else:
         assert test.name == name
+
+    test.test_function = lambda props, **kwargs: True
+
     return test
 
 
@@ -49,7 +51,18 @@ def test_Element_deregister(mock_Element):
 
 
 def test_Element_tree(mock_Element):
-    isinstance(str(mock_Element.tree), str)
+    assert isinstance(str(mock_Element.tree), str)
+
+
+def test_Element_trace(mock_Element):
+    trace = mock_Element.trace({}, "test_function")
+    assert isinstance(trace, dict)
+    assert trace["test_function"]
+
+
+def test_Element_trace_tree(mock_Element):
+    tree = mock_Element.trace_tree({}, "test_function")
+    assert isinstance(str(tree), str)
 
 
 def test_element_check():
@@ -169,17 +182,50 @@ def test_Switch_methods(mock_Switch):
         mock_Switch.attr2({"test_key": [2, 0]})
 
 
+def test_Switch_tree(mock_Switch):
+    assert isinstance(str(mock_Switch.tree), str)
+
+
+def test_Switch_trace(mock_Switch):
+    _, trace1 = mock_Switch.trace({}, "attr1").popitem()
+    assert isinstance(trace1, dict)
+    assert trace1["test1"]["attr1"] == 11.0
+    assert trace1["test2"]["attr1"] == 21.0
+
+    _, trace2 = mock_Switch.trace({}, ["attr1", "attr2"]).popitem()
+    assert trace2["test1"]["attr1"] == 11.0
+    assert trace2["test2"]["attr1"] == 21.0
+    assert trace2["test1"]["attr2"] == 12.0
+    assert trace2["test2"]["attr2"] == 22.0
+
+
 @pytest.fixture(scope="module", params=[{"name": None}, {"name": "test"}])
 def mock_Blend(request):
     e3 = Element("test1", keys=["e3_key"])
     e3.attr1 = lambda props, **kwargs: 31.0
     e3.attr2 = lambda props, **kwargs: 32.0
-    e4 = Element()
+    e4 = Element("test2")
     e4.attr1 = lambda props, **kwargs: 41.0
     e4.attr2 = lambda props, **kwargs: 42.0
 
+    TestBlend = Blend
+    setattr(
+        TestBlend,
+        "attr1",
+        lambda self, props, **kwargs: sum(
+            el.attr1(props, **kwargs) for el in self.elements
+        ),
+    )
+    setattr(
+        TestBlend,
+        "attr2",
+        lambda self, props, **kwargs: sum(
+            el.attr2(props, **kwargs) for el in self.elements
+        ),
+    )
+
     name = request.param["name"]
-    blend = Blend(
+    blend = TestBlend(
         ["test_b_key1", "test_b_key2"],
         [e3, e4],
         methods=["attr1", "attr2"],
@@ -207,3 +253,93 @@ def test_Blend_reporting(mock_Blend):
     for key in ["test_b_key1", "test_b_key2", "e3_key"]:
         assert key in mock_Blend.all_keys()
     assert True
+
+
+def test_Blend_trace(mock_Blend):
+    trace1 = mock_Blend.trace({}, "attr1")
+    print(trace1)
+    assert isinstance(trace1, dict)
+    assert trace1["test1"]["attr1"] == 31.0
+    assert trace1["test2"]["attr1"] == 41.0
+    assert trace1["attr1"] == 72.0
+
+    trace2 = mock_Blend.trace({}, ["attr1", "attr2"])
+    assert trace2["test1"]["attr1"] == 31.0
+    assert trace2["test2"]["attr1"] == 41.0
+    assert trace2["test1"]["attr2"] == 32.0
+    assert trace2["test2"]["attr2"] == 42.0
+    assert trace2["attr1"] == 72.0
+    assert trace2["attr2"] == 74.0
+
+
+@pytest.fixture(scope="module", params=[{"name": None}, {"name": "test"}])
+def mock_Transform(request):
+    e5 = Element("test1", keys=["e3_key"])
+    e5.attr1 = lambda props, **kwargs: 31.0
+    e5.attr2 = lambda props, **kwargs: 32.0
+    e5.attr3 = lambda props, **kwargs: 105.0
+
+    name = request.param["name"]
+
+    TestTsfm = Transform
+    setattr(
+        TestTsfm,
+        "attr1",
+        lambda self, props, **kwargs: self.element.attr1(props, **kwargs) + 1.0,
+    )
+    setattr(
+        TestTsfm,
+        "attr2",
+        lambda self, props, **kwargs: self.element.attr2(props, **kwargs) + 2.0,
+    )
+
+    trsfm = TestTsfm(
+        ["test_t_key1", "test_t_key2"],
+        e5,
+        methods=["attr1", "attr2", "attr3"],
+        name=name,
+    )
+    if name is None:
+        assert isinstance(trsfm.name, str)
+    else:
+        assert trsfm.name == name
+
+    return trsfm
+
+
+def test_Transform_properties(mock_Transform):
+    assert isinstance(mock_Transform.element, Element)
+    assert mock_Transform.elements == [mock_Transform.element]
+    assert mock_Transform.methods == ("attr1", "attr2", "attr3")
+    assert mock_Transform.transform_keys == ["test_t_key1", "test_t_key2"]
+
+
+def test_Transform_reporting(mock_Transform):
+    assert isinstance(mock_Transform.get_summary(), dict)
+    mock_Transform.tree
+    for key in ["test_t_key1", "test_t_key2", "e3_key"]:
+        assert key in mock_Transform.all_keys()
+    assert True
+
+
+def test_Transform_trace(mock_Transform):
+    trace1 = mock_Transform.trace({}, "attr1")
+    assert isinstance(trace1, dict)
+    assert trace1["attr1"] == 32.0
+    assert trace1["test1"]["attr1"] == 31.0
+
+    trace2 = mock_Transform.trace({}, ["attr1", "attr2"])
+    assert trace2["test1"]["attr1"] == 31.0
+    assert trace2["test1"]["attr2"] == 32.0
+    assert trace2["attr1"] == 32.0
+    assert trace2["attr2"] == 34.0
+
+
+def test_Transform_getattr(mock_Transform):
+    assert getattr(mock_Transform, "attr3")({}) == 105.0
+    assert mock_Transform.attr3({}) == 105.0
+
+    assert mock_Transform.attr2({}) == 34.0
+
+    with pytest.raises(AttributeError):
+        mock_Transform.attr4({})

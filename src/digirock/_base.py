@@ -66,8 +66,6 @@ class Element:
         """Prints a rich tree view of the Class"""
         summary = self.get_summary()
         name = summary.pop("name")
-        if name is None:
-            name = summary.pop("class")
 
         tree = Tree(str(name))
         for var, val in summary.items():
@@ -295,8 +293,6 @@ class Switch(Element):
         """Prints a rich tree view of the Class"""
         summary = self.get_summary()
         name = summary.pop("name")
-        if name is None:
-            name = summary.pop("class")
 
         _ = summary.pop("elements")
 
@@ -403,8 +399,6 @@ class Blend(Element):
         """Prints a rich tree view of the Class"""
         summary = self.get_summary()
         name = summary.pop("name")
-        if name is None:
-            name = summary.pop("class")
 
         _ = summary.pop("elements")
 
@@ -497,8 +491,6 @@ class Transform(Element):
         return self._transform_keys
 
     def __getattr__(self, attr):
-        print(attr)
-        print(self.__class__)
         if attr in self.__dict__:
             return getattr(self, attr)
         elif attr in self.methods:
@@ -523,8 +515,6 @@ class Transform(Element):
         """Prints a rich tree view of the Class"""
         summary = self.get_summary()
         name = summary.pop("name")
-        if name is None:
-            name = summary.pop("class")
 
         _ = summary.pop("elements")
 
@@ -553,14 +543,14 @@ class Transform(Element):
         if isinstance(methods, str):
             methods = [methods]
 
-        blend_trace = {
+        tsfm_trace = {
             el.name: el.trace(props, methods, **kwargs) for el in self.elements
         }
-        blend_trace["name"] = self.name
+        tsfm_trace["name"] = self.name
 
         for meth in methods:
-            blend_trace[meth] = getattr(self, meth, None)(props, **kwargs)
-        return blend_trace
+            tsfm_trace[meth] = getattr(self, meth, None)(props, **kwargs)
+        return tsfm_trace
 
     def all_keys(self) -> list:
         """Get keys from all levels"""
