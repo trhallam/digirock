@@ -11,15 +11,15 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.11">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.1">
     
     
       
-        <title>Fluid Classes - digirock Documentation</title>
+        <title>Fluids - digirock Documentation</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.50e68009.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.e8d9bf0c.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.e6a45f82.min.css">
@@ -62,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#digirockfluid" class="md-skip">
+        <a href="#digirockwaterbw92" class="md-skip">
           Skip to content
         </a>
       
@@ -95,7 +95,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fluid Classes
+              Fluids
             
           </span>
         </div>
@@ -400,8 +400,64 @@
   
   
     <li class="md-nav__item">
+      <a href="../examples/batzle_wang_1992.html" class="md-nav__link">
+        BW92
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../examples/example_fluids.html" class="md-nav__link">
         Fluids
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/example_stress.html" class="md-nav__link">
+        Stress Models
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/example_switches.html" class="md-nav__link">
+        Switches
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/example_frames.html" class="md-nav__link">
+        Frames
       </a>
     </li>
   
@@ -479,12 +535,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Fluid Classes
+          Fluids
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="fluid_classes.html" class="md-nav__link md-nav__link--active">
-        Fluid Classes
+        Fluids
       </a>
       
         
@@ -501,91 +557,43 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#digirockfluid" class="md-nav__link">
-    digirock.Fluid
+  <a href="#digirockwaterbw92" class="md-nav__link">
+    digirock.WaterBW92
   </a>
   
-    <nav class="md-nav" aria-label="digirock.Fluid">
+    <nav class="md-nav" aria-label="digirock.WaterBW92">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Fluid.bulk_modulus" class="md-nav__link">
-    bulk_modulus()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Fluid.density" class="md-nav__link">
-    density()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Fluid.get_summary" class="md-nav__link">
-    get_summary()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Fluid.shear_modulus" class="md-nav__link">
-    shear_modulus()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Fluid.velocity" class="md-nav__link">
-    velocity()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#digirockwater" class="md-nav__link">
-    digirock.Water
-  </a>
-  
-    <nav class="md-nav" aria-label="digirock.Water">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Water.__init__" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterBW92.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Water.bulk_modulus" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterBW92.bulk_modulus" class="md-nav__link">
     bulk_modulus()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Water.density" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterBW92.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Water.get_summary" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterBW92.get_summary" class="md-nav__link">
     get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Water.velocity" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterBW92.velocity" class="md-nav__link">
     velocity()
   </a>
   
@@ -605,42 +613,111 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.density_asc" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.density_asc" class="md-nav__link">
     density_asc
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.__init__" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.bulk_modulus" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.bulk_modulus" class="md-nav__link">
     bulk_modulus()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.density" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.get_summary" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.get_summary" class="md-nav__link">
     get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.velocity" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.velocity" class="md-nav__link">
+    velocity()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#digirockbaseoil" class="md-nav__link">
+    digirock.BaseOil
+  </a>
+  
+    <nav class="md-nav" aria-label="digirock.BaseOil">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.bo" class="md-nav__link">
+    bo()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.bulk_modulus" class="md-nav__link">
+    bulk_modulus()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.density" class="md-nav__link">
+    density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.get_summary" class="md-nav__link">
+    get_summary()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.set_api" class="md-nav__link">
+    set_api()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.set_pvt" class="md-nav__link">
+    set_pvt()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.set_standard_density" class="md-nav__link">
+    set_standard_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.velocity" class="md-nav__link">
     velocity()
   </a>
   
@@ -660,70 +737,56 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.__init__" class="md-nav__link">
-    __init__()
+  <a href="#digirock._fluids._oil.DeadOil.bo" class="md-nav__link">
+    bo()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.bulk_modulus" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.bulk_modulus" class="md-nav__link">
     bulk_modulus()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.calc_fvf" class="md-nav__link">
-    calc_fvf()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.density" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.fvf" class="md-nav__link">
-    fvf()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.get_summary" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.get_summary" class="md-nav__link">
     get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.set_api" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.set_api" class="md-nav__link">
     set_api()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.set_fvf" class="md-nav__link">
-    set_fvf()
+  <a href="#digirock._fluids._oil.DeadOil.set_pvt" class="md-nav__link">
+    set_pvt()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.set_standard_density" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.set_standard_density" class="md-nav__link">
     set_standard_density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.velocity" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.velocity" class="md-nav__link">
     velocity()
   </a>
   
@@ -735,64 +798,57 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#digirockoil" class="md-nav__link">
-    digirock.Oil
+  <a href="#digirockoilbw92" class="md-nav__link">
+    digirock.OilBW92
   </a>
   
-    <nav class="md-nav" aria-label="digirock.Oil">
+    <nav class="md-nav" aria-label="digirock.OilBW92">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.bulk_modulus" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilBW92.bo" class="md-nav__link">
+    bo()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.OilBW92.bulk_modulus" class="md-nav__link">
     bulk_modulus()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.calc_fvf" class="md-nav__link">
-    calc_fvf()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.density" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilBW92.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.fvf" class="md-nav__link">
-    fvf()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.get_summary" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilBW92.get_summary" class="md-nav__link">
     get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.set_dissolved_gas" class="md-nav__link">
-    set_dissolved_gas()
+  <a href="#digirock._fluids._oil.OilBW92.rs" class="md-nav__link">
+    rs()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.set_fvf" class="md-nav__link">
-    set_fvf()
+  <a href="#digirock._fluids._oil.OilBW92.set_rst" class="md-nav__link">
+    set_rst()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.velocity" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilBW92.velocity" class="md-nav__link">
     velocity()
   </a>
   
@@ -804,50 +860,112 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#digirockgas" class="md-nav__link">
-    digirock.Gas
+  <a href="#digirockoilpvt" class="md-nav__link">
+    digirock.OilPVT
   </a>
   
-    <nav class="md-nav" aria-label="digirock.Gas">
+    <nav class="md-nav" aria-label="digirock.OilPVT">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.__init__" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilPVT.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.density" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilPVT.bo" class="md-nav__link">
+    bo()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.OilPVT.bulk_modulus" class="md-nav__link">
+    bulk_modulus()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.OilPVT.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.get_summary" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilPVT.get_summary" class="md-nav__link">
     get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.modulus" class="md-nav__link">
-    modulus()
+  <a href="#digirock._fluids._oil.OilPVT.set_pvt" class="md-nav__link">
+    set_pvt()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.set_gas_density" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilPVT.velocity" class="md-nav__link">
+    velocity()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#digirockgasbw92" class="md-nav__link">
+    digirock.GasBW92
+  </a>
+  
+    <nav class="md-nav" aria-label="digirock.GasBW92">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._gas.GasBW92.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._gas.GasBW92.bulk_modulus" class="md-nav__link">
+    bulk_modulus()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._gas.GasBW92.density" class="md-nav__link">
+    density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._gas.GasBW92.get_summary" class="md-nav__link">
+    get_summary()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._gas.GasBW92.set_gas_density" class="md-nav__link">
     set_gas_density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.set_gas_sg" class="md-nav__link">
+  <a href="#digirock._fluids._gas.GasBW92.set_gas_sg" class="md-nav__link">
     set_gas_sg()
   </a>
   
@@ -859,44 +977,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#digirockgaspvdg" class="md-nav__link">
-    digirock.GasPVDG
+  <a href="#digirockgaspvt" class="md-nav__link">
+    digirock.GasPVT
   </a>
   
-    <nav class="md-nav" aria-label="digirock.GasPVDG">
+    <nav class="md-nav" aria-label="digirock.GasPVT">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.GasPVDG.__init__" class="md-nav__link">
+  <a href="#digirock._fluids._gas.GasPVT.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.GasPVDG.density" class="md-nav__link">
+  <a href="#digirock._fluids._gas.GasPVT.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.GasPVDG.load_pvdg" class="md-nav__link">
-    load_pvdg()
+  <a href="#digirock._fluids._gas.GasPVT.get_summary" class="md-nav__link">
+    get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.GasPVDG.modulus" class="md-nav__link">
-    modulus()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.GasPVDG.set_active_pvtn" class="md-nav__link">
-    set_active_pvtn()
+  <a href="#digirock._fluids._gas.GasPVT.set_pvt" class="md-nav__link">
+    set_pvt()
   </a>
   
 </li>
@@ -928,6 +1039,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#digirockload_pvdg" class="md-nav__link">
+    digirock.load_pvdg
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -948,8 +1066,106 @@
   
   
     <li class="md-nav__item">
+      <a href="fluid_blend.html" class="md-nav__link">
+        Fluid Blending
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="minerals.html" class="md-nav__link">
+        Minerals
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="rock_frame_classes.html" class="md-nav__link">
+        Rock Frame
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="poro_adjust_classes.html" class="md-nav__link">
+        Porosity Adjustment Models
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="stress_classes.html" class="md-nav__link">
+        Vertical Stress Models
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="stress_adjust.html" class="md-nav__link">
+        Stress Adjustment Models
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="model_methods.html" class="md-nav__link">
         Models
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="elastic.html" class="md-nav__link">
+        Elastic
       </a>
     </li>
   
@@ -1001,91 +1217,43 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#digirockfluid" class="md-nav__link">
-    digirock.Fluid
+  <a href="#digirockwaterbw92" class="md-nav__link">
+    digirock.WaterBW92
   </a>
   
-    <nav class="md-nav" aria-label="digirock.Fluid">
+    <nav class="md-nav" aria-label="digirock.WaterBW92">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Fluid.bulk_modulus" class="md-nav__link">
-    bulk_modulus()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Fluid.density" class="md-nav__link">
-    density()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Fluid.get_summary" class="md-nav__link">
-    get_summary()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Fluid.shear_modulus" class="md-nav__link">
-    shear_modulus()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Fluid.velocity" class="md-nav__link">
-    velocity()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#digirockwater" class="md-nav__link">
-    digirock.Water
-  </a>
-  
-    <nav class="md-nav" aria-label="digirock.Water">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Water.__init__" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterBW92.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Water.bulk_modulus" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterBW92.bulk_modulus" class="md-nav__link">
     bulk_modulus()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Water.density" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterBW92.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Water.get_summary" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterBW92.get_summary" class="md-nav__link">
     get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Water.velocity" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterBW92.velocity" class="md-nav__link">
     velocity()
   </a>
   
@@ -1105,42 +1273,111 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.density_asc" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.density_asc" class="md-nav__link">
     density_asc
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.__init__" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.bulk_modulus" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.bulk_modulus" class="md-nav__link">
     bulk_modulus()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.density" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.get_summary" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.get_summary" class="md-nav__link">
     get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.WaterECL.velocity" class="md-nav__link">
+  <a href="#digirock._fluids._water.WaterECL.velocity" class="md-nav__link">
+    velocity()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#digirockbaseoil" class="md-nav__link">
+    digirock.BaseOil
+  </a>
+  
+    <nav class="md-nav" aria-label="digirock.BaseOil">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.bo" class="md-nav__link">
+    bo()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.bulk_modulus" class="md-nav__link">
+    bulk_modulus()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.density" class="md-nav__link">
+    density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.get_summary" class="md-nav__link">
+    get_summary()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.set_api" class="md-nav__link">
+    set_api()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.set_pvt" class="md-nav__link">
+    set_pvt()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.set_standard_density" class="md-nav__link">
+    set_standard_density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.DeadOil.velocity" class="md-nav__link">
     velocity()
   </a>
   
@@ -1160,70 +1397,56 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.__init__" class="md-nav__link">
-    __init__()
+  <a href="#digirock._fluids._oil.DeadOil.bo" class="md-nav__link">
+    bo()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.bulk_modulus" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.bulk_modulus" class="md-nav__link">
     bulk_modulus()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.calc_fvf" class="md-nav__link">
-    calc_fvf()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.density" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.fvf" class="md-nav__link">
-    fvf()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.get_summary" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.get_summary" class="md-nav__link">
     get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.set_api" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.set_api" class="md-nav__link">
     set_api()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.set_fvf" class="md-nav__link">
-    set_fvf()
+  <a href="#digirock._fluids._oil.DeadOil.set_pvt" class="md-nav__link">
+    set_pvt()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.set_standard_density" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.set_standard_density" class="md-nav__link">
     set_standard_density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.DeadOil.velocity" class="md-nav__link">
+  <a href="#digirock._fluids._oil.DeadOil.velocity" class="md-nav__link">
     velocity()
   </a>
   
@@ -1235,64 +1458,57 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#digirockoil" class="md-nav__link">
-    digirock.Oil
+  <a href="#digirockoilbw92" class="md-nav__link">
+    digirock.OilBW92
   </a>
   
-    <nav class="md-nav" aria-label="digirock.Oil">
+    <nav class="md-nav" aria-label="digirock.OilBW92">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.bulk_modulus" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilBW92.bo" class="md-nav__link">
+    bo()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.OilBW92.bulk_modulus" class="md-nav__link">
     bulk_modulus()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.calc_fvf" class="md-nav__link">
-    calc_fvf()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.density" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilBW92.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.fvf" class="md-nav__link">
-    fvf()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.get_summary" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilBW92.get_summary" class="md-nav__link">
     get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.set_dissolved_gas" class="md-nav__link">
-    set_dissolved_gas()
+  <a href="#digirock._fluids._oil.OilBW92.rs" class="md-nav__link">
+    rs()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.set_fvf" class="md-nav__link">
-    set_fvf()
+  <a href="#digirock._fluids._oil.OilBW92.set_rst" class="md-nav__link">
+    set_rst()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Oil.velocity" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilBW92.velocity" class="md-nav__link">
     velocity()
   </a>
   
@@ -1304,50 +1520,112 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#digirockgas" class="md-nav__link">
-    digirock.Gas
+  <a href="#digirockoilpvt" class="md-nav__link">
+    digirock.OilPVT
   </a>
   
-    <nav class="md-nav" aria-label="digirock.Gas">
+    <nav class="md-nav" aria-label="digirock.OilPVT">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.__init__" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilPVT.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.density" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilPVT.bo" class="md-nav__link">
+    bo()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.OilPVT.bulk_modulus" class="md-nav__link">
+    bulk_modulus()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._oil.OilPVT.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.get_summary" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilPVT.get_summary" class="md-nav__link">
     get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.modulus" class="md-nav__link">
-    modulus()
+  <a href="#digirock._fluids._oil.OilPVT.set_pvt" class="md-nav__link">
+    set_pvt()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.set_gas_density" class="md-nav__link">
+  <a href="#digirock._fluids._oil.OilPVT.velocity" class="md-nav__link">
+    velocity()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#digirockgasbw92" class="md-nav__link">
+    digirock.GasBW92
+  </a>
+  
+    <nav class="md-nav" aria-label="digirock.GasBW92">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._gas.GasBW92.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._gas.GasBW92.bulk_modulus" class="md-nav__link">
+    bulk_modulus()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._gas.GasBW92.density" class="md-nav__link">
+    density()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._gas.GasBW92.get_summary" class="md-nav__link">
+    get_summary()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#digirock._fluids._gas.GasBW92.set_gas_density" class="md-nav__link">
     set_gas_density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.Gas.set_gas_sg" class="md-nav__link">
+  <a href="#digirock._fluids._gas.GasBW92.set_gas_sg" class="md-nav__link">
     set_gas_sg()
   </a>
   
@@ -1359,44 +1637,37 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#digirockgaspvdg" class="md-nav__link">
-    digirock.GasPVDG
+  <a href="#digirockgaspvt" class="md-nav__link">
+    digirock.GasPVT
   </a>
   
-    <nav class="md-nav" aria-label="digirock.GasPVDG">
+    <nav class="md-nav" aria-label="digirock.GasPVT">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.GasPVDG.__init__" class="md-nav__link">
+  <a href="#digirock._fluids._gas.GasPVT.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.GasPVDG.density" class="md-nav__link">
+  <a href="#digirock._fluids._gas.GasPVT.density" class="md-nav__link">
     density()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.GasPVDG.load_pvdg" class="md-nav__link">
-    load_pvdg()
+  <a href="#digirock._fluids._gas.GasPVT.get_summary" class="md-nav__link">
+    get_summary()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#digirock._fluid.GasPVDG.modulus" class="md-nav__link">
-    modulus()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#digirock._fluid.GasPVDG.set_active_pvtn" class="md-nav__link">
-    set_active_pvtn()
+  <a href="#digirock._fluids._gas.GasPVT.set_pvt" class="md-nav__link">
+    set_pvt()
   </a>
   
 </li>
@@ -1428,6 +1699,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#digirockload_pvdg" class="md-nav__link">
+    digirock.load_pvdg
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1446,333 +1724,10 @@
               
                 
 
-  <h1>Fluid Classes</h1>
 
-<h2 id="digirockfluid"><code>digirock.Fluid</code></h2>
+  <h1>Fluids</h1>
 
-
-  <div class="doc doc-object doc-class">
-
-
-    <div class="doc doc-contents first">
-
-      <p>Base Class for defining fluids, all new fluids should be based upon this class.</p>
-
-<p><strong>Attributes:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>name</code></td>
-        <td><code>str</code></td>
-        <td><p>name of the fluid</p></td>
-      </tr>
-  </tbody>
-</table>
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.Fluid.bulk_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Returns bulk_modulus of fluid</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>props</code></td>
-        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
-        <td><p>A dictionary of properties required.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>kwargs</code></td>
-        <td></td>
-        <td><p>ignored</p></td>
-        <td><code>{}</code></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td></td>
-      <td><p>Modulus for temp and pres (GPa).</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.Fluid.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Returns density of fluid</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>props</code></td>
-        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
-        <td><p>A dictionary of properties required.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>kwargs</code></td>
-        <td></td>
-        <td><p>ignored</p></td>
-        <td><code>{}</code></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td></td>
-      <td><p>Density for temp and pres (g/cc).</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.Fluid.get_summary" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Return a dictionary containing a summary of the fluid.</p>
-
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>dict</code></td>
-      <td><p>Summary of properties.</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.Fluid.shear_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">shear_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Fluid shear modulus is zero. Return zero for all fluids.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>props</code></td>
-        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
-        <td><p>A dictionary of properties required.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>kwargs</code></td>
-        <td></td>
-        <td><p>ignored</p></td>
-        <td><code>{}</code></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Union[numpy.ndarray, float]</code></td>
-      <td><p>Modulus for temp and pres (GPa). Always 0.0</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.Fluid.velocity" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Returns acoustic velocity of fluid</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>props</code></td>
-        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
-        <td><p>A dictionary of properties required.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>kwargs</code></td>
-        <td></td>
-        <td><p>ignored</p></td>
-        <td><code>{}</code></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td></td>
-      <td><p>Velocity for temp and pres (m/s).</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-<h2 id="digirockwater"><code>digirock.Water</code></h2>
+<h2 id="digirockwaterbw92"><code>digirock.WaterBW92</code></h2>
 
 
   <div class="doc doc-object doc-class">
@@ -1822,7 +1777,7 @@
 
 
 
-<h3 id="digirock._fluid.Water.__init__" class="doc doc-heading">
+<h3 id="digirock._fluids._water.WaterBW92.__init__" class="doc doc-heading">
 <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">salinity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
@@ -1869,8 +1824,8 @@
 
 
 
-<h3 id="digirock._fluid.Water.bulk_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._water.WaterBW92.bulk_modulus" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -1895,7 +1850,7 @@
         <td><code>props</code></td>
         <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
         <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
-        <td><code>None</code></td>
+        <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -1930,8 +1885,8 @@
 
 
 
-<h3 id="digirock._fluid.Water.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._water.WaterBW92.density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -1956,7 +1911,7 @@
         <td><code>props</code></td>
         <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
         <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
-        <td><code>None</code></td>
+        <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -1991,7 +1946,7 @@
 
 
 
-<h3 id="digirock._fluid.Water.get_summary" class="doc doc-heading">
+<h3 id="digirock._fluids._water.WaterBW92.get_summary" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
@@ -2026,8 +1981,8 @@
 
 
 
-<h3 id="digirock._fluid.Water.velocity" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._water.WaterBW92.velocity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2052,7 +2007,7 @@
         <td><code>props</code></td>
         <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
         <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
-        <td><code>None</code></td>
+        <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -2155,7 +2110,7 @@
       <tr>
         <td><code>fvf1_pres</code></td>
         <td><code>float</code></td>
-        <td><p>The reference pressure when the FVF=1.</p></td>
+        <td><p>The reference pressure when the FVF=1. Defaults to 1Atm</p></td>
       </tr>
   </tbody>
 </table>
@@ -2173,7 +2128,7 @@
 
 
 
-<h3 id="digirock._fluid.WaterECL.density_asc" class="doc doc-heading">
+<h3 id="digirock._fluids._water.WaterECL.density_asc" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">density_asc</span><span class="p">:</span> <span class="nb">float</span></code>
 
   <span class="doc doc-properties">
@@ -2215,8 +2170,8 @@
 
 
 
-<h3 id="digirock._fluid.WaterECL.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref_pres</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">visc</span><span class="p">,</span> <span class="n">cvisc</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">salinity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fvf1_pres</span><span class="o">=</span><span class="mf">0.101325</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._water.WaterECL.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref_pres</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">comp</span><span class="p">,</span> <span class="n">visc</span><span class="p">,</span> <span class="n">cvisc</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">salinity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fvf1_pres</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -2270,21 +2225,21 @@
       </tr>
       <tr>
         <td><code>name</code></td>
-        <td><code>optional</code></td>
+        <td><code>str</code></td>
         <td><p>Name for fluid. Defaults to None.</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>salinity</code></td>
-        <td><code>optional</code></td>
+        <td><code>int</code></td>
         <td><p>Salinity of brine (ppm). Defaults to 0.</p></td>
         <td><code>0</code></td>
       </tr>
       <tr>
         <td><code>fvf1_pres</code></td>
-        <td><code>optional</code></td>
+        <td><code>float</code></td>
         <td><p>The reference pressure when the FVF=1. Defaults to 0.101325 MPa.</p></td>
-        <td><code>0.101325</code></td>
+        <td><code>None</code></td>
       </tr>
   </tbody>
 </table>
@@ -2298,8 +2253,8 @@
 
 
 
-<h3 id="digirock._fluid.WaterECL.bulk_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._water.WaterECL.bulk_modulus" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2324,7 +2279,7 @@
         <td><code>props</code></td>
         <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
         <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
-        <td><code>None</code></td>
+        <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -2359,8 +2314,8 @@
 
 
 
-<h3 id="digirock._fluid.WaterECL.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._water.WaterECL.density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2386,7 +2341,7 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
         <td><code>props</code></td>
         <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
         <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
-        <td><code>None</code></td>
+        <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -2421,7 +2376,7 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
 
 
 
-<h3 id="digirock._fluid.WaterECL.get_summary" class="doc doc-heading">
+<h3 id="digirock._fluids._water.WaterECL.get_summary" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
@@ -2456,8 +2411,8 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
 
 
 
-<h3 id="digirock._fluid.WaterECL.velocity" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._water.WaterECL.velocity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2482,7 +2437,7 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
         <td><code>props</code></td>
         <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
         <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
-        <td><code>None</code></td>
+        <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -2504,6 +2459,481 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
     <tr>
       <td><code>velocity</code></td>
       <td><p>Water velocity in m/s</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="digirockbaseoil"><code>digirock.BaseOil</code></h2>
+
+
+  <div class="doc doc-object doc-class">
+
+
+    <div class="doc doc-contents first">
+
+      <p>Dead Oil fluid class for oils with no dissolved gasses.</p>
+
+<p><strong>Attributes:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>name of the fluid</p></td>
+      </tr>
+      <tr>
+        <td><code>api</code></td>
+        <td><code>float</code></td>
+        <td><p>API gravity of oil.</p></td>
+      </tr>
+      <tr>
+        <td><code>std_density</code></td>
+        <td><code>float</code></td>
+        <td><p>Standard bulk density in g/cc at 15.6degC.</p></td>
+      </tr>
+      <tr>
+        <td><code>bo</code></td>
+        <td><code>float, xarray.DataArray</code></td>
+        <td><p>The formation volume factor or table.</p></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.DeadOil.bo" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Get the formation volume factor (bo) at pressure if specified.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>pres</code></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Pressure to sample bo (MPa), required when Bo is a table.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Formation volume factor fvf (frac)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.DeadOil.bulk_modulus" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Temperature and pressure dependent bulk modulus for dead oil adjusted for FVF.</p>
+<p>Uses BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_bulkmod"><code>oil_bulkmod</code></a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional bo (vfrac) else use class constant or table.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Oil modulus (GPa)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.DeadOil.density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Temperature and pressure dependent density for dead oil adjusted for FVF.</p>
+<p>Uses BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_density"><code>oil_density</code></a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Oil density (g/cc)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.DeadOil.get_summary" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return a dictionary containing a summary of the fluid.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>dict</code></td>
+      <td><p>Summary of properties.</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.DeadOil.set_api" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">set_api</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Set the density of the oil using API gravity.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>api</code></td>
+        <td><code>float</code></td>
+        <td><p>Api of oil.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.DeadOil.set_pvt" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">set_pvt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bo</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Set the PVT table for DeadOil. If pressure is not
+specified bo should be a constant.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>bo</code></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Bo constant or table matching pressure input.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>pres</code></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Pressures that bo is defined at. Defaults to None.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>ValueError</code></td>
+        <td><p>When inputs are incorrect.</p></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.DeadOil.set_standard_density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">set_standard_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">std_density</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Set the density of the oil at standard pressure and temperature (15.6 degC).</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>std_density</code></td>
+        <td><code>float</code></td>
+        <td><p>The density of oil at standard conditions (g/cc)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.DeadOil.velocity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Temperature and pressure dependent acoustic velocity for dead oil adjusted for FVF.</p>
+<p>Uses BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_velocity"><code>oil_velocity</code></a>, gas Rs is assumed to be 0.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional bo (vfrac) else use class constant or table.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Oil acoustic velocity (m/s)</p></td>
     </tr>
   </tbody>
 </table>
@@ -2576,235 +3006,20 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
 
 
 
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.DeadOil.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">api</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std_density</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p><code>api</code> and <code>std_density</code> are mutually exclusive inputs.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>name</code></td>
-        <td><code>str</code></td>
-        <td><p>Name of fluid</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>api</code></td>
-        <td><code>float</code></td>
-        <td><p>Oil API</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>std_density</code></td>
-        <td><code>float</code></td>
-        <td><p>Standard bulk density in g/cc at 15.6degC</p></td>
-        <td><code>None</code></td>
-      </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
 
   <div class="doc doc-object doc-method">
 
 
 
-<h3 id="digirock._fluid.DeadOil.bulk_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._oil.DeadOil.bo" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Temperature and pressure dependent bulk modulus for dead oil adjusted for FVF.</p>
-<p>Uses BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_bulkmod"><code>oil_bulkmod</code></a>.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>props</code></td>
-        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
-        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional bo (vfrac) else use class constant or table.</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>kwargs</code></td>
-        <td></td>
-        <td><p>ignored</p></td>
-        <td><code>{}</code></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Union[numpy.ndarray, float]</code></td>
-      <td><p>Oil modulus (GPa)</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.DeadOil.calc_fvf" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">calc_fvf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Calculate the oil formation volume factor using BW92.</p>
-<p>Uses <a href="fluid_methods.html#digirock.fluids.bw92.oil_fvf"><code>oil_fvf</code></a> gas Rs is assumed 0.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>temp</code></td>
-        <td><code>float</code></td>
-        <td><p>The in-situ temperature degC</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.DeadOil.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Temperature and pressure dependent density for dead oil adjusted for FVF.</p>
-<p>Uses BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_density"><code>oil_density</code></a>.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>props</code></td>
-        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
-        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>kwargs</code></td>
-        <td></td>
-        <td><p>ignored</p></td>
-        <td><code>{}</code></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Union[numpy.ndarray, float]</code></td>
-      <td><p>Oil density (g/cc)</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.DeadOil.fvf" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">fvf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Get the formation volume factor at pressure if specified.</p>
+      <p>Get the formation volume factor (bo) at pressure if specified.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -2850,7 +3065,129 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
 
 
 
-<h3 id="digirock._fluid.DeadOil.get_summary" class="doc doc-heading">
+<h3 id="digirock._fluids._oil.DeadOil.bulk_modulus" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Temperature and pressure dependent bulk modulus for dead oil adjusted for FVF.</p>
+<p>Uses BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_bulkmod"><code>oil_bulkmod</code></a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional bo (vfrac) else use class constant or table.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Oil modulus (GPa)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.DeadOil.density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Temperature and pressure dependent density for dead oil adjusted for FVF.</p>
+<p>Uses BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_density"><code>oil_density</code></a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Oil density (g/cc)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.DeadOil.get_summary" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
@@ -2885,7 +3222,7 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
 
 
 
-<h3 id="digirock._fluid.DeadOil.set_api" class="doc doc-heading">
+<h3 id="digirock._fluids._oil.DeadOil.set_api" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">set_api</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">api</span><span class="p">)</span></code>
 
 
@@ -2924,15 +3261,15 @@ the expansion factor FVF relative to surface conditions to calculate the adjuste
 
 
 
-<h3 id="digirock._fluid.DeadOil.set_fvf" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">set_fvf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bo</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._oil.DeadOil.set_pvt" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">set_pvt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bo</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Set the FVF factor relationship for the oil. If pressure is not
+      <p>Set the PVT table for DeadOil. If pressure is not
 specified bo should be a constant.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -2985,7 +3322,7 @@ specified bo should be a constant.</p>
 
 
 
-<h3 id="digirock._fluid.DeadOil.set_standard_density" class="doc doc-heading">
+<h3 id="digirock._fluids._oil.DeadOil.set_standard_density" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">set_standard_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">std_density</span><span class="p">)</span></code>
 
 
@@ -3024,8 +3361,8 @@ specified bo should be a constant.</p>
 
 
 
-<h3 id="digirock._fluid.DeadOil.velocity" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._oil.DeadOil.velocity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
@@ -3050,7 +3387,7 @@ specified bo should be a constant.</p>
         <td><code>props</code></td>
         <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
         <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional bo (vfrac) else use class constant or table.</p></td>
-        <td><code>None</code></td>
+        <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -3089,7 +3426,7 @@ specified bo should be a constant.</p>
 
   </div>
 
-<h2 id="digirockoil"><code>digirock.Oil</code></h2>
+<h2 id="digirockoilbw92"><code>digirock.OilBW92</code></h2>
 
 
   <div class="doc doc-object doc-class">
@@ -3125,24 +3462,14 @@ specified bo should be a constant.</p>
         <td><p>Standard bulk density in g/cc at 15.6degC.</p></td>
       </tr>
       <tr>
-        <td><code>bo</code></td>
-        <td><code>float, xarray.DataArray</code></td>
-        <td><p>The formation volume factor or table.</p></td>
-      </tr>
-      <tr>
         <td><code>gas_sg</code></td>
         <td><code>float</code></td>
         <td><p>The dissolved gas standard gravity.</p></td>
       </tr>
       <tr>
-        <td><code>rs</code></td>
-        <td><code>float, xarray.DataArray</code></td>
-        <td><p>The dissolved gas ratio or table.</p></td>
-      </tr>
-      <tr>
-        <td><code>sal</code></td>
-        <td><code>float</code></td>
-        <td><p>Brine salinity in ppm</p></td>
+        <td><code>pvt</code></td>
+        <td><code>dict, xarray.DataArray</code></td>
+        <td><p>PVT table for Oil</p></td>
       </tr>
   </tbody>
 </table>
@@ -3164,15 +3491,70 @@ specified bo should be a constant.</p>
 
 
 
-<h3 id="digirock._fluid.Oil.bulk_modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fvf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._oil.OilBW92.bo" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Temperature and pressure dependent bulk modulus for Oil with adjusted for RS and FVF.</p>
+      <p>Calculate the oil formation volume factor (bo) using BW92.</p>
+<p>Set the attribute <code>bo</code> using BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_fvf">oil_fvf</a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Formation volume factor FVF (L/L)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.OilBW92.bulk_modulus" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Temperature and pressure dependent bulk modulus for Oil adjusted for <code>rs</code> (solution gas) and <code>bo</code> (FVF).</p>
 <p>Modulus is calculated using BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_bulkmod">oil_bulkmod</a>.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -3187,28 +3569,10 @@ specified bo should be a constant.</p>
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature in degC</p></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional <code>bo</code> (vfrac) and</p></td>
         <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure in MPa</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>rs</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>If None, uses set values or table</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>fvf</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>If None, uses set values or table</p></td>
-        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -3243,16 +3607,16 @@ specified bo should be a constant.</p>
 
 
 
-<h3 id="digirock._fluid.Oil.calc_fvf" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">calc_fvf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._oil.OilBW92.density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Calculate the oil formation volume factor using BW92.</p>
-<p>Set the attribute <code>bo</code> using BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_fvf">oil_fvf</a>.</p>
+      <p>Temperature and pressure dependent density for Oil with adjustments for <code>rs</code> (solution gas) and <code>bo</code> (FVF).</p>
+<p>Density is calculated using BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_density">oil_density</a> after adjusting for gas saturation with <a href="fluid_methods.html#digirock.fluids.bw92.oil_rho_sat">oil_rho_sat</a>.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -3266,75 +3630,10 @@ specified bo should be a constant.</p>
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>float</code></td>
-        <td><p>The in-situ temperature (degC)</p></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional <code>bo</code> (vfrac) and <code>rs</code> (v/v) else use class consstant or table.</p></td>
         <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>float</code></td>
-        <td><p>The pressure to calculate the gas <code>rs</code> for. Necessary if rs is specified as
-a table.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.Oil.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fvf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Temperature and pressure dependent density for Oil with adjusted for RS and FVF.</p>
-<p>Density is calculated using BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_density">oil_density</a>.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature in degC</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure in MPa</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>rs</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>If None, uses set values or table</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>fvf</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>If None, uses set values or table</p></td>
-        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -3369,62 +3668,7 @@ a table.</p></td>
 
 
 
-<h3 id="digirock._fluid.Oil.fvf" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">fvf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pres</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Get the formation volume factor at pressure.
-TODO: Implement for different rs values</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure to sample bo (MPa)</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>Union[numpy.ndarray, float]</code></td>
-      <td><p>Formation volume factor fvf (frac)</p></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.Oil.get_summary" class="doc doc-heading">
+<h3 id="digirock._fluids._oil.OilBW92.get_summary" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
@@ -3444,7 +3688,7 @@ TODO: Implement for different rs values</p>
   </thead>
   <tbody>
     <tr>
-      <td></td>
+      <td><code>dict</code></td>
       <td><p>Summary of properties.</p></td>
     </tr>
   </tbody>
@@ -3459,15 +3703,15 @@ TODO: Implement for different rs values</p>
 
 
 
-<h3 id="digirock._fluid.Oil.set_dissolved_gas" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">set_dissolved_gas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gas_sg</span><span class="p">,</span> <span class="n">rs</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._oil.OilBW92.rs" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">rs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Set the dissolved gas properties.</p>
+      <p>Calculate the solution gas (rs) from pressure/rs table.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -3481,21 +3725,70 @@ TODO: Implement for different rs values</p>
   </thead>
   <tbody>
       <tr>
-        <td><code>gas_sg</code></td>
-        <td><code>float</code></td>
-        <td><p>The dissolved gas specific gravity</p></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>pressure</code> (MPa)</p></td>
         <td><em>required</em></td>
       </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>solution gas (L/L)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.OilBW92.set_rst" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">set_rst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rs</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Set the RS table for Oil.</p>
+<p>The solution gas ratio <code>rs</code> i[] set for tables of <code>bo</code> and <code>pres</code>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
       <tr>
         <td><code>rs</code></td>
         <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>The gas to oil ratio (vfrac)</p></td>
+        <td><p>The solution gas ratio for bo or bo table. Has shape (M, )</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>pres</code></td>
         <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Required if <code>rs</code> is NDArray</p></td>
+        <td><p>Pressure values (MPa) to match rs if defined. Has shape (M, ).</p></td>
         <td><code>None</code></td>
       </tr>
   </tbody>
@@ -3510,74 +3803,15 @@ TODO: Implement for different rs values</p>
 
 
 
-<h3 id="digirock._fluid.Oil.set_fvf" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">set_fvf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bo</span><span class="p">,</span> <span class="n">rs</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._oil.OilBW92.velocity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Set the formation volume factor for fluid.</p>
-<p>Multiple values of <code>bo</code> for different <code>rs</code> values can be specified using the
-append keyword to create a multi-dimensional table.</p>
-
-<p><strong>Parameters:</strong></p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>bo</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Can be a float of table of pressure (MPa) and bo (frac) pairs.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>rs</code></td>
-        <td><code>float</code></td>
-        <td><p>The solution gas ratio for bo or bo table.</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure values (MPa) to match bo</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>append</code></td>
-        <td><code>bool</code></td>
-        <td><p>Append to the existing fvf table with another <code>rs</code> point.</p></td>
-        <td><code>True</code></td>
-      </tr>
-  </tbody>
-</table>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.Oil.velocity" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fvf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Temperature and pressure dependent acoustic velocity for Oil with adjusted for RS and FVF.</p>
+      <p>Temperature and pressure dependent acoustic velocity for Oil adjusted for <code>rs</code> (solution gas) and <code>bo</code> (FVF).</p>
 <p>Velocity is calculated using BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_velocity">oil_velocity</a>.</p>
 
 <p><strong>Parameters:</strong></p>
@@ -3592,28 +3826,10 @@ append keyword to create a multi-dimensional table.</p>
   </thead>
   <tbody>
       <tr>
-        <td><code>temp</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Temperature in degC</p></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional <code>bo</code> (vfrac) and <code>rs</code> (v/v) else use class consstant or table.</p></td>
         <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>pres</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>Pressure in MPa</p></td>
-        <td><em>required</em></td>
-      </tr>
-      <tr>
-        <td><code>rs</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>If None, uses set values or table</p></td>
-        <td><code>None</code></td>
-      </tr>
-      <tr>
-        <td><code>fvf</code></td>
-        <td><code>Union[numpy.ndarray, float]</code></td>
-        <td><p>If None, uses set values or table</p></td>
-        <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>kwargs</code></td>
@@ -3652,7 +3868,7 @@ append keyword to create a multi-dimensional table.</p>
 
   </div>
 
-<h2 id="digirockgas"><code>digirock.Gas</code></h2>
+<h2 id="digirockoilpvt"><code>digirock.OilPVT</code></h2>
 
 
   <div class="doc doc-object doc-class">
@@ -3660,7 +3876,9 @@ append keyword to create a multi-dimensional table.</p>
 
     <div class="doc doc-contents first">
 
-      <p>Gas fluid class.</p>
+      <p>Oil fluid class for oils with dissolved gas using PVT Tables, i.e. Live Oil.</p>
+<p>Uses BW92 elastic properties but replaces the <code>bo</code> calculation of BW92 with an
+explicit table.</p>
 
 <p><strong>Attributes:</strong></p>
 <table>
@@ -3676,6 +3894,26 @@ append keyword to create a multi-dimensional table.</p>
         <td><code>name</code></td>
         <td><code>str</code></td>
         <td><p>name of the fluid</p></td>
+      </tr>
+      <tr>
+        <td><code>api</code></td>
+        <td><code>float</code></td>
+        <td><p>API gravity of oil.</p></td>
+      </tr>
+      <tr>
+        <td><code>std_density</code></td>
+        <td><code>float</code></td>
+        <td><p>Standard bulk density in g/cc at 15.6degC.</p></td>
+      </tr>
+      <tr>
+        <td><code>gas_sg</code></td>
+        <td><code>float</code></td>
+        <td><p>The dissolved gas standard gravity.</p></td>
+      </tr>
+      <tr>
+        <td><code>pvt</code></td>
+        <td><code>dict, xarray.DataArray</code></td>
+        <td><p>PVT table for Oil</p></td>
       </tr>
   </tbody>
 </table>
@@ -3696,7 +3934,450 @@ append keyword to create a multi-dimensional table.</p>
 
 
 
-<h3 id="digirock._fluid.Gas.__init__" class="doc doc-heading">
+<h3 id="digirock._fluids._oil.OilPVT.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">api</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std_density</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gas_sg</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p><code>api</code> and <code>std_density</code> are mutually exclusive inputs.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>Name of fluid</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>api</code></td>
+        <td><code>float</code></td>
+        <td><p>Oil API</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>std_density</code></td>
+        <td><code>float</code></td>
+        <td><p>Standard bulk density in g/cc at 15.6degC</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>gas_sg</code></td>
+        <td><code>float</code></td>
+        <td><p>Dissolved gas standard gravity (required)</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.OilPVT.bo" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Interpolate bo from pvt table.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>pressure</code> (MPa); <code>rs</code> (L/L) unless rs is constant.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Formation volume factor FVF (L/L)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.OilPVT.bulk_modulus" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Temperature and pressure dependent bulk modulus for Oil adjusted for <code>rs</code> (solution gas) and <code>bo</code> (FVF).</p>
+<p>Modulus is calculated using BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_bulkmod">oil_bulkmod</a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional <code>bo</code> (vfrac) and</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Oil modulus (GPa)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.OilPVT.density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Temperature and pressure dependent density for Oil with adjustments for <code>rs</code> (solution gas) and <code>bo</code> (FVF).</p>
+<p>Density is calculated using BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_density">oil_density</a> after adjusting for gas saturation with <a href="fluid_methods.html#digirock.fluids.bw92.oil_rho_sat">oil_rho_sat</a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional <code>bo</code> (vfrac) and <code>rs</code> (v/v) else use class consstant or table.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Oil density (g/cc)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.OilPVT.get_summary" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Return a dictionary containing a summary of the fluid.</p>
+
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>dict</code></td>
+      <td><p>Summary of properties.</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.OilPVT.set_pvt" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">set_pvt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rs</span><span class="p">,</span> <span class="n">bo</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Set the PVT table for Oil.</p>
+<p>The solution gas ratio <code>rs</code> i[] set for tables of <code>bo</code> and <code>pres</code>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>rs</code></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>The solution gas ratio for bo or bo table. Has shape (M, )</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>bo</code></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Can be a float of table of pressure (MPa) and bo (frac) pairs. Has shape (M, N)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>pres</code></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Pressure values (MPa) to match bo. Has shape (M, N).</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._oil.OilPVT.velocity" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Temperature and pressure dependent acoustic velocity for Oil adjusted for <code>rs</code> (solution gas) and <code>bo</code> (FVF).</p>
+<p>Velocity is calculated using BW92 <a href="fluid_methods.html#digirock.fluids.bw92.oil_velocity">oil_velocity</a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa); optional <code>bo</code> (vfrac) and <code>rs</code> (v/v) else use class consstant or table.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Oil velocity (m/s)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="digirockgasbw92"><code>digirock.GasBW92</code></h2>
+
+
+  <div class="doc doc-object doc-class">
+
+
+    <div class="doc doc-contents first">
+
+      <p>Gas fluid class.</p>
+<p>Notes that the acoustic velocity of gas is undefined.</p>
+
+<p><strong>Attributes:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>name</code></td>
+        <td><code>str</code></td>
+        <td><p>name of the fluid</p></td>
+      </tr>
+      <tr>
+        <td><code>gas_sg</code></td>
+        <td><code>float</code></td>
+        <td><p>Gas specific gravity.</p></td>
+      </tr>
+      <tr>
+        <td><code>gas_density</code></td>
+        <td><code>float</code></td>
+        <td><p>Gas density (g/cc)</p></td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._gas.GasBW92.__init__" class="doc doc-heading">
 <code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gas_sg</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gas_density</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
@@ -3723,13 +4404,13 @@ append keyword to create a multi-dimensional table.</p>
       <tr>
         <td><code>name</code></td>
         <td><code>str</code></td>
-        <td><p>Name of fluid. Defaults to None.</p></td>
+        <td><p>Name of fluid</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
         <td><code>gas_sg</code></td>
         <td><code>float</code></td>
-        <td><p>Gas specific gravity.</p></td>
+        <td><p>Gas specific gravity</p></td>
         <td><code>None</code></td>
       </tr>
       <tr>
@@ -3750,16 +4431,57 @@ append keyword to create a multi-dimensional table.</p>
 
 
 
-<h3 id="digirock._fluid.Gas.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._gas.GasBW92.bulk_modulus" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">bulk_modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>This function overides the density function in etlpy.pem.Fluid</p>
+      <p>Temperature and pressure dependent bulk modulus for Gas.</p>
+<p>Uses BW92 <a href="fluid_methods.html#digirock.fluids.bw92.gas_adiabatic_bulkmod"><code>gas_adiabatic_bulkmod</code></a>.</p>
 
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Oil modulus (GPa)</p></td>
+    </tr>
+  </tbody>
+</table>
     </div>
 
   </div>
@@ -3770,7 +4492,68 @@ append keyword to create a multi-dimensional table.</p>
 
 
 
-<h3 id="digirock._fluid.Gas.get_summary" class="doc doc-heading">
+<h3 id="digirock._fluids._gas.GasBW92.density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+
+</h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Temperature and pressure dependent density for Gas.</p>
+<p>Uses BW92 <a href="fluid_methods.html#digirock.fluids.bw92.gas_oga_density"><code>gas_oga_density</code></a>.</p>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Gas density (g/cc)</p></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="digirock._fluids._gas.GasBW92.get_summary" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
@@ -3790,7 +4573,7 @@ append keyword to create a multi-dimensional table.</p>
   </thead>
   <tbody>
     <tr>
-      <td></td>
+      <td><code>dict</code></td>
       <td><p>Summary of properties.</p></td>
     </tr>
   </tbody>
@@ -3805,27 +4588,7 @@ append keyword to create a multi-dimensional table.</p>
 
 
 
-<h3 id="digirock._fluid.Gas.modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
-      <p>This function overides the modulus function in etlpy.pem.Fluid</p>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.Gas.set_gas_density" class="doc doc-heading">
+<h3 id="digirock._fluids._gas.GasBW92.set_gas_density" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">set_gas_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gas_density</span><span class="p">)</span></code>
 
 
@@ -3833,7 +4596,8 @@ append keyword to create a multi-dimensional table.</p>
 
     <div class="doc doc-contents ">
 
-      <p>[summary]</p>
+      <p>Sets the gas density</p>
+<p>Calculates <code>gas_sg</code> using BW92 density of air.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -3848,8 +4612,8 @@ append keyword to create a multi-dimensional table.</p>
   <tbody>
       <tr>
         <td><code>gas_density</code></td>
-        <td><code>[type]</code></td>
-        <td><p>[description]</p></td>
+        <td><code>float</code></td>
+        <td><p>Density of gas</p></td>
         <td><em>required</em></td>
       </tr>
   </tbody>
@@ -3864,7 +4628,7 @@ append keyword to create a multi-dimensional table.</p>
 
 
 
-<h3 id="digirock._fluid.Gas.set_gas_sg" class="doc doc-heading">
+<h3 id="digirock._fluids._gas.GasBW92.set_gas_sg" class="doc doc-heading">
 <code class="highlight language-python"><span class="n">set_gas_sg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gas_sg</span><span class="p">)</span></code>
 
 
@@ -3872,6 +4636,8 @@ append keyword to create a multi-dimensional table.</p>
 
     <div class="doc doc-contents ">
 
+      <p>Set the gas sepcific gravity</p>
+<p>Calculates <code>gas_density</code> using BW92 density of air.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -3886,8 +4652,8 @@ append keyword to create a multi-dimensional table.</p>
   <tbody>
       <tr>
         <td><code>gas_sg</code></td>
-        <td><code>[type]</code></td>
-        <td><p>[description]</p></td>
+        <td><code>float</code></td>
+        <td><p>gas specific gravity</p></td>
         <td><em>required</em></td>
       </tr>
   </tbody>
@@ -3906,7 +4672,7 @@ append keyword to create a multi-dimensional table.</p>
 
   </div>
 
-<h2 id="digirockgaspvdg"><code>digirock.GasPVDG</code></h2>
+<h2 id="digirockgaspvt"><code>digirock.GasPVT</code></h2>
 
 
   <div class="doc doc-object doc-class">
@@ -3940,7 +4706,7 @@ section.</p>
       <tr>
         <td><code>pvt</code></td>
         <td></td>
-        <td><p>list of pvt dicts, each table contains
+        <td><p>pvt dicts, contains
 ref_pres: Reference pressure of bw (MPa)
 bw: Formation volume factor at ref_pres (rm3/sm3)
 comp: Compressibility of fluid. l/MPa
@@ -3962,14 +4728,12 @@ cvisc: Viscosibility (1/MPa)</p></td>
 
 
 
-
-
   <div class="doc doc-object doc-method">
 
 
 
-<h3 id="digirock._fluid.GasPVDG.__init__" class="doc doc-heading">
-<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._gas.GasPVT.__init__" class="doc doc-heading">
+<code class="highlight language-python"><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">density_asc</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -3992,9 +4756,15 @@ cvisc: Viscosibility (1/MPa)</p></td>
   </thead>
   <tbody>
       <tr>
+        <td><code>density</code></td>
+        <td></td>
+        <td><p>The gas density at surface conditions (g/cc)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
         <td><code>name</code></td>
-        <td><code>[type]</code></td>
-        <td><p>[description]. Defaults to None.</p></td>
+        <td><code>str</code></td>
+        <td><p>The fluid ID</p></td>
         <td><code>None</code></td>
       </tr>
   </tbody>
@@ -4009,34 +4779,17 @@ cvisc: Viscosibility (1/MPa)</p></td>
 
 
 
-<h3 id="digirock._fluid.GasPVDG.density" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._gas.GasPVT.density" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">props</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>This function overides the density function in etlpy.pem.Fluid</p>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="digirock._fluid.GasPVDG.load_pvdg" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">load_pvdg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;METRIC&#39;</span><span class="p">)</span></code>
-
-
-</h3>
-
-    <div class="doc doc-contents ">
-
+      <p>Pressure dependent density for Gas.</p>
+<p>Uses BW92 <a href="fluid_methods.html#digirock.fluids.bw92.gas_oga_density"><code>gas_oga_density</code></a> with
+bg from table.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -4050,17 +4803,32 @@ cvisc: Viscosibility (1/MPa)</p></td>
   </thead>
   <tbody>
       <tr>
-        <td><code>filepath</code></td>
-        <td><code>[type]</code></td>
-        <td><p>[description]</p></td>
+        <td><code>props</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><p>A dictionary of properties; requires <code>temp</code> (degC) and <code>pressure</code> (MPa)</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
-        <td><code>units</code></td>
-        <td><code>str</code></td>
-        <td><p>[description]. Defaults to 'METRIC'.</p></td>
-        <td><code>&#39;METRIC&#39;</code></td>
+        <td><code>kwargs</code></td>
+        <td></td>
+        <td><p>ignored</p></td>
+        <td><code>{}</code></td>
       </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[numpy.ndarray, float]</code></td>
+      <td><p>Gas density (g/cc)</p></td>
+    </tr>
   </tbody>
 </table>
     </div>
@@ -4073,17 +4841,31 @@ cvisc: Viscosibility (1/MPa)</p></td>
 
 
 
-<h3 id="digirock._fluid.GasPVDG.modulus" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">modulus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._gas.GasPVT.get_summary" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>This function overides the modulus function in etlpy.pem.Fluid
-Temperature argument is ignored assume const temp.</p>
+      <p>Return a dictionary containing a summary of the fluid.</p>
 
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>dict</code></td>
+      <td><p>Summary of properties.</p></td>
+    </tr>
+  </tbody>
+</table>
     </div>
 
   </div>
@@ -4094,16 +4876,41 @@ Temperature argument is ignored assume const temp.</p>
 
 
 
-<h3 id="digirock._fluid.GasPVDG.set_active_pvtn" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">set_active_pvtn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pvtn</span><span class="p">)</span></code>
+<h3 id="digirock._fluids._gas.GasPVT.set_pvt" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">set_pvt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pres</span><span class="p">,</span> <span class="n">bg</span><span class="p">)</span></code>
 
 
 </h3>
 
     <div class="doc doc-contents ">
 
-      <p>Set the active PVT-N. To use for modelling.</p>
+      <p>Set the PVT table for the gas expansion for a given pressure.</p>
 
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>pres</code></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Pressure (MPa)</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>bg</code></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Expansion relative to surface conditions (vfrac)</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
     </div>
 
   </div>
@@ -4127,7 +4934,7 @@ Temperature argument is ignored assume const temp.</p>
 
     <div class="doc doc-contents first">
 
-      <p>Load a PVTW table into multiple <a href="#digirock._fluid.WaterECL"><code>WaterECL</code></a> classes.</p>
+      <p>Load a PVTW table into multiple <a href="#digirock._fluids._water.WaterECL"><code>WaterECL</code></a> classes.</p>
 <p>PVTW tables have the form (where units may differ):</p>
 <div class="highlight"><span class="filename">Text Only</span><pre><span></span><code>PVTW
 --RefPres        Bw          Cw           Vw         dVw
@@ -4186,7 +4993,7 @@ be present in the same input file.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code>dict</code></td>
+      <td><code>Dict[str, digirock._fluids._water.WaterECL]</code></td>
       <td><p>A dictionary of WaterECL instance for each PVT table entry.</p></td>
     </tr>
   </tbody>
@@ -4222,7 +5029,34 @@ be present in the same input file.</p>
 
     <div class="doc doc-contents first">
 
-      <p>Load a PVTO Eclipse keyword from a textfile into multiple <a href="#digirock._fluid.Oil"><code>Oil</code></a> classes.</p>
+      <p>Load a PVTO table into multiple <a href="#digirock._fluids._oil.OilPVT"><code>OilPVT</code></a> classes.</p>
+<p>PVTO tables have the form (where units may differ):</p>
+<div class="highlight"><span class="filename">Text Only</span><pre><span></span><code>PVTO
+------------------------------------------------------------
+--SOLUTION  PRESSURE  OIL FVF      OIL
+-- GOR Rs      Po       Bo      VISCOSITY
+-- Sm3/Sm3    bara    rm3/Sm3      cP
+------------------------------------------------------------
+--
+PVTO
+-- REGION 1
+    27.4     50.0    1.17014      1.224
+            100.0    1.16296      1.310
+            150.0    1.15664      1.393 /
+    54.3    100.0    1.24802      0.953
+            150.0    1.23902      1.027
+            200.0    1.23114      1.099 /
+/
+-- REGION 2
+    27.4     50.0    1.17014      1.224
+            100.0    1.16296      1.310
+            150.0    1.15664      1.393 /
+    54.3    100.0    1.24802      0.953
+            150.0    1.23902      1.027
+            200.0    1.23114      1.099 /
+/
+</code></pre></div>
+<p><code>api</code> and <code>std_density</code> cannot be specified together. If both are <code>None</code> then the DENSITY keyword must be present in the same input file to get the oil density.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -4238,21 +5072,54 @@ be present in the same input file.</p>
       <tr>
         <td><code>filepath</code></td>
         <td><code>Union[str, pathlib.Path]</code></td>
-        <td><p>The filepath of the file text file containing the PVTO tables.</p></td>
+        <td><p>Filepath or str to text file containing PVTW keyword tables</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>units</code></td>
         <td><code>str</code></td>
-        <td><p>The Eclipse units of the PVTW table, one of ['METRIC', 'PVTM', 'FIELD', 'LAB']. Defaults to 'METRIC'.</p></td>
+        <td><p>The Eclipse units of the PVTW table, one of ['METRIC', 'PVTM', 'FIELD', 'LAB']. Defaults to 'METRIC'</p></td>
         <td><code>&#39;METRIC&#39;</code></td>
       </tr>
       <tr>
         <td><code>prefix</code></td>
         <td><code>str</code></td>
-        <td><p>The prefix to apply to the name of each loaded fluid.</p></td>
+        <td><p>The prefix to apply to the name of each loaded fluid</p></td>
         <td><code>&#39;pvto&#39;</code></td>
       </tr>
+      <tr>
+        <td><code>api</code></td>
+        <td><code>Union[List[float], float]</code></td>
+        <td><p>A single oil API or list of API values for each PVT Region in the file</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>std_density</code></td>
+        <td><code>Union[List[float], float]</code></td>
+        <td><p>A single standard density in g/cc at 15.6degC or a list of values for each PVT Region in the file</p></td>
+        <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>gas_sg</code></td>
+        <td><code>Union[List[float], float]</code></td>
+        <td><p>A single standard gravity for the disovled gas or a list of values for each PVT Region in the file</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Dict[str, digirock._fluids._oil.OilPVT]</code></td>
+      <td><p>A dictionary of Oil instance for each PVT table entry.</p></td>
+    </tr>
   </tbody>
 </table>
 <p><strong>Exceptions:</strong></p>
@@ -4267,6 +5134,107 @@ be present in the same input file.</p>
       <tr>
         <td><code>AssertionError</code></td>
         <td><p>units is not valid</p></td>
+      </tr>
+  </tbody>
+</table>
+    </div>
+
+  </div>
+
+<h3 id="digirockload_pvdg"><code>digirock.load_pvdg</code></h3>
+
+
+  <div class="doc doc-object doc-function">
+
+
+    <div class="doc doc-contents first">
+
+      <p>Load a PVDG table into multiple <a href="#digirock._fluids._gas.GasPVT"><code>GasPVT</code></a> classes.</p>
+<p>PVDG tables have the form (where units may differ):</p>
+<div class="highlight"><span class="filename">Text Only</span><pre><span></span><code>PVDG
+------------------------------------------------------------
+--PRESSURE  VAPORIZED  GAS FVF      GAS
+--   Pg      OGR  Rv     Bg      VISCOSITY
+--  bara     Sm3/Sm3   rm3/Sm3      cP
+------------------------------------------------------------
+-- PVT region 1
+50.0         0.024734     0.014335
+100.0        0.011846     0.015991
+150.0        0.007763     0.018581 /
+-- PVT region 2
+50.0         0.024734     0.014335
+100.0        0.011846     0.015991
+150.0        0.007763     0.018581 /
+</code></pre></div>
+
+<p><strong>Parameters:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>filepath</code></td>
+        <td><code>Union[str, pathlib.Path]</code></td>
+        <td><p>Filepath or str to text file containing PVTW keyword tables.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>units</code></td>
+        <td><code>str</code></td>
+        <td><p>The Eclipse units of the PVTW table, one of ['METRIC', 'PVTM', 'FIELD', 'LAB']. Defaults to 'METRIC'.</p></td>
+        <td><code>&#39;METRIC&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>prefix</code></td>
+        <td><code>str</code></td>
+        <td><p>The prefix to apply to the name of each loaded fluid.</p></td>
+        <td><code>&#39;pvdg&#39;</code></td>
+      </tr>
+      <tr>
+        <td><code>density_asc</code></td>
+        <td><code>Union[List[float], float]</code></td>
+        <td><p>The density of the gas/s, required if DENSITY KW is missing from file.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Dict[str, digirock._fluids._gas.GasPVT]</code></td>
+      <td><p>A dictionary of GasPVT instance for each PVT table entry.</p></td>
+    </tr>
+  </tbody>
+</table>
+<p><strong>Exceptions:</strong></p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>AssertionError</code></td>
+        <td><p>units is not valid</p></td>
+      </tr>
+      <tr>
+        <td><code>ValueError</code></td>
+        <td><p>DENSITY kw not in file with PVDG</p></td>
       </tr>
   </tbody>
 </table>
@@ -4302,13 +5270,13 @@ be present in the same input file.</p>
       
       
         
-        <a href="model_methods.html" class="md-footer__link md-footer__link--next" aria-label="Next: Models" rel="next">
+        <a href="fluid_blend.html" class="md-footer__link md-footer__link--next" aria-label="Next: Fluid Blending" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Models
+              Fluid Blending
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -4342,10 +5310,16 @@ be present in the same input file.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigations.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.092fa1f6.min.js"}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigations.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.5a9542cf.min.js"></script>
+      <script src="../assets/javascripts/bundle.8aa65030.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
