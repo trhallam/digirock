@@ -11,7 +11,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.1">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.3">
     
     
       
@@ -31,7 +31,7 @@
       
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
@@ -1889,6 +1889,7 @@ Licensed under the Apache License, Version 2.0.
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">from</span> <span class="nn">digirock.datasets</span> <span class="kn">import</span> <span class="n">fetch_example_data</span>
 
 <span class="n">cur_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 <span class="n">parent_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">cur_dir</span><span class="p">)</span>
@@ -1900,10 +1901,14 @@ Licensed under the Apache License, Version 2.0.
 <span class="c1"># Temperature in degC</span>
 <span class="n">t</span> <span class="o">=</span> <span class="mi">110</span>
 <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># fetch all the example data</span>
+<span class="n">example_data</span> <span class="o">=</span> <span class="n">fetch_example_data</span><span class="p">()</span>
 </pre></div>
 <div id="cell-2" class="clipboard-copy-txt">import numpy as np
 import os
 import pathlib
+from digirock.datasets import fetch_example_data
 
 cur_dir = os.path.abspath("")
 parent_path = pathlib.Path(cur_dir)
@@ -1914,7 +1919,10 @@ p = 50
 pres = np.linspace(10, 100, 10)
 # Temperature in degC
 t = 110
-temp = np.linspace(80, 150, 10)</div>
+temp = np.linspace(80, 150, 10)
+
+# fetch all the example data
+example_data = fetch_example_data()</div>
     
         </div>
     </div>
@@ -1935,9 +1943,80 @@ temp = np.linspace(80, 150, 10)</div>
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>/mnt/c/dev/source/digirock
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>Downloading file &#39;COMPLEX_PVT.inc&#39; from &#39;https://raw.githubusercontent.com/trhallam/digirock/main/tests/test_data/COMPLEX_PVT.inc&#39; to &#39;/home/runner/work/digirock/digirock/0.1.dev56&#39;.
 </pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>/home/runner/work/digirock/digirock
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+Input <span class="ansi-green-fg">In [2]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 18&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">     15</span> temp <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>linspace(<span style="color: rgb(98,98,98)">80</span>, <span style="color: rgb(98,98,98)">150</span>, <span style="color: rgb(98,98,98)">10</span>)
+<span class="ansi-green-intense-fg ansi-bold">     17</span> <span style="color: rgb(95,135,135)"># fetch all the example data</span>
+<span class="ansi-green-fg">---&gt; 18</span> example_data <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">fetch_example_data</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/digirock/datasets.py:24</span>, in <span class="ansi-cyan-fg">fetch_example_data</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">fetch_example_data</span>():
+<span class="ansi-green-fg">---&gt; 24</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> {key: GOODBOY<span style="color: rgb(98,98,98)">.</span>fetch(key) <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> key <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> GOODBOY<span style="color: rgb(98,98,98)">.</span>registry}
+
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/digirock/datasets.py:24</span>, in <span class="ansi-cyan-fg">&lt;dictcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
+<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">fetch_example_data</span>():
+<span class="ansi-green-fg">---&gt; 24</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> {key: <span class="ansi-yellow-bg">GOODBOY</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">fetch</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">key</span><span class="ansi-yellow-bg">)</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> key <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> GOODBOY<span style="color: rgb(98,98,98)">.</span>registry}
+
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/pooch/core.py:587</span>, in <span class="ansi-cyan-fg">Pooch.fetch</span><span class="ansi-blue-fg">(self, fname, processor, downloader, progressbar)</span>
+<span class="ansi-green-intense-fg ansi-bold">    584</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> downloader <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-intense-fg ansi-bold">    585</span>         downloader <span style="color: rgb(98,98,98)">=</span> choose_downloader(url, progressbar<span style="color: rgb(98,98,98)">=</span>progressbar)
+<span class="ansi-green-fg">--&gt; 587</span>     <span class="ansi-yellow-bg">stream_download</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-intense-fg ansi-bold">    588</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">url</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    589</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">full_path</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    590</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">known_hash</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    591</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">downloader</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    592</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">pooch</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    593</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">retry_if_failed</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">retry_if_failed</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    594</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    596</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> processor <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-intense-fg ansi-bold">    597</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> processor(<span style="color: rgb(0,135,0)">str</span>(full_path), action, <span style="color: rgb(0,135,0)">self</span>)
+
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/pooch/core.py:773</span>, in <span class="ansi-cyan-fg">stream_download</span><span class="ansi-blue-fg">(url, fname, known_hash, downloader, pooch, retry_if_failed)</span>
+<span class="ansi-green-intense-fg ansi-bold">    771</span> <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> temporary_file(path<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(0,135,0)">str</span>(fname<span style="color: rgb(98,98,98)">.</span>parent)) <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> tmp:
+<span class="ansi-green-intense-fg ansi-bold">    772</span>     downloader(url, tmp, pooch)
+<span class="ansi-green-fg">--&gt; 773</span>     <span class="ansi-yellow-bg">hash_matches</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">tmp</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">known_hash</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">strict</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">True</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">source</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">str</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">fname</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    774</span>     shutil<span style="color: rgb(98,98,98)">.</span>move(tmp, <span style="color: rgb(0,135,0)">str</span>(fname))
+<span class="ansi-green-intense-fg ansi-bold">    775</span> <span class="ansi-bold" style="color: rgb(0,135,0)">break</span>
+
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/pooch/hashes.py:176</span>, in <span class="ansi-cyan-fg">hash_matches</span><span class="ansi-blue-fg">(fname, known_hash, strict, source)</span>
+<span class="ansi-green-intense-fg ansi-bold">    174</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> source <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-intense-fg ansi-bold">    175</span>         source <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">str</span>(fname)
+<span class="ansi-green-fg">--&gt; 176</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">ValueError</span>(
+<span class="ansi-green-intense-fg ansi-bold">    177</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>algorithm<span style="color: rgb(98,98,98)">.</span>upper()<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> hash of downloaded file (</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>source<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">) does not match</span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    178</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)"> the known hash: expected </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>known_hash<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> but got </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>new_hash<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">. Deleted</span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    179</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)"> download for safety. The downloaded file may have been corrupted or</span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    180</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)"> the known hash may be outdated.</span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    181</span>     )
+<span class="ansi-green-intense-fg ansi-bold">    182</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> matches
+
+<span class="ansi-red-fg">ValueError</span>: SHA256 hash of downloaded file (COMPLEX_PVT.inc) does not match the known hash: expected 3018c7ec33dded551e0bcd44103a1abd27ff4895268c712197616e396532da25 but got 2bb908ad754ac1939a6d3cc34e3997c0c120424f27a028dcdbce288e338fe00e. Deleted download for safety. The downloaded file may have been corrupted or the known hash may be outdated.</pre>
 </div>
 </div>
 
@@ -2210,16 +2289,14 @@ Modulus 2 array values (GPa): [[0.97757414 0.97709025 0.97625809 0.97511746 0.97
             </clipboard-copy>
         </div>
             <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># load the Eclipse table directly from a text file</span>
-<span class="n">parent_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
-<span class="n">wat_pvtw</span> <span class="o">=</span> <span class="n">load_pvtw</span><span class="p">(</span><span class="n">parent_path</span> <span class="o">/</span> <span class="s2">&quot;example_data/COMPLEX_PVT.inc&quot;</span><span class="p">,</span> <span class="n">salinity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">wat_pvtw</span> <span class="o">=</span> <span class="n">load_pvtw</span><span class="p">(</span><span class="n">example_data</span><span class="p">[</span><span class="s2">&quot;COMPLEX_PVT.inc&quot;</span><span class="p">],</span> <span class="n">salinity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">wat_pvtw</span><span class="p">[</span><span class="s2">&quot;pvtw0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_summary</span><span class="p">())</span>
 <span class="n">wat_pvtw</span><span class="p">[</span><span class="s2">&quot;pvtw0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tree</span>
 </pre></div>
 <div id="cell-5" class="clipboard-copy-txt"># load the Eclipse table directly from a text file
-parent_path = pathlib.Path(__file__).parent
-wat_pvtw = load_pvtw(parent_path / "example_data/COMPLEX_PVT.inc", salinity=0)
+wat_pvtw = load_pvtw(example_data["COMPLEX_PVT.inc"], salinity=0)
 
 # look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example
 print(wat_pvtw["pvtw0"].get_summary())
@@ -2248,13 +2325,13 @@ wat_pvtw["pvtw0"].tree</div>
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [5]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+Input <span class="ansi-green-fg">In [5]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># load the Eclipse table directly from a text file</span>
-<span class="ansi-green-fg">----&gt; 2</span> parent_path <span style="color: rgb(98,98,98)">=</span> pathlib<span style="color: rgb(98,98,98)">.</span>Path(<span class="ansi-yellow-bg" style="color: rgb(0,0,135)">__file__</span>)<span style="color: rgb(98,98,98)">.</span>parent
-<span class="ansi-green-intense-fg ansi-bold">      3</span> wat_pvtw <span style="color: rgb(98,98,98)">=</span> load_pvtw(parent_path <span style="color: rgb(98,98,98)">/</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">example_data/COMPLEX_PVT.inc</span><span style="color: rgb(175,0,0)">&#34;</span>, salinity<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>)
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span style="color: rgb(95,135,135)"># look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example</span>
+<span class="ansi-green-fg">----&gt; 2</span> wat_pvtw <span style="color: rgb(98,98,98)">=</span> load_pvtw(<span class="ansi-yellow-bg">example_data</span>[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">COMPLEX_PVT.inc</span><span style="color: rgb(175,0,0)">&#34;</span>], salinity<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>)
+<span class="ansi-green-intense-fg ansi-bold">      4</span> <span style="color: rgb(95,135,135)"># look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> <span style="color: rgb(0,135,0)">print</span>(wat_pvtw[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pvtw0</span><span style="color: rgb(175,0,0)">&#34;</span>]<span style="color: rgb(98,98,98)">.</span>get_summary())
 
-<span class="ansi-red-fg">NameError</span>: name &#39;__file__&#39; is not defined</pre>
+<span class="ansi-red-fg">NameError</span>: name &#39;example_data&#39; is not defined</pre>
 </div>
 </div>
 
@@ -2337,7 +2414,7 @@ print("Bulk Modulus array values (g/cc):", pvtw0.bulk_modulus(props_ar2), "\n")<
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [6]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+Input <span class="ansi-green-fg">In [6]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-fg">----&gt; 1</span> pvtw0 <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">wat_pvtw</span>[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pvtw0</span><span style="color: rgb(175,0,0)">&#34;</span>]
 <span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)"># we need to tell the fluid which pvt table to use either with each call to a method</span>
 <span class="ansi-green-intense-fg ansi-bold">      4</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Density single values (g/cc):</span><span style="color: rgb(175,0,0)">&#34;</span>, pvtw0<span style="color: rgb(98,98,98)">.</span>density(props))
@@ -2463,8 +2540,8 @@ doil_sd.tree</div>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>{&#39;class&#39;: &lt;class &#39;digirock._fluids._oil.DeadOil&#39;&gt;, &#39;name&#39;: &#39;DeadOil_140049636823776&#39;, &#39;props_keys&#39;: [&#39;bo&#39;], &#39;api&#39;: 35, &#39;std_density&#39;: 0.8498498498498499, &#39;pvt&#39;: None}
-{&#39;class&#39;: &lt;class &#39;digirock._fluids._oil.DeadOil&#39;&gt;, &#39;name&#39;: &#39;DeadOil_140049636825264&#39;, &#39;props_keys&#39;: [&#39;bo&#39;], &#39;api&#39;: 34.999970583044075, &#39;std_density&#39;: 0.84985, &#39;pvt&#39;: None}
+<pre>{&#39;class&#39;: &lt;class &#39;digirock._fluids._oil.DeadOil&#39;&gt;, &#39;name&#39;: &#39;DeadOil_140174682057984&#39;, &#39;props_keys&#39;: [&#39;bo&#39;], &#39;api&#39;: 35, &#39;std_density&#39;: 0.8498498498498499, &#39;pvt&#39;: None}
+{&#39;class&#39;: &lt;class &#39;digirock._fluids._oil.DeadOil&#39;&gt;, &#39;name&#39;: &#39;DeadOil_140174682058704&#39;, &#39;props_keys&#39;: [&#39;bo&#39;], &#39;api&#39;: 34.999970583044075, &#39;std_density&#39;: 0.84985, &#39;pvt&#39;: None}
 </pre>
 </div>
 </div>
@@ -2477,7 +2554,7 @@ doil_sd.tree</div>
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140049636825264                                                                      
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140174682058704                                                                      
 ├── class : &lt;class 'digirock._fluids._oil.DeadOil'&gt;                                          
 ├── props_keys : ['bo']                                                                      
 ├── api : 34.999970583044075                                                                 
@@ -2556,7 +2633,7 @@ doil_api.tree</div>
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140049636823776                                                                      
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140174682057984                                                                      
 ├── class : &lt;class 'digirock._fluids._oil.DeadOil'&gt;                                          
 ├── props_keys : ['bo']                                                                      
 ├── api : 35                                                                                 
@@ -2623,7 +2700,7 @@ doil_sd.tree</div>
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140049636825264                                                                      
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140174682058704                                                                      
 ├── class : &lt;class 'digirock._fluids._oil.DeadOil'&gt;                                          
 ├── props_keys : ['bo']                                                                      
 ├── api : 34.999970583044075                                                                 
@@ -3054,9 +3131,11 @@ Rs:  103.33333333333333
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pvtos</span> <span class="o">=</span> <span class="n">load_pvto</span><span class="p">(</span><span class="n">parent_path</span> <span class="o">/</span> <span class="s2">&quot;example_data/COMPLEX_PVT.inc&quot;</span><span class="p">,</span> <span class="n">api</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># load the Eclipse table directly from a text file</span>
+<span class="n">pvtos</span> <span class="o">=</span> <span class="n">load_pvto</span><span class="p">(</span><span class="n">example_data</span><span class="p">[</span><span class="s2">&quot;COMPLEX_PVT.inc&quot;</span><span class="p">],</span> <span class="n">api</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
 </pre></div>
-<div id="cell-15" class="clipboard-copy-txt">pvtos = load_pvto(parent_path / "example_data/COMPLEX_PVT.inc", api=40)</div>
+<div id="cell-15" class="clipboard-copy-txt"># load the Eclipse table directly from a text file
+pvtos = load_pvto(example_data["COMPLEX_PVT.inc"], api=40)</div>
     
         </div>
     </div>
@@ -3080,55 +3159,12 @@ Rs:  103.33333333333333
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [15]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-fg">----&gt; 1</span> pvtos <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">load_pvto</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">parent_path</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">/</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">example_data/COMPLEX_PVT.inc</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">api</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">40</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Input <span class="ansi-green-fg">In [15]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># load the Eclipse table directly from a text file</span>
+<span class="ansi-green-fg">----&gt; 2</span> pvtos <span style="color: rgb(98,98,98)">=</span> load_pvto(<span class="ansi-yellow-bg">example_data</span>[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">COMPLEX_PVT.inc</span><span style="color: rgb(175,0,0)">&#34;</span>], api<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">40</span>)
 
-File <span class="ansi-green-fg">/mnt/c/dev/source/digirock/src/digirock/utils/_decorators.py:42</span>, in <span class="ansi-cyan-fg">mutually_exclusive.&lt;locals&gt;.wrapper.&lt;locals&gt;.inner</span><span class="ansi-blue-fg">(*args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     34</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> (
-<span class="ansi-green-intense-fg ansi-bold">     35</span>     kwargs
-<span class="ansi-green-intense-fg ansi-bold">     36</span>     <span class="ansi-bold" style="color: rgb(175,0,255)">and</span> <span style="color: rgb(0,135,0)">sum</span>([k <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> keywords <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> k, val <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> kwargs<span style="color: rgb(98,98,98)">.</span>items() <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> val <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>])
-<span class="ansi-green-intense-fg ansi-bold">     37</span>     <span style="color: rgb(98,98,98)">&gt;</span> <span style="color: rgb(98,98,98)">1</span>
-<span class="ansi-green-intense-fg ansi-bold">     38</span> ):
-<span class="ansi-green-intense-fg ansi-bold">     39</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">ValueError</span>(
-<span class="ansi-green-intense-fg ansi-bold">     40</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Expected no more than one of </span><span class="ansi-bold" style="color: rgb(175,95,135)">{}</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">.</span>format(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">, </span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">.</span>join(keywords))
-<span class="ansi-green-intense-fg ansi-bold">     41</span>     )
-<span class="ansi-green-fg">---&gt; 42</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> <span class="ansi-yellow-bg">func</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">args</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">/mnt/c/dev/source/digirock/src/digirock/_fluids/_fluid_loaders.py:234</span>, in <span class="ansi-cyan-fg">load_pvto</span><span class="ansi-blue-fg">(filepath, units, prefix, api, std_density, gas_sg)</span>
-<span class="ansi-green-intense-fg ansi-bold">    231</span> _ut: <span style="color: rgb(0,135,0)">dict</span> <span style="color: rgb(98,98,98)">=</span> EclUnitScaler[units]<span style="color: rgb(98,98,98)">.</span>value
-<span class="ansi-green-intense-fg ansi-bold">    233</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
-<span class="ansi-green-fg">--&gt; 234</span>     ecl_dens_tab <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">load_density</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">filepath</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">units</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">units</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    235</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">KeyError</span>:
-<span class="ansi-green-intense-fg ansi-bold">    236</span>     ecl_dens_tab <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>
-
-File <span class="ansi-green-fg">/mnt/c/dev/source/digirock/src/digirock/_fluids/_fluid_loaders.py:32</span>, in <span class="ansi-cyan-fg">load_density</span><span class="ansi-blue-fg">(filepath, units)</span>
-<span class="ansi-green-intense-fg ansi-bold">     30</span> table <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">dict</span>()
-<span class="ansi-green-intense-fg ansi-bold">     31</span> _ut: <span style="color: rgb(0,135,0)">dict</span> <span style="color: rgb(98,98,98)">=</span> EclUnitScaler[units]<span style="color: rgb(98,98,98)">.</span>value
-<span class="ansi-green-fg">---&gt; 32</span> dens <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">read_eclipsekw_2dtable</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">filepath</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">DENSITY</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     34</span> <span style="color: rgb(95,135,135)"># water</span>
-<span class="ansi-green-intense-fg ansi-bold">     35</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
-
-File <span class="ansi-green-fg">/mnt/c/dev/source/digirock/src/digirock/utils/file.py:229</span>, in <span class="ansi-cyan-fg">read_eclipsekw_2dtable</span><span class="ansi-blue-fg">(filepath, kword)</span>
-<span class="ansi-green-intense-fg ansi-bold">    207</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">read_eclipsekw_2dtable</span>(filepath, kword):
-<span class="ansi-green-intense-fg ansi-bold">    208</span>     <span style="color: rgb(175,0,0)">&#34;&#34;&#34;A 2D table has the same number of items per row and will return a</span>
-<span class="ansi-green-intense-fg ansi-bold">    209</span> <span style="color: rgb(175,0,0)">    contiguous list of table row items.</span>
-<span class="ansi-green-intense-fg ansi-bold">    210</span> 
-<span class="ansi-green-fg">   (...)</span>
-<span class="ansi-green-intense-fg ansi-bold">    227</span> <span style="color: rgb(175,0,0)">        ValueError: [description]</span>
-<span class="ansi-green-intense-fg ansi-bold">    228</span> <span style="color: rgb(175,0,0)">    &#34;&#34;&#34;</span>
-<span class="ansi-green-fg">--&gt; 229</span>     table <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">_read_eclipsekw_section</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">filepath</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">kword</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    230</span>     table <span style="color: rgb(98,98,98)">=</span> table<span style="color: rgb(98,98,98)">.</span>strip()<span style="color: rgb(98,98,98)">.</span>split(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">/</span><span style="color: rgb(175,0,0)">&#34;</span>)[:<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>]
-<span class="ansi-green-intense-fg ansi-bold">    231</span>     table <span style="color: rgb(98,98,98)">=</span> [p<span style="color: rgb(98,98,98)">.</span>strip()<span style="color: rgb(98,98,98)">.</span>split() <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> p <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> table]
-
-File <span class="ansi-green-fg">/mnt/c/dev/source/digirock/src/digirock/utils/file.py:190</span>, in <span class="ansi-cyan-fg">_read_eclipsekw_section</span><span class="ansi-blue-fg">(filepath, kword)</span>
-<span class="ansi-green-intense-fg ansi-bold">    188</span> found_kw <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">False</span>
-<span class="ansi-green-intense-fg ansi-bold">    189</span> table <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-fg">--&gt; 190</span> <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">open</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">filepath</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">r</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span> <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> f:
-<span class="ansi-green-intense-fg ansi-bold">    191</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> line <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> f:
-<span class="ansi-green-intense-fg ansi-bold">    192</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> line[:<span style="color: rgb(98,98,98)">2</span>] <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">--</span><span style="color: rgb(175,0,0)">&#34;</span>:
-
-<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/mnt/c/dev/source/digirock/example_data/COMPLEX_PVT.inc&#39;</pre>
+<span class="ansi-red-fg">NameError</span>: name &#39;example_data&#39; is not defined</pre>
 </div>
 </div>
 
@@ -3197,7 +3233,7 @@ File <span class="ansi-green-fg">/mnt/c/dev/source/digirock/src/digirock/utils/f
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [16]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+Input <span class="ansi-green-fg">In [16]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span style="color: rgb(0,135,0)">print</span>(<span class="ansi-yellow-bg">pvtos</span><span style="color: rgb(98,98,98)">.</span>keys())
 
 <span class="ansi-red-fg">NameError</span>: name &#39;pvtos&#39; is not defined</pre>
@@ -3271,7 +3307,7 @@ ecloil0.tree</div>
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [17]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+Input <span class="ansi-green-fg">In [17]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-fg">----&gt; 1</span> ecloil0 <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">pvtos</span>[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pvto0</span><span style="color: rgb(175,0,0)">&#34;</span>]
 <span class="ansi-green-intense-fg ansi-bold">      2</span> ecloil0<span style="color: rgb(98,98,98)">.</span>tree
 
@@ -3344,7 +3380,7 @@ Input <span class="ansi-green-fg">In [17]</span>, in <span class="ansi-cyan-fg">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [18]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+Input <span class="ansi-green-fg">In [18]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">ecloil0</span><span style="color: rgb(98,98,98)">.</span>pvt[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">bo_table</span><span style="color: rgb(175,0,0)">&#34;</span>]<span style="color: rgb(98,98,98)">.</span>plot()
 
 <span class="ansi-red-fg">NameError</span>: name &#39;ecloil0&#39; is not defined</pre>
@@ -3416,7 +3452,7 @@ Input <span class="ansi-green-fg">In [18]</span>, in <span class="ansi-cyan-fg">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [19]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+Input <span class="ansi-green-fg">In [19]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Bo: </span><span style="color: rgb(175,0,0)">&#34;</span>, <span class="ansi-yellow-bg">ecloil0</span><span style="color: rgb(98,98,98)">.</span>bo({<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pres</span><span style="color: rgb(175,0,0)">&#34;</span>: <span style="color: rgb(98,98,98)">50</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">rs</span><span style="color: rgb(175,0,0)">&#34;</span>: np<span style="color: rgb(98,98,98)">.</span>array([[<span style="color: rgb(98,98,98)">100</span>, <span style="color: rgb(98,98,98)">120</span>], [<span style="color: rgb(98,98,98)">100</span>, <span style="color: rgb(98,98,98)">120</span>]])}))
 
 <span class="ansi-red-fg">NameError</span>: name &#39;ecloil0&#39; is not defined</pre>
@@ -3498,7 +3534,7 @@ print("Bulk Modulus: ", ecloil0.bulk_modulus(props))</div>
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [20]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+Input <span class="ansi-green-fg">In [20]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> props <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">dict</span>(temp<span style="color: rgb(98,98,98)">=</span>np<span style="color: rgb(98,98,98)">.</span>r_[<span style="color: rgb(98,98,98)">100</span>, <span style="color: rgb(98,98,98)">110</span>], pres<span style="color: rgb(98,98,98)">=</span>np<span style="color: rgb(98,98,98)">.</span>r_[<span style="color: rgb(98,98,98)">50</span>, <span style="color: rgb(98,98,98)">60</span>], rs<span style="color: rgb(98,98,98)">=</span>np<span style="color: rgb(98,98,98)">.</span>r_[<span style="color: rgb(98,98,98)">100</span>, <span style="color: rgb(98,98,98)">150</span>])
 <span class="ansi-green-fg">----&gt; 2</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Density: </span><span style="color: rgb(175,0,0)">&#34;</span>, <span class="ansi-yellow-bg">ecloil0</span><span style="color: rgb(98,98,98)">.</span>density(props))
 <span class="ansi-green-intense-fg ansi-bold">      4</span> props <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">dict</span>(temp<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">110</span>, pres<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">50</span>, rs<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">100</span>)
@@ -3632,7 +3668,7 @@ Input <span class="ansi-green-fg">In [20]</span>, in <span class="ansi-cyan-fg">
     <script id="__config" type="application/json">{"base": "..", "features": ["navigations.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.8aa65030.min.js"></script>
+      <script src="../assets/javascripts/bundle.b88e97c5.min.js"></script>
       
         <script src="../javascripts/mathjax.js"></script>
       

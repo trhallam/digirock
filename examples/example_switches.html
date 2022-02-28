@@ -11,7 +11,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.1">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.2.3">
     
     
       
@@ -31,7 +31,7 @@
       
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
@@ -1806,14 +1806,20 @@ Licensed under the Apache License, Version 2.0.
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">digirock</span> <span class="kn">import</span> <span class="n">Switch</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">digirock</span> <span class="kn">import</span> <span class="n">Switch</span><span class="p">,</span> <span class="n">load_pvtw</span>
+<span class="kn">from</span> <span class="nn">digirock.datasets</span> <span class="kn">import</span> <span class="n">fetch_example_data</span>
+
+<span class="n">example_data</span> <span class="o">=</span> <span class="n">fetch_example_data</span><span class="p">()</span>
     
-<span class="n">pvtos</span> <span class="o">=</span> <span class="n">load_pvtw</span><span class="p">(</span><span class="s2">&quot;example_data/COMPLEX_PVT.inc&quot;</span><span class="p">)</span>
+<span class="n">pvtos</span> <span class="o">=</span> <span class="n">load_pvtw</span><span class="p">(</span><span class="n">example_data</span><span class="p">[</span><span class="s2">&quot;COMPLEX_PVT.inc&quot;</span><span class="p">])</span>
 <span class="n">sw</span> <span class="o">=</span> <span class="n">Switch</span><span class="p">(</span><span class="s2">&quot;pvt&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">pvtos</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">,</span> <span class="s2">&quot;velocity&quot;</span><span class="p">,</span> <span class="s2">&quot;bulk_modulus&quot;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PVT_Water&#39;</span><span class="p">)</span>
 </pre></div>
-<div id="cell-2" class="clipboard-copy-txt">from digirock import Switch
+<div id="cell-2" class="clipboard-copy-txt">from digirock import Switch, load_pvtw
+from digirock.datasets import fetch_example_data
+
+example_data = fetch_example_data()
     
-pvtos = load_pvtw("example_data/COMPLEX_PVT.inc")
+pvtos = load_pvtw(example_data["COMPLEX_PVT.inc"])
 sw = Switch("pvt", list(pvtos.values()), ["density", "velocity", "bulk_modulus"], name='PVT_Water')</div>
     
         </div>
@@ -1836,15 +1842,69 @@ sw = Switch("pvt", list(pvtos.values()), ["density", "velocity", "bulk_modulus"]
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>Downloading file &#39;COMPLEX_PVT.inc&#39; from &#39;https://raw.githubusercontent.com/trhallam/digirock/main/tests/test_data/COMPLEX_PVT.inc&#39; to &#39;/home/runner/work/digirock/digirock/0.1.dev56&#39;.
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [2]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">digirock</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> Switch
-<span class="ansi-green-fg">----&gt; 3</span> pvtos <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">load_pvtw</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">example_data/COMPLEX_PVT.inc</span><span style="color: rgb(175,0,0)">&#34;</span>)
-<span class="ansi-green-intense-fg ansi-bold">      4</span> sw <span style="color: rgb(98,98,98)">=</span> Switch(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pvt</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(0,135,0)">list</span>(pvtos<span style="color: rgb(98,98,98)">.</span>values()), [<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">density</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">velocity</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">bulk_modulus</span><span style="color: rgb(175,0,0)">&#34;</span>], name<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">PVT_Water</span><span style="color: rgb(175,0,0)">&#39;</span>)
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+Input <span class="ansi-green-fg">In [2]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 4&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">digirock</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> Switch, load_pvtw
+<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-bold" style="color: rgb(0,135,0)">from</span> <span class="ansi-bold" style="color: rgb(0,0,255)">digirock</span><span class="ansi-bold" style="color: rgb(0,0,255)">.</span><span class="ansi-bold" style="color: rgb(0,0,255)">datasets</span> <span class="ansi-bold" style="color: rgb(0,135,0)">import</span> fetch_example_data
+<span class="ansi-green-fg">----&gt; 4</span> example_data <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">fetch_example_data</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      6</span> pvtos <span style="color: rgb(98,98,98)">=</span> load_pvtw(example_data[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">COMPLEX_PVT.inc</span><span style="color: rgb(175,0,0)">&#34;</span>])
+<span class="ansi-green-intense-fg ansi-bold">      7</span> sw <span style="color: rgb(98,98,98)">=</span> Switch(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pvt</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(0,135,0)">list</span>(pvtos<span style="color: rgb(98,98,98)">.</span>values()), [<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">density</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">velocity</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">bulk_modulus</span><span style="color: rgb(175,0,0)">&#34;</span>], name<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">PVT_Water</span><span style="color: rgb(175,0,0)">&#39;</span>)
 
-<span class="ansi-red-fg">NameError</span>: name &#39;load_pvtw&#39; is not defined</pre>
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/digirock/datasets.py:24</span>, in <span class="ansi-cyan-fg">fetch_example_data</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">fetch_example_data</span>():
+<span class="ansi-green-fg">---&gt; 24</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> {key: GOODBOY<span style="color: rgb(98,98,98)">.</span>fetch(key) <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> key <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> GOODBOY<span style="color: rgb(98,98,98)">.</span>registry}
+
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/digirock/datasets.py:24</span>, in <span class="ansi-cyan-fg">&lt;dictcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
+<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">fetch_example_data</span>():
+<span class="ansi-green-fg">---&gt; 24</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> {key: <span class="ansi-yellow-bg">GOODBOY</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">fetch</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">key</span><span class="ansi-yellow-bg">)</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> key <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> GOODBOY<span style="color: rgb(98,98,98)">.</span>registry}
+
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/pooch/core.py:587</span>, in <span class="ansi-cyan-fg">Pooch.fetch</span><span class="ansi-blue-fg">(self, fname, processor, downloader, progressbar)</span>
+<span class="ansi-green-intense-fg ansi-bold">    584</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> downloader <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-intense-fg ansi-bold">    585</span>         downloader <span style="color: rgb(98,98,98)">=</span> choose_downloader(url, progressbar<span style="color: rgb(98,98,98)">=</span>progressbar)
+<span class="ansi-green-fg">--&gt; 587</span>     <span class="ansi-yellow-bg">stream_download</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-intense-fg ansi-bold">    588</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">url</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    589</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">full_path</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    590</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">known_hash</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    591</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">downloader</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    592</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">pooch</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    593</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">retry_if_failed</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">retry_if_failed</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    594</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    596</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> processor <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-intense-fg ansi-bold">    597</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> processor(<span style="color: rgb(0,135,0)">str</span>(full_path), action, <span style="color: rgb(0,135,0)">self</span>)
+
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/pooch/core.py:773</span>, in <span class="ansi-cyan-fg">stream_download</span><span class="ansi-blue-fg">(url, fname, known_hash, downloader, pooch, retry_if_failed)</span>
+<span class="ansi-green-intense-fg ansi-bold">    771</span> <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> temporary_file(path<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(0,135,0)">str</span>(fname<span style="color: rgb(98,98,98)">.</span>parent)) <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> tmp:
+<span class="ansi-green-intense-fg ansi-bold">    772</span>     downloader(url, tmp, pooch)
+<span class="ansi-green-fg">--&gt; 773</span>     <span class="ansi-yellow-bg">hash_matches</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">tmp</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">known_hash</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">strict</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">True</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">source</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">str</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">fname</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    774</span>     shutil<span style="color: rgb(98,98,98)">.</span>move(tmp, <span style="color: rgb(0,135,0)">str</span>(fname))
+<span class="ansi-green-intense-fg ansi-bold">    775</span> <span class="ansi-bold" style="color: rgb(0,135,0)">break</span>
+
+File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/pooch/hashes.py:176</span>, in <span class="ansi-cyan-fg">hash_matches</span><span class="ansi-blue-fg">(fname, known_hash, strict, source)</span>
+<span class="ansi-green-intense-fg ansi-bold">    174</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> source <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-intense-fg ansi-bold">    175</span>         source <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">str</span>(fname)
+<span class="ansi-green-fg">--&gt; 176</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">ValueError</span>(
+<span class="ansi-green-intense-fg ansi-bold">    177</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>algorithm<span style="color: rgb(98,98,98)">.</span>upper()<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> hash of downloaded file (</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>source<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">) does not match</span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    178</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)"> the known hash: expected </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>known_hash<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> but got </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>new_hash<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">. Deleted</span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    179</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)"> download for safety. The downloaded file may have been corrupted or</span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    180</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)"> the known hash may be outdated.</span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">    181</span>     )
+<span class="ansi-green-intense-fg ansi-bold">    182</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> matches
+
+<span class="ansi-red-fg">ValueError</span>: SHA256 hash of downloaded file (COMPLEX_PVT.inc) does not match the known hash: expected 3018c7ec33dded551e0bcd44103a1abd27ff4895268c712197616e396532da25 but got 2bb908ad754ac1939a6d3cc34e3997c0c120424f27a028dcdbce288e338fe00e. Deleted download for safety. The downloaded file may have been corrupted or the known hash may be outdated.</pre>
 </div>
 </div>
 
@@ -1901,7 +1961,7 @@ Input <span class="ansi-green-fg">In [2]</span>, in <span class="ansi-cyan-fg">&
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [3]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+Input <span class="ansi-green-fg">In [3]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">sw</span><span style="color: rgb(98,98,98)">.</span>all_keys()
 
 <span class="ansi-red-fg">NameError</span>: name &#39;sw&#39; is not defined</pre>
@@ -1967,7 +2027,7 @@ print("Velocity in 3 PVT Zones (switches)\n", sw.velocity(props))</div>
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [4]</span>, in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+Input <span class="ansi-green-fg">In [4]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> props <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">dict</span>(temp<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">110</span>, pres<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">50</span>, pvt<span style="color: rgb(98,98,98)">=</span>[<span style="color: rgb(98,98,98)">0</span>, <span style="color: rgb(98,98,98)">7</span>, <span style="color: rgb(98,98,98)">6</span>])
 <span class="ansi-green-fg">----&gt; 2</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Bulk Modulus in 3 PVT Zones (switches)</span><span class="ansi-bold" style="color: rgb(175,95,0)">\n</span><span style="color: rgb(175,0,0)">&#34;</span>, <span class="ansi-yellow-bg">sw</span><span style="color: rgb(98,98,98)">.</span>bulk_modulus(props))
 <span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Density in 3 PVT Zones (switches)</span><span class="ansi-bold" style="color: rgb(175,95,0)">\n</span><span style="color: rgb(175,0,0)">&#34;</span>, sw<span style="color: rgb(98,98,98)">.</span>density(props))
@@ -2090,7 +2150,7 @@ Input <span class="ansi-green-fg">In [4]</span>, in <span class="ansi-cyan-fg">&
     <script id="__config" type="application/json">{"base": "..", "features": ["navigations.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.bd0b6b67.min.js"}</script>
     
     
-      <script src="../assets/javascripts/bundle.8aa65030.min.js"></script>
+      <script src="../assets/javascripts/bundle.b88e97c5.min.js"></script>
       
         <script src="../javascripts/mathjax.js"></script>
       
