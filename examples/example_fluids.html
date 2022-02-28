@@ -1943,80 +1943,9 @@ example_data = fetch_example_data()</div>
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>Downloading file &#39;COMPLEX_PVT.inc&#39; from &#39;https://raw.githubusercontent.com/trhallam/digirock/main/tests/test_data/COMPLEX_PVT.inc&#39; to &#39;/home/runner/work/digirock/digirock/0.1.dev56&#39;.
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>/home/runner/work/digirock/digirock
 </pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [2]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 18&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     15</span> temp <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>linspace(<span style="color: rgb(98,98,98)">80</span>, <span style="color: rgb(98,98,98)">150</span>, <span style="color: rgb(98,98,98)">10</span>)
-<span class="ansi-green-intense-fg ansi-bold">     17</span> <span style="color: rgb(95,135,135)"># fetch all the example data</span>
-<span class="ansi-green-fg">---&gt; 18</span> example_data <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">fetch_example_data</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
-
-File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/digirock/datasets.py:24</span>, in <span class="ansi-cyan-fg">fetch_example_data</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">fetch_example_data</span>():
-<span class="ansi-green-fg">---&gt; 24</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> {key: GOODBOY<span style="color: rgb(98,98,98)">.</span>fetch(key) <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> key <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> GOODBOY<span style="color: rgb(98,98,98)">.</span>registry}
-
-File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/digirock/datasets.py:24</span>, in <span class="ansi-cyan-fg">&lt;dictcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
-<span class="ansi-green-intense-fg ansi-bold">     23</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">fetch_example_data</span>():
-<span class="ansi-green-fg">---&gt; 24</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> {key: <span class="ansi-yellow-bg">GOODBOY</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">fetch</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">key</span><span class="ansi-yellow-bg">)</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> key <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> GOODBOY<span style="color: rgb(98,98,98)">.</span>registry}
-
-File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/pooch/core.py:587</span>, in <span class="ansi-cyan-fg">Pooch.fetch</span><span class="ansi-blue-fg">(self, fname, processor, downloader, progressbar)</span>
-<span class="ansi-green-intense-fg ansi-bold">    584</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> downloader <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-<span class="ansi-green-intense-fg ansi-bold">    585</span>         downloader <span style="color: rgb(98,98,98)">=</span> choose_downloader(url, progressbar<span style="color: rgb(98,98,98)">=</span>progressbar)
-<span class="ansi-green-fg">--&gt; 587</span>     <span class="ansi-yellow-bg">stream_download</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-intense-fg ansi-bold">    588</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">url</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    589</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">full_path</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    590</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">known_hash</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    591</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">downloader</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    592</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">pooch</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    593</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">retry_if_failed</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">retry_if_failed</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    594</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    596</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> processor <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-<span class="ansi-green-intense-fg ansi-bold">    597</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> processor(<span style="color: rgb(0,135,0)">str</span>(full_path), action, <span style="color: rgb(0,135,0)">self</span>)
-
-File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/pooch/core.py:773</span>, in <span class="ansi-cyan-fg">stream_download</span><span class="ansi-blue-fg">(url, fname, known_hash, downloader, pooch, retry_if_failed)</span>
-<span class="ansi-green-intense-fg ansi-bold">    771</span> <span class="ansi-bold" style="color: rgb(0,135,0)">with</span> temporary_file(path<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(0,135,0)">str</span>(fname<span style="color: rgb(98,98,98)">.</span>parent)) <span class="ansi-bold" style="color: rgb(0,135,0)">as</span> tmp:
-<span class="ansi-green-intense-fg ansi-bold">    772</span>     downloader(url, tmp, pooch)
-<span class="ansi-green-fg">--&gt; 773</span>     <span class="ansi-yellow-bg">hash_matches</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">tmp</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">known_hash</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">strict</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg ansi-bold" style="color: rgb(0,135,0)">True</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">source</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">str</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">fname</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    774</span>     shutil<span style="color: rgb(98,98,98)">.</span>move(tmp, <span style="color: rgb(0,135,0)">str</span>(fname))
-<span class="ansi-green-intense-fg ansi-bold">    775</span> <span class="ansi-bold" style="color: rgb(0,135,0)">break</span>
-
-File <span class="ansi-green-fg">~/.local/lib/python3.8/site-packages/pooch/hashes.py:176</span>, in <span class="ansi-cyan-fg">hash_matches</span><span class="ansi-blue-fg">(fname, known_hash, strict, source)</span>
-<span class="ansi-green-intense-fg ansi-bold">    174</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> source <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-<span class="ansi-green-intense-fg ansi-bold">    175</span>         source <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">str</span>(fname)
-<span class="ansi-green-fg">--&gt; 176</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">ValueError</span>(
-<span class="ansi-green-intense-fg ansi-bold">    177</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>algorithm<span style="color: rgb(98,98,98)">.</span>upper()<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> hash of downloaded file (</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>source<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">) does not match</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    178</span>         <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)"> the known hash: expected </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>known_hash<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> but got </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>new_hash<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">. Deleted</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    179</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)"> download for safety. The downloaded file may have been corrupted or</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    180</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)"> the known hash may be outdated.</span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">    181</span>     )
-<span class="ansi-green-intense-fg ansi-bold">    182</span> <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> matches
-
-<span class="ansi-red-fg">ValueError</span>: SHA256 hash of downloaded file (COMPLEX_PVT.inc) does not match the known hash: expected 3018c7ec33dded551e0bcd44103a1abd27ff4895268c712197616e396532da25 but got 2bb908ad754ac1939a6d3cc34e3997c0c120424f27a028dcdbce288e338fe00e. Deleted download for safety. The downloaded file may have been corrupted or the known hash may be outdated.</pre>
 </div>
 </div>
 
@@ -2321,18 +2250,34 @@ wat_pvtw["pvtw0"].tree</div>
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [5]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># load the Eclipse table directly from a text file</span>
-<span class="ansi-green-fg">----&gt; 2</span> wat_pvtw <span style="color: rgb(98,98,98)">=</span> load_pvtw(<span class="ansi-yellow-bg">example_data</span>[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">COMPLEX_PVT.inc</span><span style="color: rgb(175,0,0)">&#34;</span>], salinity<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>)
-<span class="ansi-green-intense-fg ansi-bold">      4</span> <span style="color: rgb(95,135,135)"># look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example</span>
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span style="color: rgb(0,135,0)">print</span>(wat_pvtw[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pvtw0</span><span style="color: rgb(175,0,0)">&#34;</span>]<span style="color: rgb(98,98,98)">.</span>get_summary())
-
-<span class="ansi-red-fg">NameError</span>: name &#39;example_data&#39; is not defined</pre>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;class&#39;: &lt;class &#39;digirock._fluids._water.WaterECL&#39;&gt;, &#39;name&#39;: &#39;pvtw0&#39;, &#39;props_keys&#39;: [], &#39;salinity&#39;: 0.1423666294070789, &#39;ref_pres&#39;: 26.85, &#39;bw&#39;: 1.03382, &#39;comp&#39;: 0.00031288999999999997, &#39;visc&#39;: 0.38509, &#39;cvisc&#39;: 0.0009780099999999999, &#39;density_asc&#39;: 1.1012673958726442}
+</pre>
 </div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">pvtw0                                                                                        
+├── class : &lt;class 'digirock._fluids._water.WaterECL'&gt;                                       
+├── props_keys : []                                                                          
+├── salinity : 0.1423666294070789                                                            
+├── ref_pres : 26.85                                                                         
+├── bw : 1.03382                                                                             
+├── comp : 0.00031288999999999997                                                            
+├── visc : 0.38509                                                                           
+├── cvisc : 0.0009780099999999999                                                            
+└── density_asc : 1.1012673958726442                                                         
+</pre>
+
+</div>
+
 </div>
 
 </div>
@@ -2410,16 +2355,15 @@ print("Bulk Modulus array values (g/cc):", pvtw0.bulk_modulus(props_ar2), "\n")<
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [6]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; 1</span> pvtw0 <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">wat_pvtw</span>[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pvtw0</span><span style="color: rgb(175,0,0)">&#34;</span>]
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)"># we need to tell the fluid which pvt table to use either with each call to a method</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Density single values (g/cc):</span><span style="color: rgb(175,0,0)">&#34;</span>, pvtw0<span style="color: rgb(98,98,98)">.</span>density(props))
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Density single values (g/cc): 1.1185960024862598
+Density array values (g/cc): [1.10468344 1.10814528 1.11161798 1.11510155 1.118596   1.12210132
+ 1.12561751 1.12914458 1.13268251 1.13623132] 
 
-<span class="ansi-red-fg">NameError</span>: name &#39;wat_pvtw&#39; is not defined</pre>
+Bulk Modulus array values (g/cc): [3.11532512 3.18369362 3.25225255 3.31788512 3.37855127 3.4341293
+ 3.48720719 3.54377924 3.61384577 3.71198247] 
+
+</pre>
 </div>
 </div>
 
@@ -2540,8 +2484,8 @@ doil_sd.tree</div>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>{&#39;class&#39;: &lt;class &#39;digirock._fluids._oil.DeadOil&#39;&gt;, &#39;name&#39;: &#39;DeadOil_140174682057984&#39;, &#39;props_keys&#39;: [&#39;bo&#39;], &#39;api&#39;: 35, &#39;std_density&#39;: 0.8498498498498499, &#39;pvt&#39;: None}
-{&#39;class&#39;: &lt;class &#39;digirock._fluids._oil.DeadOil&#39;&gt;, &#39;name&#39;: &#39;DeadOil_140174682058704&#39;, &#39;props_keys&#39;: [&#39;bo&#39;], &#39;api&#39;: 34.999970583044075, &#39;std_density&#39;: 0.84985, &#39;pvt&#39;: None}
+<pre>{&#39;class&#39;: &lt;class &#39;digirock._fluids._oil.DeadOil&#39;&gt;, &#39;name&#39;: &#39;DeadOil_140038471174560&#39;, &#39;props_keys&#39;: [&#39;bo&#39;], &#39;api&#39;: 35, &#39;std_density&#39;: 0.8498498498498499, &#39;pvt&#39;: None}
+{&#39;class&#39;: &lt;class &#39;digirock._fluids._oil.DeadOil&#39;&gt;, &#39;name&#39;: &#39;DeadOil_140038471174032&#39;, &#39;props_keys&#39;: [&#39;bo&#39;], &#39;api&#39;: 34.999970583044075, &#39;std_density&#39;: 0.84985, &#39;pvt&#39;: None}
 </pre>
 </div>
 </div>
@@ -2554,7 +2498,7 @@ doil_sd.tree</div>
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140174682058704                                                                      
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140038471174032                                                                      
 ├── class : &lt;class 'digirock._fluids._oil.DeadOil'&gt;                                          
 ├── props_keys : ['bo']                                                                      
 ├── api : 34.999970583044075                                                                 
@@ -2633,7 +2577,7 @@ doil_api.tree</div>
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140174682057984                                                                      
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140038471174560                                                                      
 ├── class : &lt;class 'digirock._fluids._oil.DeadOil'&gt;                                          
 ├── props_keys : ['bo']                                                                      
 ├── api : 35                                                                                 
@@ -2700,7 +2644,7 @@ doil_sd.tree</div>
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140174682058704                                                                      
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140038471174032                                                                      
 ├── class : &lt;class 'digirock._fluids._oil.DeadOil'&gt;                                          
 ├── props_keys : ['bo']                                                                      
 ├── api : 34.999970583044075                                                                 
@@ -3110,8 +3054,8 @@ Rs:  103.33333333333333
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -3141,35 +3085,6 @@ pvtos = load_pvto(example_data["COMPLEX_PVT.inc"], api=40)</div>
     </div>
 
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [15]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> <span style="color: rgb(95,135,135)"># load the Eclipse table directly from a text file</span>
-<span class="ansi-green-fg">----&gt; 2</span> pvtos <span style="color: rgb(98,98,98)">=</span> load_pvto(<span class="ansi-yellow-bg">example_data</span>[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">COMPLEX_PVT.inc</span><span style="color: rgb(175,0,0)">&#34;</span>], api<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">40</span>)
-
-<span class="ansi-red-fg">NameError</span>: name &#39;example_data&#39; is not defined</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div>
@@ -3229,14 +3144,9 @@ Input <span class="ansi-green-fg">In [15]</span>, in <span class="ansi-cyan-fg">
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [16]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span style="color: rgb(0,135,0)">print</span>(<span class="ansi-yellow-bg">pvtos</span><span style="color: rgb(98,98,98)">.</span>keys())
-
-<span class="ansi-red-fg">NameError</span>: name &#39;pvtos&#39; is not defined</pre>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>dict_keys([&#39;pvto0&#39;, &#39;pvto1&#39;, &#39;pvto2&#39;, &#39;pvto3&#39;, &#39;pvto4&#39;, &#39;pvto5&#39;, &#39;pvto6&#39;, &#39;pvto7&#39;, &#39;pvto8&#39;, &#39;pvto9&#39;, &#39;pvto10&#39;, &#39;pvto11&#39;])
+</pre>
 </div>
 </div>
 
@@ -3300,19 +3210,40 @@ ecloil0.tree</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [17]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; 1</span> ecloil0 <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">pvtos</span>[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pvto0</span><span style="color: rgb(175,0,0)">&#34;</span>]
-<span class="ansi-green-intense-fg ansi-bold">      2</span> ecloil0<span style="color: rgb(98,98,98)">.</span>tree
 
-<span class="ansi-red-fg">NameError</span>: name &#39;pvtos&#39; is not defined</pre>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">pvto0                                                                                        
+├── class : &lt;class 'digirock._fluids._oil.OilPVT'&gt;                                           
+├── props_keys : ['bo']                                                                      
+├── api : 40                                                                                 
+├── std_density : 0.8250728862973761                                                         
+├── pvt : {'type': 'full', 'rs': 'table', 'bo': 'table', 'pres': 'table', 'bo_table':        
+│   &lt;xarray.DataArray (rs: 6, pres: 14)&gt;                                                     
+│   array([[1.17014, 1.16296, 1.15664, 1.15103, 1.14598, 1.14425, 1.14143,                   
+│           1.13728, 1.13349, 1.13001, 1.12679, 1.12381, 1.12103, 1.11844],                  
+│          [    nan, 1.24802, 1.23902, 1.23114, 1.22415, 1.22175, 1.21789,                   
+│           1.21225, 1.20713, 1.20245, 1.19815, 1.19419, 1.19052, 1.18712],                  
+│          [    nan,     nan, 1.32163, 1.31096, 1.30163, 1.29846, 1.29336,                   
+│           1.28597, 1.27932, 1.27328, 1.26776, 1.26271, 1.25804, 1.25373],                  
+│          [    nan,     nan,     nan, 1.39808, 1.38574, 1.38158, 1.37494,                   
+│           1.36539, 1.35685, 1.34916, 1.34218, 1.33581, 1.32997, 1.32459],                  
+│          [    nan,     nan,     nan,     nan, 1.48274, 1.47728, 1.4686 ,                   
+│           1.45623, 1.44528, 1.43549, 1.42667, 1.41867, 1.41136, 1.40466],                  
+│          [    nan,     nan,     nan,     nan,     nan, 1.51746, 1.50785,                   
+│           1.49419, 1.48215, 1.47142, 1.46178, 1.45306, 1.44511, 1.43783]])                 
+│   Coordinates:                                                                             
+│     * pres     (pres) float64 5.0 10.0 15.0 20.0 25.0 ... 45.0 50.0 55.0 60.0 65.0         
+│     * rs       (rs) float64 27.4 54.3 81.5 110.7 143.5 156.9, 'bo_min': array(1.11844),    
+│   'bo_max': array(1.51746), 'pres_min': array(5.), 'pres_max': array(65.), 'rs_min':       
+│   array(27.4), 'rs_max': array(156.9)}                                                     
+└── gas_sg : 0.9012786885245903                                                              
+</pre>
+
 </div>
+
 </div>
 
 </div>
@@ -3373,18 +3304,34 @@ Input <span class="ansi-green-fg">In [17]</span>, in <span class="ansi-cyan-fg">
 <div class="jp-OutputArea-child">
 
     
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>&lt;matplotlib.collections.QuadMesh at 0x7f5d3c4c9670&gt;</pre>
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [18]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">ecloil0</span><span style="color: rgb(98,98,98)">.</span>pvt[<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">bo_table</span><span style="color: rgb(175,0,0)">&#34;</span>]<span style="color: rgb(98,98,98)">.</span>plot()
 
-<span class="ansi-red-fg">NameError</span>: name &#39;ecloil0&#39; is not defined</pre>
+
+<div class="jp-RenderedImage jp-OutputArea-output ">
+<img src="data:image/png;base64,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
+"
+class="
+jp-needs-light-background
+"
+>
 </div>
+
 </div>
 
 </div>
@@ -3448,14 +3395,10 @@ Input <span class="ansi-green-fg">In [18]</span>, in <span class="ansi-cyan-fg">
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [19]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Bo: </span><span style="color: rgb(175,0,0)">&#34;</span>, <span class="ansi-yellow-bg">ecloil0</span><span style="color: rgb(98,98,98)">.</span>bo({<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pres</span><span style="color: rgb(175,0,0)">&#34;</span>: <span style="color: rgb(98,98,98)">50</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">rs</span><span style="color: rgb(175,0,0)">&#34;</span>: np<span style="color: rgb(98,98,98)">.</span>array([[<span style="color: rgb(98,98,98)">100</span>, <span style="color: rgb(98,98,98)">120</span>], [<span style="color: rgb(98,98,98)">100</span>, <span style="color: rgb(98,98,98)">120</span>]])}))
-
-<span class="ansi-red-fg">NameError</span>: name &#39;ecloil0&#39; is not defined</pre>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Bo:  [[1.31490966 1.36613601]
+ [1.31490966 1.36613601]]
+</pre>
 </div>
 </div>
 
@@ -3530,17 +3473,11 @@ print("Bulk Modulus: ", ecloil0.bulk_modulus(props))</div>
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-Input <span class="ansi-green-fg">In [20]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> props <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">dict</span>(temp<span style="color: rgb(98,98,98)">=</span>np<span style="color: rgb(98,98,98)">.</span>r_[<span style="color: rgb(98,98,98)">100</span>, <span style="color: rgb(98,98,98)">110</span>], pres<span style="color: rgb(98,98,98)">=</span>np<span style="color: rgb(98,98,98)">.</span>r_[<span style="color: rgb(98,98,98)">50</span>, <span style="color: rgb(98,98,98)">60</span>], rs<span style="color: rgb(98,98,98)">=</span>np<span style="color: rgb(98,98,98)">.</span>r_[<span style="color: rgb(98,98,98)">100</span>, <span style="color: rgb(98,98,98)">150</span>])
-<span class="ansi-green-fg">----&gt; 2</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Density: </span><span style="color: rgb(175,0,0)">&#34;</span>, <span class="ansi-yellow-bg">ecloil0</span><span style="color: rgb(98,98,98)">.</span>density(props))
-<span class="ansi-green-intense-fg ansi-bold">      4</span> props <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">dict</span>(temp<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">110</span>, pres<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">50</span>, rs<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">100</span>)
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">Velocity: </span><span style="color: rgb(175,0,0)">&#34;</span>, ecloil0<span style="color: rgb(98,98,98)">.</span>velocity(props))
-
-<span class="ansi-red-fg">NameError</span>: name &#39;ecloil0&#39; is not defined</pre>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Density:  [0.69731684 0.68120537]
+Velocity:  [1119.2434647]
+Bulk Modulus:  [0.86517527]
+</pre>
 </div>
 </div>
 
