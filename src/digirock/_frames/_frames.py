@@ -1,8 +1,10 @@
 """Classes for various RockFrames, new RockFrames should inherit `RockFrame` as a base class.
 """
-from typing import Sequence, Dict, Type, List, Union
+from typing import Sequence, Dict, Type, List, Union, Tuple
 from .._base import Blend, Element
-from ..typing import NDArrayOrFloat
+from ..utils._decorators import check_props
+from ..utils._utils import _process_vfrac
+from ..typing import NDArrayOrFloat, NDArrayOrInt
 from .. import models
 from ..elastic import acoustic_vels, acoustic_velp
 
@@ -11,7 +13,7 @@ class RockFrame(Blend):
     """Base Class for defining rock frame models all new rock frames should be based upon this class.
 
     Attributes:
-        name (str): name of the fluid
+        name (str): name of the model
         blend_keys (list): Keys to use for blending
         elements (list): A list of elements
         methods (list): A list of methods each element must have
@@ -151,7 +153,7 @@ class VRHAvg(RockFrame):
     """Voight-Reuss-Hill Averaging Class for combing mineral mixes based upon averaging.
 
     Attributes:
-        name (str): name of the fluid
+        name (str): name of the model
         blend_keys (list): Keys to use for blending
         elements (list): A list of elements
         methods (list): A list of methods each element must have
@@ -172,8 +174,7 @@ class VRHAvg(RockFrame):
         Args:
             blend_keys: props keys needed for blending calcs
             elements: elements to add to vrh averaging
-            name: Name of the rock frame
-
+            name: Name of the model
         """
         super().__init__(
             blend_keys,
@@ -238,7 +239,7 @@ class HSWAvg(RockFrame):
     """Hashin-Striktman Averaging (can include a Fluid as element referenced to porosity.
 
     Attributes:
-        name (str): name of the fluid
+        name (str): name of the model
         blend_keys (list): Keys to use for blending
         elements (list): A list of elements
         methods (list): A list of methods each element must have
@@ -259,7 +260,7 @@ class HSWAvg(RockFrame):
         Args:
             blend_keys: props keys needed by blending calcs
             elements: length 2 list of elements
-            name: Name of the rock frame
+            name: Name of the model
         """
         super().__init__(
             blend_keys,
@@ -300,92 +301,116 @@ class HSWAvg(RockFrame):
         return shear
 
 
-# class CementedSandFrame(HSFrame):
-#     def __init__(self, minerals=None):
-#         """Cemented Sand Frame based upon Hashin-Striktman Averaging for two minerals.
+class CementedSand(RockFrame):
+    """Cemented Sand dry rock for sand and cement system
 
-#         Args:
-#             minerals ([type], optional): [description]. Defaults to None.
-#         """
-#         super.__init__(minerals=minerals)
+    Attributes:
+        name (str): name of the model
+        blend_keys (list): Keys to use for blending
+        elements (list): A list of elements
+        methods (list): A list of methods each element must have
+        n_elements (int): The number of elements
 
-#     def _dryframe_csand_moduli(self, porosity, min_kwargs, component="bulk"):
-#         """Dryframe moduluii for a cemented sand."""
-#         if len(min_kwargs) != 2:
-#             raise ValueError(
-#                 "Cemented Sand moduli requires exactly two mineral components."
-#             )
-#         min1, min2 = tuple(min_kwargs.keys())
+    """
 
-#         keff, mueff = dryframe_cemented_sand(
-#             self.minerals[min1]["bulk"],
-#             self.minerals[min1]["shear"],
-#             self.minerals[min2]["bulk"],
-#             self.minerals[min2]["shear"],
-#             self.crit_porosity,
-#             porosity,
-#             self.ncontacts,
-#             alpha=self.csand_scheme,
-#         )
+    def __init__(
+        self,
+        sand_vfrac_key: str,
+        sand: Type[Element],
+        cement_vfrac_key: str,
+        cement: Type[Element],
+        ncontacts: int = 9,
+        alpha: Union[str, float] = "scheme1",
+        name=None,
+    ):
+        """Cemented Sand dry rock Type Frame for two phase systems (Sand, Cement).
 
-#         if component == "bulk":
-#             return keff
-#         if component == "shear":
-#             return mueff
+        Elements must implement `density()`, `vp()`, `vs()`, `shear_modulus()`, `bulk_modulus()`, `shear_modulus()`
 
-#         raise ValueError("Unknown component: {}".format(component))
+        Args:
+            sand_vfrac_key: props key for sand
+            sand: sand element
+            cement_vfrac_key: props key for cement
+            cement: cement element
+            ncontacts: number of sand grain contacts
+            alpha: the cemented sand scheme to use
+            name: name of the model
+        """
+        super().__init__([sand_vfrac_key, cement_vfrac_key], [sand, cement], name=name)
+        self._ncontacts = ncontacts
+        self._alpha = alpha
 
-#     def dry_frame_bulk_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-#         """No stress sensitivity applied."""
-#         min_kwargs = _check_kwargs_vfrac(**min_kwargs)
-#         k0 = self._hs_avg_moduli(min_kwargs, component="bulk")
-#         kdry = self._dryframe_csand_moduli(porosity, min_kwargs, component="bulk")
-#         return kdry
+    @property
+    def ncontacts(self):
+        return self._ncontacts
 
-#     def bulk_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-#         """Returns modulus of dry frame at conditions.
+    @property
+    def alpha(self):
+        return self._alpha
 
-#         Args:
-#             porosity
-#             temp (array-like): Temperature (degC)
-#             pres (array-like): Pressure (MPa)
+    def _element_moduli(
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
+    ) -> Tuple[NDArrayOrFloat, NDArrayOrFloat, NDArrayOrFloat, NDArrayOrFloat]:
+        """Returns the moduli for the two elements."""
+        k_sand = self.elements[0].bulk_modulus(props, **kwargs)
+        mu_sand = self.elements[0].shear_modulus(props, **kwargs)
+        k_cement = self.elements[1].bulk_modulus(props, **kwargs)
+        mu_cement = self.elements[1].shear_modulus(props, **kwargs)
+        return k_sand, mu_sand, k_cement, mu_cement
 
-#         Returns:
-#             array-like : Modulus for temp and pres (GPa).
-#         """
-#         kdry = self.dry_frame_bulk_modulus(porosity, **min_kwargs)
-#         if self._is_stress_sens and self.calb_pres is None:
-#             raise WorkflowError(
-#                 "bulk_modulus",
-#                 "Calibration pressure for stress dryframe adjustment not set.",
-#             )
+    def _phi0(self, props: Dict[str, NDArrayOrFloat]) -> NDArrayOrFloat:
+        """Calculate porosity for sand grains only
 
-#         if self._is_stress_sens:
-#             kdryf = self.stress_model.stress_dryframe_moduli(
-#                 depth, self.calb_pres, pres, kdry, component="bulk"
-#             )
-#         else:
-#             kdryf = kdry
+        phi0 = phi + vfrac_cement
+        """
+        return props["poro"] + props[self.blend_keys[1]]
 
-#         return kdryf
+    def _get_ncontacts(self, props: Dict[str, NDArrayOrFloat]) -> NDArrayOrInt:
+        if "ncontacts" in props:
+            ncontacts = props["ncontacts"]
+        else:
+            ncontacts = self.ncontacts
+        return ncontacts
 
-#     def dry_frame_shear_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-#         min_kwargs = _check_kwargs_vfrac(**min_kwargs)
-#         return self._dryframe_csand_moduli(porosity, min_kwargs, component="shear")
+    @check_props("poro", broadcastable=("poro", "ncontacts"))
+    def bulk_modulus(
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
+    ) -> NDArrayOrFloat:
+        """Bulk modulus for Cemented Sand"""
+        phi0 = self._phi0(props)
+        mods = self._element_moduli(props, **kwargs)
+        ncontacts = self._get_ncontacts(props)
 
-#     def shear_modulus(self, porosity, temp, pres, depth, **min_kwargs):
-#         mudry = self.dry_frame_shear_modulus(porosity, **min_kwargs)
-#         if self._is_stress_sens and self.calb_pres is None:
-#             raise WorkflowError(
-#                 "shear_modulus",
-#                 "Calibration pressure for stress dryframe adjustment not set.",
-#             )
+        k, _ = models.dryframe_cemented_sand(
+            *mods,
+            phi0,
+            props["poro"],
+            ncontacts=ncontacts,
+            alpha=self.alpha,
+        )
+        return k
 
-#         if self._is_stress_sens:
-#             mudryf = self.stress_model.stress_dryframe_moduli(
-#                 depth, self.calb_pres, pres, mudry, component="shear"
-#             )
-#         else:
-#             mudryf = mudry
+    @check_props("poro", broadcastable=("poro", "ncontacts"))
+    def shear_modulus(
+        self, props: Dict[str, NDArrayOrFloat], **kwargs
+    ) -> NDArrayOrFloat:
+        """Shear modulus for Cemented Sand"""
+        phi0 = self._phi0(props)
+        mods = self._element_moduli(props, **kwargs)
+        ncontacts = self._get_ncontacts(props)
 
-#         return mudryf
+        _, mu = models.dryframe_cemented_sand(
+            *mods,
+            phi0,
+            props["poro"],
+            ncontacts=ncontacts,
+            alpha=self.alpha,
+        )
+        return mu
+
+    @check_props("poro")
+    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Frame density accounting for porosity"""
+        # add porosity to front of args (has zero density)
+        args = (0.0, props["poro"]) + self._process_props_get_method(props, "density")
+        return models.mixed_density(*args)
