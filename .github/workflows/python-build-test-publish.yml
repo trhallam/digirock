@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest"]
-        python: ["3.8"]
+        python: ["3.9"]
 
     outputs:
       coverage: ${{ steps.coverage.outputs.coverage }}
@@ -45,7 +45,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
-          cache: 'pip'
+          cache: "pip"
 
       - name: Install package and deps
         run: |
@@ -66,6 +66,13 @@ jobs:
           junitxml-path: ./pytest.xml
           title: Coverage Report ${{ matrix.os }} Python ${{ matrix.python }}
 
+      - name: Pytest coverage output
+        id: coverage
+        if: ${{ matrix.os }} == 'ubuntu-latest' && ${{ matrix.python }} == '3.9'
+        run: |
+          echo "::set-output name=coverage::${{ steps.coverageComment.outputs.coverage }}"
+          echo "::set-output name=color::${{ steps.coverageComment.outputs.color }}"
+
       - name: Build wheels
         run: pip wheel . -w dist --no-deps
 
@@ -82,41 +89,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: passed?
-      if: needs.build-test.result == 'success'
-      run: |
-        echo "BADGE_COLOUR=green" >> $GITHUB_ENV
-        echo "BADGE_MSG=pass" >> $GITHUB_ENV
+      - name: passed?
+        if: needs.build-test.result == 'success'
+        run: |
+          echo "BADGE_COLOUR=green" >> $GITHUB_ENV
+          echo "BADGE_MSG=pass" >> $GITHUB_ENV
 
-    - name: failed?
-      if: needs.build-test.result == 'failure'
-      run: |
-        echo "BADGE_COLOUR=RED" >> $GITHUB_ENV
-        echo "BADGE_MSG=fail" >> $GITHUB_ENV
+      - name: failed?
+        if: needs.build-test.result == 'failure'
+        run: |
+          echo "BADGE_COLOUR=RED" >> $GITHUB_ENV
+          echo "BADGE_MSG=fail" >> $GITHUB_ENV
 
-    - name: create test badges
-      if: 
-      uses: schneegans/dynamic-badges-action@v1.1.0
-      with:
-        auth: ${{ secrets.GIST_TOKEN }}
-        gistID: 0da415ee1bf30b0fc37a2fc4ddafbdee
-        filename: ${{ env.PACKAGE }}_test.json
-        label: Tests
-        namedLogo: Python
-        logoColor: white
-        message: ${{ env.BADGE_MSG }}
-        color: ${{ env.BADGE_COLOUR }}
+      - name: create test badges
+        if:
+        uses: schneegans/dynamic-badges-action@v1.1.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: 0da415ee1bf30b0fc37a2fc4ddafbdee
+          filename: ${{ env.PACKAGE }}_test.json
+          label: Tests
+          namedLogo: Python
+          logoColor: white
+          message: ${{ env.BADGE_MSG }}
+          color: ${{ env.BADGE_COLOUR }}
 
-    - name: Create the coverage badge
-      uses: schneegans/dynamic-badges-action@v1.0.0
-      with:
-        auth: ${{ secrets.GIST_TOKEN }}
-        gistID: 0da415ee1bf30b0fc37a2fc4ddafbdee
-        filename: ${{ env.PACKAGE }}_coverage.json
-        label: Coverage
-        message: ${{ needs.build-test.outputs.coverage }}
-        color: ${{ needs.build-test.outputs.coverage_color }}
-        namedLogo: python
+      - name: Create the coverage badge
+        uses: schneegans/dynamic-badges-action@v1.0.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: 0da415ee1bf30b0fc37a2fc4ddafbdee
+          filename: ${{ env.PACKAGE }}_coverage.json
+          label: Coverage
+          message: ${{ needs.build-test.outputs.coverage }}
+          color: ${{ needs.build-test.outputs.coverage_color }}
+          namedLogo: python
 
   publish:
     name: Publish to test.PyPI and PyPI
