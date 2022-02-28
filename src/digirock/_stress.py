@@ -3,8 +3,6 @@
 from inspect import getargspec
 from typing import Dict, Iterable, List
 
-from addict import Dict as AttributeDict
-
 from ._base import Element
 from ._exceptions import PrototypeError, WorkflowError
 from .utils._decorators import check_props

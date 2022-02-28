@@ -1,5 +1,4 @@
 from typing import List, Dict, Sequence, Union, Type, Any
-from attr import Attribute
 from rich.tree import Tree
 
 import numpy as np

@@ -1,6 +1,5 @@
 """Classes for various RockFrames, new RockFrames should inherit `RockFrame` as a base class.
 """
-from crypt import methods
 from typing import Sequence, Dict, Type, List, Union
 from .._base import Blend, Element
 from ..typing import NDArrayOrFloat

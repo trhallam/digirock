@@ -1,7 +1,5 @@
 """Mineral base class. Minerals are the end consumers for FrameModels.
 """
-
-from tkinter import N
 from typing import Tuple, Dict, Any
 
 from ..typing import NDArrayOrFloat
