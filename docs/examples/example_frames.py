@@ -149,8 +149,11 @@ cs = CementedSand("VSAND", sand, "VCEMENT", cement, ncontacts=9)
 cs.bulk_modulus({"poro":0.2, "VCEMENT": 0.05, "ncontacts":40})
 
 # %%
+ds
+
+# %%
 ds, props = create_orthogonal_props(
-    VCEMENT=np.linspace(0, 0.15, 16), ncontacts=np.arange(10, 100, 20), poro=np.arange(0.05, 0.1, 0.31)
+    VCEMENT=np.linspace(0, 0.15, 16), ncontacts=np.arange(10, 100, 20), poro=np.arange(0.05, 0.31, 0.01)
 )
 
 ds["bulk_modulus"] = (ds.dims, cs.bulk_modulus(props))
@@ -158,7 +161,7 @@ fig, axs = plt.subplots(ncols=3, figsize=figsize)
 ds.sel(poro=0.1).bulk_modulus.plot(ax=axs[0], vmin=0, vmax=50)
 ds.sel(poro=0.2).bulk_modulus.plot(ax=axs[1], vmin=0, vmax=50)
 # or slice in the porosity direction
-ds.sel(poro=0.2).bulk_modulus.plot(ax=axs[2], vmin=0, vmax=50)
-
+ds.sel(ncontacts=50).bulk_modulus.plot(ax=axs[2], vmin=0, vmax=50)
+fig.tight_layout()
 
 # %%
