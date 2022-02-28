@@ -304,7 +304,8 @@ class OilBW92(BaseOil):
     ) -> Tuple[NDArrayOrFloat, NDArrayOrFloat]:
         if self.rst is None:
             raise WorkflowError(
-                "RS/PRESSURE relationship needs to be set using `set_rst()`"
+                "_get_rsbo",
+                "RS/PRESSURE relationship needs to be set using `set_rst()`",
             )
 
         if self.rst["type"] == "constant":
@@ -507,7 +508,9 @@ class OilPVT(BaseOil):
                     f"`pres` {pres.shape} and `bo` {bo.shape} must have same shape"
                 )
 
-            table = xr.DataArray(data=bo, coords={"pres": pres})
+            table = xr.DataArray(
+                data=bo, dims={"pres": pres}, coords={"pres": pres}
+            ).expand_dims({"rs": rs})
             self.pvt = {
                 "type": "fixed_rs",
                 "rs": rs[0],
@@ -588,7 +591,12 @@ class OilPVT(BaseOil):
             pres=xr.DataArray(pres_l.ravel(), dims="bo", coords=coords),
         )
 
-        if self.pvt["type"] == "full":
+        if self.pvt["type"] == "fixed_rs":
+            fvf = (
+                self.pvt["bo_table"].sel(rs=rs).interp(pres=sampling_ar["pres"]).values
+            )
+            fvf = np.reshape(fvf, to_shp)
+        elif self.pvt["type"] == "full":
             fvf = self.pvt["bo_table"].interp(**sampling_ar).values
             fvf = np.reshape(fvf, to_shp)
         else:

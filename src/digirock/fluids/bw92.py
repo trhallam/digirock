@@ -560,7 +560,7 @@ def wat_velocity_pure(t: NDArrayOrFloat, p: NDArrayOrFloat) -> NDArrayOrFloat:
     to_shp = check_broadcastable(t=t, p=p)
     tl = np.broadcast_to(t, to_shp)
     pl = np.broadcast_to(p, to_shp)
-    vl = np.zeros(to_shp)
+    vl = np.zeros(to_shp, dtype=np.float64)
     dims = vl.shape
     _wat_velocity_pure_sum(
         tl.astype(np.float64).ravel(), pl.astype(np.float64).ravel(), vl.ravel()

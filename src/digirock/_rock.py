@@ -32,6 +32,7 @@ class GassmannRock(Blend):
     def __init__(
         self,
         frame_model: Union[RockFrame, PoroAdjust, StressAdjust, Mineral],
+        zero_porosity_model: Union[RockFrame, Mineral],
         fluid_model: Union[Fluid, Blend, Switch],
         blend_keys=["poro"],
         name=None,
@@ -42,20 +43,27 @@ class GassmannRock(Blend):
 
         Args:
             frame_model: dry rock frame model
+            zero_porosity_model: need for k0 in Gassmann usually a VRHAvg or equivalent
             fluid_model: fluid model
             name: Name of the model
         """
         super().__init__(
-            blend_keys, [frame_model, fluid_model], methods=self._methods, name=name
+            blend_keys,
+            [frame_model, fluid_model, zero_porosity_model],
+            methods=self._methods,
+            name=name,
         )
 
     @check_props("poro")
     def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
-        """Return the density of the rock
+        """The density of the rock
 
         Args:
             props: Properties need for calculation e.g. porosity
             kwargs: passed to class elements
+
+        Returns:
+            density
         """
         # must be at least one fluid and one mineral component
         fluid_density = self.elements[1].density(props, **kwargs)
@@ -66,28 +74,18 @@ class GassmannRock(Blend):
     def bulk_modulus(
         self, props: Dict[str, NDArrayOrFloat], **kwargs
     ) -> NDArrayOrFloat:
-        """Return the bulk modulus of the rock
-
-        Special behaviour:
-            If no fluid components are specified the dry frame modulus will be returned.
+        """The bulk modulus of the rock
 
         Args:
-            porosity (array-like): Porosity values
-            temp (array-like): Temperature
-            pres (array-like): Pressure-values
-            use_stress_sens (bool): Use the stress sensitivity equations to adjust moduli for
-                pressure. Defaults to False.
-            depth (array-like): The depth for stress calculations. Defaults to None.
-            kwargs (array-like): Volume and saturation fractions for minerals and fluids.
+            props: Properties need for calculation e.g. porosity
+            kwargs: passed to class elements
 
         Returns:
-            array-like: Bulk modulus for input values.
+            Bulk modulus
         """
         kfl = self.elements[1].bulk_modulus(props, **kwargs)
         kdry = self.elements[0].bulk_modulus(props, **kwargs)
-        zero_porosity_props = {k: v for k, v in props.items() if k != "poro"}
-        zero_porosity_props["poro"] = 0.0
-        k0 = self.elements[0].bulk_modulus(zero_porosity_props, **kwargs)
+        k0 = self.elements[2].bulk_modulus(props, **kwargs)
         return gassmann_fluidsub(kdry, kfl, k0, props["poro"])
 
     def shear_modulus(
@@ -95,30 +93,24 @@ class GassmannRock(Blend):
     ) -> NDArrayOrFloat:
         """Return the shear modulus of the rock
 
-        Special behaviour:
-            Fluid components are ignored for the shear modulus.
-
         Args:
-            porosity (array-like): Porosity values
-            pres (array-like): Pressure-values
-            use_stress_sens (bool): Use the stress sensitivity equations to adjust moduli for
-                pressure. Defaults to False.
-            kwargs (array-like): Volume fractions for minerals.
+            props: Properties need for calculation e.g. porosity
+            kwargs: passed to class elements
 
         Returns:
-            array-like: Shear modulus for input values.
+            Shear modulus for input values
         """
         return self.elements[0].shear_modulus(props, **kwargs)
 
     def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
-        """Returns compression velocity of Gassmann Model
+        """Compressional velocity of Gassmann Model
 
         Args:
             props: A dictionary of properties required.
             kwargs: ignored
 
         Returns:
-            velocity (m/s).
+            velocity (m/s)
         """
         density = self.density(props, **kwargs)
         bulk = self.bulk_modulus(props, **kwargs)
@@ -126,14 +118,14 @@ class GassmannRock(Blend):
         return acoustic_velp(bulk, shear, density)
 
     def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
-        """Returns shear velocity of Gassmann Model
+        """Shear velocity of Gassmann Model
 
         Args:
             props: A dictionary of properties required.
             kwargs: ignored
 
         Returns:
-            velocity (m/s).
+            velocity (m/s)
         """
         density = self.density(props, **kwargs)
         shear = self.shear_modulus(props, **kwargs)
