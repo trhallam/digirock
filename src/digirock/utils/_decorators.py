@@ -1,12 +1,12 @@
 """Common decorators for functions.
 """
-from typing import Dict, Callable, Tuple
+from typing import Dict, Callable, Sequence
 
 from functools import wraps
 import numpy as np
 from inspect import getfullargspec
 
-from .types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 from ._utils import check_broadcastable
 
 
@@ -76,7 +76,7 @@ def mutually_inclusive(keyword, *keywords):
 
 
 def broadcastable(keyword: str, *keywords: str) -> Callable:
-    """Wrapp to check if the argument names listed are broadcastable as Numpy arrays.
+    """Wrapper to check if the argument names listed are broadcastable as Numpy arrays.
 
     Args:
         keyword: argument to check
@@ -92,8 +92,12 @@ def broadcastable(keyword: str, *keywords: str) -> Callable:
 
         @wraps(func)
         def inner(*args, **kwargs):
-            check_args = {name: arg for name, arg in zip(argspec.args, args)}
-            check_args.update(kwargs)
+            # add args filtering to keywords check
+            check_args = {
+                name: arg for name, arg in zip(argspec.args, args) if name in keywords
+            }
+            # add keywords filtering to keywords check
+            check_args.update({kw: val for kw, val in kwargs.items() if kw in keywords})
             _ = check_broadcastable(**check_args)
             return func(*args, **kwargs)
 
@@ -103,7 +107,7 @@ def broadcastable(keyword: str, *keywords: str) -> Callable:
 
 
 def check_props(
-    *required_props: str, broadcastable: Tuple[str] = None, props_argument="props"
+    *required_props: str, broadcastable: Sequence[str] = None, props_argument="props"
 ) -> Callable:
     """Wrapper to check props dictionary has required keywords.
 
@@ -121,7 +125,7 @@ def check_props(
             props = [
                 arg for arg, name in zip(args, argspec.args) if name == props_argument
             ][0]
-            missing = [p for p in props if p not in required_props]
+            missing = [p for p in required_props if p not in props]
             if missing:
                 raise ValueError(
                     f"{func} requires props kws: {required_props}, missing: {missing}"

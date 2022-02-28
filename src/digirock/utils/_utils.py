@@ -1,55 +1,56 @@
+from typing import Sequence
 import numpy as np
 
-from digirock.utils.types import NDArrayOrFloat
+from ..typing import NDArrayOrFloat
 
 
-def _check_kwargs_vfrac(**kwargs):
-    """Check that kwargs sum to volume fraction of one.
+# def _check_kwargs_vfrac(**kwargs):
+#     """Check that kwargs sum to volume fraction of one.
 
-    Raises:
-        ValueError: [description]
-        ValueError: [description]
-        ValueError: [description]
-        ValueError: [description]
+#     Raises:
+#         ValueError: [description]
+#         ValueError: [description]
+#         ValueError: [description]
+#         ValueError: [description]
 
-    Returns:
-        [type]: [description]
-    """
-    lengths = []
-    nonekey = None
-    for key in kwargs:
-        if kwargs[key] is None and nonekey is None:
-            nonekey = key
-        elif kwargs[key] is None and nonekey is not None:
-            raise ValueError("Only one component can be the complement")
+#     Returns:
+#         [type]: [description]
+#     """
+#     lengths = []
+#     nonekey = None
+#     for key in kwargs:
+#         if kwargs[key] is None and nonekey is None:
+#             nonekey = key
+#         elif kwargs[key] is None and nonekey is not None:
+#             raise ValueError("Only one component can be the complement")
 
-        if not isinstance(kwargs[key], np.ndarray) and nonekey != key:
-            lengths.append(1)
-        elif nonekey != key:
-            lengths.append(kwargs[key].size)
+#         if not isinstance(kwargs[key], np.ndarray) and nonekey != key:
+#             lengths.append(1)
+#         elif nonekey != key:
+#             lengths.append(kwargs[key].size)
 
-    n = len(lengths)
-    if np.all(np.array(lengths) == lengths[0]):
-        frac_test = np.zeros((lengths[0], n))
-    else:
-        raise ValueError(f"Input volume fractions must be the same size got {lengths}")
+#     n = len(lengths)
+#     if np.all(np.array(lengths) == lengths[0]):
+#         frac_test = np.zeros((lengths[0], n))
+#     else:
+#         raise ValueError(f"Input volume fractions must be the same size got {lengths}")
 
-    i = 0
-    for key in kwargs:
-        if key != nonekey:
-            frac_test[:, i] = kwargs[key]
-            i = i + 1
+#     i = 0
+#     for key in kwargs:
+#         if key != nonekey:
+#             frac_test[:, i] = kwargs[key]
+#             i = i + 1
 
-    if nonekey is not None:
-        if np.all(frac_test.sum(axis=1) <= 1.0):
-            kwargs[nonekey] = 1 - frac_test.sum(axis=1)
-        else:
-            raise ValueError(f"Input volume fractions sum to greater than 1")
-    else:
-        if not np.allclose(frac_test.sum(axis=1), 1.0):
-            raise ValueError(f"Input volume fractions must sum to 1 if no complement.")
+#     if nonekey is not None:
+#         if np.all(frac_test.sum(axis=1) <= 1.0):
+#             kwargs[nonekey] = 1 - frac_test.sum(axis=1)
+#         else:
+#             raise ValueError(f"Input volume fractions sum to greater than 1")
+#     else:
+#         if not np.allclose(frac_test.sum(axis=1), 1.0):
+#             raise ValueError(f"Input volume fractions must sum to 1 if no complement.")
 
-    return kwargs
+#     return kwargs
 
 
 def check_broadcastable(**kwargs: NDArrayOrFloat) -> tuple:
@@ -78,21 +79,85 @@ def check_broadcastable(**kwargs: NDArrayOrFloat) -> tuple:
     return shapes
 
 
-def safe_divide(a, b):
-    """Helper function to avoid divide by zero in many areas.
+def _process_vfrac(
+    *argv: NDArrayOrFloat, i=1, tol: float = 1e-6
+) -> Sequence[NDArrayOrFloat]:
+    """Process an arbitrary number of components to return broadcastable arrays for volume based mixing.
+
+    Can take an arbitrary number of components and volume fractions.
+    Volume fractions must sum to one for each sample.
+    If the number of arguments is odd, the final frac is assumed to be the complement of all other fracs to sum to 1.
+
+    Inputs must be [broadcastable][https://numpy.org/doc/stable/user/basics.broadcasting.html].
+
+    When i==1:
+    `argv` as the form `(component_1, vfrac_1, component_2, vfrac2, ...)` or to use the complement for the final
+    component `(component_1, vfrac_1, component_2)`
+
     Args:
-        a (array-like): Numerator
-        b (array-like): Deominator
+        argv: Alternating component and volume fraction inputs
+        tol: The volume sum absolute tolerance
+
     Returns:
-        a/b (array-like): Replace div0 by 0
+        argv in processable state
+
+    Raises:
+        ValueError: Volume fractions != 1 +- tol
     """
-    a = np.atleast_1d(a)
-    b = np.atleast_1d(b)
-    shp = a.shape
-    a = np.squeeze(a)
-    b = np.squeeze(b)
-    shp = a.shape if a.size != 1 else b.shape
-    return np.divide(a, b, out=np.zeros(shp), where=b != 0.0)
+    interval = i + 1
+    try:
+        assert (len(argv) - 1) % interval - (interval - 2) >= 0
+    except AssertionError:
+        raise ValueError(
+            f"Length of arguments was l={len(argv)}, expected n*{interval} or n*{interval}-1"
+        )
+    to_shp = check_broadcastable(**{f"argv{i}": arg for i, arg in enumerate(argv)})
+    # check arguments and find complement if necessary
+    sum_vol = 0
+    for arg in argv[i::interval]:
+        sum_vol = sum_vol + np.array(arg)
+
+    # find complement if necessary
+    if len(argv) % interval != 0:
+        fvol = np.clip(1 - sum_vol, 0, 1)
+        sum_vol = sum_vol + fvol
+        argv = argv + (np.clip(fvol, 0, 1),)
+
+    # check volume fractions sum to one
+    if not np.allclose(1, sum_vol, atol=tol):
+        raise ValueError(
+            f"Volume fractions do not sum to 1, got sum_vol min: {sum_vol.min()} max: {sum_vol.max()}"
+        )
+
+    return argv
+
+
+def safe_divide(a: NDArrayOrFloat, b: NDArrayOrFloat) -> NDArrayOrFloat:
+    """Helper function to avoid divide by zero in arrays and floats.
+
+    Args:
+        a: Numerator
+        b: Denominator
+
+    Returns:
+        a/b replace div0 by 0
+    """
+    bc_shp = check_broadcastable(a=a, b=b)
+    return np.divide(a, b, out=np.zeros(bc_shp), where=b != 0.0)
+
+
+def nan_divide(a: NDArrayOrFloat, b: NDArrayOrFloat) -> NDArrayOrFloat:
+    """Helper function to avoid divide by zero in arrays and floats.
+
+    Args:
+        a: Numerator
+        b: Denominator
+
+    Returns:
+        a/b replace div0 by np.nan
+    """
+    bc_shp = check_broadcastable(a=a, b=b)
+    return np.divide(a, b, out=np.full(bc_shp, np.nan), where=b != 0.0)
 
 
 def ndim_index_list(n):

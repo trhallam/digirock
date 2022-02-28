@@ -40,13 +40,17 @@ These functions are based upon the work by:
 
 """
 import warnings
-
+from more_itertools import chunked
 import numba
 import numpy as np
+from numpy.typing import NDArray
 
 from scipy.optimize import root_scalar
 
-from ..utils import safe_divide
+from ..typing import NDArrayOrFloat
+
+from ..utils import safe_divide, check_broadcastable
+from ..utils._utils import _process_vfrac
 
 #  define constants
 GAS_R = 8.31441  #  gas constant (J K-1 mol-1) (m3 Pa K-1 mol-1)
@@ -68,40 +72,44 @@ WATC = np.array(
 )
 
 
-def gas_vmol(t, p):
+def gas_vmol(t: NDArrayOrFloat, p: NDArrayOrFloat) -> NDArrayOrFloat:
     """Calculates molar volume for and ideal gas
 
     B&W 1992 Eq 1
 
     Args:
-        t (array-like): Temperature of the gas in degC
-        p (array-like): The pressure of the gas in Pa
+        t: Temperature of the gas (degC)
+        p: The pressure of the gas (Pa)
 
     Returns:
-        (array-like): the molar volume of the gas for ta and p
+        the molar volume of the gas for t and p
 
     """
     return GAS_R * (t + 273.15) / p
 
 
-def gas_density(m, t, p):
+def gas_density(
+    m: NDArrayOrFloat, t: NDArrayOrFloat, p: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculates the density for and ideal gas
 
     B&W 1992 Eq 2
 
     Args:
-        m (array-like): Molecular weight of the gas.
-        t (array-like): Temperature of the gas in degC
-        p (array-like): Pressure of the gas in MPa
+        m: Molecular weight of the gas.
+        t: Temperature of the gas (degC)
+        p: Pressure of the gas in (Pa)
 
     Returns:
-        (array-like): the molar weight of the gas for ta and p
+        the molar weight of the gas for t and p
 
     """
     return np.divide(np.multiply(m, p), (t + 273.15) * GAS_R)
 
 
-def gas_isotherm_comp(v1, v2, p1, p2):
+def gas_isotherm_comp(
+    v1: NDArrayOrFloat, v2: NDArrayOrFloat, p1: NDArrayOrFloat, p2: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculates the isothermal compressibility of an ideal gas
 
     Two points of corresponding molecular volume and pressure must be known to calculate Bt
@@ -109,95 +117,97 @@ def gas_isotherm_comp(v1, v2, p1, p2):
     B&W 1992 Eq 3
 
     Args:
-        v1 (array-like): The first molecular volume of the gas
-        v2 (array-like): The second molecular volume of the gas
-        p1 (array-like): The first pressure of the gas in Pa
-        p2 (array-like): The second pressure of the gas in Pa
+        v1: The first molecular volume of the gas
+        v2: The second molecular volume of the gas
+        p1: The first pressure of the gas (Pa)
+        p2: The second pressure of the gas (Pa)
 
     Returns:
-        Bt (array-like): the isothermal compressibility
+        the isothermal compressibility [Bt]
     """
     return -1 * (v2 - v1) / (p2 - p1) / v1
 
 
-def gas_isotherm_vp(m, t):
+def gas_isotherm_vp(m: NDArrayOrFloat, t: NDArrayOrFloat) -> NDArrayOrFloat:
     """Calculates the isothermal velocity of a compressional wave for an ideal gas
 
     B&W 1992 Eq 4
 
     Args:
-        m (array-like): Molecular weight of gas
-        t (array-like): Temperature of gas in degC
+        m: Molecular weight of gas
+        t: Temperature of gas (degC)
 
     Returns:
-        vp (array-like): Isothermal compressional velocity for gas
+        Isothermal compressional velocity for gas (m/s)
     """
     return np.sqrt(GAS_R * (t + 273.15) / m)
 
 
-def gas_pseudocrit_pres(g):
+def gas_pseudocrit_pres(g: NDArrayOrFloat) -> NDArrayOrFloat:
     """Calculates the gas pseudo critical pressure value
 
     B&W 1992 Eq 9a
 
     Args:
-        g (array-like): The gas specific gravity
+        g: The gas specific gravity
 
     Returns:
-        (array-like): The pseudo critical pressure
+        The pseudo critical pressure
 
     """
     return 4.892 - 0.4048 * g
 
 
-def gas_pseudored_pres(p, g):
+def gas_pseudored_pres(p: NDArrayOrFloat, g: NDArrayOrFloat) -> NDArrayOrFloat:
     """Calculates the gas pseudo reduced pressure value
 
     B&W 1992 Eq 9a
 
     Args:
-        p (array-like): The gas pressure in MPascals
-        g (array-like): The gas specific gravity
+        p: The gas pressure in (MPa)
+        g: The gas specific gravity
 
     Returns:
-         (array-like): the pseudo reduced or normalised pseudo critical pressure value
+        the pseudo reduced or normalised pseudo critical pressure value
 
     """
     return p / gas_pseudocrit_pres(g)
 
 
-def gas_pseudocrit_temp(g):
+def gas_pseudocrit_temp(g: NDArrayOrFloat) -> NDArrayOrFloat:
     """Calculates the gas pseudo critical temperature value
 
     B&W 1992 Eq 9b
 
     Args:
-        g (array-like): The gas specific gravity
+        g: The gas specific gravity
 
     Returns:
-         (array-like): The pseudo critical temperature
+        The pseudo critical temperature
 
     """
     return 94.72 + 170.75 * g
 
 
-def gas_pseudored_temp(t, g):
+def gas_pseudored_temp(t: NDArrayOrFloat, g: NDArrayOrFloat) -> NDArrayOrFloat:
     """Calculates the gas pseudo reduced pressure value
 
     B&W 1992 Eq 9b
 
     Args:
-        t (array-like): The gas absolute temperature in degK
-        g (array-like): The gas specific gravity
+        t: The gas absolute temperature (degK)
+        g: The gas specific gravity
 
     Returns:
-        (array-like): the pseudo reduced or normalised pseudo critical temperature value
+        the pseudo reduced or normalised pseudo critical temperature value
 
     """
     return (t + 273.15) / gas_pseudocrit_temp(g)
 
 
-def gas_oga_density(t, p, g):
+def gas_oga_density(
+    t: NDArrayOrFloat, p: NDArrayOrFloat, g: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculates the approximate density of gas appropriate to the oil and gas industry
 
     Suitable for temperatures and pressures typically encountered in the oil and gas
@@ -206,12 +216,12 @@ def gas_oga_density(t, p, g):
     B&W 1992 Eq 10a
 
     Args:
-        t (array-like): The gas absolute temperature in degK
-        p (array-like): The gas pressure in MPa
-        g (array-like): The gas specific gravity
+        t: The gas absolute temperature (degK)
+        p: The gas pressure (MPa)
+        g: The gas specific gravity
 
     Returns:
-        (array-like): the oil and gas appropriate approximate density in g/cc
+        the oil and gas appropriate approximate density (g/cc)
 
     """
     ppr = gas_pseudored_pres(p, g)
@@ -234,16 +244,18 @@ def gas_oga_density(t, p, g):
     return 28.8 * np.divide(np.multiply(g, p), GAS_R * np.multiply(Z, (t + 273.15)))
 
 
-def gas_adiabatic_bulkmod(t, p, g):
+def gas_adiabatic_bulkmod(
+    t: NDArrayOrFloat, p: NDArrayOrFloat, g: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculates the approximate adiabatic (constant pressure) bulk modulus of a gas
 
     Args:
-        t (array-like): Gas temperature in degC
-        p (array-like): The gas pressure in MPa
-        g (array-like): The gas specific gravity
+        t: Gas temperature (degC)
+        p: The gas pressure (MPa)
+        g: The gas specific gravity
 
     Returns:
-        (array-like): approximate gas bulk modulus in GPa
+        approximate gas bulk modulus in GPa
 
     """
     ppr = gas_pseudored_pres(p, g)
@@ -264,16 +276,18 @@ def gas_adiabatic_bulkmod(t, p, g):
     return p * gamma * 1e-3 / (1 - ppr * f / Z)
 
 
-def gas_adiabatic_viscosity(t, p, g):
+def gas_adiabatic_viscosity(
+    t: NDArrayOrFloat, p: NDArrayOrFloat, g: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculates the approximate adiabatic (constant pressure) viscoisty of a gas
 
     Args:
-        t (float): The gas temperature in degC
-        p (float): The gas pressure in MPascals
-        g (float): The gas specific gravity
+        t: The gas temperature (degC)
+        p: The gas pressure in (MPa)
+        g: The gas specific gravity
 
     Returns:
-        (float): approximate gas bulk modulus in centipoise
+        approximate gas bulk modulus in centipoise
 
     """
     ppr = gas_pseudored_pres(p, g)
@@ -294,18 +308,18 @@ def gas_adiabatic_viscosity(t, p, g):
     return eta2diveta1 * eta1
 
 
-def oil_isothermal_density(rho, p):
+def oil_isothermal_density(rho: NDArrayOrFloat, p: NDArrayOrFloat) -> NDArrayOrFloat:
     """Calculates the oil density for a given pressure at 15.6 degC
 
     B&W 1992 Equation 18
 
     Args:
-        rho (array-like): The oil reference density (g/cc) at 15.6 degC
+        rho: The oil reference density (g/cc) at 15.6 degC
             can be compensated for disovled gases by running `oil_rho_sat` first.
-        p (array-like): Pressure (MPa)
+        p: Pressure (MPa)
 
     Returns:
-        (array-like): The oil density (g/cc) at pressure p
+        The oil density (g/cc) at pressure p
     """
     return (
         rho
@@ -314,7 +328,9 @@ def oil_isothermal_density(rho, p):
     )
 
 
-def oil_density(rho, p, t):
+def oil_density(
+    rho: NDArrayOrFloat, p: NDArrayOrFloat, t: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculates the oil density for given pressure and temperature
 
     For a live oil rho should be the output of `oil_rho_sat` to compensate
@@ -323,39 +339,47 @@ def oil_density(rho, p, t):
     B&W 1992 Eq 19
 
     Args:
-        rho (array-like): The oil density (g/cc)
-        p (array-like): Pressure (MPa)
-        t (array-like): Absolute temperature in degC
+        rho: The oil density (g/cc)
+        p: Pressure (MPa)
+        t: Absolute temperature (degC)
 
     Returns:
-        (array-like): The oil density (g/cc) at pressure p and temperature ta
+        The oil density (g/cc) at pressure p and temperature t
     """
     return oil_isothermal_density(rho, p) / (
         0.972 + 3.81e-4 * np.power(t + 17.78, 1.175)
     )
 
 
-def oil_fvf(rho0, g, rs, t):
+def oil_fvf(
+    rho0: NDArrayOrFloat, g: NDArrayOrFloat, rs: NDArrayOrFloat, t: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculate the oil formation volume factor b0
 
     Equation 23 from Batzle and Wang 1992
     All inputs must be broadcastable to an equivalent shape.
 
     Args:
-        rho0 (array-like): The oil reference density (g/cc) at 15.6 degC
-        g (array-like): The gas specific gravity
-        rs (array-like): The Gas-to-Oil ratio Litre/litre
-        t (array-like): In-situ temperature degC
+        rho0: The oil reference density (g/cc) at 15.6 degC
+        g: The gas specific gravity
+        rs: The Gas-to-Oil ratio (L/L)
+        t: In-situ temperature (degC)
 
     Returns:
-        (array-like): The oil formation volume factor (FVF/b0)
+       The oil formation volume factor (FVF/b0)
 
     """
     # note: Dhannanjay 2006 shows 2.495 instead of 2.4 inside power bracket.
     return 0.972 + 0.00038 * np.power(2.4 * rs * np.sqrt(g / rho0) + t + 17.8, 1.175)
 
 
-def oil_rg(oil, g, pres, temp, mode="rho"):
+def oil_rg(
+    oil: NDArrayOrFloat,
+    g: NDArrayOrFloat,
+    pres: NDArrayOrFloat,
+    temp: NDArrayOrFloat,
+    mode: str = "rho",
+) -> NDArrayOrFloat:
     """Calculate the Rg for oil with given paramters.
 
     Rg is the volume ratio of liberated gas to remaining oil at atmospheric
@@ -365,17 +389,15 @@ def oil_rg(oil, g, pres, temp, mode="rho"):
     all have length n.
 
     Args:
-        oil (array-like): The density of the oil at 15.6degC or the api of
+        oil: The density of the oil at 15.6degC or the api of
             the oil if mode = 'api'
-        g (array-like): gas specific gravity
-        pres (array-like): reservoir pressure (MPa)
-        temp (array-like): temperature (degC)
-        mode (string): Default: 'rho', 'oil' argument mode:
-            'rho' - oil input as density in g/cc
-            'api' - oil input as API
+        g: gas specific gravity
+        pres: reservoir pressure (MPa)
+        temp: temperature (degC)
+        mode: One of; rho' - oil input as density (g/cc), 'api' - oil (API)
 
     Returns:
-        rg (array-like): (L/L)
+        rg (L/L)
     """
     if mode == "rho":
         a = 0.02123
@@ -384,44 +406,55 @@ def oil_rg(oil, g, pres, temp, mode="rho"):
         a = 2.03
         b = 0.02878 * oil
     else:
-        raise KeyError("'mode must be either 'rho' or 'api'")
+        raise ValueError("'mode must be either 'rho' or 'api'")
     return a * g * np.power(pres * np.exp(b - 0.00377 * temp), 1.205)
 
 
-def oil_rho_sat(rho0, g, rg, b0):
+def oil_rho_sat(
+    rho0: NDArrayOrFloat, g: NDArrayOrFloat, rg: NDArrayOrFloat, b0: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculate the gas saturated oil density
 
     B&W Eq 24
 
     Args:
-        rho0 (array-like): The oil reference density (g/cc) at 15.6 degC
-        g (array-like): The gas specific gravity
-        rg (array-like): The Gas-to-Oil ratio Litre/litre
-        b0 (array-like): Oil formation volume factor FVF
+        rho0: The oil reference density (g/cc) at 15.6 degC
+        g: The gas specific gravity
+        rg: The Gas-to-Oil ratio (L/L)
+        b0: Oil formation volume factor FVF
 
     Returns:
-        (array-like): The gas saturated oil density at 15.6 degC
+        The gas saturated oil density (g/cc) at 15.6 degC
     """
     return safe_divide((rho0 + 0.0012 * rg * g), b0)
 
 
-def oil_rho_pseudo(rho0, rg, b0):
+def oil_rho_pseudo(
+    rho0: NDArrayOrFloat, rg: NDArrayOrFloat, b0: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculates the oil pseudo density
 
     B&W 1992 Eq 22
 
     Args:
-        rho0 (array-like): The oil reference density (g/cc) at 15.6 degC
-        rg (array-like): Gas-to-Oil ratio Litre/litre
-        b0 (array-like): Oil formation volume factor FVF
+        rho0: The oil reference density (g/cc) at 15.6 degC
+        rg: Gas-to-Oil ratio (L/L))
+        b0: Oil formation volume factor FVF
 
     Returns:
-        (array-like): The pseudo-density of oil due to expansion from gas
+        The pseudo-density (g/cc) of oil due to expansion from gas
     """
-    return rho0 / (1 + 0.001 * rg) / b0
+    return safe_divide(rho0 / (1 + 0.001 * rg), b0)
 
 
-def oil_velocity(rho0, p, t, g, rg, b0=None):
+def oil_velocity(
+    rho0: NDArrayOrFloat,
+    p: NDArrayOrFloat,
+    t: NDArrayOrFloat,
+    g: NDArrayOrFloat,
+    rg: NDArrayOrFloat,
+    b0: NDArrayOrFloat = None,
+):
     """Oil compressional-wave velocity
 
     B&W 1992 Eq 20a
@@ -430,10 +463,10 @@ def oil_velocity(rho0, p, t, g, rg, b0=None):
     The pseudo density for live oil is calculated intrinsically.
 
     Args:
-        rho0 (array-like): The oil reference density (g/cc) at 15.6 degC
-        p (array-like): In-situ pressure MPa
-        t (array-like): In-situ temperature degC
-        g (array-like): gas specific gravity
+        rho0: The oil reference density (g/cc) at 15.6 degC
+        p: In-situ pressure MPa
+        t: In-situ temperature degC
+        g: gas specific gravity
         rg (array-like): Gas-to-Oil ratio Litre/litre
 
     Returns:
@@ -450,50 +483,58 @@ def oil_velocity(rho0, p, t, g, rg, b0=None):
     )
 
 
-def oil_bulkmod(rho, vp):
+def oil_bulkmod(rho: NDArrayOrFloat, vel: NDArrayOrFloat) -> NDArrayOrFloat:
     """Oil bulk modulus GPa
 
+    Uses [bulkmod][digirock.fluids.bw92.bulkmod].
+
     Args:
-        rho (array-like): In-situ oil density
-        vp (array-like): In-situ compressional velocity
+        rho: In-situ oil density (g/cc)
+        vel: In-situ compressional velocity (g/cc)
 
     Returns:
-        (array-like): Oil bulk modulus in GPa
+        Oil bulk modulus in (GPa)
     """
-    return rho * np.power(vp, 2) * 1e-6
+    return bulkmod(rho, vel)
 
 
-def _mwat_velocity_pure_sum(tl, pl, vl):
-    """Pure Water Calc
-    Input vectors should be type float64 to prevent overflow
+# use number version instead - python is too slow
+# def _mwat_velocity_pure_sum(tl, pl, vl):
+#     """Pure Water Calc
+#     Input vectors should be type float64 to prevent overflow
 
-    B&W Matrix Summation with water coefficients
+#     B&W Matrix Summation with water coefficients
 
-    Args:
-        tl (array-like): Temperature decC
-        pl (array-like): Pressure MPa
-        vl (array-like): Output velocity vector will be modified
-    """
-    for v, (tt, pp) in enumerate(zip(tl.ravel(), pl.ravel())):
-        # using np.float64 may sacrifice some accuracy but was required for large powers
-        t_ar = np.power(np.array([tt] * 5), np.arange(0, 5))
-        p_ar = np.power(np.array([pp] * 4), np.arange(0, 4))
-        p_ar = np.tile(p_ar, 5).reshape(5, 4)
-        t_ar = t_ar.repeat(4).reshape(5, 4)
-        vl[v] = np.sum(WATC * t_ar * p_ar)
+#     Args:
+#         tl (array-like): Temperature decC
+#         pl (array-like): Pressure MPa
+#         vl (array-like): Output velocity vector will be modified
+#     """
+#     for v, (tt, pp) in enumerate(zip(tl.ravel(), pl.ravel())):
+#         # using np.float64 may sacrifice some accuracy but was required for large powers
+#         t_ar = np.power(np.array([tt] * 5), np.arange(0, 5))
+#         p_ar = np.power(np.array([pp] * 4), np.arange(0, 4))
+#         p_ar = np.tile(p_ar, 5).reshape(5, 4)
+#         t_ar = t_ar.repeat(4).reshape(5, 4)
+#         vl[v] = np.sum(WATC * t_ar * p_ar)
 
 
 @numba.njit
-def _wat_velocity_pure_sum(tl, pl, vl):
+def _wat_velocity_pure_sum(
+    tl: NDArray[np.float64], pl: NDArray[np.float64], vl: NDArray[np.float64]
+):
     """Numba Pure Water Calc
     Input vectors should be type float64 to prevent overflow
 
     B&W Matrix Summation with water coefficients
 
     Args:
-        tl (array-like): Temperature decC
-        pl (array-like): Pressure MPa
-        vl (array-like): Output velocity vector will be modified
+        tl: Temperature decC
+        pl: Pressure MPa
+        vl: Output velocity vector will be modified
+
+    Returns:
+        None
     """
     for v, (tt, pp) in enumerate(zip(tl.ravel(), pl.ravel())):
         # using np.float64 may sacrifice some accuracy but was required for large powers
@@ -502,55 +543,46 @@ def _wat_velocity_pure_sum(tl, pl, vl):
                 vl[v] = vl[v] + WATC[i, j] * (tt**i) * (pp**j)
 
 
-def wat_velocity_pure(t, p):
+def wat_velocity_pure(t: NDArrayOrFloat, p: NDArrayOrFloat) -> NDArrayOrFloat:
     """Returns the velocity of pure water at t and p
     t and p must have equal shape
 
     Args:
-        t (array-like): temperature degC
-        p (array-like): pressure MPa
+        t: temperature (degC)
+        p: pressure (MPa)
 
     Returns:
-        (array-like): compressional velocity of pure water m/s
+        compressional velocity of pure water (m/s)
 
     Notes:
         This approximation breaks down above pressures of 100MPa
     """
-    # TODO: catch bad inputs - mismatched shapes
-    tl = np.array(t)
-    pl = np.array(p)
-    if tl.shape == pl.shape:
-        vl = np.zeros_like(tl)
-    elif tl.shape == ():
-        tl = np.full_like(pl, t)
-        vl = np.zeros_like(pl)
-    elif pl.shape == ():
-        pl = np.full_like(tl, p)
-        vl = np.zeros_like(tl)
-    else:
-        raise ValueError
-
-    # vw = np.zeros_like(WATC)
+    to_shp = check_broadcastable(t=t, p=p)
+    tl = np.broadcast_to(t, to_shp)
+    pl = np.broadcast_to(p, to_shp)
+    vl = np.zeros(to_shp)
     dims = vl.shape
-    _wat_velocity_pure_sum(tl.astype(np.float64), pl.astype(np.float64), vl.ravel())
+    _wat_velocity_pure_sum(
+        tl.astype(np.float64).ravel(), pl.astype(np.float64).ravel(), vl.ravel()
+    )
     vl.reshape(dims)
-    try:
-        return vl.item()
-    except ValueError:
-        return vl
+    return vl
 
 
-def wat_velocity_brine(t, p, sal):
+def wat_velocity_brine(
+    t: NDArrayOrFloat, p: NDArrayOrFloat, sal: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Velocity of a brine
 
+    Salinity (ppm) = fractional weight * 1E6
+
     Args:
-        t (array-like): temperature degC
-        p (array-like): pressure MPa
-        sal (array-like): weight fraction of salt
-            note: Salinity (ppm) = fractional weight * 1E6
+        t: temperature (degC)
+        p: pressure (MPa)
+        sal: weight fraction of salt
 
     Returns:
-     (array-like): compressional velocity of brine m/s
+        compressional velocity of brine (m/s)
     """
     return wat_velocity_pure(t, p) + (
         sal
@@ -568,17 +600,17 @@ def wat_velocity_brine(t, p, sal):
     )
 
 
-def wat_density_pure(t, p):
+def wat_density_pure(t: NDArrayOrFloat, p: NDArrayOrFloat) -> NDArrayOrFloat:
     """Returns the density of pure water at t and p
 
     B&W 1992 Eq 27a
 
     Args:
-        t (array-like): temperature degC
-        p (array-like): pressure MPa
+        t: temperature (degC)
+        p: pressure (MPa)
 
     Returns:
-        (array-like): density of pure water g/cc
+        density of pure water (g/cc)
     """
     return 1 + 1e-6 * (
         -80 * t
@@ -593,19 +625,23 @@ def wat_density_pure(t, p):
     )
 
 
-def wat_density_brine(t, p, sal):
+def wat_density_brine(
+    t: NDArrayOrFloat, p: NDArrayOrFloat, sal: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Returns the density of brine at t and p
 
     B&W 1992 Eq 27b
 
+    Note:
+        Salinity (ppm) = fractional weight * 1E6
+
     Args:
-        t (array-like): temperature degC
-        p (array-like): pressure MPa
-        sal (array-like): weight fraction of salt
-            note: Salinity (ppm) = fractional weight * 1E6
+        t: temperature (degC)
+        p: pressure (MPa)
+        sal: weight fraction of salt
 
     Returns:
-        (array-like): density of brine (g/cc)
+        density of brine (g/cc)
     """
     return wat_density_pure(t, p) + sal * (
         0.668
@@ -622,12 +658,14 @@ def wat_density_brine(t, p, sal):
 def wat_salinity_brine(t: float, p: float, density: float) -> float:
     """Back out the salinity of a brine form it's density using root finding.
 
+    This is not efficient on arrays so limited to floats.
+
     Reverse B&W 1992 Eq 27b
 
     Args:
-        t (float): temperature degC
-        p (float): pressure MPa
-        density (float): density of brine (g/cc)
+        t: temperature degC
+        p: pressure MPa
+        density: density of brine (g/cc)
 
     Returns:
         (float): weight fraction of salt; note: Salinity (ppm) = fractional weight * 1E6
@@ -645,117 +683,99 @@ def wat_salinity_brine(t: float, p: float, density: float) -> float:
         raise ValueError("Could not find solution for density to salinity")
 
 
-def wat_bulkmod(rho, vp):
+def wat_bulkmod(rho: NDArrayOrFloat, vel: NDArrayOrFloat) -> NDArrayOrFloat:
     """Brine bulk modulus K
 
-    Args:
-        rho (array-like): water fluid density g/cc
-        vp (array-like): water fluid compressional velocity m/s
-
-    Returns:
-        (array-like): bulk modulus GPa
-    """
-    return rho * np.power(vp, 2) * 1e-6
-
-
-def mixed_density(den, frac, *argv):
-    """Returns the mixed fluid density based upon volume fractions
-
-    Can take an arbitrary number of fluids and volume fractions.
-    Volume fractions must sum to one for each sample.
-    If the number of arguments is odd, the final frac is assumed to
-        be the complement of all other fracs to sum to 1
-    All array-like must be the same shape
+    Uses [bulkmod][digirock.fluids.bw92.bulkmod].
 
     Args:
-        den (array-like): first fluid density
-        frac (array-like): [description]
-        arg3 (array-like) : the next fluid density
-        arg4 (array-like) : the next fluid fraction
-        arg(3+2*n) (array-like) : the nth fluid density
-        arg(3+2*n) (array-like) : the nth fluid fraction
+        rho: water fluid density (g/cc)
+        vel: water fluid compressional velocity (m/s)
 
     Returns:
-        (array-like): mixed fluid density
-    Notes:
+        bulk modulus (GPa)
     """
-    # check arguments and find complement if necessary
-    largv = len(argv)
-    if largv % 2 == 1:
-        fvol = np.array(frac)
-        for i in range(1, largv, 2):
-            fvol = fvol + np.array(argv[i])
-        if np.any(fvol < 0.0) or np.any(fvol > 1.0):
-            raise ValueError
-        else:
-            argv = argv + (1.0 - fvol,)
-
-    # reset
-    fvol = np.array(frac)
-    rho = np.array(den) * np.array(frac)
-    for i in range(0, largv, 2):
-        rho = rho + np.array(argv[i]) * np.array(argv[i + 1])
-        fvol = fvol + np.array(argv[i + 1])
-
-    if np.allclose(fvol, 1):
-        return rho
-    else:
-        return None  # change this to raise an appropriate error
+    return bulkmod(rho, vel)
 
 
-def bulkmod(rho, vel):
+def mixed_density(
+    den: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
+    """Mixed fluid density $\\rho_M$ based upon volume fractions
+
+    $$
+    \\rho_M = \sum_{i=1}^N \\phi_i \\rho_i
+    $$
+
+    Can take an arbitrary number of fluid denisties $\\rho_i$ and volume fractions $\\phi_i$.
+    Volume fractions must sum to one. If the number of arguments is odd, the final
+    volume fraction is assumed to be the ones complement of all other fractions.
+
+    Inputs must be [broadcastable](https://numpy.org/doc/stable/user/basics.broadcasting.html).
+
+    `argv` as the form `(component_1, vfrac_1, component_2, vfrac2, ...)` or to use the complement for the final
+    component `(component_1, vfrac_1, component_2)`
+
+    Args:
+        den: first fluid density
+        frac: first fluid volume fraction
+        argv: additional fluid and volume fraction pairs.
+
+    Returns:
+        mixed density for combined fluid
+    """
+    args = _process_vfrac(*((den, frac) + argv))
+    den_sum = 0
+    for deni, vfraci in chunked(args, 2):
+        den_sum = den_sum + np.array(vfraci) * np.array(deni)
+    return den_sum
+
+
+def bulkmod(rho: NDArrayOrFloat, vel: NDArrayOrFloat) -> NDArrayOrFloat:
     """Single phase fluid bulk modulus
 
+    $$
+    \kappa_M = \\rho v_p^2
+    $$
+
     Args:
-        rho (array-like): (g/cc)
-        velp (array-like): material velocity (m/s)
+        rho: bulk density (g/cc)
+        vel: material velocity (m/s)
 
     Returns:
-        (array-like): material bulk modulus (GPa)
+        material bulk modulus (GPa)
     """
     return rho * np.power(vel, 2) * 1e-6
 
 
-def mixed_bulkmod(mod, frac, *argv):
-    """Mixed fluid bulk modulus (Wood's Equation)
+def woods_bulkmod(
+    mod: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
+    """Mixed fluid bulk modulus $\\kappa_M$ (Wood's Equation)
 
+    $$
+    \\frac{1}{\kappa_M} = \sum_{i=1}^N \\frac{\\phi_i}{\\kappa_i}
+    $$
 
-    Can take an arbitrary number of fluids and volume fractions.
-    Volume fractions must sum to one for each sample.
-    If the number of arguments is odd, the final frac is assumed to
-        be the complement of all other fracs to sum to 1
-    All array-like must be the same shape
+    Can take an arbitrary number of fluids moduli $\\kappa_i$ and volume fractions $\\phi_i$.
+    Volume fractions must sum to one. If the number of arguments is odd, the final
+    volume fraction is assumed to be the ones complement of all other fractions.
+
+    Inputs must be [broadcastable](https://numpy.org/doc/stable/user/basics.broadcasting.html).
+
+    `argv` as the form `(component_1, vfrac_1, component_2, vfrac2, ...)` or to use the complement for the final
+    component `(component_1, vfrac_1, component_2)`
 
     Args:
-        mod (array-like): first fluid modulus
-        frac (array-like): [description]
-        arg3 (array-like) : the next fluid modulus
-        arg4 (array-like) : the next fluid fraction
-        arg(3+2*n) (array-like) : the nth fluid modulus
-        arg(3+2*n) (array-like) : the nth fluid fraction
+        mod: first fluid modulus
+        frac: first fluid volume fraction
+        argv: additional fluid and volume fraction pairs.
 
     Returns:
-        (array-like): Wood's bulk modulus for a fluid mix
+        Wood's bulk modulus for a fluid mix
     """
-    # check arguments and find complement if necessary
-    largv = len(argv)
-    if largv % 2 == 1:
-        fvol = np.array(frac)
-        for i in range(1, largv, 2):
-            fvol = fvol + np.array(argv[i])
-        if np.any(fvol < 0.0) or np.any(fvol > 1.0):
-            raise ValueError
-        else:
-            argv = argv + (1.0 - fvol,)
-
-    # reset
-    fvol = np.array(frac)
-    K = safe_divide(np.array(frac), np.array(mod))
-    for i in range(0, largv, 2):
-        K = K + np.array(argv[i + 1]) / np.array(argv[i])
-        fvol = fvol + np.array(argv[i + 1])
-
-    if np.allclose(fvol, 1):
-        return safe_divide(1, K)
-    else:
-        return None  # change this to raise an appropriate error
+    args = _process_vfrac(*((mod, frac) + argv))
+    mod_sum = 0
+    for modi, vfraci in chunked(args, 2):
+        mod_sum = mod_sum + safe_divide(np.array(vfraci), np.array(modi))
+    return safe_divide(1, mod_sum)

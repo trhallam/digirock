@@ -1,60 +1,151 @@
-"""Core functions for PEM modelling.
+"""Core functions for elastic property modelling.
 """
-
-# pylint: disable=invalid-name
-
+from typing import Tuple
 import numpy as np
 
+from .typing import NDArrayOrFloat
+from .utils._decorators import broadcastable
 
-def poisson_moduli(k, mu):
-    """Poisson's Ratio from material moduli.
+
+@broadcastable("k", "mu")
+def poisson_ratio(k: NDArrayOrFloat, mu: NDArrayOrFloat) -> NDArrayOrFloat:
+    """Poisson's Ratio $v$ from bulk $\kappa$ and shear $\mu$ moduli.
+
+    $$
+    v = \\frac{3\kappa - 2\mu}{2(3\kappa + \mu)}
+    $$
 
     Args:
-        k (array-like): Bulk modulus
-        mu (array-like): Shear modulus
+        k: Bulk modulus
+        mu: Shear modulus
 
     Returns:
-        (array-like): poisson's ratio
+        Poisson's ratio
     """
     return (3 * k - 2 * mu) / (2 * (3 * k + mu))
 
 
-def acoustic_moduli(velp, vels, rhob):
-    """Calculate the bulk and shear modulus for a material from acoustic properties
+@broadcastable("velp", "vels", "rhob")
+def acoustic_bulk_moduli(
+    velp: NDArrayOrFloat, vels: NDArrayOrFloat, rhob: NDArrayOrFloat
+) -> NDArrayOrFloat:
+    """Calculate the bulk modulus for a material from acoustic properties
 
     Whether from dynamic velocity measurements or from wireline log data, we can relate the bulk
-    modulus of a rock to it's acoustic properties. If the rock is saturated then the modulus will
-    be Ksat, if the rock is measured while dry then the modulus will approximate the porous rock
-    framework Kdry.
+    modulus ($\kappa$) of a rock to it's acoustic properties. If the rock is saturated then the modulus will
+    be $\kappa_{sat}$, if the rock is measured while dry then the modulus will approximate the porous rock
+    framework $\kappa_{dry}$.
+
+    $$
+    \kappa = \\rho_b \\left( v_p^2 - \\frac{4v_s^2}{3} \\right)
+    $$
 
     Args:
-        velp (array_like): Compressional velocity (m/s)
-        vels (array_like): Shear velocity (m/s)
-        rhob (array_like): Bulk density (g/cc)
+        velp: Compressional velocity (m/s)
+        vels: Shear velocity (m/s)
+        rhob: Bulk density (g/cc)
 
     Returns:
-        (array_like): acoustic bulk modulus GPa
-        (array_like): acoustic shear modulus GPa
+        acoustic bulk modulus GPa
 
     References:
         [3] Smith et al. 2003
     """
-    return (
-        (rhob * (np.power(velp, 2) - (4 / 3) * np.power(vels, 2))) * 1e-6,
-        rhob * np.power(vels, 2) * 1e-6,
-    )
+    return rhob * (np.power(velp, 2) - (4 / 3) * np.power(vels, 2)) * 1e-6
 
 
-def acoustic_vel(k, mu, rhob):
-    """Calculate the compressional and shear velocity from material bulk moduli and density
+@broadcastable("vels", "rhob")
+def acoustic_shear_moduli(vels: NDArrayOrFloat, rhob: NDArrayOrFloat) -> NDArrayOrFloat:
+    """Calculate the shear modulus for a material from acoustic properties
+
+    $$
+    \mu = \\rho_b v_s^2
+    $$
 
     Args:
-        k (array_like): bulk modulus GPa
-        mu (aray_like): shear modulus GPa
-        rhob (array_like): bulk density g/cc
+        vels: Shear velocity (m/s)
+        rhob: Bulk density (g/cc)
 
     Returns:
-        velp (array_like): compressional velocity (m/s)
-        vels (array_like): shear velocity (m/s)
+        acoustic shear modulus GPa
+
+    References:
+        [3] Smith et al. 2003
     """
-    return 1000 * np.sqrt((k + (4 / 3) * mu) / rhob), 1000 * np.sqrt(mu / rhob)
+    return rhob * np.power(vels, 2) * 1e-6
+
+
+@broadcastable("velp", "vels", "rhob")
+def acoustic_moduli(
+    velp: NDArrayOrFloat, vels: NDArrayOrFloat, rhob: NDArrayOrFloat
+) -> Tuple[NDArrayOrFloat, NDArrayOrFloat]:
+    """Shortcut for getting both acoustic moduli
+
+    Args:
+        velp: Compressional velocity (m/s)
+        vels: Shear velocity (m/s)
+        rhob: Bulk density (g/cc)
+
+    Returns:
+        acoustic bulk modulus GPa, acoustic shear modulus GPa
+
+    References:
+        [3] Smith et al. 2003
+    """
+    return acoustic_bulk_moduli(velp, vels, rhob), acoustic_shear_moduli(vels, rhob)
+
+
+@broadcastable("k", "mu", "rhob")
+def acoustic_velp(
+    k: NDArrayOrFloat, mu: NDArrayOrFloat, rhob: NDArrayOrFloat
+) -> NDArrayOrFloat:
+    """Calculate the compressional $v_p$ from material bulk $\kappa$ and shear $\mu$ moduli and density $\\rho_b$.
+
+    $$
+    v_p = \\sqrt{\\frac{\kappa + \\dfrac{4}{3}\mu}{\\rho_b}}
+    $$
+
+    Args:
+        k: bulk modulus GPa
+        mu: shear modulus GPa
+        rhob: bulk density g/cc
+
+    Returns:
+        compressional velocity (m/s), shear velocity (m/s)
+    """
+    return 1000 * np.sqrt((k + (4 / 3) * mu) / rhob)
+
+
+@broadcastable("k", "mu", "rhob")
+def acoustic_vels(mu: NDArrayOrFloat, rhob: NDArrayOrFloat) -> NDArrayOrFloat:
+    """Calculate the shear $v_s$ velocity from material shear $\mu$ moduli and density $\\rho_b$.
+
+    $$
+    v_s = \\sqrt{\\frac{\mu}{\\rho_b}}
+    $$
+
+    Args:
+        mu: shear modulus GPa
+        rhob: bulk density g/cc
+
+    Returns:
+        shear velocity (m/s)
+    """
+    return 1000 * np.sqrt(mu / rhob)
+
+
+@broadcastable("k", "mu", "rhob")
+def acoustic_vel(
+    k: NDArrayOrFloat, mu: NDArrayOrFloat, rhob: NDArrayOrFloat
+) -> Tuple[NDArrayOrFloat, NDArrayOrFloat]:
+    """Shortcut for getting both velocities
+
+    Args:
+        k: bulk modulus GPa
+        mu: shear modulus GPa
+        rhob: bulk density g/cc
+
+    Returns:
+        compressional velocity (m/s), shear velocity (m/s)
+    """
+    return acoustic_velp(k, mu, rhob), acoustic_vels(mu, rhob)

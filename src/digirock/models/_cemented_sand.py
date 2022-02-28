@@ -8,7 +8,7 @@ Refs:
 # pylint: disable=invalid-name
 
 from numpy import power, pi
-from ..elastic import poisson_moduli
+from ..elastic import poisson_ratio
 
 
 def _alpha_scheme1(phi0, phi, ncontacts):
@@ -75,16 +75,16 @@ def dryframe_cemented_sand(
         mu_cem (array-like): Shear modulus of cement.
         phi0 (array-like): Material porosity without any cement. For perfect spherical grains
             phi0 = 0.36
-        phi (array-like): Material porosity after substituting in cememnt to porespace.
+        phi (array-like): Material porosity after substituting in cement to porespace.
         ncontacts (float): Number of contacts between grains.
         alpha (str/float, Optional): The cement fill scheme to use. Defaults to 'scheme1.
-            One of ['sheme1', 'scheme2', float]
+            One of ['scheme1', 'scheme2', float]
 
     Returns:
         (array-like, array-like): Bulk and shear modului of cemented-sand.
     """
-    pois_sand = poisson_moduli(k_sand, mu_sand)
-    pois_cem = poisson_moduli(k_cem, mu_cem)
+    pois_sand = poisson_ratio(k_sand, mu_sand)
+    pois_cem = poisson_ratio(k_cem, mu_cem)
     alpha = _cemented_sand_alpha(phi0, phi, ncontacts, alpha)
 
     lam_tau = mu_cem / (pi * mu_sand)

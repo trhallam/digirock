@@ -10,18 +10,17 @@ Methods can be imported from `digirock.models`.
     selection:
       members:
         - voigt_upper_bound
-        - voigt_lower_bound
+        - reuss_lower_bound
         - vrh_avg
-        - dryframe_delta_pres
         - dryframe_dpres
         - dryframe_stress
         - dryframe_acoustic
         - dryframe_density
         - saturated_density
         - gassmann_fluidsub
-        - patchy_fluidsub
 
-## Hashin-Striktman Model
+
+## Hashin-Shtrikman Model
 
 ::: digirock.models._hsw
     rendering:
@@ -29,10 +28,10 @@ Methods can be imported from `digirock.models`.
       show_root_toc_entry: false
     selection:
       members:
-        - hs_kbounds
-        - hs_mubounds
-        - hsw_avg_bulk_modulus
-        - hsw_avg_shear_modulus
+        - hs_kbounds2
+        - hs_mubounds2
+        - hsw_bounds
+        - hsw_avg
 
 ## Cemented Sand Model
 

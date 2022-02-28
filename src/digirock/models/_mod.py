@@ -13,129 +13,165 @@ Refs:
     MacBeth, 2004, A classification for the pressure-sensitivity properties of a sandstone rock frame\n
     Smith, Sondergeld and Rai, 2003, Gassmann fluid substitutions: A tutorial, Geophysics, 68, pp430-440
 """
-
+from more_itertools import chunked
 import numpy as np
 
 # pylint: disable=unused-import
-from ..utils import safe_divide
+from ..utils._utils import safe_divide, _process_vfrac
+from ..typing import NDArrayOrFloat
 
 
-def _vr_bound(m, f, bound):
-    """Common function for voight_upper and reuss_lower
-
-    Args:
-        m (array-like): Modulus
-        f (array-like): Volume fraction
-        bound (str): Bound, one of ['voigt', 'reuss']
-    """
-    m = np.array(m).squeeze()
-    f = np.array(f).squeeze()
-    if m.shape[-1] == f.shape[-1]:
-        if np.allclose(np.sum(f, axis=-1), 1.0):
-            if bound == "voigt":
-                return np.sum(np.multiply(m, f), axis=-1)
-            elif bound == "reuss":
-                return 1.0 / np.sum(np.divide(f, m), axis=-1)
-        else:
-            raise ValueError(
-                f"Input f must sum to 1.0 current sum is {np.sum(f, axis=-1)}"
-            )
-    else:
-        raise ValueError("Inputs m and f must have equal length")
-
-
-def voigt_upper_bound(m, f):
+def voigt_upper_bound(
+    mod: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculate the Voigt upper bound for material moduli
 
     Args:
-        m (array_like): the material moduli
-        f (array_like): the material volume fractions where sum(f, axis=-1) = 1
+        mod: first fluid modulus
+        frac: first fluid volume fraction
+        argv: additional fluid and volume fraction pairs.
 
     Returns:
-        (): the Voigt upper bound modulus
+        Voigt upper bound for modulus mix
     """
-    return _vr_bound(m, f, "voigt")
+    args = _process_vfrac(*((mod, frac) + argv))
+    mod_sum = 0
+    for modi, vfraci in chunked(args, 2):
+        mod_sum = mod_sum + np.array(vfraci) * np.array(modi)
+    return mod_sum
 
 
-def reuss_lower_bound(m, f):
+def reuss_lower_bound(
+    mod: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Calculate the Reuss lower bound for material moduli
 
     Args:
-        m: the material moduli
-        f: the material volume fractions where sum(f) = 1
+        mod: first fluid modulus
+        frac: first fluid volume fraction
+        argv: additional fluid and volume fraction pairs.
 
     Returns:
-        (): the Reuss lower vound modulus
+        Reuss upper bound for modulus mix
     """
-    return _vr_bound(m, f, "reuss")
+    args = _process_vfrac(*((mod, frac) + argv))
+    mod_sum = 0
+    for modi, vfraci in chunked(args, 2):
+        mod_sum = mod_sum + safe_divide(np.array(vfraci), np.array(modi))
+    return safe_divide(1, mod_sum)
 
 
-def vrh_avg(mclay, mnonclay, vclay):
-    """Calculates the Voigt-Reuss-Hill mix for a simple other/shale mix.
+def vrh_avg(
+    mod: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
+    """Calculates the Voigt-Reuss-Hill average for a multi-modulus mix.
 
     Args:
-        mclay (array-like): clay component moduli
-        mnonclay (array-like): non-clay component moduli
-        vclay (array-like): fraction of material that is clay where 0 < fclay < 1
+        mod: first modulus
+        frac: first volume fraction
+        argv: additional modulus and volume fraction pairs.
 
     Returns:
-        (array-like): Voigt-Reuss-Hill average modulus
+        Voigt-Reuss-Hill average modulus
     """
-    fclay = vclay
-    fnonclay = 1 - vclay
-    return 0.5 * (
-        voigt_upper_bound([mnonclay, mclay], np.transpose([fnonclay, fclay]))
-        + reuss_lower_bound([mnonclay, mclay], np.transpose([fnonclay, fclay]))
-    )
+    vub = voigt_upper_bound(mod, frac, *argv)
+    rlb = reuss_lower_bound(mod, frac, *argv)
+    return 0.5 * (vub + rlb)
 
 
-def dryframe_delta_pres(erp_init, erp, mod_vrh, mod_e, mod_p, phi, phic):
-    """Calculates the dry rock frame for a given stress regieme and depth by factoring the
-    difference between two pressure regiemes.
+def mixed_density(
+    den: NDArrayOrFloat, frac: NDArrayOrFloat, *argv: NDArrayOrFloat
+) -> NDArrayOrFloat:
+    """Mixed density $\\rho_M$ based upon volume fractions
+
+    $$
+    \\rho_M = \sum_{i=1}^N \\phi_i \\rho_i
+    $$
+
+    Can take an arbitrary number of denisties $\\rho_i$ and volume fractions $\\phi_i$.
+    Volume fractions must sum to one. If the number of arguments is odd, the final
+    volume fraction is assumed to be the ones complement of all other fractions.
+
+    Inputs must be [broadcastable](https://numpy.org/doc/stable/user/basics.broadcasting.html).
+
+    `argv` as the form `(component_1, vfrac_1, component_2, vfrac2, ...)` or to use the complement for the final
+    component `(component_1, vfrac_1, component_2)`
 
     Args:
-        erp_init (array_like): Effective Initial Reservoir Pressure (MPa)
-                                = Overburden Pressure - Initial Reservoir Pressure
-        erp (array_like): Effective Current Reservoir Pressure (MPa)
-                                = Overburden Pressure - Current Reservoir Pressure
-        mod_vrh: Voigt-Reuss-Hill average modulus (check this).
-        mod_e: modulus stress sensitivity metric *2
-        mod_p: modulus characteristic pressure constant *2
-        phi: rock porosity
-        c (list: Default:None): If 'c=None' constant porosity is used else c is a critical
-            porosity (phic) list of length 5 e.g. [c1, c2, c3, c4, c5] where when phi < c3;
-            phic = c1 + c2*phi and when phi >= c3 phic = c3 + c4*phi
+        den: first fluid density
+        frac: first fluid volume fraction
+        argv: additional fluid and volume fraction pairs.
 
     Returns:
-        moddry (array_like): the dry-frame modulus for inputs
-
-    References:
-        [1] Amini and Alvarez (2014)
-        [2] MacBeth (2004)
+        mixed density for combined material
     """
-    # Calcuate Bulk Modulus for Dry Frame
-    dry1 = np.where(phi >= phic, 0.0, mod_vrh * (1 - phi / phic))
-    moddry = (
-        dry1
-        * (1 + (mod_e * np.exp(-erp_init / mod_p)))
-        / (1 + (mod_e * np.exp(-erp / mod_p)))
-    )
-    return moddry
+    args = _process_vfrac(*((den, frac) + argv))
+    den_sum = 0
+    for deni, vfraci in chunked(args, 2):
+        den_sum = den_sum + np.array(vfraci) * np.array(deni)
+    return den_sum
 
 
-def dryframe_dpres(dry_mod, pres1, pres2, sse, ssp):
-    """Calculates the dry rock frame for a given stress regieme and depth by factoring the
-    difference between two pressure regiemes.
+# def dryframe_delta_pres(
+#     erp_init: NDArrayOrFloat,
+#     erp: NDArrayOrFloat,
+#     mod_vrh: NDArrayOrFloat,
+#     mod_e: NDArrayOrFloat,
+#     mod_p: NDArrayOrFloat,
+# ) -> NDArrayOrFloat:
+#     """Calculates the dry rock frame for a given stress regime by factoring the
+#     difference between two pressure regimes.
+
+#     $$
+#     m(P) = m * \\frac{1 + E_m e^{\\tfrac{-P_{e_i}}{P_m}}}{1 + E_m e^{\\tfrac{-P_{e}}{P_m}}}
+#     $$
+
+#     Args:
+#         erp_init: Effective Initial Reservoir Pressure $P_{e_i}$ (MPa) = Overburden Pressure - Initial Reservoir Pressure
+#         erp: Effective Current Reservoir Pressure $P_e$ (MPa) = Overburden Pressure - Current Reservoir Pressure
+#         mod_vrh: Voigt-Reuss-Hill average modulus $m$ (GPa)
+#         mod_e: modulus stress sensitivity metric $E_m$
+#         mod_p: modulus characteristic pressure constant $P_m$
+
+#     Returns:
+#         stress adjusted modulus (GPa)
+
+#     References:
+#         [1] Amini and Alvarez (2014)
+#         [2] MacBeth (2004)
+#     """
+#     # Calcuate Bulk Modulus for Dry Frame
+#     # dry1 = np.where(phi >= phic, 0.0, mod_vrh * (1 - phi / phic))
+#     return (
+#         mod_vrh
+#         * (1 + (mod_e * np.exp(-erp_init / mod_p)))
+#         / (1 + (mod_e * np.exp(-erp / mod_p)))
+#     )
+
+
+def dryframe_dpres(
+    dry_mod: NDArrayOrFloat,
+    pres1: NDArrayOrFloat,
+    pres2: NDArrayOrFloat,
+    sse: NDArrayOrFloat,
+    ssp: NDArrayOrFloat,
+) -> NDArrayOrFloat:
+    """Calculates the dry rock frame for a given stress regime by factoring the
+    difference between two formation pressure scenarios.
+
+    $$
+    m(P) = m \\frac{1 + S_E e^{\\tfrac{-P_1}{S_P}}}{1 + S_E e^{\\tfrac{-P_2}{S_P}}}
+    $$
 
     Args:
-        dry_mod (array-like): Dryframe modulus (MPa)
-        pres1 (array-like): Pressure calibrated to dryframe modulus. (MPa)
-        pres2 (array-like): Pressure of output (MPa)
-        sse (float): Stress-sensitivity parameter E
-        ssp (float): Stress-sensitivity parameter P
+        dry_mod: Dryframe modulus (MPa)
+        pres1: Pressure calibrated to dryframe modulus. (MPa)
+        pres2: Pressure of output (MPa)
+        sse: Stress-sensitivity parameter E
+        ssp: Stress-sensitivity parameter P
 
     Returns:
-        array_like: the dry-frame modulus adjusted to pressure (pres2)
+        the dry-frame modulus adjusted to pressure (pres2)
 
     References:
         [1] Amini and Alvarez (2014)
@@ -162,17 +198,22 @@ def dryframe_stress(mod_e, mod_p, inf, p):
     return inf / (1 + (mod_e * np.exp(-p / mod_p)))
 
 
-def dryframe_acoustic(ksat, kfl, k0, phi):
+def dryframe_acoustic(
+    ksat: NDArrayOrFloat, kfl: NDArrayOrFloat, k0: NDArrayOrFloat, phi: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Dry frame bulk modulus from material saturated modulus
 
+    This is essentially inverse Gassmann fluid substitution and assumes you know the bulk modulus of
+    the matrix material `k0`.
+
     Args:
-        ksat (array_like): saturated bulk modulus
-        kfl (array_like): fluid bulk modulus
-        k0 (array_like): matrix bulk modulus
-        phi (array_like): porosity (frac)
+        ksat: saturated bulk modulus
+        kfl: fluid bulk modulus
+        k0: matrix bulk modulus
+        phi: porosity (frac)
 
     Returns:
-        kdry (array_like): backed-out dry fame bulk modulus (inverse Gassman_fluidsub)
+        backed-out dry fame bulk modulus
     """
     return (ksat * (phi * k0 / kfl + 1 - phi) - k0) / (
         phi * k0 / kfl + ksat / k0 - 1 - phi
@@ -209,7 +250,9 @@ def saturated_density(rhog, rhofl, phi):
     return rhog * (1 - phi) + rhofl * phi
 
 
-def gassmann_fluidsub(kdry, kfl, k0, phi):
+def gassmann_fluidsub(
+    kdry: NDArrayOrFloat, kfl: NDArrayOrFloat, k0: NDArrayOrFloat, phi: NDArrayOrFloat
+) -> NDArrayOrFloat:
     """Gassmann fluid substitution for saturated rock bulk modulus
 
     Gassmann fluid substitution assumes:
@@ -222,13 +265,13 @@ def gassmann_fluidsub(kdry, kfl, k0, phi):
             inappropriate for production timescales.
 
     Args:
-        kdry (array_like): dry frame rock bulk modulus
-        kfl (array_like): fluid bulk modulus
-        k0 (array_like): matrix bulk modulus
-        phi (array_like): porosity (frac)
+        kdry: dry frame rock bulk modulus
+        kfl: fluid bulk modulus
+        k0: matrix bulk modulus
+        phi: porosity (frac)
 
     Returns:
-        ksat (array_like): saturated rock bulk modulus
+        ksat saturated rock bulk modulus
     """
     return kdry + np.power(1 - kdry / k0, 2) / (
         safe_divide(phi, kfl)

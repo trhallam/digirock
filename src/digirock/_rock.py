@@ -14,53 +14,6 @@ from .elastic import acoustic_vel, acoustic_moduli
 from .models import gassmann_fluidsub
 
 
-class Mineral:
-    """Base Class for defining Minerals. This are rock constituents.
-
-    Attributes:
-        name (str): name of the mineral
-        density (float): density of the mineral in g/cc
-        bulk_modulus (float): Bulk modulus (compression) of the mineral in GPa
-        shear_modulus (float): Shear modulus of the mineral in GPa
-    """
-
-    def __init__(self, name=None, density=None, bulk_modulus=None, shear_modulus=None):
-        self.name = name
-        self.density = density
-        self.bulk_modulus = bulk_modulus
-        self.shear_modulus = shear_modulus
-        self._quick_get = {"bulk": bulk_modulus, "shear": shear_modulus, "rho": density}
-
-    def _check_defined(self, from_func, var):
-        if self.__getattribute__(var) is None:
-            raise WorkflowError(from_func, f"The {var} attribute is not defined.")
-
-    def __getitem__(self, key):
-        try:
-            return self._quick_get[key]
-        except KeyError:
-            raise KeyError(
-                f"unknown {key} for mineral expects one of {self._quick_get.keys()}"
-            )
-
-    def elastic(self):
-        """Pure elastic properties of mineral."""
-        vp, vs = acoustic_vel(self.bulk_modulus, self.shear_modulus, self.density)
-        return vp, vs, self.density
-
-    def get_summary(self):
-        summary = super().get_summary()
-        summary.update(
-            {
-                "name": self.name,
-                "k": self.bulk_modulus,
-                "mu": self.shear_modulus,
-                "rhob": self.density,
-            }
-        )
-        return summary
-
-
 class RockModel:
     """Build a rock model from minerals, fluids and methods.
 
