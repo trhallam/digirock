@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.13.7
+#       jupytext_version: 1.13.6
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -21,9 +21,12 @@
 # # Switches
 
 # %%
-from digirock import Switch
+from digirock import Switch, load_pvtw
+from digirock.datasets import fetch_example_data
+
+example_data = fetch_example_data()
     
-pvtos = load_pvtw("example_data/COMPLEX_PVT.inc")
+pvtos = load_pvtw(example_data["COMPLEX_PVT.inc"])
 sw = Switch("pvt", list(pvtos.values()), ["density", "velocity", "bulk_modulus"], name='PVT_Water')
 
 # %%

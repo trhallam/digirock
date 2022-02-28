@@ -37,6 +37,7 @@
 import numpy as np
 import os
 import pathlib
+from digirock.datasets import fetch_example_data
 
 cur_dir = os.path.abspath("")
 parent_path = pathlib.Path(cur_dir)
@@ -48,6 +49,9 @@ pres = np.linspace(10, 100, 10)
 # Temperature in degC
 t = 110
 temp = np.linspace(80, 150, 10)
+
+# fetch all the example data
+example_data = fetch_example_data()
 
 # %%
 from digirock import WaterBW92, WaterECL, load_pvtw
@@ -98,8 +102,7 @@ print("Modulus 2 array values (GPa):", wat.density(props_ar3))
 
 # %%
 # load the Eclipse table directly from a text file
-parent_path = pathlib.Path(__file__).parent
-wat_pvtw = load_pvtw(parent_path / "example_data/COMPLEX_PVT.inc", salinity=0)
+wat_pvtw = load_pvtw(example_data["COMPLEX_PVT.inc"], salinity=0)
 
 # look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example
 print(wat_pvtw["pvtw0"].get_summary())
@@ -198,7 +201,8 @@ print("Rs: ", bwoil_rst.rs({"pres": 50}))
 # If you have an Eclipse PVTO table you can load those oil properties using `load_pvto`.
 
 # %%
-pvtos = load_pvto(parent_path / "example_data/COMPLEX_PVT.inc", api=40)
+# load the Eclipse table directly from a text file
+pvtos = load_pvto(example_data["COMPLEX_PVT.inc"], api=40)
 
 # %% [markdown]
 # `pvtos` is a dictionary, one for each pvto table. The returned fluid has the `OilPVT` class. This uses the BW92 equations for elastic properties, but eclusively uses `rs` and `bo` calculated from the tables loaded into the class.
