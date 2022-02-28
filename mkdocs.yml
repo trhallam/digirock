@@ -2,86 +2,87 @@ site_name: digirock Documentation
 site_author: Tony Hallam
 docs_dir: docs
 theme:
-    name: material
-    language: "en"
-    features:
-        - navigations.instant
-        - navigation.tracking
-        - navigation.tabs
-        - navigation.sections
-        - navigation.expand
+  name: material
+  language: "en"
+  features:
+    - navigations.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
 use_directory_urls: false
 
 copyright: "Tony Hallam"
 
 markdown_extensions:
-    - admonition
-    - footnotes
-    - tables
-    - codehilite:
-          guess_lang: false
-    - toc:
-          permalink: false
-    # - pymdownx.snippets:
-    #     auto_append: ["docs/hyperlinks.md"]
-    - pymdownx.betterem
-    - pymdownx.caret
-    - pymdownx.mark
-    - pymdownx.tilde
-    - pymdownx.details
-    - pymdownx.highlight:
-          use_pygments: true
-          auto_title: true
-    - pymdownx.superfences
-    - pymdownx.smartsymbols
-    - pymdownx.emoji:
-          emoji_index: !!python/name:materialx.emoji.twemoji
-          emoji_generator: !!python/name:materialx.emoji.to_svg
-    - pymdownx.arithmatex:
-          generic: true
+  - admonition
+  - footnotes
+  - tables
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: false
+  # - pymdownx.snippets:
+  #     auto_append: ["docs/hyperlinks.md"]
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.details
+  - pymdownx.highlight:
+      use_pygments: true
+      auto_title: true
+  - pymdownx.superfences
+  - pymdownx.smartsymbols
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
 
 extra_javascript:
-    - javascripts/mathjax.js
-    - https://polyfill.io/v3/polyfill.min.js?features=es6
-    - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - javascripts/mathjax.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
-    - search
-    - simple
-    - autorefs
-    - mkdocs-jupyter:
-          execute: true
-          kernel_name: python3
-    - mkdocstrings:
-          default_handler: python
-          watch:
-              - src/digirock
+  - search
+  - simple
+  - autorefs
+  - mkdocs-jupyter:
+      execute: true
+      kernel_name: python3
+  - mkdocstrings:
+      default_handler: python
+      watch:
+        - src/digirock
 
 nav:
-    - "Home":
-          - "About": index.md
-          - "Contributing": "contrib.md"
-          - "Contact": "contact.md"
-          - "Issue Tracker": https://github.com/trhallam/digirock/issues
+  - "Home":
+    - "About": index.md
+    - "Contributing": "contrib.md"
+    - "Contact": "contact.md"
+    - "Issue Tracker": https://github.com/trhallam/digirock/issues
 
-    - "User Guide":
-          - "Digirock Framework": "ug/framework.md"
-          - "Examples":
-                - "BW92": examples/batzle_wang_1992.py
-                - "Fluids": examples/example_fluids.py
-                - "Stress Models": examples/example_stress.py
-                - "Switches": examples/example_switches.py
-                - "Frames": examples/example_frames.py
+  - "User Guide":
+    - "Digirock Framework": "ug/framework.md"
+    - "Examples":
+      - "BW92": examples/batzle_wang_1992.py
+      - "Fluids": examples/example_fluids.py
+      - "Stress Models": examples/example_stress.py
+      - "Switches": examples/example_switches.py
+      - "Frames": examples/example_frames.py
+      - "Gassmann": examples/example_gassmann_frame.py
 
-    - "API":
-          - "Fluid Methods": api/fluid_methods.md
-          - "Fluids": api/fluid_classes.md
-          - "Fluid Blending": api/fluid_blend.md
-          - "Minerals": api/minerals.md
-          - "Rock Frame": api/rock_frame_classes.md
-          - "Porosity Adjustment Models": api/poro_adjust_classes.md
-          - "Vertical Stress Models": api/stress_classes.md
-          - "Stress Adjustment Models": api/stress_adjust.md
-          - "Models": api/model_methods.md
-          - "Elastic": api/elastic.md
-          - "Base Classes": api/base_classes.md
+  - "API":
+    - "Fluid Methods": api/fluid_methods.md
+    - "Fluids": api/fluid_classes.md
+    - "Fluid Blending": api/fluid_blend.md
+    - "Minerals": api/minerals.md
+    - "Rock Frame": api/rock_frame_classes.md
+    - "Porosity Adjustment Models": api/poro_adjust_classes.md
+    - "Vertical Stress Models": api/stress_classes.md
+    - "Stress Adjustment Models": api/stress_adjust.md
+    - "Models": api/model_methods.md
+    - "Elastic": api/elastic.md
+    - "Base Classes": api/base_classes.md

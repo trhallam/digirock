@@ -1,7 +1,7 @@
 """Fluid models to simplify generation of fluid properties.
 
 """
-from typing import List, Dict, Tuple, Type, Sequence, Any
+from typing import List, Dict, Tuple, Type, Sequence, Any, Union
 
 # pylint: disable=invalid-name,no-value-for-parameter
 import numpy as np
@@ -44,26 +44,6 @@ class WoodsFluid(Blend):
         self.check_vol_sum = check_vol_sum
         self.vol_frac_tol = vol_frac_tol
 
-    def _build_args(
-        self, props: Dict[str, NDArrayOrFloat], method_name, **element_kwargs
-    ) -> Sequence[Any]:
-        blend_props = {
-            key: val for key, val in props.items() if key in self._blend_keys
-        }
-        if "complement" in self._blend_keys:
-            blend_props["complement"] = _get_complement(blend_props)
-
-        if self.check_vol_sum:
-            _volume_sum_check(blend_props, atol=self.vol_frac_tol)
-
-        args = []
-        for key, el in zip(self._blend_keys, self._elements):
-            args += [
-                getattr(el, method_name)(props, **element_kwargs),
-                blend_props[key],
-            ]
-        return args
-
     def density(self, props: Dict[str, NDArrayOrFloat], **element_kwargs):
         """Return the density of the mixed fluid based upon the volume fraction.
 
@@ -76,7 +56,8 @@ class WoodsFluid(Blend):
             props: dictionary of properties, must contain all keys in `blend_keys`.
             element_kwargs: kwargs to pass to elements
         """
-        args = self._build_args(props, "density", **element_kwargs)
+        # args = self._build_args(props, "density", **element_kwargs)
+        args = self._process_props_get_method(props, "density", **element_kwargs)
         return bw92.mixed_density(*args)
 
     def bulk_modulus(
@@ -93,8 +74,8 @@ class WoodsFluid(Blend):
             props: dictionary of properties, must contain all keys in `blend_keys`.
             element_kwargs: kwargs to pass to elements
         """
-        args = self._build_args(props, "bulk_modulus", **element_kwargs)
-        return bw92.mixed_bulkmod(*args)
+        args = self._process_props_get_method(props, "density", **element_kwargs)
+        return bw92.woods_bulkmod(*args)
 
     def shear_modulus(
         self, props: Dict[str, NDArrayOrFloat], **element_kwargs
@@ -133,3 +114,11 @@ class WoodsFluid(Blend):
         rhob = self.density(props, **element_kwargs)
         k = self.bulk_modulus(props, **element_kwargs)
         return np.sqrt(k / rhob) * 1000
+
+    def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Alias for velocity"""
+        return self.velocity(props, **kwargs)
+
+    def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+        """Always returns 0"""
+        return 0.0

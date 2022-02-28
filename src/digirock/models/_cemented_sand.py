@@ -6,12 +6,15 @@ Refs:
 """
 
 # pylint: disable=invalid-name
-
+from typing import Union, Tuple
+from ..typing import NDArrayOrFloat
 from numpy import power, pi
 from ..elastic import poisson_ratio
 
 
-def _alpha_scheme1(phi0, phi, ncontacts):
+def _alpha_scheme1(
+    phi0: NDArrayOrFloat, phi: NDArrayOrFloat, ncontacts: int
+) -> NDArrayOrFloat:
     """Scheme 1 of cemented sand model. Cement deposited at sand contacts.
 
     Defaults:
@@ -19,33 +22,33 @@ def _alpha_scheme1(phi0, phi, ncontacts):
         ncontacts = 9
 
     Args:
-        phi0 (float): Sand only porosity
-        phi (float): Rock porosity after cement added
-        ncontacts (float): Number of contacts between grains.
+        phi0: Sand only porosity
+        phi: Rock porosity after cement added
+        ncontacts: Number of contacts between grains.
 
     Returns:
-        alpha (float): Ratio of cement radius to grain radius.
+        alpha: Ratio of cement radius to grain radius.
     """
     return 2 * power((phi0 - phi) / (3 * ncontacts * (1 - phi0)), 0.25)
 
 
-def _alpha_scheme2(phi0, phi):
+def _alpha_scheme2(phi0: NDArrayOrFloat, phi: NDArrayOrFloat) -> NDArrayOrFloat:
     """Scheme 2 of cemented sand model. Cement deposited evenly around grains.
 
     Defaults:
         phi0 = 0.36
 
     Args:
-        phi0 (float): Sand only porosity
-        phi (float): Rock porosity after cement added
+        phi0: Sand only porosity
+        phi: Rock porosity after cement added
 
     Returns:
-        alpha (float): Ratio of cement radius to grain radius.
+        alpha: Ratio of cement radius to grain radius.
     """
     return power(2 * (phi0 - phi) / (3 * (1 - phi0)), 0.5)
 
 
-def _cemented_sand_alpha(phi0, phi, ncontacts=None, alpha="scheme1"):
+def _cemented_sand_alpha(phi0: NDArrayOrFloat, phi, ncontacts=None, alpha="scheme1"):
     """Alpha calculation for keyword."""
     if alpha == "scheme1" and ncontacts is not None:
         return _alpha_scheme1(phi0, phi, ncontacts)
@@ -58,30 +61,35 @@ def _cemented_sand_alpha(phi0, phi, ncontacts=None, alpha="scheme1"):
 
 
 def dryframe_cemented_sand(
-    k_sand, mu_sand, k_cem, mu_cem, phi0, phi, ncontacts, alpha="scheme1"
-):
+    k_sand: NDArrayOrFloat,
+    mu_sand: NDArrayOrFloat,
+    k_cem: NDArrayOrFloat,
+    mu_cem: NDArrayOrFloat,
+    phi0: NDArrayOrFloat,
+    phi: NDArrayOrFloat,
+    ncontacts: int = 9,
+    alpha: Union[str, NDArrayOrFloat] = "scheme1",
+) -> Tuple[NDArrayOrFloat, NDArrayOrFloat]:
     """Dryframe moduli for Cemented-Sand model.
 
     Assumes sand grains are in contact and cement fills the porespace between grains.
 
     Scheme 1: Cement preferentially fills spaces around contacts increasing shear strength.
     Scheme 2: Cement covers grains evenly but maintains contacts between sand grains.
-    Alpha as float: Specify a custom value for alpha.
+    alpha can also be `NDArrayOrFloat` for a custom scheme.
 
     Args:
-        k_sand (array-like): Bulk modulus of sand grains.
-        mu_sand (array-like): Shear modulus of sand grains.
-        k_cem (array-like): Bulk modulus of cement.
-        mu_cem (array-like): Shear modulus of cement.
-        phi0 (array-like): Material porosity without any cement. For perfect spherical grains
-            phi0 = 0.36
-        phi (array-like): Material porosity after substituting in cement to porespace.
-        ncontacts (float): Number of contacts between grains.
-        alpha (str/float, Optional): The cement fill scheme to use. Defaults to 'scheme1.
-            One of ['scheme1', 'scheme2', float]
+        k_sand: Bulk modulus of sand grains
+        mu_sand: Shear modulus of sand grains
+        k_cem: Bulk modulus of cement
+        mu_cem: Shear modulus of cement
+        phi0: Material porosity without any cement. For perfect spherical grains phi0 = 0.36
+        phi: Material porosity after substituting in cement to porespace
+        ncontacts: Number of contacts between grains
+        alpha: The cement fill scheme to use, one of ['scheme1', 'scheme2', `NDArrayOrFloat`]
 
     Returns:
-        (array-like, array-like): Bulk and shear modului of cemented-sand.
+        Bulk and shear modului of cemented-sand.
     """
     pois_sand = poisson_ratio(k_sand, mu_sand)
     pois_cem = poisson_ratio(k_cem, mu_cem)
