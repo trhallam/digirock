@@ -7,6 +7,7 @@ from ..utils._utils import _process_vfrac
 from ..typing import NDArrayOrFloat, NDArrayOrInt
 from .. import models
 from ..elastic import acoustic_vels, acoustic_velp
+from ._minerals import Mineral
 
 
 class RockFrame(Blend):
@@ -39,43 +40,6 @@ class RockFrame(Blend):
         """
         methods = ["density", "vp", "vs", "shear_modulus", "bulk_modulus"]
         super().__init__(blend_keys, elements, methods, name=name)
-
-    def _process_props_get_method(
-        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
-    ) -> Sequence[NDArrayOrFloat]:
-        """Process the props to find if all required keys are present for blending
-
-        Uses self.blend_keys for check and get the result of method by passing props.
-
-        Args:
-
-        Returns:
-            result for method from elements in order of `blend_keys`
-        """
-        missing = [key for key in self.blend_keys if key not in props]
-        if len(missing) > 1:
-            raise ValueError(
-                f"Had {len(missing)} missing volume fractions, only 1 missing volume fraction allowed: please add to props {missing}"
-            )
-        has_keys = [key for key in self.blend_keys if key in props]
-
-        args = []
-
-        if isinstance(methods, str):
-            methods = [methods]
-
-        for key in has_keys:
-            eli = self.blend_keys.index(key)
-            args += [
-                getattr(self._elements[eli], meth)(props, **kwargs) for meth in methods
-            ] + [props[key]]
-
-        if missing:
-            eli = self.blend_keys.index(missing[0])
-            args += [
-                getattr(self._elements[eli], meth)(props, **kwargs) for meth in methods
-            ]
-        return tuple(args)
 
     def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
         """Returns density of RockFrame using volume fraction average, see [mixed_denisty][digirock.models._mod.mixed_density].
@@ -316,9 +280,9 @@ class CementedSand(RockFrame):
     def __init__(
         self,
         sand_vfrac_key: str,
-        sand: Type[Element],
+        sand: Type[Mineral],
         cement_vfrac_key: str,
-        cement: Type[Element],
+        cement: Type[Mineral],
         ncontacts: int = 9,
         alpha: Union[str, float] = "scheme1",
         name=None,

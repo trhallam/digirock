@@ -9,7 +9,7 @@ from ._frames import *
 
 from ._stress import StressModel, FStressModel, LGStressModel
 
-# from ._rock import Mineral, RockModel, FaciesModel, MultiRockModel
+from ._rock import GassmannRock
 
 from ._mineral_lib import minerals as _minerals
 

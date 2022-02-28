@@ -56,6 +56,9 @@ class Element:
         """
         return self._protected_kw_registry
 
+    def all_keys(self) -> List[str]:
+        return self.keys()
+
     def get_summary(self) -> Dict[str, Any]:
         """Returns a summary of this class."""
         return {"class": self.__class__, "name": self.name, "props_keys": self.keys()}
@@ -439,10 +442,52 @@ class Blend(Element):
         """Get keys from all levels"""
         all_keys = self.keys()
         for el in self._elements:
-            for key in el.keys():
+            for key in el.all_keys():
                 if key not in all_keys:
                     all_keys.append(key)
         return all_keys
+
+    def _process_props_get_method(
+        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+    ) -> Sequence[NDArrayOrFloat]:
+        """Process the props to find if all required keys are present for blending
+
+        Uses self.blend_keys for check and get the result of method by passing props.
+        Will find the complement if a blend key is missing (assumes that the volumes
+        must sum to 1.)
+
+        Args:
+            props
+            methods
+
+
+        Returns:
+            result for method from elements in order of `blend_keys`
+        """
+        missing = [key for key in self.blend_keys if key not in props]
+        if len(missing) > 1:
+            raise ValueError(
+                f"Had {len(missing)} missing volume fractions, only 1 missing volume fraction allowed: please add to props {missing}"
+            )
+        has_keys = [key for key in self.blend_keys if key in props]
+
+        args = []
+
+        if isinstance(methods, str):
+            methods = [methods]
+
+        for key in has_keys:
+            eli = self.blend_keys.index(key)
+            args += [
+                getattr(self._elements[eli], meth)(props, **kwargs) for meth in methods
+            ] + [props[key]]
+
+        if missing:
+            eli = self.blend_keys.index(missing[0])
+            args += [
+                getattr(self._elements[eli], meth)(props, **kwargs) for meth in methods
+            ]
+        return tuple(args)
 
 
 class Transform(Element):

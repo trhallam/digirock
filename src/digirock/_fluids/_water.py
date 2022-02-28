@@ -29,7 +29,7 @@ class WaterBW92(Fluid):
             name (optional): Name of fluid. Defaults to None.
             salinity (optional): Water salinity in ppm. Defaults to 0.
         """
-        super().__init__(name=name)
+        super().__init__(name=name, keys=["temp", "pres"])
         self.sal = salinity / 1e6
 
     @check_props("temp", "pres")
@@ -126,7 +126,7 @@ class WaterECL(Fluid):
             salinity: Salinity of brine (ppm). Defaults to 0.
             fvf1_pres: The reference pressure when the FVF=1. Defaults to 0.101325 MPa.
         """
-        super().__init__(name=name)
+        super().__init__(name=name, keys=["temp", "pres"])
         self.sal = salinity / 1e6
         self.ref_pres = ref_pres
         self.bw = bw
