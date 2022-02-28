@@ -464,6 +464,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/example_gassmann_frame.html" class="md-nav__link">
+        Gassmann
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2431,7 +2445,7 @@ K^{HS^+} = \Lambda(\mu_{max})
 
 
 <h3 id="digirock.models._cemented_sand.dryframe_cemented_sand" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">dryframe_cemented_sand</span><span class="p">(</span><span class="n">k_sand</span><span class="p">,</span> <span class="n">mu_sand</span><span class="p">,</span> <span class="n">k_cem</span><span class="p">,</span> <span class="n">mu_cem</span><span class="p">,</span> <span class="n">phi0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">ncontacts</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="s1">&#39;scheme1&#39;</span><span class="p">)</span></code>
+<code class="highlight language-python"><span class="n">dryframe_cemented_sand</span><span class="p">(</span><span class="n">k_sand</span><span class="p">,</span> <span class="n">mu_sand</span><span class="p">,</span> <span class="n">k_cem</span><span class="p">,</span> <span class="n">mu_cem</span><span class="p">,</span> <span class="n">phi0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">ncontacts</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="s1">&#39;scheme1&#39;</span><span class="p">)</span></code>
 
 
 </h3>
@@ -2442,7 +2456,7 @@ K^{HS^+} = \Lambda(\mu_{max})
 <p>Assumes sand grains are in contact and cement fills the porespace between grains.</p>
 <p>Scheme 1: Cement preferentially fills spaces around contacts increasing shear strength.
 Scheme 2: Cement covers grains evenly but maintains contacts between sand grains.
-Alpha as float: Specify a custom value for alpha.</p>
+alpha can also be <code>NDArrayOrFloat</code> for a custom scheme.</p>
 
 <p><strong>Parameters:</strong></p>
 <table>
@@ -2457,52 +2471,50 @@ Alpha as float: Specify a custom value for alpha.</p>
   <tbody>
       <tr>
         <td><code>k_sand</code></td>
-        <td><code>array-like</code></td>
-        <td><p>Bulk modulus of sand grains.</p></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Bulk modulus of sand grains</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>mu_sand</code></td>
-        <td><code>array-like</code></td>
-        <td><p>Shear modulus of sand grains.</p></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Shear modulus of sand grains</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>k_cem</code></td>
-        <td><code>array-like</code></td>
-        <td><p>Bulk modulus of cement.</p></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Bulk modulus of cement</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>mu_cem</code></td>
-        <td><code>array-like</code></td>
-        <td><p>Shear modulus of cement.</p></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Shear modulus of cement</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>phi0</code></td>
-        <td><code>array-like</code></td>
-        <td><p>Material porosity without any cement. For perfect spherical grains
-phi0 = 0.36</p></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Material porosity without any cement. For perfect spherical grains phi0 = 0.36</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>phi</code></td>
-        <td><code>array-like</code></td>
-        <td><p>Material porosity after substituting in cement to porespace.</p></td>
+        <td><code>Union[numpy.ndarray, float]</code></td>
+        <td><p>Material porosity after substituting in cement to porespace</p></td>
         <td><em>required</em></td>
       </tr>
       <tr>
         <td><code>ncontacts</code></td>
-        <td><code>float</code></td>
-        <td><p>Number of contacts between grains.</p></td>
-        <td><em>required</em></td>
+        <td><code>int</code></td>
+        <td><p>Number of contacts between grains</p></td>
+        <td><code>9</code></td>
       </tr>
       <tr>
         <td><code>alpha</code></td>
-        <td><code>str/float, Optional</code></td>
-        <td><p>The cement fill scheme to use. Defaults to 'scheme1.
-One of ['scheme1', 'scheme2', float]</p></td>
+        <td><code>Union[str, numpy.ndarray, float]</code></td>
+        <td><p>The cement fill scheme to use, one of ['scheme1', 'scheme2', <code>NDArrayOrFloat</code>]</p></td>
         <td><code>&#39;scheme1&#39;</code></td>
       </tr>
   </tbody>
@@ -2517,7 +2529,7 @@ One of ['scheme1', 'scheme2', float]</p></td>
   </thead>
   <tbody>
     <tr>
-      <td><code>(array-like, array-like)</code></td>
+      <td><code>Tuple[Union[numpy.ndarray, float], Union[numpy.ndarray, float]]</code></td>
       <td><p>Bulk and shear modului of cemented-sand.</p></td>
     </tr>
   </tbody>
@@ -2525,30 +2537,35 @@ One of ['scheme1', 'scheme2', float]</p></td>
         <details class="quote">
           <summary>Source code in <code>digirock/models/_cemented_sand.py</code></summary>
           <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span> <span class="nf">dryframe_cemented_sand</span><span class="p">(</span>
-    <span class="n">k_sand</span><span class="p">,</span> <span class="n">mu_sand</span><span class="p">,</span> <span class="n">k_cem</span><span class="p">,</span> <span class="n">mu_cem</span><span class="p">,</span> <span class="n">phi0</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">ncontacts</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="s2">&quot;scheme1&quot;</span>
-<span class="p">):</span>
+    <span class="n">k_sand</span><span class="p">:</span> <span class="n">NDArrayOrFloat</span><span class="p">,</span>
+    <span class="n">mu_sand</span><span class="p">:</span> <span class="n">NDArrayOrFloat</span><span class="p">,</span>
+    <span class="n">k_cem</span><span class="p">:</span> <span class="n">NDArrayOrFloat</span><span class="p">,</span>
+    <span class="n">mu_cem</span><span class="p">:</span> <span class="n">NDArrayOrFloat</span><span class="p">,</span>
+    <span class="n">phi0</span><span class="p">:</span> <span class="n">NDArrayOrFloat</span><span class="p">,</span>
+    <span class="n">phi</span><span class="p">:</span> <span class="n">NDArrayOrFloat</span><span class="p">,</span>
+    <span class="n">ncontacts</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">NDArrayOrFloat</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;scheme1&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">NDArrayOrFloat</span><span class="p">,</span> <span class="n">NDArrayOrFloat</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Dryframe moduli for Cemented-Sand model.</span>
 
 <span class="sd">    Assumes sand grains are in contact and cement fills the porespace between grains.</span>
 
 <span class="sd">    Scheme 1: Cement preferentially fills spaces around contacts increasing shear strength.</span>
 <span class="sd">    Scheme 2: Cement covers grains evenly but maintains contacts between sand grains.</span>
-<span class="sd">    Alpha as float: Specify a custom value for alpha.</span>
+<span class="sd">    alpha can also be `NDArrayOrFloat` for a custom scheme.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        k_sand (array-like): Bulk modulus of sand grains.</span>
-<span class="sd">        mu_sand (array-like): Shear modulus of sand grains.</span>
-<span class="sd">        k_cem (array-like): Bulk modulus of cement.</span>
-<span class="sd">        mu_cem (array-like): Shear modulus of cement.</span>
-<span class="sd">        phi0 (array-like): Material porosity without any cement. For perfect spherical grains</span>
-<span class="sd">            phi0 = 0.36</span>
-<span class="sd">        phi (array-like): Material porosity after substituting in cement to porespace.</span>
-<span class="sd">        ncontacts (float): Number of contacts between grains.</span>
-<span class="sd">        alpha (str/float, Optional): The cement fill scheme to use. Defaults to &#39;scheme1.</span>
-<span class="sd">            One of [&#39;scheme1&#39;, &#39;scheme2&#39;, float]</span>
+<span class="sd">        k_sand: Bulk modulus of sand grains</span>
+<span class="sd">        mu_sand: Shear modulus of sand grains</span>
+<span class="sd">        k_cem: Bulk modulus of cement</span>
+<span class="sd">        mu_cem: Shear modulus of cement</span>
+<span class="sd">        phi0: Material porosity without any cement. For perfect spherical grains phi0 = 0.36</span>
+<span class="sd">        phi: Material porosity after substituting in cement to porespace</span>
+<span class="sd">        ncontacts: Number of contacts between grains</span>
+<span class="sd">        alpha: The cement fill scheme to use, one of [&#39;scheme1&#39;, &#39;scheme2&#39;, `NDArrayOrFloat`]</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (array-like, array-like): Bulk and shear modului of cemented-sand.</span>
+<span class="sd">        Bulk and shear modului of cemented-sand.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">pois_sand</span> <span class="o">=</span> <span class="n">poisson_ratio</span><span class="p">(</span><span class="n">k_sand</span><span class="p">,</span> <span class="n">mu_sand</span><span class="p">)</span>
     <span class="n">pois_cem</span> <span class="o">=</span> <span class="n">poisson_ratio</span><span class="p">(</span><span class="n">k_cem</span><span class="p">,</span> <span class="n">mu_cem</span><span class="p">)</span>

@@ -15,7 +15,7 @@
     
     
       
-        <title>Fluids - digirock Documentation</title>
+        <title>Gassmann - digirock Documentation</title>
       
     
     
@@ -61,11 +61,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#fluids" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -95,7 +90,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Fluids
+              Gassmann
             
           </span>
         </div>
@@ -416,59 +411,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Fluids
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="example_fluids.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="example_fluids.html" class="md-nav__link">
         Fluids
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#water-types" class="md-nav__link">
-    Water Types
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#oil-types" class="md-nav__link">
-    Oil Types
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -520,11 +467,19 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="example_gassmann_frame.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="example_gassmann_frame.html" class="md-nav__link md-nav__link--active">
         Gassmann
       </a>
+      
     </li>
   
 
@@ -738,52 +693,14 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#water-types" class="md-nav__link">
-    Water Types
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#oil-types" class="md-nav__link">
-    Oil Types
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content" data-md-component="content">
             <article class="md-content__inner md-typeset">
               
                 
 
+
+  <h1>Gassmann</h1>
 
 <script>
 (function (global, factory) {
@@ -1835,11 +1752,11 @@ Licensed under the Apache License, Version 2.0.
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
-<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">digirock</span> <span class="kn">import</span> <span class="n">GassmannRock</span><span class="p">,</span> <span class="n">VRHAvg</span><span class="p">,</span> <span class="n">Mineral</span><span class="p">,</span> <span class="n">WaterBW92</span><span class="p">,</span> <span class="n">OilBW92</span><span class="p">,</span> <span class="n">NurCriticalPoroAdjust</span><span class="p">,</span> <span class="n">WoodsFluid</span>
+<span class="kn">from</span> <span class="nn">digirock.utils</span> <span class="kn">import</span> <span class="n">create_orthogonal_props</span>
 </pre></div>
-<div id="cell-1" class="clipboard-copy-txt">%load_ext autoreload
-%autoreload 2</div>
+<div id="cell-1" class="clipboard-copy-txt">from digirock import GassmannRock, VRHAvg, Mineral, WaterBW92, OilBW92, NurCriticalPoroAdjust, WoodsFluid
+from digirock.utils import create_orthogonal_props</div>
     
         </div>
     </div>
@@ -1848,39 +1765,8 @@ Licensed under the Apache License, Version 2.0.
 </div>
 
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="fluids">Fluids<a class="anchor-link" href="#fluids">&#182;</a></h1><p>All fluids have four basic methods:</p>
-<ul>
-<li><code>get_summary</code> which returns details of the fluid</li>
-<li><code>density</code> which returns the density of the fluid with minimum arguments of temperature and pressure.</li>
-<li><code>velocity</code> which returns the acoustic velocity of the fluid with minimum arguments of temperature and pressure.</li>
-<li><code>modulus</code> which returns the modulus of the fluid with minimum arguments of temperature and pressure.</li>
-</ul>
-<p>Additional keyword arguments to each method can be added as differentiators when fluids become more complex, for example when there are PVT zones.</p>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="water-types">Water Types<a class="anchor-link" href="#water-types">&#182;</a></h2><p>Classes for Water are based upon the Batzle and Wang 92 equations or with <code>PVTW</code> can be modified to use a table for the formation volume factor (FVF).</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -1900,71 +1786,38 @@ Licensed under the Apache License, Version 2.0.
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
-<span class="kn">from</span> <span class="nn">digirock.datasets</span> <span class="kn">import</span> <span class="n">fetch_example_data</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">sand</span> <span class="o">=</span> <span class="n">Mineral</span><span class="p">(</span><span class="mf">2.7</span><span class="p">,</span> <span class="mf">29.9</span><span class="p">,</span> <span class="mf">22.5</span><span class="p">)</span>
+<span class="n">clay</span> <span class="o">=</span> <span class="n">Mineral</span><span class="p">(</span><span class="mf">2.51</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mf">9.4</span><span class="p">)</span>
 
-<span class="n">cur_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-<span class="n">parent_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">cur_dir</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">parent_path</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">VRHAvg</span><span class="p">([</span><span class="s2">&quot;VSAND&quot;</span><span class="p">,</span> <span class="s2">&quot;VCLAY&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">sand</span><span class="p">,</span> <span class="n">clay</span><span class="p">])</span>
+<span class="n">pn</span> <span class="o">=</span> <span class="n">NurCriticalPoroAdjust</span><span class="p">([</span><span class="s2">&quot;poro&quot;</span><span class="p">],</span> <span class="n">rf</span><span class="p">,</span> <span class="mf">0.39</span><span class="p">)</span>
 
-<span class="c1"># Presure in MPa</span>
-<span class="n">p</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">pres</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="c1"># Temperature in degC</span>
-<span class="n">t</span> <span class="o">=</span> <span class="mi">110</span>
-<span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">wat</span> <span class="o">=</span> <span class="n">WaterBW92</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;water&quot;</span><span class="p">,</span> <span class="n">salinity</span><span class="o">=</span><span class="mi">100000</span><span class="p">)</span>
+<span class="n">oil</span> <span class="o">=</span> <span class="n">OilBW92</span><span class="p">(</span><span class="s2">&quot;norst&quot;</span><span class="p">,</span> <span class="n">api</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">gas_sg</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">oil</span><span class="o">.</span><span class="n">set_rst</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
-<span class="c1"># fetch all the example data</span>
-<span class="n">example_data</span> <span class="o">=</span> <span class="n">fetch_example_data</span><span class="p">()</span>
+<span class="n">woods</span> <span class="o">=</span> <span class="n">WoodsFluid</span><span class="p">([</span><span class="s2">&quot;SWAT&quot;</span><span class="p">,</span> <span class="s2">&quot;SOIL&quot;</span><span class="p">],</span> <span class="p">[</span><span class="n">wat</span><span class="p">,</span> <span class="n">oil</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wfl&quot;</span><span class="p">)</span>
+
+<span class="n">gr</span> <span class="o">=</span> <span class="n">GassmannRock</span><span class="p">(</span><span class="n">pn</span><span class="p">,</span> <span class="n">woods</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;myrock&quot;</span><span class="p">)</span>
 </pre></div>
-<div id="cell-2" class="clipboard-copy-txt">import numpy as np
-import os
-import pathlib
-from digirock.datasets import fetch_example_data
+<div id="cell-2" class="clipboard-copy-txt">sand = Mineral(2.7, 29.9, 22.5)
+clay = Mineral(2.51, 22, 9.4)
 
-cur_dir = os.path.abspath("")
-parent_path = pathlib.Path(cur_dir)
-print(parent_path)
+rf = VRHAvg(["VSAND", "VCLAY"], [sand, clay])
+pn = NurCriticalPoroAdjust(["poro"], rf, 0.39)
 
-# Presure in MPa
-p = 50
-pres = np.linspace(10, 100, 10)
-# Temperature in degC
-t = 110
-temp = np.linspace(80, 150, 10)
+wat = WaterBW92(name="water", salinity=100000)
+oil = OilBW92("norst", api=35, gas_sg=0.6)
+oil.set_rst(100)
 
-# fetch all the example data
-example_data = fetch_example_data()</div>
+woods = WoodsFluid(["SWAT", "SOIL"], [wat, oil], name="wfl")
+
+gr = GassmannRock(pn, woods, name="myrock")</div>
     
         </div>
     </div>
 
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>/home/runner/work/digirock/digirock
-</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div>
@@ -1989,23 +1842,9 @@ example_data = fetch_example_data()</div>
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">digirock</span> <span class="kn">import</span> <span class="n">WaterBW92</span><span class="p">,</span> <span class="n">WaterECL</span><span class="p">,</span> <span class="n">load_pvtw</span>
-
-<span class="c1"># Initialisation of BW92 Water requires the salinity in PPM.</span>
-<span class="n">wat</span> <span class="o">=</span> <span class="n">WaterBW92</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;water&quot;</span><span class="p">,</span> <span class="n">salinity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># check the summary - note the input salinity has been converted from PPM to ...</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">wat</span><span class="o">.</span><span class="n">get_summary</span><span class="p">())</span>
-<span class="n">wat</span><span class="o">.</span><span class="n">tree</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">gr</span><span class="o">.</span><span class="n">tree</span>
 </pre></div>
-<div id="cell-3" class="clipboard-copy-txt">from digirock import WaterBW92, WaterECL, load_pvtw
-
-# Initialisation of BW92 Water requires the salinity in PPM.
-wat = WaterBW92(name="water", salinity=0)
-
-# check the summary - note the input salinity has been converted from PPM to ...
-print(wat.get_summary())
-wat.tree</div>
+<div id="cell-3" class="clipboard-copy-txt">gr.tree</div>
     
         </div>
     </div>
@@ -2023,27 +1862,43 @@ wat.tree</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>{&#39;class&#39;: &lt;class &#39;digirock._fluids._water.WaterBW92&#39;&gt;, &#39;name&#39;: &#39;water&#39;, &#39;props_keys&#39;: [&#39;temp&#39;, &#39;pres&#39;], &#39;salinity&#39;: 0.0}
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
     <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
 
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">water                                                                                        
-├── class : &lt;class 'digirock._fluids._water.WaterBW92'&gt;                                      
-├── props_keys : ['temp', 'pres']                                                            
-└── salinity : 0.0                                                                           
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">myrock                                                                                       
+├── class : &lt;class 'digirock._rock.GassmannRock'&gt;                                            
+├── props_keys : ['poro']                                                                    
+├── blend_keys : ['poro']                                                                    
+├── methods : ('density', 'vp', 'vs', 'shear_modulus', 'bulk_modulus')                       
+├── n_elements : 2                                                                           
+├── NurCriticalPoroAdjust_140440710905568                                                    
+│   ├── class : &lt;class 'digirock._frames._poro_adjust.NurCriticalPoroAdjust'&gt;                
+│   ├── props_keys : ['poro']                                                                
+│   ├── transform_keys : ['poro']                                                            
+│   ├── methods : ('bulk_modulus', 'vp', 'vs', 'shear_modulus', 'density')                   
+│   ├── elements : [{'class': &lt;class 'digirock._frames._frames.VRHAvg'&gt;, 'name':             
+│   │   'VRHAvg_140440710905472', 'props_keys': ['VSAND', 'VCLAY'], 'blend_keys': ['VSAND',  
+│   │   'VCLAY'], 'methods': ('density', 'vp', 'vs', 'shear_modulus', 'bulk_modulus'),       
+│   │   'n_elements': 2, 'elements': [{'class': &lt;class 'digirock._frames._minerals.Mineral'&gt;,
+│   │   'name': 'Mineral_140440710905376', 'props_keys': [], 'bulk_modulus': 29.9,           
+│   │   'shear_modulus': 22.5, 'dens': 2.7, 'vp': 4710.1151987170315, 'vs':                  
+│   │   2886.751345948129}, {'class': &lt;class 'digirock._frames._minerals.Mineral'&gt;, 'name':  
+│   │   'Mineral_140440710905280', 'props_keys': [], 'bulk_modulus': 22, 'shear_modulus':    
+│   │   9.4, 'dens': 2.51, 'vp': 3709.2182643789142, 'vs': 1935.205394866066}]}]             
+│   └── critical_poro : 0.39                                                                 
+└── wfl                                                                                      
+    ├── class : &lt;class 'digirock._fluids._fluid_mod.WoodsFluid'&gt;                             
+    ├── props_keys : ['SWAT', 'SOIL']                                                        
+    ├── blend_keys : ['SWAT', 'SOIL']                                                        
+    ├── methods : ('density', 'bulk_modulus', 'shear_modulus', 'velocity')                   
+    ├── n_elements : 2                                                                       
+    └── elements : [{'class': &lt;class 'digirock._fluids._water.WaterBW92'&gt;, 'name': 'water',  
+        'props_keys': ['temp', 'pres'], 'salinity': 0.1}, {'class': &lt;class                   
+        'digirock._fluids._oil.OilBW92'&gt;, 'name': 'norst', 'props_keys': ['bo', 'rs'], 'api':
+        35, 'std_density': 0.8498498498498499, 'rst': {'type': 'constant', 'rs': 100, 'pres':
+        None}}]                                                                              
 </pre>
 
 </div>
@@ -2054,18 +1909,6 @@ wat.tree</div>
 
 </div>
 
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Then let's check the elastic properties of this water with a mixture of constants and arrays or both.</p>
-
-</div>
-</div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -2088,63 +1931,9 @@ wat.tree</div>
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
-<span class="n">props_ar1</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="n">pres</span><span class="p">)</span>
-<span class="n">props_ar2</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="n">temp</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="n">pres</span><span class="p">)</span>
-<span class="n">props_ar3</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="n">temp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">pres</span><span class="o">=</span><span class="n">pres</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-
-<span class="c1"># density</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Density single values (g/cc):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Density 1 array values (g/cc):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props_ar1</span><span class="p">))</span>
-
-<span class="c1"># arrays can be used, but they must be the same shape</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Density 2 array values (g/cc):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props_ar2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Density 2 array values (g/cc):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props_ar3</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># velocity</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Velocity single values (m/s):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Velocity 1 array values (m/s):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props_ar1</span><span class="p">))</span>
-
-<span class="c1"># arrays can be used, but they must be the same shape</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Velocity 2 array values (m/s):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props_ar2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Velocity 2 array values (m/s):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props_ar3</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># modulus</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modulus single values (GPa):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modulus 1 array values (GPa):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props_ar1</span><span class="p">))</span>
-
-<span class="c1"># arrays can be used, but they must be the same shape</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modulus 2 array values (GPa):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props_ar2</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Modulus 2 array values (GPa):&quot;</span><span class="p">,</span> <span class="n">wat</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props_ar3</span><span class="p">))</span>
+            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">gr</span><span class="o">.</span><span class="n">trace_tree</span><span class="p">({</span><span class="s2">&quot;VCLAY&quot;</span><span class="p">:</span><span class="mf">0.2</span><span class="p">,</span> <span class="s2">&quot;poro&quot;</span><span class="p">:</span><span class="mf">0.2</span><span class="p">,</span> <span class="s2">&quot;SOIL&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;temp&quot;</span><span class="p">:</span><span class="mi">110</span><span class="p">,</span> <span class="s2">&quot;pres&quot;</span><span class="p">:</span><span class="mi">20</span><span class="p">},</span> <span class="p">[</span><span class="s2">&quot;density&quot;</span><span class="p">,</span> <span class="s2">&quot;bulk_modulus&quot;</span><span class="p">,</span> <span class="s2">&quot;shear_modulus&quot;</span><span class="p">,</span> <span class="s2">&quot;vp&quot;</span><span class="p">,</span> <span class="s2">&quot;vs&quot;</span><span class="p">])</span>
 </pre></div>
-<div id="cell-4" class="clipboard-copy-txt">props = dict(temp=t, pres=p)
-props_ar1 = dict(temp=t, pres=pres)
-props_ar2 = dict(temp=temp, pres=pres)
-props_ar3 = dict(temp=temp.reshape(2, -1), pres=pres.reshape(2, -1))
-
-# density
-print("Density single values (g/cc):", wat.density(props))
-print("Density 1 array values (g/cc):", wat.density(props_ar1))
-
-# arrays can be used, but they must be the same shape
-print("Density 2 array values (g/cc):", wat.density(props_ar2))
-print("Density 2 array values (g/cc):", wat.density(props_ar3), "\n")
-
-# velocity
-print("Velocity single values (m/s):", wat.density(props))
-print("Velocity 1 array values (m/s):", wat.density(props_ar1))
-
-# arrays can be used, but they must be the same shape
-print("Velocity 2 array values (m/s):", wat.density(props_ar2))
-print("Velocity 2 array values (m/s):", wat.density(props_ar3), "\n")
-
-# modulus
-print("Modulus single values (GPa):", wat.density(props))
-print("Modulus 1 array values (GPa):", wat.density(props_ar1))
-
-# arrays can be used, but they must be the same shape
-print("Modulus 2 array values (GPa):", wat.density(props_ar2))
-print("Modulus 2 array values (GPa):", wat.density(props_ar3))</div>
+<div id="cell-4" class="clipboard-copy-txt">gr.trace_tree({"VCLAY":0.2, "poro":0.2, "SOIL": 0.5, "temp":110, "pres":20}, ["density", "bulk_modulus", "shear_modulus", "vp", "vs"])</div>
     
         </div>
     </div>
@@ -2162,61 +1951,77 @@ print("Modulus 2 array values (GPa):", wat.density(props_ar3))</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Density single values (g/cc): 0.9744816
-Density 1 array values (g/cc): [0.95799692 0.96228399 0.96646046 0.97052633 0.9744816  0.97832627
- 0.98206034 0.98568381 0.98919668 0.99259895]
-Density 2 array values (g/cc): [0.97757414 0.97709025 0.97625809 0.97511746 0.97370666 0.97206256
- 0.97022054 0.96821451 0.96607692 0.96383875]
-Density 2 array values (g/cc): [[0.97757414 0.97709025 0.97625809 0.97511746 0.97370666]
- [0.97206256 0.97022054 0.96821451 0.96607692 0.96383875]] 
 
-Velocity single values (m/s): 0.9744816
-Velocity 1 array values (m/s): [0.95799692 0.96228399 0.96646046 0.97052633 0.9744816  0.97832627
- 0.98206034 0.98568381 0.98919668 0.99259895]
-Velocity 2 array values (m/s): [0.97757414 0.97709025 0.97625809 0.97511746 0.97370666 0.97206256
- 0.97022054 0.96821451 0.96607692 0.96383875]
-Velocity 2 array values (m/s): [[0.97757414 0.97709025 0.97625809 0.97511746 0.97370666]
- [0.97206256 0.97022054 0.96821451 0.96607692 0.96383875]] 
-
-Modulus single values (GPa): 0.9744816
-Modulus 1 array values (GPa): [0.95799692 0.96228399 0.96646046 0.97052633 0.9744816  0.97832627
- 0.98206034 0.98568381 0.98919668 0.99259895]
-Modulus 2 array values (GPa): [0.97757414 0.97709025 0.97625809 0.97511746 0.97370666 0.97206256
- 0.97022054 0.96821451 0.96607692 0.96383875]
-Modulus 2 array values (GPa): [[0.97757414 0.97709025 0.97625809 0.97511746 0.97370666]
- [0.97206256 0.97022054 0.96821451 0.96607692 0.96383875]]
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">myrock                                                                                       
+├── density : [2.29896951]                                                                   
+├── bulk_modulus : [14.70819801]                                                             
+├── shear_modulus : [9.12868979]                                                             
+├── vp : [3419.37148074]                                                                     
+├── vs : [1992.68026332]                                                                     
+├── NurCriticalPoroAdjust_140440710905568                                                    
+│   ├── density : 2.1296                                                                     
+│   ├── bulk_modulus : [13.6937683]                                                          
+│   ├── shear_modulus : [9.12868979]                                                         
+│   ├── vp : [3485.05952279]                                                                 
+│   ├── vs : [2070.40451248]                                                                 
+│   └── VRHAvg_140440710905472                                                               
+│       ├── density : 2.662                                                                  
+│       ├── bulk_modulus : [28.10826124]                                                     
+│       ├── shear_modulus : [18.73783694]                                                    
+│       ├── vp : [4465.91750563]                                                             
+│       ├── vs : [2653.11272176]                                                             
+│       ├── Mineral_140440710905376                                                          
+│       │   ├── density : 2.7                                                                
+│       │   ├── bulk_modulus : 29.9                                                          
+│       │   ├── shear_modulus : 22.5                                                         
+│       │   ├── vp : 4710.1151987170315                                                      
+│       │   └── vs : 2886.751345948129                                                       
+│       └── Mineral_140440710905280                                                          
+│           ├── density : 2.51                                                               
+│           ├── bulk_modulus : 22                                                            
+│           ├── shear_modulus : 9.4                                                          
+│           ├── vp : 3709.2182643789142                                                      
+│           └── vs : 1935.205394866066                                                       
+└── wfl                                                                                      
+    ├── density : [0.84684753]                                                               
+    ├── bulk_modulus : [0.80607805]                                                          
+    ├── shear_modulus : 0.0                                                                  
+    ├── vp : [975.63177547]                                                                  
+    ├── vs : 0.0                                                                             
+    ├── water                                                                                
+    │   ├── density : 1.03265799                                                             
+    │   ├── bulk_modulus : [2.81319124]                                                      
+    │   ├── shear_modulus : 0.0                                                              
+    │   ├── vp : [1650.52221268]                                                             
+    │   └── vs : 0.0                                                                         
+    └── norst                                                                                
+        ├── density : [0.66103706]                                                           
+        ├── bulk_modulus : [0.52047762]                                                      
+        ├── shear_modulus : 0.0                                                              
+        ├── vp : [887.3360486]                                                               
+        └── vs : 0.0                                                                         
 </pre>
-</div>
-</div>
 
 </div>
 
 </div>
 
 </div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>An inbuilt class exists for using PVTW tables from Eclipse include files. The density is then calculated using the Eclipse formula.</p>
 
 </div>
+
 </div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
         
         
         <div class="CodeMirror cm-s-jupyter">
@@ -2231,1310 +2036,9 @@ Modulus 2 array values (GPa): [[0.97757414 0.97709025 0.97625809 0.97511746 0.97
                 </div>
             </clipboard-copy>
         </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># load the Eclipse table directly from a text file</span>
-<span class="n">wat_pvtw</span> <span class="o">=</span> <span class="n">load_pvtw</span><span class="p">(</span><span class="n">example_data</span><span class="p">[</span><span class="s2">&quot;COMPLEX_PVT.inc&quot;</span><span class="p">],</span> <span class="n">salinity</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">wat_pvtw</span><span class="p">[</span><span class="s2">&quot;pvtw0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_summary</span><span class="p">())</span>
-<span class="n">wat_pvtw</span><span class="p">[</span><span class="s2">&quot;pvtw0&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tree</span>
-</pre></div>
-<div id="cell-5" class="clipboard-copy-txt"># load the Eclipse table directly from a text file
-wat_pvtw = load_pvtw(example_data["COMPLEX_PVT.inc"], salinity=0)
-
-# look at the first value of the loaded table - there is one value for each of the 13 PVT zones in this example
-print(wat_pvtw["pvtw0"].get_summary())
-wat_pvtw["pvtw0"].tree</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>{&#39;class&#39;: &lt;class &#39;digirock._fluids._water.WaterECL&#39;&gt;, &#39;name&#39;: &#39;pvtw0&#39;, &#39;props_keys&#39;: [&#39;temp&#39;, &#39;pres&#39;], &#39;salinity&#39;: 0.1423666294070789, &#39;ref_pres&#39;: 26.85, &#39;bw&#39;: 1.03382, &#39;comp&#39;: 0.00031288999999999997, &#39;visc&#39;: 0.38509, &#39;cvisc&#39;: 0.0009780099999999999, &#39;density_asc&#39;: 1.1012673958726442}
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">pvtw0                                                                                        
-├── class : &lt;class 'digirock._fluids._water.WaterECL'&gt;                                       
-├── props_keys : ['temp', 'pres']                                                            
-├── salinity : 0.1423666294070789                                                            
-├── ref_pres : 26.85                                                                         
-├── bw : 1.03382                                                                             
-├── comp : 0.00031288999999999997                                                            
-├── visc : 0.38509                                                                           
-├── cvisc : 0.0009780099999999999                                                            
-└── density_asc : 1.1012673958726442                                                         
-</pre>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Let's look at the denisty for the first table entry that was loaded for this PVTW.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-6">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">pvtw0</span> <span class="o">=</span> <span class="n">wat_pvtw</span><span class="p">[</span><span class="s2">&quot;pvtw0&quot;</span><span class="p">]</span>
-
-<span class="c1"># we need to tell the fluid which pvt table to use either with each call to a method</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Density single values (g/cc):&quot;</span><span class="p">,</span> <span class="n">pvtw0</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
-
-<span class="c1"># with arrays</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Density array values (g/cc):&quot;</span><span class="p">,</span> <span class="n">pvtw0</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props_ar1</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bulk Modulus array values (g/cc):&quot;</span><span class="p">,</span> <span class="n">pvtw0</span><span class="o">.</span><span class="n">bulk_modulus</span><span class="p">(</span><span class="n">props_ar2</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-<div id="cell-6" class="clipboard-copy-txt">pvtw0 = wat_pvtw["pvtw0"]
-
-# we need to tell the fluid which pvt table to use either with each call to a method
-print("Density single values (g/cc):", pvtw0.density(props))
-
-# with arrays
-print("Density array values (g/cc):", pvtw0.density(props_ar1), "\n")
-print("Bulk Modulus array values (g/cc):", pvtw0.bulk_modulus(props_ar2), "\n")</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Density single values (g/cc): 1.1185960024862598
-Density array values (g/cc): [1.10468344 1.10814528 1.11161798 1.11510155 1.118596   1.12210132
- 1.12561751 1.12914458 1.13268251 1.13623132] 
-
-Bulk Modulus array values (g/cc): [3.11532512 3.18369362 3.25225255 3.31788512 3.37855127 3.4341293
- 3.48720719 3.54377924 3.61384577 3.71198247] 
-
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="oil-types">Oil Types<a class="anchor-link" href="#oil-types">&#182;</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-7">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">digirock</span> <span class="kn">import</span> <span class="n">DeadOil</span><span class="p">,</span> <span class="n">OilBW92</span><span class="p">,</span> <span class="n">OilPVT</span><span class="p">,</span> <span class="n">load_pvto</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-<div id="cell-7" class="clipboard-copy-txt">from digirock import DeadOil, OilBW92, OilPVT, load_pvto
-import numpy as np</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><code>DeadOil</code> is a class for fluids with no dissolved gas and it is initialised by either specifying an oil API or standard density.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-8">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">doil_api</span> <span class="o">=</span> <span class="n">DeadOil</span><span class="p">(</span><span class="n">api</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">doil_api</span><span class="o">.</span><span class="n">get_summary</span><span class="p">())</span>
-
-<span class="n">doil_sd</span> <span class="o">=</span> <span class="n">DeadOil</span><span class="p">(</span><span class="n">std_density</span><span class="o">=</span><span class="mf">0.84985</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">doil_sd</span><span class="o">.</span><span class="n">get_summary</span><span class="p">())</span>
-<span class="n">doil_sd</span><span class="o">.</span><span class="n">tree</span>
-</pre></div>
-<div id="cell-8" class="clipboard-copy-txt">doil_api = DeadOil(api=35)
-print(doil_api.get_summary())
-
-doil_sd = DeadOil(std_density=0.84985)
-print(doil_sd.get_summary())
-doil_sd.tree</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>{&#39;class&#39;: &lt;class &#39;digirock._fluids._oil.DeadOil&#39;&gt;, &#39;name&#39;: &#39;DeadOil_140529924716768&#39;, &#39;props_keys&#39;: [&#39;bo&#39;], &#39;api&#39;: 35, &#39;std_density&#39;: 0.8498498498498499, &#39;pvt&#39;: None}
-{&#39;class&#39;: &lt;class &#39;digirock._fluids._oil.DeadOil&#39;&gt;, &#39;name&#39;: &#39;DeadOil_140529924716864&#39;, &#39;props_keys&#39;: [&#39;bo&#39;], &#39;api&#39;: 34.999970583044075, &#39;std_density&#39;: 0.84985, &#39;pvt&#39;: None}
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140529924716864                                                                      
-├── class : &lt;class 'digirock._fluids._oil.DeadOil'&gt;                                          
-├── props_keys : ['bo']                                                                      
-├── api : 34.999970583044075                                                                 
-├── std_density : 0.84985                                                                    
-└── pvt : None                                                                               
-</pre>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Note that <code>pvt</code> is mentioned in the summary but isn't yet set. Default behaviour for <code>DeadOil</code> is to calculate the formation volume factor (fvf) using a constant or a presure and FVF table.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-9">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># set a constant bo</span>
-<span class="n">doil_api</span><span class="o">.</span><span class="n">set_pvt</span><span class="p">(</span><span class="mf">1.1</span><span class="p">)</span>
-<span class="n">doil_api</span><span class="o">.</span><span class="n">tree</span>
-</pre></div>
-<div id="cell-9" class="clipboard-copy-txt"># set a constant bo
-doil_api.set_pvt(1.1)
-doil_api.tree</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140529924716768                                                                      
-├── class : &lt;class 'digirock._fluids._oil.DeadOil'&gt;                                          
-├── props_keys : ['bo']                                                                      
-├── api : 35                                                                                 
-├── std_density : 0.8498498498498499                                                         
-└── pvt : {'type': 'constant', 'bo': 1.1}                                                    
-</pre>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-10">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># set a bo pres table</span>
-<span class="n">doil_sd</span><span class="o">.</span><span class="n">set_pvt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">pres</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
-<span class="n">doil_sd</span><span class="o">.</span><span class="n">tree</span>
-</pre></div>
-<div id="cell-10" class="clipboard-copy-txt"># set a bo pres table
-doil_sd.set_pvt(np.linspace(1, 1.1, 11), pres=np.linspace(0, 50, 11))
-doil_sd.tree</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">DeadOil_140529924716864                                                                      
-├── class : &lt;class 'digirock._fluids._oil.DeadOil'&gt;                                          
-├── props_keys : ['bo']                                                                      
-├── api : 34.999970583044075                                                                 
-├── std_density : 0.84985                                                                    
-└── pvt : {'type': 'table', 'bo': 'table', 'pres': 'table', 'bo_table': &lt;xarray.DataArray    
-    (pres: 11)&gt;                                                                              
-    array([1.  , 1.01, 1.02, 1.03, 1.04, 1.05, 1.06, 1.07, 1.08, 1.09, 1.1 ])                
-    Coordinates:                                                                             
-      * pres     (pres) float64 0.0 5.0 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0}        
-</pre>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>An oil with gas in it can be created using the <code>OilBW92</code> class. This class uses the BW92 equations to calculate elastic properties. There are many different ways to calculate the elastic properties with this class.</p>
-<ul>
-<li>Explicit values for FVF <code>bo</code> and solution gas <code>rs</code> can be passed in the <code>props</code> keyword to the BW92 elastic equations.</li>
-<li>An RS to Pressure table can be set using the <code>set_rst</code> method. This allows the solution gas to be pressure dependent. The <code>rs</code> and <code>bo</code> props are then not required. <code>bo</code> is calculated per BW92.</li>
-<li>A constatnt RS can be set using the <code>set_rst</code> method. The <code>rs</code> and <code>bo</code> props are then not required. <code>bo</code> is calculated per BW92 for constant <code>rs</code>.</li>
-</ul>
-
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>An example with no <code>rs</code> table.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-11">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">bwoil_norst</span> <span class="o">=</span> <span class="n">OilBW92</span><span class="p">(</span><span class="s2">&quot;norst&quot;</span><span class="p">,</span> <span class="n">api</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">gas_sg</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">bwoil_norst</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">bwoil_norst</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span> <span class="n">bo</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)))</span>
-</pre></div>
-<div id="cell-11" class="clipboard-copy-txt">bwoil_norst = OilBW92("norst", api=35, gas_sg=0.6)
-display(bwoil_norst.tree)
-display(bwoil_norst.density(dict(temp=110, pres=50, rs=110, bo=1.1)))</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">norst                                                                                        
-├── class : &lt;class 'digirock._fluids._oil.OilBW92'&gt;                                          
-├── props_keys : ['bo', 'rs']                                                                
-├── api : 35                                                                                 
-├── std_density : 0.8498498498498499                                                         
-└── rst : None                                                                               
-</pre>
-
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
-<pre>array([0.80400771])</pre>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>An example with a constant <code>rs</code>. Note, that <code>bo</code> and <code>rs</code> are no longer required in <code>props</code>, but if we pass them they will overwrite the use of the table.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-12">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">bwoil_rsc</span> <span class="o">=</span> <span class="n">OilBW92</span><span class="p">(</span><span class="s2">&quot;norst&quot;</span><span class="p">,</span> <span class="n">api</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">gas_sg</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-<span class="n">bwoil_rsc</span><span class="o">.</span><span class="n">set_rst</span><span class="p">(</span><span class="mi">120</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">bwoil_rsc</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;using set table: &quot;</span><span class="p">,</span> <span class="n">bwoil_rsc</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="mi">50</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;using properties: &quot;</span><span class="p">,</span> <span class="n">bwoil_rsc</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span> <span class="n">bo</span><span class="o">=</span><span class="mf">1.1</span><span class="p">))</span>
-<span class="p">)</span>  <span class="c1"># overwrite table rs and bw92 bo</span>
-</pre></div>
-<div id="cell-12" class="clipboard-copy-txt">bwoil_rsc = OilBW92("norst", api=35, gas_sg=0.6)
-bwoil_rsc.set_rst(120)
-display(bwoil_rsc.tree)
-print("using set table: ", bwoil_rsc.density(dict(temp=110, pres=50)))
-print(
-    "using properties: ", bwoil_rsc.density(dict(temp=110, pres=50, rs=110, bo=1.1))
-)  # overwrite table rs and bw92 bo</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">norst                                                                                        
-├── class : &lt;class 'digirock._fluids._oil.OilBW92'&gt;                                          
-├── props_keys : ['bo', 'rs']                                                                
-├── api : 35                                                                                 
-├── std_density : 0.8498498498498499                                                         
-└── rst : {'type': 'constant', 'rs': 120, 'pres': None}                                      
-</pre>
-
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>using set table:  [0.66999975]
-using properties:  [0.80400771]
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Finally, we can make <code>rs</code> pressure dependent by passing a table to <code>set_rst</code>.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-13">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">bwoil_rst</span> <span class="o">=</span> <span class="n">OilBW92</span><span class="p">(</span><span class="s2">&quot;norst&quot;</span><span class="p">,</span> <span class="n">api</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">gas_sg</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
-<span class="n">bwoil_rst</span><span class="o">.</span><span class="n">set_rst</span><span class="p">([</span><span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">120</span><span class="p">],</span> <span class="n">pres</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
-<span class="n">display</span><span class="p">(</span><span class="n">bwoil_rst</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;using set table: &quot;</span><span class="p">,</span> <span class="n">bwoil_rst</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="mi">50</span><span class="p">)))</span>
-</pre></div>
-<div id="cell-13" class="clipboard-copy-txt">bwoil_rst = OilBW92("norst", api=35, gas_sg=0.6)
-bwoil_rst.set_rst([80, 100, 120], pres=[10, 40, 100])
-display(bwoil_rst.tree)
-print("using set table: ", bwoil_rst.density(dict(temp=110, pres=50)))</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">norst                                                                                        
-├── class : &lt;class 'digirock._fluids._oil.OilBW92'&gt;                                          
-├── props_keys : ['bo', 'rs']                                                                
-├── api : 35                                                                                 
-├── std_density : 0.8498498498498499                                                         
-└── rst : {'type': 'table', 'rs': 'table', 'pres': 'table', 'rs_table': &lt;xarray.DataArray    
-    (pres: 3)&gt;                                                                               
-    array([ 80, 100, 120])                                                                   
-    Coordinates:                                                                             
-      * pres     (pres) int64 10 40 100}                                                     
-</pre>
-
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>using set table:  [0.68034298]
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>When the <code>rst</code> has been set in some manner it is possible to query <code>rs</code> and <code>bo</code> directly. Note, <code>rs</code> only needs the pressure.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-14">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bo: &quot;</span><span class="p">,</span> <span class="n">bwoil_rst</span><span class="o">.</span><span class="n">bo</span><span class="p">({</span><span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="mi">110</span><span class="p">,</span> <span class="s2">&quot;pres&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rs: &quot;</span><span class="p">,</span> <span class="n">bwoil_rst</span><span class="o">.</span><span class="n">rs</span><span class="p">({</span><span class="s2">&quot;pres&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">}))</span>
-</pre></div>
-<div id="cell-14" class="clipboard-copy-txt">print("Bo: ", bwoil_rst.bo({"temp": 110, "pres": 50}))
-print("Rs: ", bwoil_rst.rs({"pres": 50}))</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Bo:  1.3255946390999833
-Rs:  103.33333333333333
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>If you have an Eclipse PVTO table you can load those oil properties using <code>load_pvto</code>.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-15">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># load the Eclipse table directly from a text file</span>
-<span class="n">pvtos</span> <span class="o">=</span> <span class="n">load_pvto</span><span class="p">(</span><span class="n">example_data</span><span class="p">[</span><span class="s2">&quot;COMPLEX_PVT.inc&quot;</span><span class="p">],</span> <span class="n">api</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
-</pre></div>
-<div id="cell-15" class="clipboard-copy-txt"># load the Eclipse table directly from a text file
-pvtos = load_pvto(example_data["COMPLEX_PVT.inc"], api=40)</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><code>pvtos</code> is a dictionary, one for each pvto table. The returned fluid has the <code>OilPVT</code> class. This uses the BW92 equations for elastic properties, but eclusively uses <code>rs</code> and <code>bo</code> calculated from the tables loaded into the class.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[16]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-16">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pvtos</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-</pre></div>
-<div id="cell-16" class="clipboard-copy-txt">print(pvtos.keys())</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>dict_keys([&#39;pvto0&#39;, &#39;pvto1&#39;, &#39;pvto2&#39;, &#39;pvto3&#39;, &#39;pvto4&#39;, &#39;pvto5&#39;, &#39;pvto6&#39;, &#39;pvto7&#39;, &#39;pvto8&#39;, &#39;pvto9&#39;, &#39;pvto10&#39;, &#39;pvto11&#39;])
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Access the individual pvt fluids using the appropriate key.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[17]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-17">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">ecloil0</span> <span class="o">=</span> <span class="n">pvtos</span><span class="p">[</span><span class="s2">&quot;pvto0&quot;</span><span class="p">]</span>
-<span class="n">ecloil0</span><span class="o">.</span><span class="n">tree</span>
-</pre></div>
-<div id="cell-17" class="clipboard-copy-txt">ecloil0 = pvtos["pvto0"]
-ecloil0.tree</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">pvto0                                                                                        
-├── class : &lt;class 'digirock._fluids._oil.OilPVT'&gt;                                           
-├── props_keys : ['bo']                                                                      
-├── api : 40                                                                                 
-├── std_density : 0.8250728862973761                                                         
-├── pvt : {'type': 'full', 'rs': 'table', 'bo': 'table', 'pres': 'table', 'bo_table':        
-│   &lt;xarray.DataArray (rs: 6, pres: 14)&gt;                                                     
-│   array([[1.17014, 1.16296, 1.15664, 1.15103, 1.14598, 1.14425, 1.14143,                   
-│           1.13728, 1.13349, 1.13001, 1.12679, 1.12381, 1.12103, 1.11844],                  
-│          [    nan, 1.24802, 1.23902, 1.23114, 1.22415, 1.22175, 1.21789,                   
-│           1.21225, 1.20713, 1.20245, 1.19815, 1.19419, 1.19052, 1.18712],                  
-│          [    nan,     nan, 1.32163, 1.31096, 1.30163, 1.29846, 1.29336,                   
-│           1.28597, 1.27932, 1.27328, 1.26776, 1.26271, 1.25804, 1.25373],                  
-│          [    nan,     nan,     nan, 1.39808, 1.38574, 1.38158, 1.37494,                   
-│           1.36539, 1.35685, 1.34916, 1.34218, 1.33581, 1.32997, 1.32459],                  
-│          [    nan,     nan,     nan,     nan, 1.48274, 1.47728, 1.4686 ,                   
-│           1.45623, 1.44528, 1.43549, 1.42667, 1.41867, 1.41136, 1.40466],                  
-│          [    nan,     nan,     nan,     nan,     nan, 1.51746, 1.50785,                   
-│           1.49419, 1.48215, 1.47142, 1.46178, 1.45306, 1.44511, 1.43783]])                 
-│   Coordinates:                                                                             
-│     * pres     (pres) float64 5.0 10.0 15.0 20.0 25.0 ... 45.0 50.0 55.0 60.0 65.0         
-│     * rs       (rs) float64 27.4 54.3 81.5 110.7 143.5 156.9, 'bo_min': array(1.11844),    
-│   'bo_max': array(1.51746), 'pres_min': array(5.), 'pres_max': array(65.), 'rs_min':       
-│   array(27.4), 'rs_max': array(156.9)}                                                     
-└── gas_sg : 0.9012786885245903                                                              
-</pre>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>DataArrays are easy to plot</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[18]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-18">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">ecloil0</span><span class="o">.</span><span class="n">pvt</span><span class="p">[</span><span class="s2">&quot;bo_table&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-</pre></div>
-<div id="cell-18" class="clipboard-copy-txt">ecloil0.pvt["bo_table"].plot()</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&lt;matplotlib.collections.QuadMesh at 0x7fcfa93e56d0&gt;</pre>
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedImage jp-OutputArea-output ">
-<img src="data:image/png;base64,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
-"
-class="
-jp-needs-light-background
-"
->
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>We can get the value of bo for any <code>pres</code> and <code>rs</code> combination. Eclipse100 PVT models are not temperature dependent for <code>bo</code>.</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-19">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bo: &quot;</span><span class="p">,</span> <span class="n">ecloil0</span><span class="o">.</span><span class="n">bo</span><span class="p">({</span><span class="s2">&quot;pres&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">&quot;rs&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">120</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">120</span><span class="p">]])}))</span>
-</pre></div>
-<div id="cell-19" class="clipboard-copy-txt">print("Bo: ", ecloil0.bo({"pres": 50, "rs": np.array([[100, 120], [100, 120]])}))</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Bo:  [[1.31490966 1.36613601]
- [1.31490966 1.36613601]]
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Getting elastic properties</p>
-
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[20]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-20">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
-            <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">110</span><span class="p">],</span> <span class="n">pres</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">],</span> <span class="n">rs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">150</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Density: &quot;</span><span class="p">,</span> <span class="n">ecloil0</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
-
-<span class="n">props</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">temp</span><span class="o">=</span><span class="mi">110</span><span class="p">,</span> <span class="n">pres</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Velocity: &quot;</span><span class="p">,</span> <span class="n">ecloil0</span><span class="o">.</span><span class="n">velocity</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bulk Modulus: &quot;</span><span class="p">,</span> <span class="n">ecloil0</span><span class="o">.</span><span class="n">bulk_modulus</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
-</pre></div>
-<div id="cell-20" class="clipboard-copy-txt">props = dict(temp=np.r_[100, 110], pres=np.r_[50, 60], rs=np.r_[100, 150])
-print("Density: ", ecloil0.density(props))
-
-props = dict(temp=110, pres=50, rs=100)
-print("Velocity: ", ecloil0.velocity(props))
-print("Bulk Modulus: ", ecloil0.bulk_modulus(props))</div>
-    
-        </div>
-    </div>
-
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Density:  [0.69731684 0.68120537]
-Velocity:  [1119.2434647]
-Bulk Modulus:  [0.86517527]
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="gas-types">Gas Types<a class="anchor-link" href="#gas-types">&#182;</a></h1>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-        
-        
-        <div class="CodeMirror cm-s-jupyter">
-        <div class="zeroclipboard-container">
-            <clipboard-copy for="cell-21">
-            <div>
-                <span class="notice" hidden>Copied!</span>
-                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 16 16" version="1.1"  data-view-component="true" class="clipboard-copy-icon">
-                    <path fill="currentColor" fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                    <path fill="currentColor" fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
-                </svg>
-                </div>
-            </clipboard-copy>
-        </div>
             <div class="highlight-ipynb hl-python"><pre><span></span>
 </pre></div>
-<div id="cell-21" class="clipboard-copy-txt"></div>
+<div id="cell-5" class="clipboard-copy-txt"></div>
     
         </div>
     </div>
@@ -3560,7 +2064,7 @@ Bulk Modulus:  [0.86517527]
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="batzle_wang_1992.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: BW92" rel="prev">
+        <a href="example_frames.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Frames" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -3569,20 +2073,20 @@ Bulk Modulus:  [0.86517527]
               <span class="md-footer__direction">
                 Previous
               </span>
-              BW92
+              Frames
             </div>
           </div>
         </a>
       
       
         
-        <a href="example_stress.html" class="md-footer__link md-footer__link--next" aria-label="Next: Stress Models" rel="next">
+        <a href="../api/fluid_methods.html" class="md-footer__link md-footer__link--next" aria-label="Next: Fluid Methods" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Stress Models
+              Fluid Methods
             </div>
           </div>
           <div class="md-footer__button md-icon">
