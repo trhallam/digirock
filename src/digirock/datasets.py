@@ -13,9 +13,9 @@ GOODBOY = pooch.create(
     version_dev="main",
     # The registry specifies the files that can be fetched from the local storage
     registry={
-        "COMPLEX_PVT.inc": "3018c7ec33dded551e0bcd44103a1abd27ff4895268c712197616e396532da25",
-        "PVT_BO.inc": "053669c122948b690b03bcd2e5d11bdbc377bf84cddcd0d614ee19ec22ca36b6",
-        "PVT_RS.inc": "ff869731b2ece69fa0686b6a0204f113a0106e359413ddf1547841cbdf3d219d",
+        "COMPLEX_PVT.inc": "md5:492cb074b8232283b02e18a18a7777ec",
+        "PVT_BO.inc": "md5:1582ab00bc170cecd21bdfd5d3221f81",
+        "PVT_RS.inc": "md5:aa882bc90020b529d73d346767e46481",
     },
 )
 
