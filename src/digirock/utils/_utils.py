@@ -1,5 +1,6 @@
 from typing import Sequence
 import numpy as np
+import xarray as xr
 
 from ..typing import NDArrayOrFloat
 
@@ -189,3 +190,64 @@ def ndim_index_list(n):
         return ind
     else:
         raise ValueError("n must be of type list containing integer values")
+
+
+def create_orthogonal_props(**coords: NDArrayOrFloat):
+    """Creates a set of orthogonal arrays and returns them as xr.DataArrays in
+    a props dictionary.
+
+    Args:
+        coords: Linear arrays of coordinates, e.g. poro, VSH
+
+    Returns:
+        the coordinate xr.Dataset, a dictionary of props xr.DataArray for each of coords broadcast against each other
+
+    Example:
+    ```
+    ds, props = create_orthogonal_props(VSH=np.linspace(0, 0.15, 2), ncontacts=np.arange(10, 21, 10), poro=np.r_[0.1, 0.2])
+    print(ds)
+    <xarray.Dataset>
+    Dimensions:    (VSH: 2, ncontacts: 2, poro: 2)
+    Coordinates:
+    * VSH        (VSH) float64 0.0 0.15
+    * ncontacts  (ncontacts) int64 10 20
+    * poro       (poro) float64 0.1 0.2
+    Data variables:
+    *empty*
+
+    print(props)
+    {'VSH': <xarray.DataArray 'bc_VSH' (VSH: 2, ncontacts: 2, poro: 2)>
+    array([[[0.  , 0.  ],
+        [0.  , 0.  ]],
+
+        [[0.15, 0.15],
+        [0.15, 0.15]]])
+    Coordinates:
+    * VSH        (VSH) float64 0.0 0.15
+    * ncontacts  (ncontacts) int64 10 20
+    * poro       (poro) float64 0.1 0.2, 'ncontacts': <xarray.DataArray 'bc_ncontacts' (VSH: 2, ncontacts: 2, poro: 2)>
+    array([[[10, 10],
+        [20, 20]],
+
+        [[10, 10],
+        [20, 20]]])
+    Coordinates:
+    * VSH        (VSH) float64 0.0 0.15
+    * ncontacts  (ncontacts) int64 10 20
+    * poro       (poro) float64 0.1 0.2, 'poro': <xarray.DataArray 'bc_poro' (VSH: 2, ncontacts: 2, poro: 2)>
+    array([[[0.1, 0.2],
+        [0.1, 0.2]],
+
+        [[0.1, 0.2],
+        [0.1, 0.2]]])
+    Coordinates:
+    * VSH        (VSH) float64 0.0 0.15
+    * ncontacts  (ncontacts) int64 10 20
+    * poro       (poro) float64 0.1 0.2}
+    ```
+    """
+    ds = xr.Dataset(coords={key: (key, val) for key, val in coords.items()})
+    # for key in coords:
+    bc = xr.broadcast(*tuple(ds[key] for key in coords))
+    bc = xr.Dataset(data_vars={f"bc_{key}": bcv for key, bcv in zip(coords, bc)})
+    return ds, {key: bc[f"bc_{key}"].values for key in coords}
