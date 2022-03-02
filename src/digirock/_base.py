@@ -166,12 +166,15 @@ def _trace_tree(trace: dict, tree: Tree) -> None:
     sub_items = []
     for key, item in trace.items():
         if isinstance(item, dict):
-            sub_items.append(item)
+            sub_items.append((key, item))
         else:
             tree.add(f"{key} : {item}")
 
-    for item in sub_items:
-        name = item.pop("name")
+    for key, item in sub_items:
+        try:
+            name = item.pop("name")
+        except KeyError:  # probably an attribute
+            name = key
         branch = tree.add(name)
         _trace_tree(item, branch)
 
@@ -285,7 +288,10 @@ class Switch(Element):
                 "switch_key": self.switch_key,
                 "methods": self.methods,
                 "n_elements": self.n_elements,
-                "elements": [el.get_summary() for el in self.elements],
+                "elements": {
+                    f"element{i}": el.get_summary()
+                    for i, el in enumerate(self.elements)
+                },
             }
         )
         return summary
@@ -391,7 +397,10 @@ class Blend(Element):
                 "blend_keys": self.blend_keys,
                 "methods": self.methods,
                 "n_elements": self.n_elements,
-                "elements": [el.get_summary() for el in self.elements],
+                "elements": {
+                    f"element{i}": el.get_summary()
+                    for i, el in enumerate(self.elements)
+                },
             }
         )
         return summary
@@ -409,7 +418,10 @@ class Blend(Element):
             tree.add(f"{var} : {val}")
 
         for el in self.elements:
-            _trace_tree({el.name: el.get_summary()}, tree)
+            sum = el.get_summary()
+            name = sum.pop("name")
+            branch = tree.add(name)
+            _trace_tree(sum, branch)
 
         return tree
 
@@ -549,7 +561,10 @@ class Transform(Element):
             {
                 "transform_keys": self.transform_keys,
                 "methods": self.methods,
-                "elements": [el.get_summary() for el in self.elements],
+                "elements": {
+                    f"element{i}": el.get_summary()
+                    for i, el in enumerate(self.elements)
+                },
             }
         )
         return summary
@@ -567,7 +582,10 @@ class Transform(Element):
             tree.add(f"{var} : {val}")
 
         for el in self.elements:
-            _trace_tree({el.name: el.get_summary()}, tree)
+            sum = el.get_summary()
+            name = sum.pop("name")
+            branch = tree.add(name)
+            _trace_tree(sum, branch)
 
         return tree
 
