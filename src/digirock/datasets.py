@@ -3,12 +3,13 @@ Example data sets for digirock
 """
 import os
 import pooch
-from . import __local_version__
+from . import __version__
 
 GOODBOY = pooch.create(
     path=os.curdir,
     base_url="https://github.com/trhallam/digirock/raw/{version}/tests/test_data/",
-    version=__local_version__,
+    # Always get the main branch if dev in version. Thick package doesn't use dev releases.
+    version=__version__ + "+dirty" if "dev" in __version__ else __version__,
     # If this is a development version, get the data from the master branch
     version_dev="main",
     # The registry specifies the files that can be fetched from the local storage
