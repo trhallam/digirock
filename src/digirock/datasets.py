@@ -3,12 +3,12 @@ Example data sets for digirock
 """
 import os
 import pooch
-from . import __version__
+from . import __local_version__
 
 GOODBOY = pooch.create(
     path=os.curdir,
-    base_url="https://raw.githubusercontent.com/trhallam/digirock/main/tests/test_data/",
-    version=__version__,
+    base_url="https://raw.githubusercontent.com/trhallam/digirock/{version}/tests/test_data/",
+    version=__local_version__,
     # If this is a development version, get the data from the master branch
     version_dev="main",
     # The registry specifies the files that can be fetched from the local storage

@@ -1,6 +1,9 @@
 # pylint:disable=missing-docstring
 import sys
-from ._version import version as __version__
+from packaging.version import Version
+from ._version import version as __local_version__
+
+__version__ = Version(__local_version__).public
 
 from ._base import Element, Switch, Blend, Transform
 
