@@ -30,7 +30,7 @@ oil.set_rst(100)
 
 woods = WoodsFluid(["SWAT", "SOIL"], [wat, oil], name="wfl")
 
-gr = GassmannRock(pn, woods, name="myrock")
+gr = GassmannRock(pn, rf, woods, name="myrock")
 
 # %%
 gr.tree
