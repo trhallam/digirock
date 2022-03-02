@@ -1765,8 +1765,8 @@ from digirock.utils import create_orthogonal_props</div>
 </div>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -1820,6 +1820,36 @@ gr = GassmannRock(pn, woods, name="myrock")</div>
 </div>
 </div>
 
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+Input <span class="ansi-green-fg">In [2]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 13&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      9</span> oil<span style="color: rgb(98,98,98)">.</span>set_rst(<span style="color: rgb(98,98,98)">100</span>)
+<span class="ansi-green-intense-fg ansi-bold">     11</span> woods <span style="color: rgb(98,98,98)">=</span> WoodsFluid([<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">SWAT</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">SOIL</span><span style="color: rgb(175,0,0)">&#34;</span>], [wat, oil], name<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">wfl</span><span style="color: rgb(175,0,0)">&#34;</span>)
+<span class="ansi-green-fg">---&gt; 13</span> gr <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">GassmannRock</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">pn</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">woods</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">name</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">myrock</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span>
+
+<span class="ansi-red-fg">TypeError</span>: __init__() missing 1 required positional argument: &#39;fluid_model&#39;</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -1862,47 +1892,18 @@ gr = GassmannRock(pn, woods, name="myrock")</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Input <span class="ansi-green-fg">In [3]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">gr</span><span style="color: rgb(98,98,98)">.</span>tree
 
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">myrock                                                                                       
-├── class : &lt;class 'digirock._rock.GassmannRock'&gt;                                            
-├── props_keys : ['poro']                                                                    
-├── blend_keys : ['poro']                                                                    
-├── methods : ('density', 'vp', 'vs', 'shear_modulus', 'bulk_modulus')                       
-├── n_elements : 2                                                                           
-├── NurCriticalPoroAdjust_140440710905568                                                    
-│   ├── class : &lt;class 'digirock._frames._poro_adjust.NurCriticalPoroAdjust'&gt;                
-│   ├── props_keys : ['poro']                                                                
-│   ├── transform_keys : ['poro']                                                            
-│   ├── methods : ('bulk_modulus', 'vp', 'vs', 'shear_modulus', 'density')                   
-│   ├── elements : [{'class': &lt;class 'digirock._frames._frames.VRHAvg'&gt;, 'name':             
-│   │   'VRHAvg_140440710905472', 'props_keys': ['VSAND', 'VCLAY'], 'blend_keys': ['VSAND',  
-│   │   'VCLAY'], 'methods': ('density', 'vp', 'vs', 'shear_modulus', 'bulk_modulus'),       
-│   │   'n_elements': 2, 'elements': [{'class': &lt;class 'digirock._frames._minerals.Mineral'&gt;,
-│   │   'name': 'Mineral_140440710905376', 'props_keys': [], 'bulk_modulus': 29.9,           
-│   │   'shear_modulus': 22.5, 'dens': 2.7, 'vp': 4710.1151987170315, 'vs':                  
-│   │   2886.751345948129}, {'class': &lt;class 'digirock._frames._minerals.Mineral'&gt;, 'name':  
-│   │   'Mineral_140440710905280', 'props_keys': [], 'bulk_modulus': 22, 'shear_modulus':    
-│   │   9.4, 'dens': 2.51, 'vp': 3709.2182643789142, 'vs': 1935.205394866066}]}]             
-│   └── critical_poro : 0.39                                                                 
-└── wfl                                                                                      
-    ├── class : &lt;class 'digirock._fluids._fluid_mod.WoodsFluid'&gt;                             
-    ├── props_keys : ['SWAT', 'SOIL']                                                        
-    ├── blend_keys : ['SWAT', 'SOIL']                                                        
-    ├── methods : ('density', 'bulk_modulus', 'shear_modulus', 'velocity')                   
-    ├── n_elements : 2                                                                       
-    └── elements : [{'class': &lt;class 'digirock._fluids._water.WaterBW92'&gt;, 'name': 'water',  
-        'props_keys': ['temp', 'pres'], 'salinity': 0.1}, {'class': &lt;class                   
-        'digirock._fluids._oil.OilBW92'&gt;, 'name': 'norst', 'props_keys': ['bo', 'rs'], 'api':
-        35, 'std_density': 0.8498498498498499, 'rst': {'type': 'constant', 'rs': 100, 'pres':
-        None}}]                                                                              
-</pre>
-
+<span class="ansi-red-fg">NameError</span>: name &#39;gr&#39; is not defined</pre>
 </div>
-
 </div>
 
 </div>
@@ -1951,63 +1952,18 @@ gr = GassmannRock(pn, woods, name="myrock")</div>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+Input <span class="ansi-green-fg">In [4]</span>, in <span class="ansi-cyan-fg">&lt;cell line: 1&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">gr</span><span style="color: rgb(98,98,98)">.</span>trace_tree({<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">VCLAY</span><span style="color: rgb(175,0,0)">&#34;</span>:<span style="color: rgb(98,98,98)">0.2</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">poro</span><span style="color: rgb(175,0,0)">&#34;</span>:<span style="color: rgb(98,98,98)">0.2</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">SOIL</span><span style="color: rgb(175,0,0)">&#34;</span>: <span style="color: rgb(98,98,98)">0.5</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">temp</span><span style="color: rgb(175,0,0)">&#34;</span>:<span style="color: rgb(98,98,98)">110</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">pres</span><span style="color: rgb(175,0,0)">&#34;</span>:<span style="color: rgb(98,98,98)">20</span>}, [<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">density</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">bulk_modulus</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">shear_modulus</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">vp</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">vs</span><span style="color: rgb(175,0,0)">&#34;</span>])
 
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">myrock                                                                                       
-├── density : [2.29896951]                                                                   
-├── bulk_modulus : [14.70819801]                                                             
-├── shear_modulus : [9.12868979]                                                             
-├── vp : [3419.37148074]                                                                     
-├── vs : [1992.68026332]                                                                     
-├── NurCriticalPoroAdjust_140440710905568                                                    
-│   ├── density : 2.1296                                                                     
-│   ├── bulk_modulus : [13.6937683]                                                          
-│   ├── shear_modulus : [9.12868979]                                                         
-│   ├── vp : [3485.05952279]                                                                 
-│   ├── vs : [2070.40451248]                                                                 
-│   └── VRHAvg_140440710905472                                                               
-│       ├── density : 2.662                                                                  
-│       ├── bulk_modulus : [28.10826124]                                                     
-│       ├── shear_modulus : [18.73783694]                                                    
-│       ├── vp : [4465.91750563]                                                             
-│       ├── vs : [2653.11272176]                                                             
-│       ├── Mineral_140440710905376                                                          
-│       │   ├── density : 2.7                                                                
-│       │   ├── bulk_modulus : 29.9                                                          
-│       │   ├── shear_modulus : 22.5                                                         
-│       │   ├── vp : 4710.1151987170315                                                      
-│       │   └── vs : 2886.751345948129                                                       
-│       └── Mineral_140440710905280                                                          
-│           ├── density : 2.51                                                               
-│           ├── bulk_modulus : 22                                                            
-│           ├── shear_modulus : 9.4                                                          
-│           ├── vp : 3709.2182643789142                                                      
-│           └── vs : 1935.205394866066                                                       
-└── wfl                                                                                      
-    ├── density : [0.84684753]                                                               
-    ├── bulk_modulus : [0.80607805]                                                          
-    ├── shear_modulus : 0.0                                                                  
-    ├── vp : [975.63177547]                                                                  
-    ├── vs : 0.0                                                                             
-    ├── water                                                                                
-    │   ├── density : 1.03265799                                                             
-    │   ├── bulk_modulus : [2.81319124]                                                      
-    │   ├── shear_modulus : 0.0                                                              
-    │   ├── vp : [1650.52221268]                                                             
-    │   └── vs : 0.0                                                                         
-    └── norst                                                                                
-        ├── density : [0.66103706]                                                           
-        ├── bulk_modulus : [0.52047762]                                                      
-        ├── shear_modulus : 0.0                                                              
-        ├── vp : [887.3360486]                                                               
-        └── vs : 0.0                                                                         
-</pre>
-
+<span class="ansi-red-fg">NameError</span>: name &#39;gr&#39; is not defined</pre>
 </div>
-
 </div>
 
 </div>
