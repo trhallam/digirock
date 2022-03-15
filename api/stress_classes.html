@@ -898,7 +898,7 @@
 
       <p>Build a stress model for a rock using a user defined function.</p>
 <p>The function <code>func</code> passed to the constructor should be of the form</p>
-<div class="highlight"><span class="filename">Text Only</span><pre><span></span><code>def stress_func(props: Dict[str, NDArrayOrFloat] = None, **kwargs) -&gt; NDArrayOrFloat:
+<div class="highlight"><span class="filename">Text Only</span><pre><span></span><code>def stress_func(props = None, **kwargs) -&gt; NDArrayOrFloat:
     return props.
 </code></pre></div>
 <p>where props contains constants or properties for each calculation point and returns an NDArray of the same
@@ -1237,7 +1237,7 @@ to enable property_checks at runtime.</p>
   <tbody>
       <tr>
         <td><code>props</code></td>
-        <td><code>Dict[str, Union[numpy.ndarray, float]]</code></td>
+        <td><code>Dict[str, Union[numpy.ndarray, float, int]]</code></td>
         <td><p>A dictionary of properties required</p></td>
         <td><em>required</em></td>
       </tr>
