@@ -5,7 +5,7 @@ import numpy as np
 
 from ..utils.ecl import EclStandardConditions
 from ..utils._decorators import check_props
-from ..typing import NDArrayOrFloat
+from ..typing import NDArrayOrFloat, PropsDict
 from ..fluids import bw92
 from ..fluids import ecl as fluid_ecl
 
@@ -33,7 +33,7 @@ class WaterBW92(Fluid):
         self.sal = salinity / 1e6
 
     @check_props("temp", "pres")
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for water with fixed salt concentration.
 
         Uses BW92 [`wat_density_brine`][digirock.fluids.bw92.wat_density_brine].
@@ -48,7 +48,7 @@ class WaterBW92(Fluid):
         return bw92.wat_density_brine(props["temp"], props["pres"], self.sal)
 
     @check_props("temp", "pres")
-    def velocity(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def velocity(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent acoustic velocity for water with fixed salt concentration.
 
         Uses BW92 [`wat_velocity_brine`][digirock.fluids.bw92.wat_velocity_brine].
@@ -62,9 +62,7 @@ class WaterBW92(Fluid):
         """
         return bw92.wat_velocity_brine(props["temp"], props["pres"], self.sal)
 
-    def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def bulk_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for water with fixed salt concentration.
 
         Uses BW92 [`wat_bulkmod`][digirock.fluids.bw92.wat_bulkmod].
@@ -149,7 +147,7 @@ class WaterECL(Fluid):
         )
 
     @check_props("temp", "pres")
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for water with fixed salt concentration adjusted for FVF.
 
         Uses Eclipse [`e100_bw`][digirock.fluids.ecl.e100_bw] for calculating FVF. Eclipse multiplies the surface presure
@@ -173,7 +171,7 @@ class WaterECL(Fluid):
         return self.density_asc * bw_asc / bw
 
     @check_props("temp", "pres")
-    def velocity(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def velocity(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent velocity for a fixed fixed salt concentration.
 
         Uses BW92 [`wat_velocity_brine`][digirock.fluids.bw92.wat_velocity_brine].
@@ -187,9 +185,7 @@ class WaterECL(Fluid):
         """
         return bw92.wat_velocity_brine(props["temp"], props["pres"], self.sal)
 
-    def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def bulk_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for a fixed fixed salt concentration.
 
         Uses BW92 [`wat_bulkmod`][digirock.fluids.bw92.wat_bulkmod].

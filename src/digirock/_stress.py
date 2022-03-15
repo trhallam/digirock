@@ -6,7 +6,7 @@ from typing import Dict, Iterable, List
 from ._base import Element
 from ._exceptions import PrototypeError, WorkflowError
 from .utils._decorators import check_props
-from .typing import NDArrayOrFloat
+from .typing import NDArrayOrFloat, PropsDict
 
 
 class StressModel(Element):
@@ -21,7 +21,7 @@ class StressModel(Element):
             keys = ["depth", "pres"]
         super().__init__(name, keys)
 
-    def vertical_stress(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def vertical_stress(self, props: PropsDict, **kwargs):
         """Returns the vertical stress $S_v$ for the class.
 
         Args:
@@ -30,7 +30,7 @@ class StressModel(Element):
         """
         raise PrototypeError(self.__class__.__name__, "vertical_stress")
 
-    def effective_stress(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def effective_stress(self, props: PropsDict, **kwargs):
         """Returns the effective stress $S_e$ for the class at a given depth $(z)$ and for a
         particular formation pressure $p_f$.
 
@@ -60,7 +60,7 @@ class FStressModel(StressModel):
     The function `func` passed to the constructor should be of the form
 
     ```
-    def stress_func(props: Dict[str, NDArrayOrFloat] = None, **kwargs) -> NDArrayOrFloat:
+    def stress_func(props = None, **kwargs) -> NDArrayOrFloat:
         return props.
     ```
 
@@ -96,9 +96,7 @@ class FStressModel(StressModel):
         # self.stress_func = check_props(*tuple(keys))(func)
         self.stress_func = func
 
-    def vertical_stress(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def vertical_stress(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns the vertical stress using user defined function `vertical_stress`.
 
         Returns:
@@ -147,9 +145,7 @@ class LGStressModel(StressModel):
         super().__init__(name, keys=["depth", "pres"])
 
     # @check_props("depth")
-    def vertical_stress(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def vertical_stress(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         return self.grad * (props["depth"] - self.ref_depth) + self.ref_pres
 
     def get_summary(self) -> dict:

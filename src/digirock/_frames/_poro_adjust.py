@@ -7,7 +7,7 @@ from typing import Dict, Sequence, Type, Any
 
 import numpy as np
 
-from ..typing import NDArrayOrFloat
+from ..typing import NDArrayOrFloat, PropsDict
 from .._base import Transform, Element
 from .._exceptions import PrototypeError, WorkflowError
 from ..utils._decorators import check_props
@@ -37,17 +37,17 @@ class PoroAdjust(Transform):
         super().__init__(transform_keys, element, self._methods, name=name)
 
     @check_props("poro")
-    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def bulk_modulus(self, props: PropsDict, **kwargs):
         """Applies the class porosity adjustment to the bulk modulus."""
         raise PrototypeError(self.__class__.__name__, "bulk_modulus")
 
     @check_props("poro")
-    def shear_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def shear_modulus(self, props: PropsDict, **kwargs):
         """Applies the class porosity adjustment to the shear modulus."""
         raise PrototypeError(self.__class__.__name__, "shear_modulus")
 
     @check_props("poro")
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns density of RockFrame using volume fraction average, see [mixed_denisty][digirock.models._mod.mixed_density].
 
         Args:
@@ -60,7 +60,7 @@ class PoroAdjust(Transform):
         dens = self.element.density(props, **kwargs)
         return dens * (1 - props["poro"])
 
-    def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vp(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns compression velocity of RockFrame
 
         Args:
@@ -75,7 +75,7 @@ class PoroAdjust(Transform):
         shear = self.shear_modulus(props, **kwargs)
         return acoustic_velp(bulk, shear, density)
 
-    def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vs(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns shear velocity of RockFrame
 
         Args:
@@ -109,13 +109,13 @@ class FixedPoroAdjust(PoroAdjust):
         super().__init__(transform_keys, element, name=name)
 
     @check_props("poro")
-    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def bulk_modulus(self, props: PropsDict, **kwargs):
         """Applies the class porosity adjustment to the bulk modulus."""
         k0 = self.element.bulk_modulus(props, **kwargs)
         return (1 - 2.8 * props["poro"]) * k0
 
     @check_props("poro")
-    def shear_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def shear_modulus(self, props: PropsDict, **kwargs):
         """Applies the class porosity adjustment to the shear modulus."""
         k0 = self.element.shear_modulus(props, **kwargs)
         return (1 - 2.8 * props["poro"]) * k0
@@ -149,14 +149,14 @@ class NurCriticalPoroAdjust(PoroAdjust):
         return np.where(poro >= self._critphi, 0.0, 1 - poro / self._critphi)
 
     @check_props("poro")
-    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def bulk_modulus(self, props: PropsDict, **kwargs):
         """Applies the class porosity adjustment to the bulk modulus."""
         k0 = self.element.bulk_modulus(props, **kwargs)
         k0_fact = self._tranform(props["poro"])
         return k0_fact * k0
 
     @check_props("poro")
-    def shear_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def shear_modulus(self, props: PropsDict, **kwargs):
         """Applies the class porosity adjustment to the shear modulus."""
         mu0 = self.element.shear_modulus(props, **kwargs)
         mu0_fact = self._tranform(props["poro"])
@@ -206,7 +206,7 @@ class LeeConsPoroAdjust(PoroAdjust):
         )
 
     @check_props("poro")
-    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def bulk_modulus(self, props: PropsDict, **kwargs):
         """Applies the class porosity adjustment to the bulk modulus.
 
         $$
@@ -218,7 +218,7 @@ class LeeConsPoroAdjust(PoroAdjust):
         return k0_fact * k0
 
     @check_props("poro")
-    def shear_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def shear_modulus(self, props: PropsDict, **kwargs):
         """Applies the class porosity adjustment to the shear modulus.
 
         $$

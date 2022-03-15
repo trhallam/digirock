@@ -12,7 +12,7 @@ from ._fluids import Fluid
 from ._base import Transform, Blend, Switch
 from .utils._decorators import check_props
 
-from .typing import NDArrayOrFloat
+from .typing import NDArrayOrFloat, PropsDict
 
 from .elastic import acoustic_vel, acoustic_moduli, acoustic_velp, acoustic_vels
 from .models import gassmann_fluidsub
@@ -55,7 +55,7 @@ class GassmannRock(Blend):
         )
 
     @check_props("poro")
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """The density of the rock
 
         Args:
@@ -71,9 +71,7 @@ class GassmannRock(Blend):
         return props["poro"] * fluid_density + min_dens
 
     @check_props("poro")
-    def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def bulk_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """The bulk modulus of the rock
 
         Args:
@@ -88,9 +86,7 @@ class GassmannRock(Blend):
         k0 = self.elements[2].bulk_modulus(props, **kwargs)
         return gassmann_fluidsub(kdry, kfl, k0, props["poro"])
 
-    def shear_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def shear_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Return the shear modulus of the rock
 
         Args:
@@ -102,7 +98,7 @@ class GassmannRock(Blend):
         """
         return self.elements[0].shear_modulus(props, **kwargs)
 
-    def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vp(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Compressional velocity of Gassmann Model
 
         Args:
@@ -117,7 +113,7 @@ class GassmannRock(Blend):
         shear = self.shear_modulus(props, **kwargs)
         return acoustic_velp(bulk, shear, density)
 
-    def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vs(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Shear velocity of Gassmann Model
 
         Args:

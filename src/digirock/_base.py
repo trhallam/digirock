@@ -5,7 +5,7 @@ import numpy as np
 
 from .utils import check_broadcastable
 from .utils._decorators import check_props
-from .typing import NDArrayOrFloat
+from .typing import NDArrayOrFloat, PropsDict
 
 
 class Element:
@@ -76,7 +76,7 @@ class Element:
         return tree
 
     def trace(
-        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+        self, props: PropsDict, methods: Union[str, List[str]], **kwargs
     ) -> Dict[str, Any]:
         """Returns a props trace for all methods, switching keys in props are ignored.
 
@@ -99,7 +99,7 @@ class Element:
         return trace
 
     def trace_tree(
-        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+        self, props: PropsDict, methods: Union[str, List[str]], **kwargs
     ) -> Tree:
         """Returns a props trace for all methods, switching keys in props are ignored.
 
@@ -133,7 +133,7 @@ def _element_check(elements: List[Type[Element]], methods: List[str]):
                 )
 
 
-def _volume_sum_check(props: Dict[str, NDArrayOrFloat], sum_to=1, atol=1e-3) -> bool:
+def _volume_sum_check(props: PropsDict, sum_to=1, atol=1e-3) -> bool:
     """Check arrays all sum to no more than 1"""
     check_broadcastable(**props)
     sum_ar = np.zeros((1,))
@@ -148,7 +148,7 @@ def _volume_sum_check(props: Dict[str, NDArrayOrFloat], sum_to=1, atol=1e-3) -> 
     return True
 
 
-def _get_complement(props: Dict[str, NDArrayOrFloat]) -> NDArrayOrFloat:
+def _get_complement(props: PropsDict) -> NDArrayOrFloat:
     """Find the ones complement to a bunch of arrays"""
     check_broadcastable(**props)
     sum_ar = np.zeros((1,))
@@ -255,7 +255,7 @@ class Switch(Element):
         )
 
         @check_props(self.switch_key)
-        def func(props: Dict[str, NDArrayOrFloat], **element_kwargs) -> NDArrayOrFloat:
+        def func(props: PropsDict, **element_kwargs) -> NDArrayOrFloat:
             was_int = isinstance(props[self.switch_key], int)
             switches = np.atleast_1d(props[self.switch_key])
             unique_switches = np.unique(switches)
@@ -314,7 +314,7 @@ class Switch(Element):
         return tree
 
     def trace(
-        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+        self, props: PropsDict, methods: Union[str, List[str]], **kwargs
     ) -> Dict[str, Any]:
         """Returns a props trace for all methods, switching keys in props are ignored.
 
@@ -426,7 +426,7 @@ class Blend(Element):
         return tree
 
     def trace(
-        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+        self, props: PropsDict, methods: Union[str, List[str]], **kwargs
     ) -> Dict[str, Any]:
         """Returns a props trace for all methods, switching keys in props are ignored.
 
@@ -460,7 +460,7 @@ class Blend(Element):
         return all_keys
 
     def _process_props_get_method(
-        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+        self, props: PropsDict, methods: Union[str, List[str]], **kwargs
     ) -> Sequence[NDArrayOrFloat]:
         """Process the props to find if all required keys are present for blending
 
@@ -590,7 +590,7 @@ class Transform(Element):
         return tree
 
     def trace(
-        self, props: Dict[str, NDArrayOrFloat], methods: Union[str, List[str]], **kwargs
+        self, props: PropsDict, methods: Union[str, List[str]], **kwargs
     ) -> Dict[str, Any]:
         """Returns a props trace for all methods, switching keys in props are ignored.
 

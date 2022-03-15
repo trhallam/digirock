@@ -4,7 +4,7 @@ from typing import Sequence, Dict, Type, List, Union, Tuple
 from .._base import Blend, Element
 from ..utils._decorators import check_props
 from ..utils._utils import _process_vfrac
-from ..typing import NDArrayOrFloat, NDArrayOrInt
+from ..typing import NDArrayOrFloat, NDArrayOrInt, PropsDict
 from .. import models
 from ..elastic import acoustic_vels, acoustic_velp
 from ._minerals import Mineral
@@ -41,7 +41,7 @@ class RockFrame(Blend):
         methods = ["density", "vp", "vs", "shear_modulus", "bulk_modulus"]
         super().__init__(blend_keys, elements, methods, name=name)
 
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns density of RockFrame using volume fraction average, see [mixed_denisty][digirock.models._mod.mixed_density].
 
         Args:
@@ -55,7 +55,7 @@ class RockFrame(Blend):
         return models.mixed_density(*args)
         # raise PrototypeError(self.__class__.__name__, "density")
 
-    def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vp(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns compression velocity of RockFrame
 
         Args:
@@ -70,7 +70,7 @@ class RockFrame(Blend):
         shear = self.shear_modulus(props, **kwargs)
         return acoustic_velp(bulk, shear, density)
 
-    def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vs(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns shear velocity of RockFrame
 
         Args:
@@ -84,9 +84,7 @@ class RockFrame(Blend):
         shear = self.shear_modulus(props, **kwargs)
         return acoustic_vels(shear, density)
 
-    def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def bulk_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns bulk modulus of RockFrame
 
         Args:
@@ -98,9 +96,7 @@ class RockFrame(Blend):
         """
         raise PrototypeError(self.__class__.__name__, "bulk_modulus")
 
-    def shear_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def shear_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns shear modulus of RockFrame
 
         Args:
@@ -148,7 +144,7 @@ class VRHAvg(RockFrame):
 
     def _vrh_avg_moduli(
         self,
-        props: Dict[str, NDArrayOrFloat],
+        props: PropsDict,
         component: str = "bulk_modulus",
         **kwargs,
     ) -> NDArrayOrFloat:
@@ -166,9 +162,7 @@ class VRHAvg(RockFrame):
 
         return models.vrh_avg(*tuple(args))
 
-    def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def bulk_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns bulk modulus of VRH average
 
         `props` must contain a volume fraction for each element
@@ -182,9 +176,7 @@ class VRHAvg(RockFrame):
         """
         return self._vrh_avg_moduli(props, component="bulk_modulus", **kwargs)
 
-    def shear_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def shear_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns shear modulus of VRH average
 
         `props` must contain a volume fraction for each element
@@ -232,9 +224,7 @@ class HSWAvg(RockFrame):
             name=name,
         )
 
-    def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def bulk_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns bulk modulus
 
         Args:
@@ -248,9 +238,7 @@ class HSWAvg(RockFrame):
         bulk, _ = models.hsw_avg(*args)
         return bulk
 
-    def shear_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def shear_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns bulk modulus
 
         Args:
@@ -313,7 +301,7 @@ class CementedSand(RockFrame):
         return self._alpha
 
     def _element_moduli(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
+        self, props: PropsDict, **kwargs
     ) -> Tuple[NDArrayOrFloat, NDArrayOrFloat, NDArrayOrFloat, NDArrayOrFloat]:
         """Returns the moduli for the two elements."""
         k_sand = self.elements[0].bulk_modulus(props, **kwargs)
@@ -322,14 +310,14 @@ class CementedSand(RockFrame):
         mu_cement = self.elements[1].shear_modulus(props, **kwargs)
         return k_sand, mu_sand, k_cement, mu_cement
 
-    def _phi0(self, props: Dict[str, NDArrayOrFloat]) -> NDArrayOrFloat:
+    def _phi0(self, props: PropsDict) -> NDArrayOrFloat:
         """Calculate porosity for sand grains only
 
         phi0 = phi + vfrac_cement
         """
         return props["poro"] + props[self.blend_keys[1]]
 
-    def _get_ncontacts(self, props: Dict[str, NDArrayOrFloat]) -> NDArrayOrInt:
+    def _get_ncontacts(self, props: PropsDict) -> NDArrayOrInt:
         if "ncontacts" in props:
             ncontacts = props["ncontacts"]
         else:
@@ -337,9 +325,7 @@ class CementedSand(RockFrame):
         return ncontacts
 
     @check_props("poro", broadcastable=("poro", "ncontacts"))
-    def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def bulk_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Bulk modulus for Cemented Sand"""
         phi0 = self._phi0(props)
         mods = self._element_moduli(props, **kwargs)
@@ -355,9 +341,7 @@ class CementedSand(RockFrame):
         return k
 
     @check_props("poro", broadcastable=("poro", "ncontacts"))
-    def shear_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def shear_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Shear modulus for Cemented Sand"""
         phi0 = self._phi0(props)
         mods = self._element_moduli(props, **kwargs)
@@ -373,7 +357,7 @@ class CementedSand(RockFrame):
         return mu
 
     @check_props("poro")
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Frame density accounting for porosity"""
         # add porosity to front of args (has zero density)
         args = (0.0, props["poro"]) + self._process_props_get_method(props, "density")

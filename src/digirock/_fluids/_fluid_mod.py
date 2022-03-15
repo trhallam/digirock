@@ -7,7 +7,7 @@ from typing import List, Dict, Tuple, Type, Sequence, Any, Union
 import numpy as np
 
 from .._base import Blend, _get_complement, _volume_sum_check, Element
-from ..typing import NDArrayOrFloat
+from ..typing import NDArrayOrFloat, PropsDict
 
 from ..fluids import bw92
 
@@ -44,7 +44,7 @@ class WoodsFluid(Blend):
         self.check_vol_sum = check_vol_sum
         self.vol_frac_tol = vol_frac_tol
 
-    def density(self, props: Dict[str, NDArrayOrFloat], **element_kwargs):
+    def density(self, props: PropsDict, **element_kwargs):
         """Return the density of the mixed fluid based upon the volume fraction.
 
         The arguments passed to this function are the volume fractions of each fluid name to mix.
@@ -60,9 +60,7 @@ class WoodsFluid(Blend):
         args = self._process_props_get_method(props, "density", **element_kwargs)
         return bw92.mixed_density(*args)
 
-    def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **element_kwargs
-    ) -> NDArrayOrFloat:
+    def bulk_modulus(self, props: PropsDict, **element_kwargs) -> NDArrayOrFloat:
         """Return the density of the mixed fluid based upon the volume fraction.
 
         The arguments passed to this function are the volume fractions of each fluid name to mix.
@@ -77,9 +75,7 @@ class WoodsFluid(Blend):
         args = self._process_props_get_method(props, "density", **element_kwargs)
         return bw92.woods_bulkmod(*args)
 
-    def shear_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **element_kwargs
-    ) -> NDArrayOrFloat:
+    def shear_modulus(self, props: PropsDict, **element_kwargs) -> NDArrayOrFloat:
         """Return the density of the mixed fluid based upon the volume fraction.
 
         The arguments passed to this function are the volume fractions of each fluid name to mix.
@@ -92,9 +88,7 @@ class WoodsFluid(Blend):
         """
         return 0.0
 
-    def velocity(
-        self, props: Dict[str, NDArrayOrFloat], **element_kwargs
-    ) -> NDArrayOrFloat:
+    def velocity(self, props: PropsDict, **element_kwargs) -> NDArrayOrFloat:
         """Return the compressional velocity of the mixed fluid based upon the volume fraction by
         calculating the density and bulk modulus:
 
@@ -115,10 +109,10 @@ class WoodsFluid(Blend):
         k = self.bulk_modulus(props, **element_kwargs)
         return np.sqrt(k / rhob) * 1000
 
-    def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vp(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Alias for velocity"""
         return self.velocity(props, **kwargs)
 
-    def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vs(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Always returns 0"""
         return 0.0

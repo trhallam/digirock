@@ -7,7 +7,7 @@ from .._exceptions import WorkflowError
 from ..utils.ecl import EclStandardConditions
 from ..utils._decorators import check_props, mutually_exclusive, broadcastable
 from ..utils import check_broadcastable
-from ..typing import NDArrayOrFloat
+from ..typing import NDArrayOrFloat, PropsDict
 from ..fluids import bw92
 from ..fluids import ecl as fluid_ecl
 
@@ -163,7 +163,7 @@ class DeadOil(BaseOil):
             )
 
     @check_props("temp", "pres")
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for dead oil adjusted for FVF.
 
         Uses BW92 [`oil_density`][digirock.fluids.bw92.oil_density].
@@ -180,7 +180,7 @@ class DeadOil(BaseOil):
     @check_props("temp", "pres", broadcastable=("temp", "pres", "bo"))
     def velocity(
         self,
-        props: Dict[str, NDArrayOrFloat],
+        props: PropsDict,
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent acoustic velocity for dead oil adjusted for FVF.
@@ -203,7 +203,7 @@ class DeadOil(BaseOil):
 
     def bulk_modulus(
         self,
-        props: Dict[str, NDArrayOrFloat],
+        props: PropsDict,
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for dead oil adjusted for FVF.
@@ -325,7 +325,7 @@ class OilBW92(BaseOil):
         return rs, fvf
 
     @check_props("temp", "pres")
-    def bo(self, props: Dict[str, NDArrayOrFloat]) -> NDArrayOrFloat:
+    def bo(self, props: PropsDict) -> NDArrayOrFloat:
         """Calculate the oil formation volume factor (bo) using BW92.
 
         Set the attribute `bo` using BW92 [oil_fvf][digirock.fluids.bw92.oil_fvf].
@@ -340,7 +340,7 @@ class OilBW92(BaseOil):
         return fvf
 
     @check_props("pres")
-    def rs(self, props: Dict[str, NDArrayOrFloat]) -> NDArrayOrFloat:
+    def rs(self, props: PropsDict) -> NDArrayOrFloat:
         """Calculate the solution gas (rs) from pressure/rs table.
 
         Args:
@@ -353,9 +353,7 @@ class OilBW92(BaseOil):
         rs, _ = self._get_rsbo(100.0, props["pres"])
         return rs
 
-    def _process_bo_rs(
-        self, props: Dict[str, NDArrayOrFloat]
-    ) -> Tuple[NDArrayOrFloat, NDArrayOrFloat]:
+    def _process_bo_rs(self, props: PropsDict) -> Tuple[NDArrayOrFloat, NDArrayOrFloat]:
         # If RS or BO are not supplied, calculate from the table
         rs = props.get("rs")
         fvf = props.get("bo")
@@ -366,7 +364,7 @@ class OilBW92(BaseOil):
             return fvf, rs
 
     @check_props("temp", "pres", broadcastable=("temp", "pres", "rs", "bo"))
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for Oil with adjustments for `rs` (solution gas) and `bo` (FVF).
 
         Density is calculated using BW92 [oil_density][digirock.fluids.bw92.oil_density] after adjusting for gas saturation with [oil_rho_sat][digirock.fluids.bw92.oil_rho_sat].
@@ -386,7 +384,7 @@ class OilBW92(BaseOil):
     @check_props("temp", "pres", broadcastable=("temp", "pres", "rs", "bo"))
     def velocity(
         self,
-        props: Dict[str, NDArrayOrFloat],
+        props: PropsDict,
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent acoustic velocity for Oil adjusted for `rs` (solution gas) and `bo` (FVF).
@@ -407,7 +405,7 @@ class OilBW92(BaseOil):
 
     def bulk_modulus(
         self,
-        props: Dict[str, NDArrayOrFloat],
+        props: PropsDict,
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for Oil adjusted for `rs` (solution gas) and `bo` (FVF).
@@ -615,9 +613,7 @@ class OilPVT(BaseOil):
 
         return rs
 
-    def _process_bo_rs(
-        self, props: Dict[str, NDArrayOrFloat]
-    ) -> Tuple[NDArrayOrFloat, NDArrayOrFloat]:
+    def _process_bo_rs(self, props: PropsDict) -> Tuple[NDArrayOrFloat, NDArrayOrFloat]:
         # If RS or BO are not supplied, calculate from the table
         rs = props.get("rs")
         fvf = props.get("bo")
@@ -631,7 +627,7 @@ class OilPVT(BaseOil):
             return fvf, rs
 
     @check_props("pres")
-    def bo(self, props: Dict[str, NDArrayOrFloat]) -> NDArrayOrFloat:
+    def bo(self, props: PropsDict) -> NDArrayOrFloat:
         """Interpolate bo from pvt table.
 
         Args:
@@ -644,7 +640,7 @@ class OilPVT(BaseOil):
         return fvf
 
     @check_props("temp", "pres", broadcastable=("temp", "pres", "rs", "bo"))
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for Oil with adjustments for `rs` (solution gas) and `bo` (FVF).
 
         Density is calculated using BW92 [oil_density][digirock.fluids.bw92.oil_density] after adjusting for gas saturation with [oil_rho_sat][digirock.fluids.bw92.oil_rho_sat].
@@ -664,7 +660,7 @@ class OilPVT(BaseOil):
     @check_props("temp", "pres", broadcastable=("temp", "pres", "rs", "bo"))
     def velocity(
         self,
-        props: Dict[str, NDArrayOrFloat],
+        props: PropsDict,
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent acoustic velocity for Oil adjusted for `rs` (solution gas) and `bo` (FVF).
@@ -685,7 +681,7 @@ class OilPVT(BaseOil):
 
     def bulk_modulus(
         self,
-        props: Dict[str, NDArrayOrFloat],
+        props: PropsDict,
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for Oil adjusted for `rs` (solution gas) and `bo` (FVF).

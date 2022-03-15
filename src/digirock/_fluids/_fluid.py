@@ -3,7 +3,7 @@
 from typing import List, Dict, Type
 
 from .._exceptions import PrototypeError, WorkflowError
-from ..typing import NDArrayOrFloat
+from ..typing import NDArrayOrFloat, PropsDict
 from .._base import Element, Switch
 
 
@@ -17,7 +17,7 @@ class Fluid(Element):
     def __init__(self, name: str = None, keys: List[str] = None):
         Element.__init__(self, name, keys if keys else [])
 
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns density of fluid
 
         Args:
@@ -29,7 +29,7 @@ class Fluid(Element):
         """
         raise PrototypeError(self.__class__.__name__, "density")
 
-    def velocity(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def velocity(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns acoustic velocity of fluid
 
         Args:
@@ -41,17 +41,15 @@ class Fluid(Element):
         """
         raise PrototypeError(self.__class__.__name__, "velocity")
 
-    def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vp(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Alias for velocity"""
         return self.velocity(props, **kwargs)
 
-    def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vs(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Always returns 0"""
         return 0.0
 
-    def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def bulk_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns bulk_modulus of fluid
 
         Args:
@@ -63,9 +61,7 @@ class Fluid(Element):
         """
         raise PrototypeError(self.__class__.__name__, "modulus")
 
-    def shear_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def shear_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Fluid shear modulus is zero. Return zero for all fluids.
 
         Args:

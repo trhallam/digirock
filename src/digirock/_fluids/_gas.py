@@ -6,7 +6,7 @@ import xarray as xr
 from scipy.interpolate import interp1d
 
 from ..utils._decorators import check_props, mutually_exclusive, broadcastable
-from ..typing import NDArrayOrFloat
+from ..typing import NDArrayOrFloat, PropsDict
 from ..fluids import bw92
 
 from ._fluid import Fluid
@@ -64,7 +64,7 @@ class GasBW92(Fluid):
         self.gas_sg = self.gas_density / bw92.AIR_RHO
 
     @check_props("temp", "pres")
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Temperature and pressure dependent density for Gas.
 
         Uses BW92 [`gas_oga_density`][digirock.fluids.bw92.gas_oga_density].
@@ -81,7 +81,7 @@ class GasBW92(Fluid):
     @check_props("temp", "pres")
     def bulk_modulus(
         self,
-        props: Dict[str, NDArrayOrFloat],
+        props: PropsDict,
         **kwargs,
     ) -> NDArrayOrFloat:
         """Temperature and pressure dependent bulk modulus for Gas.
@@ -165,7 +165,7 @@ class GasPVT(Fluid):
         )
 
     @check_props("pres")
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Pressure dependent density for Gas.
 
         Uses BW92 [`gas_oga_density`][digirock.fluids.bw92.gas_oga_density] with
@@ -188,7 +188,7 @@ class GasPVT(Fluid):
 
     # def bulk_modulus(
     #     self,
-    #     props: Dict[str, NDArrayOrFloat],
+    #     PropsDict,
     #     **kwargs,
     # ) -> NDArrayOrFloat:
     #     """This function overides the modulus function in etlpy.pem.Fluid

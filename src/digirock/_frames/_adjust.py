@@ -3,7 +3,7 @@ model specific.
 """
 from typing import Dict, List, Tuple, Type, Sequence
 
-from ..typing import NDArrayOrFloat
+from ..typing import NDArrayOrFloat, PropsDict
 from ..utils._decorators import check_props
 from .._base import Element, Transform
 from .._exceptions import WorkflowError, PrototypeError
@@ -47,19 +47,15 @@ class StressAdjust(Transform):
         super().__init__(transform_keys, element, self._methods, name=name)
         self._stress_model = stress_model
 
-    def bulk_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def bulk_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Applies the class porosity adjustment to the bulk modulus."""
         raise PrototypeError(self.__class__.__name__, "bulk_modulus")
 
-    def shear_modulus(
-        self, props: Dict[str, NDArrayOrFloat], **kwargs
-    ) -> NDArrayOrFloat:
+    def shear_modulus(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Applies the class porosity adjustment to the shear modulus."""
         raise PrototypeError(self.__class__.__name__, "shear_modulus")
 
-    def density(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def density(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns density of RockFrame using volume fraction average, see [mixed_denisty][digirock.models._mod.mixed_density].
 
         Args:
@@ -71,7 +67,7 @@ class StressAdjust(Transform):
         """
         return self.element.density(props, **kwargs)
 
-    def vp(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vp(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns compression velocity of RockFrame
 
         Args:
@@ -86,7 +82,7 @@ class StressAdjust(Transform):
         shear = self.shear_modulus(props, **kwargs)
         return acoustic_velp(bulk, shear, density)
 
-    def vs(self, props: Dict[str, NDArrayOrFloat], **kwargs) -> NDArrayOrFloat:
+    def vs(self, props: PropsDict, **kwargs) -> NDArrayOrFloat:
         """Returns shear velocity of RockFrame
 
         Args:
@@ -154,20 +150,18 @@ class MacBethStressAdjust(StressAdjust):
         self.e_mu = e_mu
         self.p_mu = p_mu
 
-    def _effective_pres(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def _effective_pres(self, props: PropsDict, **kwargs):
         """Use the stress model to calculate effective pressure."""
         return self._stress_model.effective_stress(props, **kwargs)
 
-    def _initial_pres_props(
-        self, props: Dict[str, NDArrayOrFloat], pres_key: str = "pres", **kwargs
-    ):
+    def _initial_pres_props(self, props: PropsDict, pres_key: str = "pres", **kwargs):
         assert pres_key in props
         effi_props = {key: props[key] for key in self._stress_model.keys()}
         effi_props[pres_key] = props["pres_init"]
         return effi_props
 
     @check_props("pres_init")
-    def bulk_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def bulk_modulus(self, props: PropsDict, **kwargs):
         """
 
         This implementation removes estimates for $\\kappa_\\inf$ by substituting in an initial
@@ -187,7 +181,7 @@ class MacBethStressAdjust(StressAdjust):
         return dryframe_dpres(k0, pres_effi, pres_eff, self.e_k, self.p_k)
 
     @check_props("pres_init")
-    def shear_modulus(self, props: Dict[str, NDArrayOrFloat], **kwargs):
+    def shear_modulus(self, props: PropsDict, **kwargs):
         """
 
         This implementation removes estimates for $\\mu_\\inf$ by substituting in an initial
