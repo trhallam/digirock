@@ -63,7 +63,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-mkdocs" class="md-skip">
+        <a href="#digirock" class="md-skip">
           Skip to content
         </a>
       
@@ -305,16 +305,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
-    Commands
+  <a href="#quick-start" class="md-nav__link">
+    Quick Start
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
-    Project layout
+  <a href="#installation" class="md-nav__link">
+    Installation
   </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-with-pip" class="md-nav__link">
+    Installing with pip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-from-source" class="md-nav__link">
+    Installing from source
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -757,16 +777,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
-    Commands
+  <a href="#quick-start" class="md-nav__link">
+    Quick Start
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#project-layout" class="md-nav__link">
-    Project layout
+  <a href="#installation" class="md-nav__link">
+    Installation
   </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-with-pip" class="md-nav__link">
+    Installing with pip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-from-source" class="md-nav__link">
+    Installing from source
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -784,20 +824,48 @@
                 
 
 
-<h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
+<h1 id="digirock"><code>digirock</code></h1>
+<p><code>digirock</code> is a Python framework for modelling digital rock models. It uses four
+abstract building blocks <code>Element</code>s, <code>Blend</code>ers, <code>Transform</code>ers and <code>Switch</code>es
+ to build flexible and moduluar rock models, all on top of the Python scientific
+ stack to make things easy (<code>numpy</code>, <code>xarray</code> and <code>pandas</code>).</p>
 <ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs -h</code> - Print help message and exit.</li>
+<li>The <a href="api/base_classes.html#digirockelement"><code>Element</code></a> class is the fundamental building block, all
+   other classes a based on it and it provides most of the functionality. Element
+   classes are extended to have rock or fluid properties or indeed any other property
+   you want to model.</li>
+<li>The <a href="api/base_classes.html#digirockblend"><code>Blend</code></a> class is used to combine any of the building block classes
+   in different ways
+   the blending method is implemented within a new class. Examples of a blend method
+   include a Wood's Fluid or Voight-Reuss-Hill average for a mineral composite.</li>
+<li>The <a href="api/base_classes.html#digirocktransform"><code>Transform</code></a> class is a pipeline that takes one of the
+  building block classes and performs an operation on either the upgoing or downgoing
+  properties of the rock. This is useful for transforming inputs or performing adjustments
+  to lower level block outputs. For example, Nur's Critical porosity transform is a
+  transformer.</li>
+<li>The <a href="api/base_classes.html#digirockswitch"><code>Switch</code></a> class is used when you zones or regions in your data
+  that use completely different models. The switch class for example can be used apply
+  the correct fluid in different PVT Zones, or a different Rock model per facies zone.</li>
 </ul>
-<h2 id="project-layout">Project layout</h2>
-<div class="codehilite"><pre><span></span><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
+<p><code>digirock</code> has primarily been implemented for clastic petro-elastic modelling but the
+framework is flexible enough for users to implement there own Elements and Models
+following the guidelines and examples from withing this documentation. If you write a
+new model, or implement an old one, please considering submitting back to the <code>digirock</code>
+project (<a href="contrib.html">contributing</a>).</p>
+<h2 id="quick-start">Quick Start</h2>
+<p>See the quick start example in the user guide.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="installing-with-pip">Installing with <code>pip</code></h3>
+<p><code>digirock</code> is available via <code>pip install</code>.</p>
+<div class="highlight"><span class="filename">Text Only</span><pre><span></span><code>pip install digirock
+</code></pre></div>
+<h3 id="installing-from-source">Installing from source</h3>
+<p>Clone the repository</p>
+<div class="highlight"><span class="filename">Text Only</span><pre><span></span><code>git clone http://github.com/trhallam/digirock
+</code></pre></div>
+<p>and install using <code>pip</code></p>
+<div class="highlight"><span class="filename">Text Only</span><pre><span></span><code>cd digirock
+pip install .
 </code></pre></div>
 
               
