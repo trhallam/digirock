@@ -201,10 +201,14 @@ def dryframe_stress(mod_e, mod_p, inf, p):
 def dryframe_acoustic(
     ksat: NDArrayOrFloat, kfl: NDArrayOrFloat, k0: NDArrayOrFloat, phi: NDArrayOrFloat
 ) -> NDArrayOrFloat:
-    """Dry frame bulk modulus from material saturated modulus
+    """Dry frame bulk modulus $K^*$ from material saturated modulus
 
     This is essentially inverse Gassmann fluid substitution and assumes you know the bulk modulus of
     the matrix material `k0`.
+
+    $$
+    K^* = \\frac{K_{sat}\\left( \\frac{\\phi K_0}{K_{fl}} + 1 - \\phi \\right) - K_0}{\\frac{\\phi K_0}{K_{fl}}+\\frac{K_{sat}}{K_0}-1-\\phi}
+    $$
 
     Args:
         ksat: saturated bulk modulus
