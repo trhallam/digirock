@@ -14,9 +14,11 @@ theme:
     primary: deep orange
   icon:
     repo: fontawesome/brands/github
+  custom_dir: docs/overrides
 use_directory_urls: false
 repo_url: https://github.com/trhallam/digirock
 repo_name: trhallam/digirock
+edit_uri: edit/main/docs
 
 copyright: "Tony Hallam"
 
@@ -58,6 +60,7 @@ plugins:
   - mkdocs-jupyter:
       execute: true
       kernel_name: python3
+      include_source: True
       include: ["examples/example*.py"]
       ignore: ["*.ipynb"]
   - mkdocstrings:
