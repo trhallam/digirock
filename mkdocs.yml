@@ -61,12 +61,13 @@ plugins:
       execute: true
       kernel_name: python3
       include_source: True
-      include: ["examples/example*.py"]
+      include: ["examples/example*.py", "examples/batzle_wang_1992.py"]
       ignore: ["*.ipynb"]
   - mkdocstrings:
       default_handler: python
       watch:
         - src/digirock
+  - include-markdown
 
 nav:
   - "Home":
