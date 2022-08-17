@@ -72,7 +72,7 @@ class WoodsFluid(Blend):
             props: dictionary of properties, must contain all keys in `blend_keys`.
             element_kwargs: kwargs to pass to elements
         """
-        args = self._process_props_get_method(props, "density", **element_kwargs)
+        args = self._process_props_get_method(props, "bulk_modulus", **element_kwargs)
         return bw92.woods_bulkmod(*args)
 
     def shear_modulus(self, props: PropsDict, **element_kwargs) -> NDArrayOrFloat:
