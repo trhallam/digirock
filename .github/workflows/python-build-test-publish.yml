@@ -29,7 +29,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # required for `git describe --tags` to work
           fetch-depth: 0
@@ -42,7 +42,7 @@ jobs:
           pip-compile setup.cfg --extra test
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
           cache: "pip"
@@ -77,7 +77,7 @@ jobs:
         run: pip wheel . -w dist --no-deps
 
       - name: Upload wheel as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.os }} Python ${{ matrix.python }} wheel
           path: dist/*
@@ -133,7 +133,7 @@ jobs:
 
     steps:
       - name: Get wheels
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: artifacts
 
